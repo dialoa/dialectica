@@ -10,7 +10,9 @@ class PagesController < ApplicationController
   # GET /pages/1
   # GET /pages/1.json
   def show
-
+    set_meta_tags title: @page.title, reverse: true,
+              description: @page.description,
+              keywords: @page.keywords
   end
 
   # GET /pages/new
