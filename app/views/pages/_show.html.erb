@@ -17,13 +17,18 @@
        <hr>
 
        <!-- Description and Keywords -->
-       <p class="text-center text-justify mx-2">
-          <%= page.description %>
-       </p>
-       <p class="text-center text-justify mx-2">
-         <small class="text-muted"><strong>Keywords: </strong><%= page.keywords %></small>
-       </p>
-       <hr>
+       <% unless page.description.blank? %>
+         <p class="text-center text-justify mx-2">
+            <%= page.description %>
+         </p>
+         <% unless page.keywords.blank? %>
+           <p class="text-center text-justify mx-2">
+             <small class="text-muted"><strong>Keywords: </strong><%= page.keywords %></small>
+           </p>
+         <% end %>
+         <hr>
+       <% end %>
+
 
        <!-- Post Content -->
        <div class="text-justify">

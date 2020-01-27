@@ -6,30 +6,15 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <%= link_to "About us", root_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Index", root_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Online Content", root_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "How to subscribe", root_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "How to submit", root_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Advice to authors", root_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Contact us", root_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Links", root_path, class: "nav-link" %>
-      </li>
+      <% page_slugs = ["about-us", "index", "online-content", "how-to-subscribe", "how-to-submit", "advice-to-authors", "contact-us", "links"] %>
+      <% page_slugs.each do |slug| %>
+        <% page = Page.find_by_slug(slug) %>
+        <% if page.present? %>
+        <li class="nav-item">
+          <%= link_to page.title, page_path(page), class: "nav-link" %>
+        </li>
+        <% end %>
+      <% end %>
     </ul>
   </div>
 </nav>
