@@ -4,7 +4,11 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.file_field :cover %>
+    <p>
+      Cover <br />
+      <%= f.file_field :cover %>
+    </p>
+
     <%= f.input :title %>
     <%= f.input :description %>
     <%= f.input :keywords %>
@@ -13,6 +17,6 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: "btn btn-primary my-2" %>
   </div>
 <% end %>
