@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-first-color">
   <%= link_to "Dialectica", root_path, class: "navbar-brand" %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -6,7 +6,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <% page_slugs = ["about-us", "index", "online-content", "how-to-subscribe", "how-to-submit", "advice-to-authors", "contact-us", "links"] %>
+      <% page_slugs = ["about-us", "contents", "how-to-subscribe", "how-to-submit", "advice-to-authors", "contact-us", "links"] %>
       <% page_slugs.each do |slug| %>
         <% page = Page.find_by_slug(slug) %>
         <% if page.present? %>
