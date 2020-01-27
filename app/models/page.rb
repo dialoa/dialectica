@@ -4,7 +4,6 @@ class Page < ApplicationRecord
   has_rich_text :content
   has_one_attached :cover
 
-
   before_save :update_search_field
 
   def update_search_field

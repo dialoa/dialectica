@@ -1,6 +1,6 @@
 class PagePolicy < ApplicationPolicy
 
   def update?
-    false
+    is_user_admin?(@user)
   end
 end

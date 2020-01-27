@@ -13,5 +13,9 @@ module ApplicationHelper
     end
     nil
   end
-  
+
+  def is_user_admin?(user)
+    !user.nil? && user.roles.where(name: "admin").exists?
+  end
+
 end
