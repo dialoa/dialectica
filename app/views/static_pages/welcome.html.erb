@@ -1,4 +1,3 @@
 <div class="container">
-  <h1>StaticPages#welcome</h1>
-  <p>Find me in app/views/static_pages/welcome.html.erb</p>
+  <%= render 'pages/show', page: Page.find_by_slug("dialectica") if Page.find_by_slug("dialectica").present? %>
 </div>
