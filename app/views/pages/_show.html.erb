@@ -10,13 +10,26 @@
        <% if page.cover.attached? %>
           <%= image_tag page.cover, class: "img-fluid  rounded" %>
          <hr>
-         <% end %>
+       <% end %>
+
        <!-- Title -->
-       <h1 class="mt-4"><%= page.title %></h1>
+       <h1 class="mt-4 text-center"><%= page.title %></h1>
+       <hr>
+
+       <!-- Description and Keywords -->
+       <p class="text-center text-justify mx-2">
+          <%= page.description %>
+       </p>
+       <p class="text-center text-justify mx-2">
+         <small class="text-muted"><strong>Keywords: </strong><%= page.keywords %></small>
+       </p>
        <hr>
 
        <!-- Post Content -->
-       <%= page.content %>
+       <div class="text-justify">
+         <%= page.content %>
+        </div>
+
        <hr>
 
      </div>
