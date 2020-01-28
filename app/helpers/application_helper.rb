@@ -18,4 +18,16 @@ module ApplicationHelper
     !user.nil? && user.roles.where(name: "admin").exists?
   end
 
+  def is_user_author?(user)
+    !user.nil? && user.roles.where(name: "author").exists?
+  end
+
+  def is_user_reviewer?(user)
+    !user.nil? && user.roles.where(name: "reviewer").exists?
+  end
+
+  def is_user_editor?(user)
+    !user.nil? && user.roles.where(name: "editor").exists?
+  end
+
 end

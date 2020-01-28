@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   resources :pages
 
   get '/about-us', to: 'pages#show', id: "about-us"
+  get '/dashboard', to: 'static_pages#dashboard', as: "dashboard"
 
 end
