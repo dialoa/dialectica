@@ -24,6 +24,13 @@
 \end{filecontents}
 
 \begin{document}
+\title{<%= @article.title %>}
+\author{<%= @article.author %>}
+\date{<%= @article.created_at %>}
+\maketitle
+
+<%= @article.author %>
+
 This document\cite{example} uses \verb|parse_runs = 2| to calculate the last page.
 
 Other defaults can be overridden using \verb|LatexToPdf#config| and \verb|@latex_config|.
