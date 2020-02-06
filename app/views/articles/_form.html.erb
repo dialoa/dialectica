@@ -1,3 +1,5 @@
+<%= tinymce_assets %>
+<%= tinymce %>
 
 <%= simple_form_for(@article) do |f| %>
   <%= f.error_notification %>
@@ -5,9 +7,10 @@
 
   <div class="form-inputs">
     <%= f.input :author %>
-    <%= f.input :content %>
     <%= f.input :title %>
-    <%= f.input :published_at %>
+    <%= f.text_area :content, :class => "tinymce", :rows => 10 %>
+
+    <%#= f.input :published_at %>
   </div>
 
   <div class="form-actions">
