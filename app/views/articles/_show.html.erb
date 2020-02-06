@@ -6,5 +6,6 @@
   <div>
     <%= raw Sanitize.fragment(article.content, Sanitize::Config::RELAXED) %>
  </div>
+ <%= link_to "print", article_path(article,:format => :pdf) %>
 
 <hr>

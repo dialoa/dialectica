@@ -30,4 +30,8 @@ module ApplicationHelper
     !user.nil? && user.roles.where(name: "editor").exists?
   end
 
+  def lesc(text)
+    LatexToPdf.escape_latex(text)
+  end
+
 end
