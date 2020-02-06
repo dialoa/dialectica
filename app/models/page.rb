@@ -13,7 +13,8 @@ class Page < ApplicationRecord
       title,
       description,
       keywords,
-      #content.to_plain_text,
+      #ActionView::Base.full_sanitizer.sanitize(content),
+      ActionController::Base.helpers.strip_tags(content).squish,
       slug
     ].compact.join(' ')
 
