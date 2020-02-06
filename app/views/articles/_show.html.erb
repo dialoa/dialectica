@@ -5,6 +5,8 @@
   <!-- Post Content -->
   <div>
     <%= raw Sanitize.fragment(article.content, Sanitize::Config::RELAXED) %>
+    <hr />
+    <%= simple_format(article.latex_code) %>
  </div>
  <%= link_to "print", article_path(article,:format => :pdf) %>
 
