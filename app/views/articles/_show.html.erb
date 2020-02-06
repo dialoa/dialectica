@@ -4,12 +4,6 @@
 
   <!-- Post Content -->
   <div>
-    <%= sanitize article.content, attributes: %w(href target) %>
-    <hr />
-    <%= sanitize(article.content, tags: %w(table tr td)) %>
-    <hr />
-    <%= sanitize(article.content, tags: %w(table tr td), attributes: %w()) %>
-    <hr />
     <%= raw Sanitize.fragment(article.content, Sanitize::Config::RELAXED) %>
  </div>
 
