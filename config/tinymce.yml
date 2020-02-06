@@ -1,6 +1,6 @@
 menubar: false
 toolbar:
-  - styleselect | bold italic | undo redo | link | table | code
+  - styleselect | bold italic | undo redo | link | table | code | alignright
 plugins:
   - link
   - table
