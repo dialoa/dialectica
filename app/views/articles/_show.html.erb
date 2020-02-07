@@ -11,11 +11,13 @@
 
   <% unless article.latex_code.blank? %>
   <div class="row">
-      <div class="col-6 border rounded">
+      <div class="col-4 border rounded">
         <%= simple_format(article.latex_code) %>
       </div>
-      <div class="col-6">
-          <iframe src="https://latexonline.cc/compile?url=<%= article_latex_code_url %>"></iframe>
+      <div class="col-8">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe  class="embed-responsive-item" src="https://latexonline.cc/compile?url=<%= article_latex_code_url %>"></iframe>
+        </div>
       </div>
   </div>
 
