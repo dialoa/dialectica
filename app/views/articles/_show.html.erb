@@ -3,16 +3,25 @@
 <hr>
 
   <!-- Post Content -->
-  <div>
+  <% unless article.content.blank? %>
     <%= raw Sanitize.fragment(article.content, Sanitize::Config::RELAXED) %>
-    <hr />
-    <%= simple_format(article.latex_code) %>
- </div>
+  <% end %>
+
+  <% unless article.latex_code.blank? %>
+  <div class="row">
+      <div class="col-6">
+        <%= article.latex_code %>
+      </div>
+      <div class="col-6">
+        <div class="embed-responsive embed-responsive-1by1">
+          <iframe src="https://latexonline.cc/compile?url=<%= article_latex_code_url %>"></iframe>
+        </div>
+      </div>
+  </div>
+
+  <% end %>
+
  <%= link_to "print", article_path(article,:format => :pdf) %>
  <%= link_to "Print External", "https://latexonline.cc/compile?url=#{article_latex_code_url}"  %>
 
 <hr>
-
-<div class="embed-responsive embed-responsive-16by9">
-  <iframe src="https://latexonline.cc/compile?url=<%= article_latex_code_url %>"></iframe>
-</div>

@@ -12,6 +12,7 @@ class ArticlesController < ApplicationController
   def show
     respond_to do |format|
       format.html  # index.html.erb
+      format.pdf
       #format.tex  { render plain: @article.latex_code }
     end
   end
