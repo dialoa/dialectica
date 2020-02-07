@@ -1,3 +1,5 @@
+<div class="container-fluid">
+
 <!-- Title -->
 <h1 class="mt-4 text-center"><%= article.title %></h1>
 <hr>
@@ -21,7 +23,8 @@
 
   <% end %>
 
- <%= link_to "print", article_path(article,:format => :pdf) %>
- <%= link_to "Print External", "https://latexonline.cc/compile?url=#{article_latex_code_url}"  %>
+ <%#= link_to "print", article_path(article,:format => :pdf) %>
+ <%#= link_to "Print External", "https://latexonline.cc/compile?url=#{article_latex_code_url}"  %>
 
 <hr>
+</div>
