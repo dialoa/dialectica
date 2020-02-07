@@ -11,8 +11,8 @@
 
   <% unless article.latex_code.blank? %>
   <div class="row">
-      <div class="col-6">
-        <%= article.latex_code %>
+      <div class="col-6 border rounded">
+        <%= simple_format(article.latex_code) %>
       </div>
       <div class="col-6">
         <div class="embed-responsive embed-responsive-1by1">
