@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :latex_code]
 
   # GET /articles
   # GET /articles.json
@@ -10,6 +10,10 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
+    respond_to do |format|
+      format.html  # index.html.erb
+      #format.tex  { render plain: @article.latex_code }
+    end
   end
 
   # GET /articles/new
@@ -59,6 +63,10 @@ class ArticlesController < ApplicationController
       format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def latex_code
+    render plain: @article.latex_code
   end
 
   private

@@ -9,5 +9,6 @@
     <%= simple_format(article.latex_code) %>
  </div>
  <%= link_to "print", article_path(article,:format => :pdf) %>
+ <%= link_to "Print External", "https://latexonline.cc/compile?url=#{article_latex_code_url}"  %>
 
 <hr>

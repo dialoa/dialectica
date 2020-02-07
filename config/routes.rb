@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
   resources :articles
+
+  get 'articles/:id/latex_code', to: 'articles#latex_code', as: "article_latex_code"
+
   devise_for :users
   root 'static_pages#welcome'
 
