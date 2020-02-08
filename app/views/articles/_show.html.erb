@@ -21,6 +21,10 @@
       </div>
   </div>
 
+  <div>
+    <%= raw (PandocRuby.convert(article.latex_code, :from => :latex, :to => :html)) %>
+  </div>
+
   <% end %>
 
  <%#= link_to "print", article_path(article,:format => :pdf) %>
