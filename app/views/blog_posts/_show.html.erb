@@ -1,0 +1,46 @@
+<!-- blog_post Content -->
+ <div class="container">
+
+
+     <!-- Post Content Column -->
+
+       <% if is_user_admin?(current_user) %>
+        <%= link_to "Eintrag bearbeiten", edit_blog_post_path(blog_post), class: "btn btn-primary my-2" %>
+       <% end %>
+
+       <!-- Preview Image -->
+       <% if false %>
+          <%= image_tag blog_post.cover, class: "img-fluid  rounded" %>
+         <hr>
+       <% end %>
+
+       <!-- Title -->
+       <h1 class="mt-4 text-center"><%= blog_post.title %></h1>
+       <hr>
+
+       <!-- Description and Keywords -->
+       <% unless blog_post.description.blank? %>
+         <p class="text-center text-justify mx-2">
+            <%= blog_post.description %>
+         </p>
+         <% unless blog_post.keywords.blank? %>
+           <p class="text-center text-justify mx-2">
+             <small class="text-muted"><strong>Keywords: </strong><%= blog_post.keywords %></small>
+           </p>
+         <% end %>
+         <hr>
+       <% end %>
+
+
+       <!-- Post Content -->
+       <div class="text-justify">
+             <%= raw Sanitize.fragment(blog_post.content, Sanitize::Config::RELAXED) %>
+        </div>
+
+       <hr>
+
+
+
+   <!-- /.row -->
+
+ </div>

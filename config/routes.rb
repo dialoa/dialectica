@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :blog_posts
   resources :articles
 
   get 'articles/:id/latex_code', to: 'articles#latex_code', as: "article_latex_code"
