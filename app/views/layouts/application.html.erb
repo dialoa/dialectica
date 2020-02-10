@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class=h-100>
   <head>
     <%= display_meta_tags site: 'Dialectica' %>
     <%= csrf_meta_tags %>
@@ -23,12 +23,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
-  <body class="bg-light">
+  <body class="bg-light d-flex flex-column h-100">
     <%= render "layouts/navigation" %>
     <div class="container my-2">
       <%= flash_messages %>
     </div>
-    <%= yield %>
-    <%= render "layouts/footer" %>
+      <%= yield %>
+    </div>    <%= render "layouts/footer" %>
   </body>
 </html>
