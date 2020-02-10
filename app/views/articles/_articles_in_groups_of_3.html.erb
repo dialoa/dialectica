@@ -1,0 +1,9 @@
+<div class="row">
+  <% articles.each do |article| %>
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+      <%= render 'card', article: article %>
+    </div>
+  <% end %>
+</div>
+
+<%#= paginate articles, params: {controller: 'articles', action: 'index'} %>

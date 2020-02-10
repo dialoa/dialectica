@@ -1,0 +1,22 @@
+<div class="card h-100 my-1 <%= dom_id(article) %>">
+  <div class="card-body">
+    <h5 class="card-title text-center"><%= article.title %></h5>
+    <div class="text-justify">
+      <% unless article.keywords.blank? %>
+        <p class="text-center text-justify mx-2">
+          <small class="text-muted"><strong>Keywords: </strong><%= article.keywords %></small>
+        </p>
+      <% end %>
+      <% unless article.description.blank? %>
+      <hr />
+        <p class="">
+          <small class=""><%= article.description%></small>
+          <br />
+        </p>
+      <% end %>
+      <p class="text-center mt-auto">
+        <%= link_to "Read more", article_path(article) %>
+      </p>
+    </div>
+  </div>
+</div>

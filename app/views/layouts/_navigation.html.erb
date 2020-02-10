@@ -9,6 +9,9 @@
       <li class="nav-item">
         <%= link_to "Blog", blog_posts_path, class: "nav-link" %>
       </li>
+      <li class="nav-item">
+        <%= link_to "Contents", articles_path, class: "nav-link" %>
+      </li>
       <% page_slugs = ["about-us", "contents", "how-to-subscribe", "how-to-submit", "advice-to-authors", "contact-us", "links"] %>
       <% page_slugs.each do |slug| %>
         <% page = Page.find_by_slug(slug) %>

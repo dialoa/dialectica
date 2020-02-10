@@ -1,20 +1,66 @@
-<div class="container-fluid">
+<!-- article Content -->
+ <div class="container">
+
+
+     <!-- Post Content Column -->
+
+       <% if is_user_admin?(current_user) %>
+        <%= link_to "Edit entry", edit_article_path(article), class: "btn btn-primary my-2" %>
+       <% end %>
+
+       <!-- Preview Image -->
+       <% if false %>
+          <%= image_tag article.cover, class: "img-fluid  rounded" %>
+         <hr>
+       <% end %>
+
+       <!-- Title -->
+       <h1 class="mt-4 text-center"><%= article.title %></h1>
+       <hr>
+
+       <!-- Description and Keywords -->
+       <% unless article.description.blank? %>
+         <p class="text-center text-justify mx-2">
+            <%= article.description %>
+         </p>
+         <% unless article.keywords.blank? %>
+           <p class="text-center text-justify mx-2">
+             <small class="text-muted"><strong>Keywords: </strong><%= article.keywords %></small>
+           </p>
+         <% end %>
+         <hr>
+       <% end %>
+
+
+       <!-- Post Content -->
+       <div class="text-justify">
+             <%= raw Sanitize.fragment(article.content, Sanitize::Config::RELAXED) %>
+        </div>
+
+       <hr>
+
+
+
+   <!-- /.row -->
+
+ </div>
+
+
+<hr />
+
+<div class="container">
 
 <!-- Title -->
-<h1 class="mt-4 text-center"><%= article.title %></h1>
+<h1 class="mt-4 text-center">Experimental</h1>
 <hr>
 
-  <!-- Post Content -->
-  <% unless article.content.blank? %>
-    <%= raw Sanitize.fragment(article.content, Sanitize::Config::RELAXED) %>
-  <% end %>
-
+  <h3>PDF:</h3>
   <% unless false  %>
     <div class="row">
-        <div class="col-4 border rounded">
+        <div class="col-0 border rounded">
           <%= simple_format(article.latex) %>
         </div>
-        <div class="col-8">
+        <div class="col-12">
           <div class="embed-responsive" style="padding-bottom: 141.42%;">
               <iframe  class="embed-responsive-item" src="https://latexonline.cc/compile?url=<%= article_latex_url %>"></iframe>
           </div>
@@ -24,10 +70,10 @@
     <% else %>
 
     <div class="row">
-        <div class="col-4 border rounded">
+        <div class="col-0 border rounded">
           <%= simple_format(article.latex) %>
         </div>
-        <div class="col-8">
+        <div class="col-12">
           <div class="embed-responsive" style="padding-bottom: 141.42%;">
               <iframe  class="embed-responsive-item" src="https://latexonline.cc/compile?text=<%= PandocRuby.html(article.content, :standalone).to_latex %>"></iframe>
           </div>
