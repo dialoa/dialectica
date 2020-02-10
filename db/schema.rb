@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_10_171936) do
+ActiveRecord::Schema.define(version: 2020_02_10_181145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,8 @@ ActiveRecord::Schema.define(version: 2020_02_10_171936) do
     t.date "published_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "latex_code", default: ""
+    t.text "latex", default: ""
+    t.string "format", default: "html"
   end
 
   create_table "blog_posts", force: :cascade do |t|

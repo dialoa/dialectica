@@ -8,13 +8,38 @@
   <div class="form-inputs">
     <%= f.input :author %>
     <%= f.input :title %>
-    <%= f.text_area :content, :class => "tinymce", :rows => 10 %>
-    <%= f.input :latex_code %>
+    <%#= f.input :format, collection: Article.formats.map {|p| [t("#{p}"), p]} %>
+
+
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <% Article.formats.each_with_index do |format, i| %>
+          <a class="nav-item nav-link <%= "active" if i == 0 %>" id="nav-<%= format %>-tab" data-toggle="tab" href="#nav-<%= format %>" role="tab" aria-controls="nav-<%= format %>" aria-selected="<%= i == 0 ? "true" : "false" %>"><%= format %></a>
+        <% end %>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <% Article.formats.each_with_index do |format, i| %>
+        <div class="tab-pane fade <%= "show active" if i == 0 %>" id="nav-<%= format %>" role="tabpanel" aria-labelledby="nav-<%= format %>-tab">
+          <% if format == "html" %>
+            <%= f.text_area :content, :class => "tinymce", :rows => 10 %>
+          <% elsif format == "latex" %>
+            <%= f.input :latex, :input_html => {:rows => 10} %>
+            <%#= f.text_area "format"to_sym, :class => "tinymce", :rows => 10 %>
+          <% end %>
+
+        </div>
+      <% end %>
+    </div>
+
+    <br />
+
+    <%#= f.input :latex %>
 
     <%#= f.input :published_at %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: "btn btn-light" %>
   </div>
 <% end %>

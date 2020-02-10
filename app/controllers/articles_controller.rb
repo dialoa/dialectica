@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :latex_code]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :latex]
 
   # GET /articles
   # GET /articles.json
@@ -13,7 +13,7 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html  # index.html.erb
       format.pdf
-      #format.tex  { render plain: @article.latex_code }
+      #format.tex  { render plain: @article.latex }
     end
   end
 
@@ -66,8 +66,8 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def latex_code
-    render plain: @article.latex_code
+  def latex
+    render plain: @article.latex
   end
 
   private
@@ -78,6 +78,6 @@ class ArticlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:author, :content, :title, :published_at, :latex_code)
+      params.require(:article).permit(:author, :content, :title, :published_at, :latex, :format)
     end
 end

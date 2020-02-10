@@ -9,14 +9,14 @@
     <%= raw Sanitize.fragment(article.content, Sanitize::Config::RELAXED) %>
   <% end %>
 
-  <% unless article.latex_code.blank? %>
+  <% unless article.latex.blank? %>
   <div class="row">
       <div class="col-4 border rounded">
-        <%= simple_format(article.latex_code) %>
+        <%= simple_format(article.latex) %>
       </div>
       <div class="col-8">
         <div class="embed-responsive" style="padding-bottom: 141.42%;">
-            <iframe  class="embed-responsive-item" src="https://latexonline.cc/compile?url=<%= article_latex_code_url %>"></iframe>
+            <iframe  class="embed-responsive-item" src="https://latexonline.cc/compile?url=<%= article_latex_url %>"></iframe>
         </div>
       </div>
   </div>
@@ -24,7 +24,7 @@
   <% end %>
 
  <%#= link_to "print", article_path(article,:format => :pdf) %>
- <%#= link_to "Print External", "https://latexonline.cc/compile?url=#{article_latex_code_url}"  %>
+ <%#= link_to "Print External", "https://latexonline.cc/compile?url=#{article_latex_url}"  %>
 
 <hr>
 </div>
