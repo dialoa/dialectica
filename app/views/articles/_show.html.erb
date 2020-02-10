@@ -9,7 +9,7 @@
     <%= raw Sanitize.fragment(article.content, Sanitize::Config::RELAXED) %>
   <% end %>
 
-  <% unless article.latex.blank? %>
+  <% unless false  %>
     <div class="row">
         <div class="col-4 border rounded">
           <%= simple_format(article.latex) %>
@@ -29,10 +29,12 @@
         </div>
         <div class="col-8">
           <div class="embed-responsive" style="padding-bottom: 141.42%;">
-              <iframe  class="embed-responsive-item" src="latexonline.cc/compile?text=<%= PandocRuby.new(article.content).to_latex %>"></iframe>
+              <iframe  class="embed-responsive-item" src="https://latexonline.cc/compile?text=<%= PandocRuby.html(article.content, :standalone).to_latex %>"></iframe>
           </div>
         </div>
     </div>
+    <br />
+    https://latexonline.cc/compile?text=<%= PandocRuby.html(article.content, :standalone).to_latex %>
 
   <% end %>
 

@@ -67,7 +67,12 @@ class ArticlesController < ApplicationController
   end
 
   def latex
-    render plain: @article.latex
+    if @article.latex.blank?
+      text = PandocRuby.html(@article.content, :standalone).to_latex
+    else
+      text = @article.latex
+    end
+    render plain: text
   end
 
   private
