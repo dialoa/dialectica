@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy, :latex]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :latex, :pdf]
 
   # GET /articles
   # GET /articles.json
@@ -73,6 +73,22 @@ class ArticlesController < ApplicationController
       text = @article.latex
     end
     render plain: text
+  end
+
+  def pdf
+    #pdf = PandocRuby.html(@article.content, :standalone).to_pdf
+    #pdf_string = PandocRuby.convert(@article.content, :from => :html, :to => :pdf)
+    #raw_pdf_string = Base64.decode64 pdf_string
+    #render :text, raw_pdf_string
+    #html = @article.content
+    #pdf = WickedPdf.new.pdf_from_string(html)
+
+
+    send_data render_to_string(
+                            pdf: "document.pdf",
+                            inline: "<!doctype html><html><head></head><body>#{@article.content}</body></html>",
+                            dpi: 75), filename: "document.pdf", disposition: 'inline'
+
   end
 
   private

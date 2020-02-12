@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
 
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 gem 'pandoc-ruby'
 gem 'rails-latex'
 gem 'sanitize'
