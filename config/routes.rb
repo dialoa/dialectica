@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :issues
   resources :blog_posts
   resources :articles
 

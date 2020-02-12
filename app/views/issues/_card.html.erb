@@ -1,0 +1,17 @@
+<div class="card h-100 my-1 <%= dom_id(issue) %>">
+  <div class="card-body">
+    <h5 class="card-title text-center"><%= issue.title %></h5>
+    <div class="text-justify">
+      <% unless issue.description.blank? %>
+      <hr />
+        <p class="">
+          <small class=""><%= issue.description%></small>
+          <br />
+        </p>
+      <% end %>
+      <p class="text-center mt-auto">
+        <%= link_to "Read more", issue_path(issue) %>
+      </p>
+    </div>
+  </div>
+</div>

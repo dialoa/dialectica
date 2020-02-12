@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_10_205617) do
+ActiveRecord::Schema.define(version: 2020_02_12_232715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 2020_02_10_205617) do
     t.string "format", default: "html"
     t.text "keywords", default: ""
     t.text "description", default: ""
+    t.bigint "issue_id"
+    t.index ["issue_id"], name: "index_articles_on_issue_id"
   end
 
   create_table "blog_posts", force: :cascade do |t|
@@ -80,6 +82,14 @@ ActiveRecord::Schema.define(version: 2020_02_10_205617) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "issues", force: :cascade do |t|
+    t.string "title", default: ""
+    t.date "published_at"
+    t.text "description", default: ""
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "pages", force: :cascade do |t|

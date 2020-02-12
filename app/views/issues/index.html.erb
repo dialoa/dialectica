@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="jumbotron bg-white my-4">
+    <div class="text-center">
+      <h1 class="my-4">Issues</h1>
+    </div>
+    <% if is_user_admin?(current_user) %>
+      <div class="text-center">
+        <%= link_to 'New Entry', new_issue_path, class: "btn btn-primary my-2" %>
+      </div>
+    <% end %>
+    <%#= render "issues/search_form", issues: @issues %>
+    <div class="issues">
+      <%#= render partial: "issues/show", collection: @issues, as: :issue %>
+      <%= render 'issues_in_groups_of_3', issues: @issues %>
+    </div>
+  </div>
+</div>

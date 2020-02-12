@@ -1,0 +1,41 @@
+<!-- issue Content -->
+ <div class="container">
+
+
+     <!-- Post Content Column -->
+
+       <% if is_user_admin?(current_user) %>
+        <%= link_to "Edit entry", edit_issue_path(issue), class: "btn btn-primary my-2" %>
+       <% end %>
+
+       <!-- Preview Image -->
+       <% if false %>
+          <%= image_tag issue.cover, class: "img-fluid  rounded" %>
+         <hr>
+       <% end %>
+
+       <!-- Title -->
+       <h1 class="mt-4 text-center"><%= issue.title %></h1>
+       <hr>
+
+       <!-- Description and Keywords -->
+       <% unless issue.description.blank? %>
+         <p class="text-justify mx-5">
+            <%= issue.description %>
+         </p>
+         <hr>
+       <% end %>
+
+       <% issue.articles.each do |article| %>
+          <%= render 'articles/card', article: article %>
+       <% end %>
+       <hr>
+
+
+
+   <!-- /.row -->
+
+ </div>
+
+
+<hr />

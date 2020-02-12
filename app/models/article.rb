@@ -1,5 +1,6 @@
 class Article < ApplicationRecord
 
+  belongs_to :issue, optional: true
 
   def self.formats
     #xml: DocBook, TEI simple
