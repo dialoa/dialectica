@@ -12,7 +12,7 @@
       </p>
       <hr />
       <p>
-        The current issue can be found here:
+        The current issue can be found here: <%= link_to "Current Issue", issue_path(Issue.last) unless !Issue.last.present? %>
       </p>
       <p>
 
