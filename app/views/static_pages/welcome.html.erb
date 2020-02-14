@@ -1,22 +1,56 @@
-<div class="container">
-  <div class="jumbotron bg-white my-4">
-    <div class="text-center">
-      <h1 class="my-4">Overview</h1>
-    </div>
-    <div class="text-center">
-      <p>
-        Dialectica is soon going to be an <b>Open-Access Journal</b>.
-      </p>
-      <p>
-        Latest developments can be found here: <%= link_to "Open Access Blog", blog_posts_path %>
-      </p>
-      <hr />
-      <p>
-        The current issue can be found here: <%= link_to "Current Issue", issue_path(Issue.last) unless !Issue.last.present? %>
-      </p>
-      <p>
 
-      </p>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Dialectica</h1>
+  <p class="lead">Dialectica is a general analytic philosophy journal. It is edited in Switzerland, publishes predominantly systematic and theoretical philosophy and aims to become the best journal on the European Continent.</p>
+  <hr />
+</div>
+
+<div class="container">
+  <div class="card-deck mb-3 text-center">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Dashboard</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title"></h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>Supervise new submissions</li>
+          <li>Make assessments</li>
+          <li>Take part in discussions</li>
+          <li>
+            Write comments
+            </li>
+        </ul>
+      <%= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
+      </div>
+    </div>
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Current Issue</h4>
+      </div>
+      <div class="card-body">
+        <% issue = Issue.last %>
+        <h5 class="card-title pricing-card-title"><%= issue.title %></h5>
+        <hr />
+        <ul class="list-unstyled mt-3 mb-4">
+          <li><%= issue.description %></li>
+        </ul>
+        <%= link_to "To the Issue", issue_path(Issue.last), class: "btn btn-lg btn-block btn-primary" %>
+      </div>
+    </div>
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Open-Access Blog</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title"></h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>See the latest developments</li>
+          <li></li>
+        </ul>
+        <%= link_to "To the Blog", blog_posts_path, class: "btn btn-lg btn-block btn-primary" %>
+      </div>
     </div>
   </div>
 </div>
