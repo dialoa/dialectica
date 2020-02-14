@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_12_232715) do
+ActiveRecord::Schema.define(version: 2020_02_14_130424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2020_02_12_232715) do
     t.text "keywords", default: ""
     t.text "description", default: ""
     t.bigint "issue_id"
+    t.string "statuts", default: ""
     t.index ["issue_id"], name: "index_articles_on_issue_id"
   end
 
