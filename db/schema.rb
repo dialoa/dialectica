@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2020_02_14_130424) do
     t.text "keywords", default: ""
     t.text "description", default: ""
     t.bigint "issue_id"
-    t.string "statuts", default: ""
+    t.string "status", default: ""
     t.index ["issue_id"], name: "index_articles_on_issue_id"
   end
 

@@ -11,6 +11,7 @@
     <%= f.input :description %>
     <%= f.input :keywords %>
     <%#= f.input :format, collection: Article.formats.map {|p| [t("#{p}"), p]} %>
+    <%= f.input :status, collection: Article.statuses.map {|p| [t("#{p}"), p]} %>
 
 
     <nav>

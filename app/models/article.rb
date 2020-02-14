@@ -10,4 +10,10 @@ class Article < ApplicationRecord
     ["html", "latex", "markdown", "odt", "docbook", "rtf", "pdf", "plain"]
   end
 
+  def self.statuses
+    ["submitted", "published"]
+  end
+
+   scope :submitted, -> { where(status: "submitted") }
+
 end
