@@ -16,5 +16,6 @@ Rails.application.routes.draw do
 
   get '/about-us', to: 'pages#show', id: "about-us"
   get '/dashboard', to: 'static_pages#dashboard', as: "dashboard"
+  get '/bibtex', to: 'static_pages#bibtex', as: "bibtex"
 
 end

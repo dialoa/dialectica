@@ -1,0 +1,43 @@
+<% cp = CiteProc::Processor.new style: 'chicago-author-date', format: 'html' %>
+<% cp.import BibTeX.open('./public/bibtex/dialectica-sandro.bib').to_citeproc %>
+<% array_of_ids = [] %>
+<% @b['@article'].each do |article| %>
+  <% array_of_ids.push(article.id) %>
+<% end %>
+
+
+<div class="container">
+
+  <h1>Bibtex</h1>
+  <% array_of_ids.each do |id| %>
+  <li>
+    <%= raw (cp.render :bibliography, id: id).first %>
+  </li>
+
+  <% end %>
+  <ol>
+
+  </ol>
+
+
+  <%= @b['@article'].first %>
+  <%= @b['@article'].each do |article| %>
+    <p>
+      <%= article.id %>
+    </p>
+  <% end %>
+
+  <p>
+    <%= CiteProc.process @b['yu_ad:2017a'].to_citeproc, :style => :mla %>
+    <br />
+    <%= CiteProc.class %>
+    <b><%= @b['yu_ad:2017a'].title %></b>
+
+    <%= CiteProc.process @b['yu_ad:2017a'], :style => 'chicago-author-date' %>
+
+  </p>
+  <p>
+
+    <%= raw (cp.render :bibliography, id: 'yu_ad:2017a').first.squish %>
+  </p>
+</div>
