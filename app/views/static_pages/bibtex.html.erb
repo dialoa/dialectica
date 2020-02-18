@@ -1,5 +1,6 @@
 <% cp = CiteProc::Processor.new style: 'apa', format: 'html' %>
 <% cp.import BibTeX.open('./public/bibtex/dialectica-sandro.bib').to_citeproc %>
+<%# cp.import BibTeX.open('./public/bibtex/biblio.bib').to_citeproc %>
 <% array_of_ids = [] %>
 <% @b['@article'].each do |article| %>
   <% array_of_ids.push(article.id) %>
@@ -12,7 +13,7 @@
 
   <h3>Searching DOI with CrossRef-API (random example from bib-file)</h3>
   <p>
-  <i>Reload page to get another random example.</i>  
+  <i>Reload page to get another random example.</i>
   </p>
   <% array_of_ids.sample(1).each do |id| %>
   <% citation = raw (cp.render :bibliography, id: id).first %>
