@@ -1,4 +1,4 @@
-<% cp = CiteProc::Processor.new style: 'chicago-author-date', format: 'html' %>
+<% cp = CiteProc::Processor.new style: 'apa', format: 'html' %>
 <% cp.import BibTeX.open('./public/bibtex/dialectica-sandro.bib').to_citeproc %>
 <% array_of_ids = [] %>
 <% @b['@article'].each do |article| %>
@@ -8,24 +8,27 @@
 
 <div class="container">
 
+
+
   <h1>Bibtex</h1>
-  <% array_of_ids.each do |id| %>
+  <% array_of_ids.last(10).each do |id| %>
+  <% citation = raw (cp.render :bibliography, id: id).first %>
   <li>
-    <%= raw (cp.render :bibliography, id: id).first %>
+    <%= citation %>
+    <br />
+    <strong>Found DOI-Links</strong><br />
+    <% Serrano.works(query: citation)["message"]["items"].each do |item|%>
+      <%=  link_to item["URL"], item["URL"]  %><br />
+    <% end %>
+
+    <br />
+    <br />
   </li>
 
   <% end %>
   <ol>
 
   </ol>
-
-
-  <%= @b['@article'].first %>
-  <%= @b['@article'].each do |article| %>
-    <p>
-      <%= article.id %>
-    </p>
-  <% end %>
 
   <p>
     <%= CiteProc.process @b['yu_ad:2017a'].to_citeproc, :style => :mla %>
