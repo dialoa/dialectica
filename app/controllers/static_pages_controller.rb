@@ -8,7 +8,6 @@ class StaticPagesController < ApplicationController
   end
 
   def bibtex
-    #Rails.public_path.join('filename.csv')
     @b = BibTeX.open('./public/bibtex/dialectica-sandro.bib')
 
   end
