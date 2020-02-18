@@ -10,8 +10,8 @@
 
 
 
-  <h1>Bibtex</h1>
-  <% array_of_ids.last(10).each do |id| %>
+  <h3>Searching DOI with CrossRef-API (5 random examples from bib-file):</h3>
+  <% array_of_ids.sample(5).each do |id| %>
   <% citation = raw (cp.render :bibliography, id: id).first %>
   <li>
     <%= citation %>
@@ -24,6 +24,17 @@
     <br />
     <br />
   </li>
+
+  <% end %>
+
+  <hr />
+  <h1>Bibtex</h1>
+  <% array_of_ids.each do |id| %>
+  <% citation = raw (cp.render :bibliography, id: id).first %>
+  <p>
+    <%= citation %>
+    <%#= CiteProc.process @b[id].to_citeproc, :style => :apa %>
+  </p>
 
   <% end %>
 </div>
