@@ -17,21 +17,24 @@
   </p>
   <% array_of_ids.sample(1).each do |id| %>
   <% citation = raw (cp.render :bibliography, id: id).first %>
-  <li>
+  <% serrano = Serrano.works(query: citation) %>
+  <p>
+    <h3> Random Article </h3>
     <%= citation %>
+    <%#= serrano.inspect %>
+  </p>
+  <br />
+    <p>
+    <h5>Found DOI-Links and their Citation Counts</h5>
+    <% serrano["message"]["items"].first(10).each do |item|%>
+    <p>
+      <%= Serrano.content_negotiation(ids: item["DOI"], format: "text", style: "elsevier-harvard").force_encoding(Encoding::UTF_8) %>
     <br />
-    <strong>Found DOI-Links</strong><br />
-    <% Serrano.works(query: citation)["message"]["items"].each do |item|%>
-      <%=  link_to item["URL"], item["URL"]  %><br />
+      <%=  link_to item["URL"], item["URL"]  %> - <strong>Citation Count: </strong><%= item["is-referenced-by-count"] %><br />
+    </p>
+
     <% end %>
-
-    <br />
-    <br />
-  </li>
-
+    </p>
   <% end %>
 
-  <p>
-      <%#= Serrano.works(ids: '10.1371/journal.pone.0033693').first["message"]["title"].first %>
-  </p>
 </div>
