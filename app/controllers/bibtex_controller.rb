@@ -25,7 +25,9 @@ class BibtexController < ApplicationController
       #Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"])
       #resultbib << Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
 
-      file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
+      #file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
+      file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "csl").force_encoding(Encoding::UTF_8)
+      #file = file + "\n\n" + serrano["message"]["items"].first.to_s
       #####file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
     end
 
