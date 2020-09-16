@@ -23,4 +23,7 @@ Rails.application.routes.draw do
   post 'pandoc/pandoc_output', to: 'pandoc#pandoc_output', as: "pandoc_output"
   post 'pandoc/pandoc_clean', to: 'pandoc#pandoc_clean', as: "pandoc_clean"
 
+  get '/bibtex_enter', to: 'bibtex#bibtex_enter', as: "bibtex_enter"
+  get '/bibtex_create', to: 'bibtex#bibtex_create', as: "bibtex_create"
+
 end
