@@ -5,6 +5,10 @@ class Stuff < ApplicationRecord
     ["docx", "odt", "markdown", "latex", "html"]
   end
 
+  def self.bibtex_options
+    ["bib", "json"]
+  end
+
   def self.get_extension(option)
     extensions = {
       "docx" => "docx",

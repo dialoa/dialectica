@@ -5,6 +5,8 @@
       <%#= file_field_tag :file, class: "btn btn-secondary" %>
       <%= text_area_tag :text %>
       <br />
+      <%= select_tag :format, options_for_select(Stuff.bibtex_options.collect{ |u| [u, u] }) %>
+      <br />
       <%= submit_tag "Convert", class: "btn btn-primary" %>
     <% end %>
   </p>
