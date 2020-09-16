@@ -1,0 +1,19 @@
+<div class="container">
+  <h1>Pandoc</h1>
+  <p>
+    <%= form_tag pandoc_output_path, multipart: true do %>
+      <%= file_field_tag :file, class: "btn btn-secondary" %>
+      <br />
+      <br />
+      From:
+      <%= select_tag :from, options_for_select(Stuff.pandoc_options.collect{ |u| [u, u] }) %>
+      <br>
+      <br />
+      To:
+      <%= select_tag :to, options_for_select(Stuff.pandoc_options.collect{ |u| [u, u] }) %>
+      <br>
+      <br />
+      <%= submit_tag "Convert", class: "btn btn-primary" %>
+    <% end %>
+  </p>
+</div>
