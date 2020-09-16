@@ -18,4 +18,7 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'static_pages#dashboard', as: "dashboard"
   get '/bibtex', to: 'static_pages#bibtex', as: "bibtex"
 
+  get '/pandoc', to: 'static_pages#pandoc', as: "pandoc"
+  post '/pandoc', to: 'static_pages#pandoc'
+
 end

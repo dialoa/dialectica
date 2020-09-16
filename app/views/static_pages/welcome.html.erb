@@ -31,12 +31,14 @@
       </div>
       <div class="card-body">
         <% issue = Issue.last %>
+        <% unless issue.nil? %>
         <h5 class="card-title pricing-card-title"><%= issue.title %></h5>
         <hr />
         <ul class="list-unstyled mt-3 mb-4">
           <li><%= issue.description %></li>
         </ul>
         <%= link_to "To the Issue", issue_path(Issue.last), class: "btn btn-lg btn-block btn-primary" %>
+        <% end %>
       </div>
     </div>
     <div class="card mb-4 shadow-sm">

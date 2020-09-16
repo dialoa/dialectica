@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>Pandoc</h1>
+  <p>
+    file_content:<br />
+    <%= @file_content unless @file_content.nil? %>
+  </p>
+  <p>
+    <%= @file_content.encoding unless @file_content.nil? %>
+  </p>
+  <p>
+    <%= @converter unless @converter.nil? %>
+    </p>
+  <p>
+    <%= form_tag pandoc_path, multipart: true do %>
+      <%= file_field_tag :file, class: "btn btn-secondary" %>
+      <br>
+      <br>
+      <%= submit_tag "Importieren", class: "btn btn-primary" %>
+    <% end %>
+  </p>
+</div>
