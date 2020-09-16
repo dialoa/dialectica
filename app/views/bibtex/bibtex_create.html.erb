@@ -1,6 +1,8 @@
 <div class="container">
   <h1>Bibtex</h1>
   <p>
-    <%= @result %>
+    <% @results.each do |result| %>
+      <%= result %>
+    <% end %>
   </p>
 </div>
