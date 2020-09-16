@@ -25,5 +25,6 @@ Rails.application.routes.draw do
 
   get '/bibtex_enter', to: 'bibtex#bibtex_enter', as: "bibtex_enter"
   get '/bibtex_create', to: 'bibtex#bibtex_create', as: "bibtex_create"
+  post '/bibtex_create', to: 'bibtex#bibtex_create'
 
 end

@@ -1,3 +1,11 @@
 <div class="container">
   <h1>Bibtex</h1>
+  <p>
+    <%= form_tag bibtex_create_path, multipart: true do %>
+      <%#= file_field_tag :file, class: "btn btn-secondary" %>
+      <%= text_area_tag :text %>
+      <br />
+      <%= submit_tag "Convert", class: "btn btn-primary" %>
+    <% end %>
+  </p>
 </div>
