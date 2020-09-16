@@ -21,5 +21,6 @@ Rails.application.routes.draw do
 
   get '/pandoc', to: 'pandoc#pandoc', as: "pandoc"
   post 'pandoc/pandoc_output', to: 'pandoc#pandoc_output', as: "pandoc_output"
+  post 'pandoc/pandoc_clean', to: 'pandoc#pandoc_clean', as: "pandoc_clean"
 
 end

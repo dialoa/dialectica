@@ -9,7 +9,7 @@ class Stuff < ApplicationRecord
     extensions = {
       "docx" => "docx",
       "odt" => "odt",
-      "markdown" => "markdown",
+      "markdown" => "md",
       "latex" => "tex",
       "html" => "html"
     }

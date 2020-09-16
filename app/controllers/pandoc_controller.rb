@@ -37,7 +37,24 @@ class PandocController < ApplicationController
     #@converted = PandocRuby.new(docx, :standalone, from: 'docx').to_docx
 
     #send_data @converted, filename: "#{filename.split('.').first}_clean.docx"
-    send_data @converted, filename: "#{filename.split('.').first}_clean.#{Stuff.get_extension(to)}"
+    send_data @converted, filename: "#{filename.split('.').first}_converted.#{Stuff.get_extension(to)}"
+
+    stuff.delete
+  end
+
+  def pandoc_clean
+    file = params[:file]
+    filename = file.original_filename
+
+    stuff = Stuff.create(filename: filename)
+    stuff.file.attach(file)
+    docx = stuff.file.download.force_encoding('UTF-8')
+
+    from = params[:from]
+
+    @converted = PandocRuby.new(docx, :standalone, from: from, to: from).convert
+
+    send_data @converted, filename: "#{filename.split('.').first}_clean.#{Stuff.get_extension(from)}"
 
     stuff.delete
   end
