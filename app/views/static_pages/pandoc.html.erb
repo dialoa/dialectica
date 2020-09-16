@@ -8,8 +8,8 @@
     <%= @file_content.encoding unless @file_content.nil? %>
   </p>
   <p>
-    <%= @converter unless @converter.nil? %>
-    </p>
+    <%= @converted %>
+  </p>
   <p>
     <%= form_tag pandoc_path, multipart: true do %>
       <%= file_field_tag :file, class: "btn btn-secondary" %>
