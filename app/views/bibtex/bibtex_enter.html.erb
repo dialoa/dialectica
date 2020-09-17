@@ -3,9 +3,11 @@
   <p>
     <%= form_tag bibtex_create_path, multipart: true do %>
       <%#= file_field_tag :file, class: "btn btn-secondary" %>
-      <%= text_area_tag :text %>
+      <%= text_area_tag :text, nil, :rows => 15, style: 'width:100%;' %>
+      <br />
       <br />
       <%= select_tag :format, options_for_select(Stuff.bibtex_options.collect{ |u| [u, u] }) %>
+      <br />
       <br />
       <%= submit_tag "Convert", class: "btn btn-primary" %>
     <% end %>
