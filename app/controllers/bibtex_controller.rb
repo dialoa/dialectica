@@ -48,7 +48,7 @@ class BibtexController < ApplicationController
       text.split("\n").each do |line|
         serrano = Serrano.works(query: line)
         #json.push(serrano["message"]["items"].first)
-        json.append(Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "citeproc-json"))
+        json = Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "citeproc-json", style: "elsevier-harvard")
       end
 
       #file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
