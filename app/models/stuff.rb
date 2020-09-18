@@ -6,7 +6,7 @@ class Stuff < ApplicationRecord
   end
 
   def self.bibtex_options
-    ["bib", "json", "citeproc-json"]
+    ["bib", "json"]
   end
 
   def self.get_extension(option)

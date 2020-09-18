@@ -44,11 +44,12 @@ class BibtexController < ApplicationController
       send_data json.to_json, filename: "json.json"
 
     elsif format == "citeproc-json"
-      json = {}
+      json = {"email" => "john@doe.com", "name" => "John Doe"}
+      json = json.to_json
       text.split("\n").each do |line|
         serrano = Serrano.works(query: line)
         #json.push(serrano["message"]["items"].first)
-        json = Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "citeproc-json", style: "elsevier-harvard")
+        json = json + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "citeproc-json", style: "elsevier-harvard")
       end
 
       #file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)

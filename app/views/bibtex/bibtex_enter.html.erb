@@ -1,6 +1,12 @@
 <div class="container">
   <h1>Bibtex</h1>
   <p>
+    If something doesn't work or if you need something special, please contact me: <%= mail_to "sandro.raess@philosophie.ch", "sandro.raess@philosophie.ch" %>
+  </p>
+  <p>
+    Enter a reference list or bibliography and get it returned as bibtex or json.
+  </p>
+  <p>
     <%= form_tag bibtex_create_path, multipart: true do %>
       <%#= file_field_tag :file, class: "btn btn-secondary" %>
       <%= text_area_tag :text, nil, :rows => 15, style: 'width:100%;' %>
@@ -9,7 +15,14 @@
       <%= select_tag :format, options_for_select(Stuff.bibtex_options.collect{ |u| [u, u] }) %>
       <br />
       <br />
-      <%= submit_tag "Convert", class: "btn btn-primary" %>
+      <%= submit_tag "Submit", class: "btn btn-primary" %>
     <% end %>
+  </p>
+  <p>
+    <strong>Example</strong>
+    <br />
+    1. Boucher RC (2004) New concepts of the pathogenesis of cystic fibrosis lung disease. Eur Resp J 23: 146–158.
+    <br />
+    2. Knowles MR, Boucher RC (2002) Mucus clearance as a primary innate defense mechanism for mammalian airways. J Clin Investig 109: 571–577.
   </p>
 </div>
