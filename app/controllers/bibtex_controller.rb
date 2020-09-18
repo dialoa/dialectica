@@ -32,7 +32,7 @@ class BibtexController < ApplicationController
         #file = file + "\n\n" + serrano["message"]["items"].first.to_s
         #####file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
       end
-      send_data file, filename: "bib.bib"
+      send_data file, filename: "references.bib"
     elsif format == "json"
       json = []
       text.split("\n").each do |line|
@@ -41,7 +41,7 @@ class BibtexController < ApplicationController
       end
 
       #file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
-      send_data json.to_json, filename: "json.json"
+      send_data json.to_json, filename: "references.json"
 
     elsif format == "citeproc-json"
       json = {"email" => "john@doe.com", "name" => "John Doe"}

@@ -28,7 +28,7 @@
             <%= hidden_field_tag :command, "pandoc_convert" %>
             <br>
             <br />
-            <%= submit_tag "Convert", class: "btn btn-primary" %>
+            <%= button_tag "Convert", class: "btn btn-primary" %>
           <% end %>
         </p>
       </div>
@@ -45,7 +45,7 @@
             From: <%= select_tag :from, options_for_select(Stuff.pandoc_options.collect{ |u| [u, u] }) %>
             <br>
             <br />
-            <%= submit_tag "Clean", class: "btn btn-primary" %>
+            <%= button_tag "Clean", class: "btn btn-primary" %>
           <% end %>
         </p>
       </div>
