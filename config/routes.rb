@@ -20,8 +20,9 @@ Rails.application.routes.draw do
   get '/bibtex', to: 'static_pages#bibtex', as: "bibtex"
 
   get '/pandoc', to: 'pandoc#pandoc', as: "pandoc"
-  post 'pandoc/pandoc_output', to: 'pandoc#pandoc_output', as: "pandoc_output"
-  post 'pandoc/pandoc_clean', to: 'pandoc#pandoc_clean', as: "pandoc_clean"
+  post 'pandoc/pandoc_command', to: 'pandoc#pandoc_command', as: "pandoc_command"
+  get 'pandoc/pandoc_convert/:stuff/:from/:to', to: 'pandoc#pandoc_convert', as: "pandoc_convert"
+  get 'pandoc/pandoc_clean/:stuff/:from/:to', to: 'pandoc#pandoc_clean', as: "pandoc_clean"
 
   get '/bibtex_enter', to: 'bibtex#bibtex_enter', as: "bibtex_enter"
   get '/bibtex_create', to: 'bibtex#bibtex_create', as: "bibtex_create"
