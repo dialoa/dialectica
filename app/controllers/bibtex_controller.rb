@@ -56,7 +56,7 @@ class BibtexController < ApplicationController
 
       #file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
     #  send_data json, filename: "citeproc.json"
-    end
+  #  end
 
 
     #resultbib.close
