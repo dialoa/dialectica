@@ -12,8 +12,8 @@ class CreateBibtexFileJob < ApplicationJob
 
       #send_data file, filename: "references.bib"
       #file = create_data file, filename: "references.bib"
-      file_to_store = "references.bib"
-      Tempfile.open(file_to_store, "w"){|f| f << file}
+      #file_to_store = "references.bib"
+      file_to_store = Tempfile.new("references.bib", "w"){|f| f << file}
 
       stuff = Stuff.create(filename: "references-#{Date.today.to_s}")
       stuff.file.attach(file_to_store)

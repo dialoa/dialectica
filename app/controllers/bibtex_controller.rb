@@ -10,6 +10,7 @@ class BibtexController < ApplicationController
     text = params[:text]
     format = params[:format]
 
+    #CreateBibtexFileJob.perform_later()
     CreateBibtexFileJob.perform_later(text, format)
     #bib = BibTeX::Bibliography.new
     #b = BibTeX.open('./public/bibtex/test.bib')
