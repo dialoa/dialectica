@@ -13,10 +13,18 @@ class CreateBibtexFileJob < ApplicationJob
       #send_data file, filename: "references.bib"
       #file = create_data file, filename: "references.bib"
       #file_to_store = "references.bib"
-      file_to_store = Tempfile.new("references.bib", "w"){|f| f << file}
+      #file_to_store = Tempfile.new("references.bib", "w"){|f| f << file}
+      file_to_store = Tempfile.new('references-#{Date.today.to_s}.bib')
+      file_to_store.write(file)
+
 
       stuff = Stuff.create(filename: "references-#{Date.today.to_s}")
-      stuff.file.attach(file_to_store)
+      #stuff.file.attach(file_to_store)
+      file_to_store.rewind
+
+      stuff.file.attach(io: file_to_store, filename: "references-#{Date.today.to_s}.bib")
+      file_to_store.close
+
 
     elsif format == "json"
       json = []

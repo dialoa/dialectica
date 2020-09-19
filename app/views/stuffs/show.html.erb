@@ -4,6 +4,12 @@
   <strong>Filename:</strong>
   <%= @stuff.filename %>
 </p>
+<p>
+  <strong>Attachment</strong>
+  <% if @stuff.file.attached? %>
+    <%= link_to "Download", rails_blob_path(@stuff.file, disposition: "attachment") %>
+  <% end %>
+</p>
 
 <%= link_to 'Edit', edit_stuff_path(@stuff) %> |
 <%= link_to 'Back', stuffs_path %>
