@@ -6,16 +6,13 @@
   </p>
   <hr />
   <p>
-    Enter a reference list or bibliography and get it returned as bibtex or json.
+    Enter a reference list or bibliography and get it returned as bibtex or json.<br />
+    <strong>Note:</strong> The longer the list is, the longer it takes.
   </p>
   <p>
-    <strong>Sometimes, Crossref limits requests which results in an error message!</strong>
+    <strong>Sometimes, Crossref limits requests which results in an error message!
     <br />
-    If this happens, wait and try again later.
-  </p>
-  <p>
-    If your reference list or bibliography is big (eg. more than 5-10 lines), use the enter field below.
-    You might get a timeout-error otherwise.
+    If this happens, try again later.</strong>
   </p>
   <p>
     <%= form_tag bibtex_create_path, multipart: true do %>

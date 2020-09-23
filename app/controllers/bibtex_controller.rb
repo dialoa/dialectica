@@ -20,9 +20,9 @@ class BibtexController < ApplicationController
     if format == "bib"
       file = ""
       text.split("\n").each do |line|
-        sleep 1
         next if line.blank?
         serrano = Serrano.works(query: line)
+
         file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
 
       end
@@ -32,7 +32,6 @@ class BibtexController < ApplicationController
     elsif format == "json"
       json = []
       text.split("\n").each do |line|
-        sleep 1
         next if line.blank?
         serrano = Serrano.works(query: line)
         json.push(serrano["message"]["items"].first)
