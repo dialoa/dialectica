@@ -9,6 +9,15 @@
     Enter a reference list or bibliography and get it returned as bibtex or json.
   </p>
   <p>
+    <strong>Sometimes, Crossref limits requests which results in an error message!</strong>
+    <br />
+    If this happens, wait and try again later.
+  </p>
+  <p>
+    If your reference list or bibliography is big (eg. more than 5-10 lines), use the enter field below.
+    You might get a timeout-error otherwise.
+  </p>
+  <p>
     <%= form_tag bibtex_create_path, multipart: true do %>
       <%#= file_field_tag :file, class: "btn btn-secondary" %>
       <%= text_area_tag :text, nil, :rows => 15, style: 'width:100%;' %>
