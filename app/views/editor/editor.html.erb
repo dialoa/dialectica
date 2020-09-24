@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <h1>Markdown-Editor</h1>
+
+  <div class="row">
+      <div class="col-6">
+        <%= form_for :search_inputs, url: "/editor/editor", method: :post do |form| %>
+          <%#= form.text_area :text %>
+          <%= form.text_area :text, :rows => 40, style: 'width:100%;' %>
+          <br />
+          <%= form.submit "Übersetzen" %>
+        <% end %>
+      </div>
+      <div class="col-6">
+        <br /><br />
+        <br /><br />
+        <%#= raw @result %>
+        <div>
+          <%= raw @result %>
+        </div>
+      </div>
+      <div class="col-12 rounded border bg-light">
+        <%= @result %>
+      </div>
+  </div>
+</div>

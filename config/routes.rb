@@ -28,4 +28,7 @@ Rails.application.routes.draw do
   get '/bibtex_create', to: 'bibtex#bibtex_create', as: "bibtex_create"
   post '/bibtex_create', to: 'bibtex#bibtex_create'
 
+  get '/editor/editor', to: "editor#editor", as: 'editor'
+  post '/editor/editor', to: "editor#editor"
+
 end
