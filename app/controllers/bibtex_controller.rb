@@ -6,14 +6,19 @@ class BibtexController < ApplicationController
 
   end
 
-  def bibtex_create_later
+  def bibtex_create
     text = params[:text]
-    format = params[:format]
+    format_string = params[:format_string]
+    email = params[:email]
 
-    CreateBibtexFileJob.perform_later(text, format)
+    #BibtexMailer.bibtex_is_finished_email(email, Stuff.first).deliver_now
+
+    CreateBibtexFileJob.perform_later(text, format_string, email)
+
+    redirect_to bibtex_enter_path, notice: 'File is being produced! Wait for the mail.'
   end
 
-  def bibtex_create
+  def bibtex_create_fast
     text = params[:text]
     format = params[:format]
 

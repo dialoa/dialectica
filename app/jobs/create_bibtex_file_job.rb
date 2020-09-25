@@ -1,7 +1,9 @@
 class CreateBibtexFileJob < ApplicationJob
   queue_as :default
 
-  def perform(text, format)
+  def perform(text, format, email)
+    stuff = Stuff.create(filename: "references-#{Time.now.strftime("%d/%m/%Y %H:%M")}")
+
     if format == "bib"
       file = ""
       text.split("\n").each do |line|
@@ -21,9 +23,9 @@ class CreateBibtexFileJob < ApplicationJob
             end
           end
       end
+
       file_to_store = Tempfile.new('references-#{Date.today.to_s}.bib')
       file_to_store.write(file)
-      stuff = Stuff.create(filename: "references-#{Date.today.to_s}")
       file_to_store.rewind
       stuff.file.attach(io: file_to_store, filename: "references-#{Date.today.to_s}.bib")
       file_to_store.close
@@ -49,14 +51,15 @@ class CreateBibtexFileJob < ApplicationJob
             end
           end
 
-
       end
 
-      file_to_store = "references.json"
-      Tempfile.open(file_to_store, "w"){|f| f << json.to_json}
-
-      stuff = Stuff.create(filename: "references-#{Date.today.to_s}")
-      stuff.file.attach(file_to_store)
+      file_to_store = Tempfile.new('references-#{Date.today.to_s}.json')
+      file_to_store.write(json.to_json)
+      file_to_store.rewind
+      stuff.file.attach(io: file_to_store, filename: "references-#{Date.today.to_s}.json")
+      file_to_store.close
     end
+
+    BibtexMailer.bibtex_is_finished_email(email, stuff).deliver_now
   end
 end

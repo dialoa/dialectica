@@ -7,12 +7,9 @@
   <hr />
   <p>
     Enter a reference list or bibliography and get it returned as bibtex or json.<br />
-    <strong>Note:</strong> The longer the list is, the longer it takes.
-  </p>
-  <p>
-    <strong>Sometimes, Crossref limits requests which results in an error message!
+    <strong>Note:</strong> The longer the list is, the longer it takes.<br />
     <br />
-    If this happens, try again later.</strong>
+    It could take hours, depending on how busy Crossref is.
   </p>
   <p>
     <%= form_tag bibtex_create_path, multipart: true do %>
@@ -20,7 +17,11 @@
       <%= text_area_tag :text, nil, :rows => 15, style: 'width:100%;' %>
       <br />
       <br />
-      <%= select_tag :format, options_for_select(Stuff.bibtex_options.collect{ |u| [u, u] }) %>
+      <%= select_tag :format_string, options_for_select(Stuff.bibtex_options.collect{ |u| [u, u] }) %>
+      <br />
+      <br />
+      <strong>e-Mail</strong><br />
+      <%= text_field_tag :email %>
       <br />
       <br />
       <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
