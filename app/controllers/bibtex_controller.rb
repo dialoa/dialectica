@@ -21,9 +21,25 @@ class BibtexController < ApplicationController
       file = ""
       text.split("\n").each do |line|
         next if line.blank?
-        serrano = Serrano.works(query: line)
+            begin
+              puts line
+              serrano = Serrano.works(query: line)
+              file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
 
-        file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
+          rescue
+            @retries ||= 0
+            if @retries < 3
+              @retries += 1
+              puts "ERROR!!! RETRY: #{@retries}"
+              sleep 300
+              retry
+            else
+              file = file + "ERROR for: #{line}"
+            end
+          end
+        #serrano = Serrano.works(query: line)
+
+        #file = file + "\n\n" + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "bibtex").force_encoding(Encoding::UTF_8)
 
       end
 
