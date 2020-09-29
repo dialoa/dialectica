@@ -14,13 +14,13 @@ class EditorController < ApplicationController
 
     markdown_text = @search_inputs[:text]
 
-    markdown_text = Kramdown::Document.new(' <h1 id="header">Header</h1> <p>This is <span style="color: red">written in red</span>.</p>').to_kramdown
+    @markdown_text = Kramdown::Document.new(' <h1 id="header">Header</h1> <p>This is <span style="color: red">written in red</span>.</p>').to_kramdown
 
-    #markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
 
-    #@result = markdown.render(markdown_text)
+    @result = markdown.render(markdown_text)
 
-    @result = Kramdown::Document.new(markdown_text).to_html
+    #@result = Kramdown::Document.new(markdown_text).to_html
 
   end
 end

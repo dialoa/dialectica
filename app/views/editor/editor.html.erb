@@ -1,4 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js" integrity="sha256-jl1+DOsSs9uABTKppOJ2GF8kXoc3XQzBtFFyS0i9Xoo=" crossorigin="anonymous"></script>
+<%= tinymce_assets %>
+<%#= tinymce %>
 
 <div class="container-fluid">
   <h1>Markdown-Editor</h1>
@@ -10,7 +12,7 @@
           </p>
         <%= form_for :search_inputs, url: "/editor/editor", method: :post do |form| %>
           <%#= form.text_area :text %>
-          <%= form.text_area :text, :rows => 40, id: "markdown_text_area", style: 'width:100%;' %>
+          <%= form.text_area :text, :class => "tinymce markdown", :rows => 40, id: "markdown_text_area", style: 'width:100%;' %>
           <br />
           <%= form.submit "Übersetzen" %>
         <% end %>
@@ -20,7 +22,7 @@
         <br />
         <br />
         <%#= raw @result %>
-        <div id="html_from_markdown_text_area">
+        <div id="html_from_markdown_text_area" class="">
           <%= raw @result %>
         </div>
       </div>
@@ -34,24 +36,34 @@
 </div>
 
 <script>
+
+
+
   $( document ).ready(function() {
+
+    tinyMCE.init({
+      selector: 'textarea#markdown_text_area',
+      content_css: ["<%= asset_url 'markdown.css' %>"],
+      body_class: "markdown",
+      body_id : "markdown_tinymce_text_area"
+    });
 
     var converter = new showdown.Converter();
 
     $( "#button_from_markdown_to_html" ).click(function() {
 
-      var markdown = $( "#markdown_text_area" ).val();
-      console.log(markdown);
+      //var markdown = $( "#markdown_tinymce_text_area" ).val();
+
+      //var markdown = tinymce.get("markdown_tinymce_text_area").getContent();
+      //console.log(markdown)
+      //console.log(tinyMCE.activeEditor.getContent());
+      var markdown = tinyMCE.activeEditor.getContent();
       var html = converter.makeHtml(markdown);
       $("#html_from_markdown_text_area").html(html);
 
-      var markdown2 = converter.makeMarkdown(html);
-      $("#markdown_from_html").val(markdown2);
+      //var markdown2 = converter.makeMarkdown(html);
+      //$("#markdown_from_html").val(markdown2);
     });
-
-      console.log( "editor!" );
-
-
 
       var md = '[**Showdown**](http://www.showdownjs.com) is *great*\n' +
 
@@ -64,10 +76,9 @@
                ' - works in the server and in the browser';
 
       var html = converter.makeHtml(md);
-      console.log(html);
 
       var md2 = converter.makeMarkdown(html)
-      console.log(md2);
+
 
   });
 </script>
