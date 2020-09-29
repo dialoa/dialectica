@@ -7,16 +7,13 @@
 
   <div class="row">
       <div class="col-6">
-        <p>
-          Kramdown mixes html with markdown. Could be useful.
-          </p>
         <%= form_for :search_inputs, url: "/editor/editor", method: :post do |form| %>
           <%#= form.text_area :text %>
           <%= form.text_area :text, :class => "tinymce markdown", :rows => 40, id: "markdown_text_area", style: 'width:100%;' %>
           <br />
-          <%= form.submit "Übersetzen" %>
+          <%= form.submit "Translate" %>
         <% end %>
-        <button type="button" id="button_from_markdown_to_html" class="btn btn-primary">Primary</button>
+        <button type="button" id="button_from_markdown_to_html" class="btn btn-primary">Experimental</button>
       </div>
       <div class="col-6">
         <br />
@@ -35,6 +32,7 @@
   </div>
 </div>
 
+
 <script>
 
 
@@ -45,7 +43,10 @@
       selector: 'textarea#markdown_text_area',
       content_css: ["<%= asset_url 'markdown.css' %>"],
       body_class: "markdown",
-      body_id : "markdown_tinymce_text_area"
+      body_id : "markdown_tinymce_text_area",
+      menubar: "false",
+      plugins: ["link", "table", "code", "lists"],
+      toolbar: ["styleselect | bold italic | undo redo | link table | code | alignleft aligncenter alignjustify | numlist bullist"]
     });
 
     var converter = new showdown.Converter();
