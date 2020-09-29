@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js" integrity="sha256-jl1+DOsSs9uABTKppOJ2GF8kXoc3XQzBtFFyS0i9Xoo=" crossorigin="anonymous"></script>
+
 <div class="container-fluid">
   <h1>Markdown-Editor</h1>
 
@@ -8,21 +10,64 @@
           </p>
         <%= form_for :search_inputs, url: "/editor/editor", method: :post do |form| %>
           <%#= form.text_area :text %>
-          <%= form.text_area :text, :rows => 40, style: 'width:100%;' %>
+          <%= form.text_area :text, :rows => 40, id: "markdown_text_area", style: 'width:100%;' %>
           <br />
           <%= form.submit "Übersetzen" %>
         <% end %>
+        <button type="button" id="button_from_markdown_to_html" class="btn btn-primary">Primary</button>
       </div>
       <div class="col-6">
         <br />
         <br />
         <%#= raw @result %>
-        <div>
+        <div id="html_from_markdown_text_area">
           <%= raw @result %>
         </div>
       </div>
       <div class="col-12 rounded border bg-light">
-        <%= @result %>
+      <textarea id="markdown_from_html" rows="40" cols="50">
+        <%= @markdown_text %>
+      </textarea>
       </div>
+
   </div>
 </div>
+
+<script>
+  $( document ).ready(function() {
+
+    var converter = new showdown.Converter();
+
+    $( "#button_from_markdown_to_html" ).click(function() {
+
+      var markdown = $( "#markdown_text_area" ).val();
+      console.log(markdown);
+      var html = converter.makeHtml(markdown);
+      $("#html_from_markdown_text_area").html(html);
+
+      var markdown2 = converter.makeMarkdown(html);
+      $("#markdown_from_html").val(markdown2);
+    });
+
+      console.log( "editor!" );
+
+
+
+      var md = '[**Showdown**](http://www.showdownjs.com) is *great*\n' +
+
+               'because:\n\n' +
+
+               ' - it\'s easy to use\n' +
+
+               ' - it\'s extensible\n' +
+
+               ' - works in the server and in the browser';
+
+      var html = converter.makeHtml(md);
+      console.log(html);
+
+      var md2 = converter.makeMarkdown(html)
+      console.log(md2);
+
+  });
+</script>
