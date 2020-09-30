@@ -9,8 +9,17 @@ class EditorController < ApplicationController
       @search_inputs = OpenStruct.new()
     end
 
-    @search_inputs[:text] = @search_inputs[:text] ? @search_inputs[:text] : "# Header \r\n
- This is <span style=\"color: red\">written in red</span>."
+    @search_inputs[:text] = @search_inputs[:text] ? @search_inputs[:text] : "<h1>Title</h1>
+<p>Normal</p>
+<p><em>Italic</em></p>
+<p><strong>Bold</strong></p>
+<h2>List</h2>
+<ul>
+<li>a</li>
+<li>b</li>
+<li>c</li>
+<li>d</li>
+</ul>"
 
     markdown_text = @search_inputs[:text]
 
