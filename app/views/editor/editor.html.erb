@@ -45,8 +45,16 @@
       body_class: "markdown",
       body_id : "markdown_tinymce_text_area",
       menubar: "false",
-      plugins: ["link", "table", "code", "lists"],
-      toolbar: ["styleselect | bold italic | undo redo | link table | code | numlist bullist"]
+      plugins: ["link", "table", "code", "lists", "textcolor"],
+      toolbar: ["styleselect | bold italic | undo redo | link table | code | numlist bullist | myCustomToolbarButton | forecolor backcolor"],
+      setup: function (editor) {
+        editor.ui.registry.addButton('myCustomToolbarButton', {
+          text: 'My Custom Button',
+          onAction: function () {
+            alert('Button clicked!');
+          }
+        });
+      }
     });
 
     var converter = new showdown.Converter();
