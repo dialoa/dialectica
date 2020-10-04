@@ -6,6 +6,10 @@ class BibtexController < ApplicationController
 
   end
 
+  def what_does_crossref_say
+    
+  end
+
   def bibtex_comma_seperated_list_of_bibtex_keys
 
     @result = ""
