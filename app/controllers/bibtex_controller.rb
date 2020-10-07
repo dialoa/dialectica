@@ -6,8 +6,8 @@ class BibtexController < ApplicationController
 
   end
 
-  def what_does_crossref_say
-    
+  def compare_bibtex_with_crossref
+
   end
 
   def bibtex_comma_seperated_list_of_bibtex_keys
@@ -17,7 +17,7 @@ class BibtexController < ApplicationController
     if params[:text].present?
       text = params[:text]
 
-      file_to_store = Tempfile.new('references-#{Date.today.to_s}.json')
+      file_to_store = Tempfile.new('comparison')
       file_to_store.write(text)
       file_to_store.rewind
 
