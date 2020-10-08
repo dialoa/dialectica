@@ -1,0 +1,85 @@
+<div class="container">
+  <h1>Bibtex</h1>
+  <hr />
+  <p>
+    Compare Bibtex with Crossref.
+    </p>
+  <p>
+    If something doesn't work or if you need something special, please contact me: <%= mail_to "sandro.raess@philosophie.ch", "sandro.raess@philosophie.ch" %>
+  </p>
+  <hr />
+  <p>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Original</th>
+          <th scope="col">Crossref</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @result.each do |result| %>
+          <tr>
+            <td>
+              <%= result.first %>
+              </td>
+            <td><%= result.second %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </p>
+  <p>
+    <%= form_tag bibtex_compare_bibtex_with_crossref_post_path, multipart: true do %>
+      <%#= file_field_tag :file, class: "btn btn-secondary" %>
+      <%= text_area_tag :text, nil, :rows => 15, style: 'width:100%;' %>
+      <br />
+      <br />
+      <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
+      <%= button_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
+    <% end %>
+  </p>
+  <p>
+    <strong>Example</strong>
+    <br />
+    @book{Anderson.1975,
+	year = {1975},
+	title = {Entailment: The Logic of Relevance and Neccessity, Vol. I},
+	publisher = {Princeton University Press},
+	key = {Anderson.1975},
+	author = {Anderson, Alan R. and Belnap, Nuel D.}
+}
+
+<br /><br />
+@article{Baumgartner.2008,
+	year = {2008},
+	journal = {Synthese},
+	pages = {93--115},
+	title = {Adequate Formalization},
+	author = {Michael Baumgartner and Timm Lampert},
+	number = {1},
+	key = {Baumgartner.2008},
+	volume = {164}
+}
+<br />
+<br />
+@book{Beall.2006,
+	author = {Beall, JC and Restall, Greg},
+	title = {Logical Pluralism},
+	publisher = {Oxford University Press},
+	key = {Beall.2006},
+	year = {2006},
+}
+
+<br />
+<br />
+
+@book{Betz.2010,
+	publisher = {Klostermann},
+	year = {2010},
+	title = {Theorie Dialektischer Strukturen},
+	author = {Betz, Gregor},
+	key = {Betz.2010}
+}
+
+  </p>
+</div>
