@@ -37,4 +37,7 @@ Rails.application.routes.draw do
   get '/editor/editor', to: "editor#editor", as: 'editor'
   post '/editor/editor', to: "editor#editor"
 
+  get '/editor/basic_markdown_editor', to: "editor#basic_markdown_editor", as: "basic_markdown_editor"
+  post '/editor/basic_markdown_editor', to: "editor#basic_markdown_editor", as: "basic_markdown_editor_post"
+
 end

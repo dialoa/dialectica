@@ -28,8 +28,14 @@
           <%= link_to "Compare Bibtex with Crossref", bibtex_compare_bibtex_with_crossref_path, class: "dropdown-item" %>
         </div>
       </li>
-      <li class="nav-item">
-        <%= link_to "Markdown-Editor", editor_path, class: "nav-link" %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Markdown-Editor
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <%= link_to "Basic Markdown Editor", basic_markdown_editor_path, class: "dropdown-item" %>
+          <%= link_to "Etherpad-Editor", editor_path, class: "dropdown-item" %>
+        </div>
       </li>
       <% #page_slugs = ["dialectica", "about-us", "contents", "how-to-subscribe", "how-to-submit", "advice-to-authors", "contact-us", "links"] %>
       <% page_slugs = ["dialectica", "about-us", "contact-us"] %>
