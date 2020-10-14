@@ -19,13 +19,13 @@ class EditorController < ApplicationController
       @result = PandocRuby.convert(@inputs[:text], :from => :markdown, :to => :pdf)
     end
 
-    file_to_store = Tempfile.new('basic-markdown-editor-#{Date.today.to_s}.pdf')
-    file_to_store.write(@result)
-    file_to_store.rewind
+    #file_to_store = Tempfile.new('basic-markdown-editor-#{Date.today.to_s}.pdf')
+    #file_to_store.write(@result)
+    #file_to_store.rewind
     @stuff = Stuff.create(filename: "basic_markdown_editor #{DateTime.now}")
     #@stuff.file.attach(@result)
-    @stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
-    file_to_store.close
+    #@stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
+    #file_to_store.close
 
     dir = Rails.root.join('public', 'pancriticin')
     Dir.mkdir(dir) unless Dir.exist?(dir)
@@ -33,6 +33,12 @@ class EditorController < ApplicationController
       file.write(@inputs[:text])
     end
     system "pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md"
+
+    File.open("#{dir}/pancritic.pdf") do |file|
+      @stuff.file.attach(io: file, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
+    end
+
+    #file_to_store.close
 
 
   end
