@@ -1,4 +1,5 @@
 require 'kramdown'
+require 'fileutils'
 
 class EditorController < ApplicationController
 
@@ -25,6 +26,13 @@ class EditorController < ApplicationController
     #@stuff.file.attach(@result)
     @stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
     file_to_store.close
+
+    dir = Rails.root.join('public', 'pancriticin')
+    Dir.mkdir(dir) unless Dir.exist?(dir)
+    File.open(dir.join("pancritic.md"), 'w+') do |file|
+      file.write(@inputs[:text])
+    end
+    system "pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md"
 
 
   end
