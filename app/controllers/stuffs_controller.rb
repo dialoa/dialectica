@@ -10,6 +10,11 @@ class StuffsController < ApplicationController
   # GET /stuffs/1
   # GET /stuffs/1.json
   def show
+    respond_to do |format|
+      format.html  # index.html.erb
+      format.pdf
+      #format.tex  { render plain: @article.latex }
+    end
   end
 
   # GET /stuffs/new

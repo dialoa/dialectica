@@ -1,4 +1,5 @@
 require 'tempfile'
+require 'fuzzystringmatch'
 
 class BibtexController < ApplicationController
 
@@ -6,8 +7,46 @@ class BibtexController < ApplicationController
 
   end
 
-  def what_does_crossref_say
-    
+  def compare_bibtex_with_crossref
+
+    @result = []
+
+    if params[:text].present?
+      text = params[:text]
+
+      cp = CiteProc::Processor.new style: 'apa', format: 'text'
+
+      file_to_store = Tempfile.new('comparison')
+      file_to_store.write(text)
+      file_to_store.rewind
+
+      b = BibTeX.open(file_to_store)
+      cp.import BibTeX.open(file_to_store).to_citeproc
+
+      b.each_with_index do |article, index|
+        result_from_bibtex = (cp.render :bibliography, id: article.id).first
+        result_from_crossref = ""
+
+        if article.try(:doi).nil? || article.doi.blank?
+          serrano = Serrano.works(query: result_from_bibtex)
+          result_from_crossref = + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "text", style: "apa").force_encoding(Encoding::UTF_8)
+        else
+          result_from_crossref = Serrano.content_negotiation(ids: article.doi, style: "apa", format: "text").force_encoding(Encoding::UTF_8)
+        end
+
+        #serrano = Serrano.works(query: line)
+        #result_from_crossref = Serrano.content_negotiation(ids: article.doi, style: "apa", format: "text").force_encoding(Encoding::UTF_8)
+
+        @result.push([result_from_bibtex, result_from_crossref])
+      end
+
+
+      file_to_store.close
+    else
+
+
+    end
+
   end
 
   def bibtex_comma_seperated_list_of_bibtex_keys
@@ -17,7 +56,7 @@ class BibtexController < ApplicationController
     if params[:text].present?
       text = params[:text]
 
-      file_to_store = Tempfile.new('references-#{Date.today.to_s}.json')
+      file_to_store = Tempfile.new('comparison')
       file_to_store.write(text)
       file_to_store.rewind
 

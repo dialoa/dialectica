@@ -1,6 +1,34 @@
 require 'kramdown'
 
 class EditorController < ApplicationController
+
+  def basic_markdown_editor
+    if params[:inputs].present?
+      @inputs = OpenStruct.new(params[:inputs])
+    else
+      @inputs = OpenStruct.new()
+    end
+
+    @inputs[:text] = @inputs[:text] ? @inputs[:text] : "Enter text here"
+    #byebug
+
+    if @inputs[:text].blank?
+      @result = PandocRuby.convert("Use Editor on the left.", :from => :markdown, :to => :pdf)
+    else
+      @result = PandocRuby.convert(@inputs[:text], :from => :markdown, :to => :pdf)
+    end
+
+    file_to_store = Tempfile.new('basic-markdown-editor-#{Date.today.to_s}.pdf')
+    file_to_store.write(@result)
+    file_to_store.rewind
+    @stuff = Stuff.create(filename: "basic_markdown_editor #{DateTime.now}")
+    #@stuff.file.attach(@result)
+    @stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
+    file_to_store.close
+
+
+  end
+
   def editor
 
     if params[:search_inputs].present?
