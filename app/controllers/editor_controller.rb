@@ -51,15 +51,28 @@ code block
       file.write(@inputs[:text])
     end
 
-    #system "pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md"
-    system "pandoc -s -o #{dir}/pandoc.pdf #{dir}/pandoc.md"
+    pandoc_output = `pandoc -s -f markdown -t pdf #{dir}/pandoc.md`
 
-    File.open("#{dir}/pandoc.pdf") do |file|
-      @stuff.file.attach(io: file, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
-    end
+    file_to_store = Tempfile.new('basic-markdown-editor-#{Date.today.to_s}.pdf')
+    file_to_store.write(pandoc_output)
+    file_to_store.rewind
+    @stuff = Stuff.create(filename: "basic_markdown_editor #{DateTime.now}")
+    @stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
+    file_to_store.close
+
+
+    #system "pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md"
+    #system "pandoc -s -o #{dir}/pandoc.pdf #{dir}/pandoc.md"
+    #pandoc_file = %x[pandoc -s -o #{dir}/pandoc.pdf #{dir}/pandoc.md]
+    #byebug
+    #@stuff.file.attach(io: pandoc_file, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
+
+    #File.open("#{dir}/pandoc.pdf") do |file|
+    #  @stuff.file.attach(io: file, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
+    #end
 
     File.delete("#{dir}/pandoc.md")
-    File.delete("#{dir}/pandoc.pdf")
+    #File.delete("#{dir}/pandoc.pdf")
 
 
 
@@ -120,7 +133,7 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
     #  @result = PandocRuby.convert(@inputs[:text], :from => :markdown, :to => :pdf)
     #end
 
-    #file_to_store = Tempfile.new('basic-markdown-editor-#{Date.today.to_s}.pdf')
+    file_to_store = Tempfile.new('basic-markdown-editor-#{Date.today.to_s}.pdf')
     #file_to_store.write(@result)
     #file_to_store.rewind
     @stuff = Stuff.create(filename: "pancritic_editor #{DateTime.now}")
@@ -134,7 +147,7 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
       file.write(@inputs[:text])
     end
 
-    system "pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md"
+    `pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md`
 
     File.open("#{dir}/pancritic.pdf") do |file|
       @stuff.file.attach(io: file, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
