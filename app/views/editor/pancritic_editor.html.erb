@@ -3,11 +3,11 @@
 <%#= tinymce %>
 
 <div class="container-fluid">
-  <h1>Markdown-Editor</h1>
+  <h1>Pancritic-Editor</h1>
 
   <div class="row">
       <div class="col-5">
-        <%= form_for :inputs, url: "/editor/basic_markdown_editor", method: :post do |form| %>
+        <%= form_for :inputs, url: "/editor/pancritic_editor", method: :post do |form| %>
           <%#= form.text_area :text %>
           <%= form.text_area :text, :class => "markdown", :rows => 40, id: "markdown_text_area", style: 'width:100%;' %>
           <br />
