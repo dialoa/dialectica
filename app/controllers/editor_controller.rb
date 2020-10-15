@@ -42,21 +42,42 @@ code block
 '
 
     @inputs[:text] = @inputs[:text] ? @inputs[:text] : start_markdown
-    #byebug
 
-    if @inputs[:text].blank?
-      @result = PandocRuby.convert("Use Editor on the left.", :from => :markdown, :to => :pdf)
-    else
-      @result = PandocRuby.convert(@inputs[:text], :from => :markdown, :to => :pdf)
+    @stuff = Stuff.create(filename: "basic-markdown-editor #{DateTime.now}")
+
+    dir = Rails.root.join('public', 'pandocin')
+    Dir.mkdir(dir) unless Dir.exist?(dir)
+    File.open(dir.join("pandoc.md"), 'w+') do |file|
+      file.write(@inputs[:text])
     end
 
-    file_to_store = Tempfile.new('basic-markdown-editor-#{Date.today.to_s}.pdf')
-    file_to_store.write(@result)
-    file_to_store.rewind
-    @stuff = Stuff.create(filename: "basic_markdown_editor #{DateTime.now}")
+    #system "pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md"
+    system "pandoc -s -o #{dir}/pandoc.pdf #{dir}/pandoc.md"
+
+    File.open("#{dir}/pandoc.pdf") do |file|
+      @stuff.file.attach(io: file, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
+    end
+
+    File.delete("#{dir}/pandoc.md")
+    File.delete("#{dir}/pandoc.pdf")
+
+
+
+    #byebug
+
+    #if @inputs[:text].blank?
+    #  @result = PandocRuby.convert("Use Editor on the left.", :from => :markdown, :to => :pdf)
+    #else
+    #  @result = PandocRuby.convert(@inputs[:text], :from => :markdown, :to => :pdf)
+    #end
+
+    #file_to_store = Tempfile.new('basic-markdown-editor-#{Date.today.to_s}.pdf')
+    #file_to_store.write(@result)
+    #file_to_store.rewind
+    #@stuff = Stuff.create(filename: "basic_markdown_editor #{DateTime.now}")
     #@stuff.file.attach(@result)
-    @stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
-    file_to_store.close
+    #@stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
+    #file_to_store.close
 
   end
 
@@ -93,16 +114,16 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
     @inputs[:text] = @inputs[:text] ? @inputs[:text] : start_markdown
     #byebug
 
-    if @inputs[:text].blank?
-      @result = PandocRuby.convert("Use Editor on the left.", :from => :markdown, :to => :pdf)
-    else
-      @result = PandocRuby.convert(@inputs[:text], :from => :markdown, :to => :pdf)
-    end
+    #if @inputs[:text].blank?
+    #  @result = PandocRuby.convert("Use Editor on the left.", :from => :markdown, :to => :pdf)
+    #else
+    #  @result = PandocRuby.convert(@inputs[:text], :from => :markdown, :to => :pdf)
+    #end
 
     #file_to_store = Tempfile.new('basic-markdown-editor-#{Date.today.to_s}.pdf')
     #file_to_store.write(@result)
     #file_to_store.rewind
-    @stuff = Stuff.create(filename: "basic_markdown_editor #{DateTime.now}")
+    @stuff = Stuff.create(filename: "pancritic_editor #{DateTime.now}")
     #@stuff.file.attach(@result)
     #@stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
     #file_to_store.close

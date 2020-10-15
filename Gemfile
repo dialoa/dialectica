@@ -9,7 +9,7 @@ gem 'serrano'
 gem 'citeproc-ruby'
 gem 'csl-styles'
 gem 'bibtex-ruby'
-gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
+
 #gem 'wkhtmltopdf-binary'
 #gem 'wicked_pdf'
 gem 'pandoc-ruby'
@@ -70,6 +70,10 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+end
+
+group :production do
+  gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
