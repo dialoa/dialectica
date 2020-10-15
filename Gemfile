@@ -9,6 +9,7 @@ gem 'serrano'
 gem 'citeproc-ruby'
 gem 'csl-styles'
 gem 'bibtex-ruby'
+gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
 #gem 'wkhtmltopdf-binary'
 #gem 'wicked_pdf'
 gem 'pandoc-ruby'
