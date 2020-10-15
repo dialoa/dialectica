@@ -54,6 +54,8 @@ code block
     #system "pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md"
     system "pandoc -s -o #{dir}/pandoc.pdf #{dir}/pandoc.md"
 
+    sleep 5
+
     File.open("#{dir}/pandoc.pdf") do |file|
       @stuff.file.attach(io: file, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
     end
@@ -135,6 +137,8 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
     end
 
     system "pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md"
+
+    sleep 5
 
     File.open("#{dir}/pancritic.pdf") do |file|
       @stuff.file.attach(io: file, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
