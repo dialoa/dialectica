@@ -15,10 +15,11 @@
         <% end %>
       </div>
       <div class="col-7">
+        <%= @errormessage unless @errormessage.blank? %>
 
         <%#= link_to "Download", rails_blob_path(@stuff.file, disposition: "inline") %>
         <div class="embed-responsive" style="padding-bottom: 141.42%;">
-            <iframe  class="embed-responsive-item" src="<%= rails_blob_path(@stuff.file, disposition: "inline") %>"></iframe>
+            <iframe  class="embed-responsive-item" src="<%= rails_blob_path(@stuff.file, disposition: "inline") unless @stuff.nil? %>"></iframe>
         </div>
         <%#= raw @result %>
         <div id="html_from_markdown_text_area" class="">
