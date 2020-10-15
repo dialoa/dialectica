@@ -40,4 +40,6 @@ Rails.application.routes.draw do
   get '/editor/basic_markdown_editor', to: "editor#basic_markdown_editor", as: "basic_markdown_editor"
   post '/editor/basic_markdown_editor', to: "editor#basic_markdown_editor", as: "basic_markdown_editor_post"
 
+  get '/editor/pancritic_editor', to: "editor#pancritic_editor", as: "pancritic_editor"
+  post '/editor/pancritic_editor', to: "editor#pancritic_editor", as: "pancritic_editor_post"
 end

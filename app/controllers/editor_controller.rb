@@ -12,6 +12,63 @@ class EditorController < ApplicationController
 
     start_markdown ='
 ---
+title: Logic and Metaphysics
+shorttitle: What is the connection between language and being?
+author: Sandro Räss
+date: May 9, 2020
+fontfamily: lmodern,changes
+header-includes:
+  \paperheight = 29.70 cm  \paperwidth = 21.0 cm  \hoffset        = 0.46 cm
+  \headheight  =  0.81 cm  \textwidth  = 15.0 cm  \evensidemargin = 0.00 cm
+  \headsep     =  0.81 cm  \textheight = 9.00 in  \oddsidemargin  = 0.00 cm
+---
+# Introduction
+
+If a then b
+
+## Models of Language
+
+*italics* and _italics_
+**bold** and __bold__
+***bold it.*** and ___bold it.___
+
+```
+this is
+a
+code block
+```
+
+
+'
+
+    @inputs[:text] = @inputs[:text] ? @inputs[:text] : start_markdown
+    #byebug
+
+    if @inputs[:text].blank?
+      @result = PandocRuby.convert("Use Editor on the left.", :from => :markdown, :to => :pdf)
+    else
+      @result = PandocRuby.convert(@inputs[:text], :from => :markdown, :to => :pdf)
+    end
+
+    file_to_store = Tempfile.new('basic-markdown-editor-#{Date.today.to_s}.pdf')
+    file_to_store.write(@result)
+    file_to_store.rewind
+    @stuff = Stuff.create(filename: "basic_markdown_editor #{DateTime.now}")
+    #@stuff.file.attach(@result)
+    @stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
+    file_to_store.close
+
+  end
+
+  def pancritic_editor
+    if params[:inputs].present?
+      @inputs = OpenStruct.new(params[:inputs])
+    else
+      @inputs = OpenStruct.new()
+    end
+
+    start_markdown ='
+---
 title: Test CriticMarkup with pandoc
 author: Kolen Cheung
 fontfamily: lmodern,changes
@@ -53,7 +110,7 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
     dir = Rails.root.join('public', 'pancriticin')
     Dir.mkdir(dir) unless Dir.exist?(dir)
     File.open(dir.join("pancritic.md"), 'w+') do |file|
-      file.write(start_markdown)
+      file.write(@inputs[:text])
     end
 
     system "pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md"
