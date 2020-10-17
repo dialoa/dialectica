@@ -108,19 +108,20 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
       file.write(@inputs[:text])
     end
 
-    Open3.popen3("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md") do |stdin, stdout, stderr, wait_thr|
-      stdin.puts "This is sent to the command"
-      stdin.close                # we're done
-      stdout_str = stdout.read   # read stdout to string. note that this will block until the command is done!
+    #Open3.popen3("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md") do |stdin, stdout, stderr, wait_thr|
+    #  stdin.puts "This is sent to the command"
+    #  stdin.close                # we're done
+    #  stdout_str = stdout.read   # read stdout to string. note that this will block until the command is done!
       #puts stdout_str
-      stderr_str = stderr.read   # read stderr to string
-      status = wait_thr.value    # will block until the command finishes; returns status that responds to .success? etc
+    #  stderr_str = stderr.read   # read stderr to string
+    #  status = wait_thr.value    # will block until the command finishes; returns status that responds to .success? etc
 
-    end
+    #end
+
+    system("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md")
 
     until File.exist?("#{dir}/pancritic.pdf")
       sleep 1
-      puts dir
     end
 
     File.open("#{dir}/pancritic.pdf") do |file|
