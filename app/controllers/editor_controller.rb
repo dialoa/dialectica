@@ -130,6 +130,10 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
 
     output = %x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
 
+    panv = %x(pancritic -v)
+    puts panv
+    logger.info panv
+
     puts "Here comes the output! Here comes the output! Here comes the output!"
     puts output
     logger.info output
