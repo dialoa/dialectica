@@ -134,6 +134,9 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
     puts panv
     logger.info panv
 
+    pdflatex = %x(pdflatex -v)
+    logger.info pdflatex
+
     puts "Here comes the output! Here comes the output! Here comes the output!"
     puts output
     logger.info output
