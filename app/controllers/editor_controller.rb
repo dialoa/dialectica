@@ -108,8 +108,6 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
       file.write(@inputs[:text])
     end
 
-    puts dir
-
     Open3.popen3("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md") do |stdin, stdout, stderr, wait_thr|
       stdin.puts "This is sent to the command"
       stdin.close                # we're done
@@ -121,7 +119,8 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
     end
 
     until File.exist?("#{dir}/pancritic.pdf")
-      sleep 5
+      sleep 1
+      puts dir
     end
 
     File.open("#{dir}/pancritic.pdf") do |file|
