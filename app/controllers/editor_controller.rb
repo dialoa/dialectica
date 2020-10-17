@@ -108,6 +108,8 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
       file.write(@inputs[:text])
     end
 
+    puts dir
+
     Open3.popen3("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md") do |stdin, stdout, stderr, wait_thr|
       stdin.puts "This is sent to the command"
       stdin.close                # we're done
@@ -116,18 +118,16 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
       stderr_str = stderr.read   # read stderr to string
       status = wait_thr.value    # will block until the command finishes; returns status that responds to .success? etc
 
-      if status.success?
-        File.open("#{dir}/pancritic.pdf") do |file|
-          @stuff = Stuff.create(filename: "pancritic_editor #{DateTime.now}")
-          @stuff.file.attach(io: file, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
-        end
-      else
-        @errormessage = stderr_str
-      end
-
-
     end
 
+    until File.exist?("#{dir}/pancritic.pdf")
+      sleep 5
+    end
+
+    File.open("#{dir}/pancritic.pdf") do |file|
+      @stuff = Stuff.create(filename: "pancritic_editor #{DateTime.now}")
+      @stuff.file.attach(io: file, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
+    end
 
 
     File.delete("#{dir}/pancritic.md")
