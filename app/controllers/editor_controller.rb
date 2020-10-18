@@ -108,50 +108,26 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
       file.write(@inputs[:text])
     end
 
-    Open3.popen3("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md") do |stdin, stdout, stderr, wait_thr|
-      puts "popen3 popen3 popen3 popen3 popen3 popen3 popen3 popen3 popen3 popen3 popen3"
-      stdin.puts "This is sent to the command"
-      stdin.close                # we're done
-      stdout_str = stdout.read   # read stdout to string. note that this will block until the command is done!
-      puts stdout_str
-      stderr_str = stderr.read   # read stderr to string
-      puts stderr_str
-      status = wait_thr.value    # will block until the command finishes; returns status that responds to .success? etc
-      puts status
-      puts dir
-    end
+    #Open3.popen3("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md") do |stdin, stdout, stderr, wait_thr|
+    #  puts "popen3 popen3 popen3 popen3 popen3 popen3 popen3 popen3 popen3 popen3 popen3"
+    #  stdin.puts "This is sent to the command"
+    #  stdin.close                # we're done
+    #  stdout_str = stdout.read   # read stdout to string. note that this will block until the command is done!
+    #  puts stdout_str
+    #  stderr_str = stderr.read   # read stderr to string
+    #  puts stderr_str
+    #  status = wait_thr.value    # will block until the command finishes; returns status that responds to .success? etc
+    #  puts status
+    #  puts dir
+    #end
 
-    fork { exec("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md") }
+    #fork { exec("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md") }
 
     #system("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md")
     `pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md`
 
-    %x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
+    #%x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
 
-    path = %x(echo $PATH)
-    puts path
-    logger.info path
-
-    output = %x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
-
-    puts "Pancritic version:"
-    panv = %x(pancritic -v)
-    puts panv
-    logger.info panv
-
-    puts "Pandoc version:"
-    pandoc = %x(pandoc -v)
-    logger.info pandoc
-
-    puts "PDFlatex version"
-    pdflatex = %x(/home/sandro/.local/bin/texlive/bin/x86_64-linux/pdflatex -v)
-    logger.info pdflatex
-
-
-
-    puts "Here comes the output! Here comes the output! Here comes the output!"
-    puts output
-    logger.info output
 
     until File.exist?("#{dir}/pancritic.pdf")
       sleep 1
