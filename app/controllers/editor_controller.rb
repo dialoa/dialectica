@@ -128,6 +128,10 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
 
     %x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
 
+    path = %x(echo $PATH)
+    puts path
+    logger.info path
+
     output = %x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
 
     puts "Pancritic version:"
@@ -142,6 +146,8 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
     puts "PDFlatex version"
     pdflatex = %x(/home/sandro/.local/bin/texlive/bin/x86_64-linux/pdflatex -v)
     logger.info pdflatex
+
+
 
     puts "Here comes the output! Here comes the output! Here comes the output!"
     puts output
