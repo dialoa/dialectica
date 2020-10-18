@@ -124,9 +124,10 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
     #fork { exec("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md") }
 
     #system("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md")
-    `pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md`
+    `pancritic -s -o /tmp/pancritic.pdf #{dir}/pancritic.md`
 
     #%x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
+
 
 
     until File.exist?("#{dir}/pancritic.pdf")
