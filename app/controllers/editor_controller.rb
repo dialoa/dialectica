@@ -127,7 +127,7 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
 
 
 
-    `pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md --pdf-engine=/home/sandro/.local/bin/texlive/bin/x86_64-linux/pdflatex`
+    `pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md`
 
     #%x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
 
