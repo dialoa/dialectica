@@ -130,12 +130,17 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
 
     output = %x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
 
+    puts "Pancritic version:"
     panv = %x(pancritic -v)
     puts panv
     logger.info panv
 
-    puts "Pandoc version"
-    pdflatex = %x(pandoc -v)
+    puts "Pandoc version:"
+    pandoc = %x(pandoc -v)
+    logger.info pandoc
+
+    puts "PDFlatex version"
+    pdflatex = %x(pdflatex -v)
     logger.info pdflatex
 
     puts "Here comes the output! Here comes the output! Here comes the output!"
