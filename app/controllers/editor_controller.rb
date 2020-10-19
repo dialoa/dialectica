@@ -62,6 +62,7 @@ code block
       stdin.close                # we're done
       stdout_str = stdout.read   # read stdout to string. note that this will block until the command is done!
       #puts stdout_str
+      puts "Stdout_str:"
       puts stdout_str
       file_to_store = Tempfile.new("basic-markdown-editor-#{Date.today.to_s}.pdf")
       file_to_store.write(stdout_str)
