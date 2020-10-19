@@ -131,7 +131,8 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
 
     #%x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
 
-
+    output = `/home/sandro/.local/bin/texlive/bin/x86_64-linux/pdflatex -v`
+    puts output
 
     until File.exist?("#{dir}/pancritic.pdf")
       sleep 1
