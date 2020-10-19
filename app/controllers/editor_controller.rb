@@ -73,6 +73,12 @@ code block
 
       #stderr_str = stderr.read   # read stderr to string
       status = wait_thr.value    # will block until the command finishes; returns status that responds to .success? etc
+
+
+      output = `/usr/bin/pandoc -s -f markdown -t pdf /home/sandro/dialectica/public/basic_markdown_editor/basic_markdown_editor.md`
+      puts "full command:"
+      puts output
+
     end
 
     File.delete("#{dir}/basic_markdown_editor.md")
