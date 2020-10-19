@@ -81,7 +81,7 @@ code block
 
     end
 
-    File.delete("#{dir}/basic_markdown_editor.md")
+    #File.delete("#{dir}/basic_markdown_editor.md")
 
   end
 
@@ -159,8 +159,8 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
     end
 
 
-    File.delete("#{dir}/pancritic.md")
-    File.delete("#{dir}/pancritic.pdf")
+    #File.delete("#{dir}/pancritic.md")
+    #File.delete("#{dir}/pancritic.pdf")
 
 
   end
