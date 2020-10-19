@@ -49,7 +49,7 @@ code block
       file.write(@inputs[:text])
     end
 
-    Open3.popen3("pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md") do |stdin, stdout, stderr, wait_thr|
+    Open3.popen3("/usr/bin/pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md") do |stdin, stdout, stderr, wait_thr|
       stdin.puts "This is sent to the command"
       stdin.close                # we're done
       stdout_str = stdout.read   # read stdout to string. note that this will block until the command is done!
