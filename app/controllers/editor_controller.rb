@@ -81,6 +81,8 @@ code block
 
     end
 
+    `/usr/bin/pandoc -s -o #{dir}/basic_markdown_editor.pdf #{dir}/basic_markdown_editor.md`
+
     #File.delete("#{dir}/basic_markdown_editor.md")
 
   end
