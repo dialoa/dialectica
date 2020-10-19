@@ -49,6 +49,14 @@ code block
       file.write(@inputs[:text])
     end
 
+    output = `whoami`
+    puts "Who am i?"
+    puts output
+
+    output = `/usr/bin/pandoc -v`
+    puts "Pandoc Version:"
+    puts output
+
     Open3.popen3("/usr/bin/pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md") do |stdin, stdout, stderr, wait_thr|
       stdin.puts "This is sent to the command"
       stdin.close                # we're done
