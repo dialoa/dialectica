@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :submissions
   resources :stuffs
   resources :issues
   resources :blog_posts
@@ -42,4 +43,6 @@ Rails.application.routes.draw do
 
   get '/editor/pancritic_editor', to: "editor#pancritic_editor", as: "pancritic_editor"
   post '/editor/pancritic_editor', to: "editor#pancritic_editor", as: "pancritic_editor_post"
+
+  get '/submission_pool', to: "submissions#pool", as: "submission_pool"
 end

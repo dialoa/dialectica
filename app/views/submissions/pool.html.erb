@@ -1,0 +1,39 @@
+<h1>Pool</h1>
+<p>
+  <table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th scope="col">Area</th>
+      <th scope="col">File</th>
+      <th scope="col">Reviewers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Submission.all.each do |submission| %>
+      <tr>
+        <td>
+          <%= submission.title %>
+        </td>
+        <td>
+          <%= submission.firstname %> <%= submission.lastname %>
+        </td>
+        <td><%= submission.area %></td>
+        <td><%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") %></td>
+        <td>
+          <% submission.users.each do |user| %>
+            <%= user.email %>
+          <% end %>
+          <% if submission.users.empty? %>
+            No Reviewers yet
+          <% end %>
+        </td>
+        <td>
+          <%= link_to "I'll review it", root_path, class: "btn btn-primary my-2" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</p>

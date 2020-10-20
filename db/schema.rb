@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_080841) do
+ActiveRecord::Schema.define(version: 2020_10_20_094711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,24 @@ ActiveRecord::Schema.define(version: 2020_09_16_080841) do
 
   create_table "stuffs", force: :cascade do |t|
     t.string "filename", default: ""
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "submission_users", force: :cascade do |t|
+    t.bigint "submission_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["submission_id"], name: "index_submission_users_on_submission_id"
+    t.index ["user_id"], name: "index_submission_users_on_user_id"
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.string "title", default: ""
+    t.string "area", default: ""
+    t.string "firstname", default: ""
+    t.string "lastname", default: ""
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

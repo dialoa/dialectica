@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @submission.title %>
+</p>
+
+<p>
+  <strong>Area:</strong>
+  <%= @submission.area %>
+</p>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @submission.firstname %>
+</p>
+
+<p>
+  <strong>Lastname:</strong>
+  <%= @submission.lastname %>
+</p>
+<p>
+  <%= link_to "Download", rails_blob_path(@submission.file, disposition: "attachment") %>
+</p>
+
+<%= link_to 'Edit', edit_submission_path(@submission) %> |
+<%= link_to 'Back', submissions_path %>
