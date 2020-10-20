@@ -7,4 +7,8 @@ has_many :users, :through => :submission_users
     ["metaphysics", "epistemology", "philosophy of science", "ethics"]
   end
 
+  def self.statuses
+    ["submitted", "rejected", "published", "review"]
+  end
+
 end

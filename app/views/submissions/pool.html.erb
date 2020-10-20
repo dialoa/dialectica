@@ -23,14 +23,16 @@
         <td><%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") %></td>
         <td>
           <% submission.users.each do |user| %>
-            <%= user.email %>
+            <%= user.email %><br />
           <% end %>
           <% if submission.users.empty? %>
             No Reviewers yet
           <% end %>
         </td>
         <td>
-          <%= link_to "I'll review it", root_path, class: "btn btn-primary my-2" %>
+          <% if current_user.submissions.where(id: submission.id).empty? %>
+            <%= link_to "I'll review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-primary my-2" %>
+          <% end %>
         </td>
       </tr>
     <% end %>

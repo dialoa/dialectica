@@ -68,7 +68,10 @@ class SubmissionsController < ApplicationController
   def add_user_to_submission
     @user = User.find(params[:user_id])
     @submission = Submission.find(params[:submission_id])
-    @user.submissions << @submission
+    @user.submissions << @submission if @user.submissions.where(id: @submission.id).empty?
+
+
+    redirect_to submission_pool_path, notice: 'Submission was added to your Profile'
   end
 
   private

@@ -45,4 +45,5 @@ Rails.application.routes.draw do
   post '/editor/pancritic_editor', to: "editor#pancritic_editor", as: "pancritic_editor_post"
 
   get '/submission_pool', to: "submissions#pool", as: "submission_pool"
+  post '/submissions_add_user_to_submission/:user_id/:submission_id', to: "submissions#add_user_to_submission", as: "submissions_add_user_to_submission"
 end
