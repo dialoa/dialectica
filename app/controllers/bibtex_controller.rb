@@ -3,68 +3,23 @@ require 'fuzzystringmatch'
 
 class BibtexController < ApplicationController
 
+  def compare_author_bibtex_with_crossref_create
+    text = params[:text]
+    email = params[:email]
+
+    CompareAuthorBibtexWithCrossrefJob.perform_later(text, email)
+
+    redirect_to bibtex_compare_author_bibtex_with_crossref_path, notice: 'Wait for the mail!'
+  end
+
   def compare_author_bibtex_with_crossref
 
-        @array_of_bibtex_originals = []
+  end
 
-        @result = []
-
-        if params[:text].present?
-          text = params[:text]
-
-          cp = CiteProc::Processor.new style: 'apa', format: 'text'
-
-          file_to_store = Tempfile.new('comparison')
-          file_to_store.write(text)
-          file_to_store.rewind
-
-          b = BibTeX.open(file_to_store)
-          cp.import BibTeX.open(file_to_store).to_citeproc
-
-          #every article in the author's bibtex file gets scanned
-          b.each_with_index do |article, index|
-            #result_from_bibtex = (cp.render :bibliography, id: article.id).first
-            result_from_bibtex = article
-            bibtex_entry_of_author = BibtexEntry.create(content: result_from_bibtex)
-
-            result_from_crossref = ""
-
-            #check if doi is available
-            if article.try(:doi).nil? || article.doi.blank?
-              serrano = Serrano.works(query: result_from_bibtex)
-              #result_from_crossref = + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "text", style: "apa").force_encoding(Encoding::UTF_8)
-
-              serrano["message"]["items"].first(10).each do |item|
-                result_from_crossref = Serrano.content_negotiation(ids: item["DOI"], format: "text", style: "bibtex").force_encoding(Encoding::UTF_8)
-                result_from_crossref = change_id_of_bibtex_entry(article.id, result_from_crossref)
-                bibtex_entry_of_author.children.create(content: result_from_crossref.to_s.strip)
-              end
-
-            else
-              result_from_crossref = Serrano.content_negotiation(ids: article.doi, style: "apa", format: "text").force_encoding(Encoding::UTF_8)
-
-              result_from_crossref = change_id_of_bibtex_entry(article.id, result_from_crossref)
-
-              bibtex_entry_of_author.children.create(content: result_from_crossref.to_s.strip)
-            end
-
-            #serrano["message"]["items"].first(10).each do |item|
-            #  BibtexEntry.create(content: Serrano.content_negotiation(ids: item["DOI"], format: "text", style: "apa").force_encoding(Encoding::UTF_8))
-            #end
-
-            #serrano = Serrano.works(query: line)
-            #result_from_crossref = Serrano.content_negotiation(ids: article.doi, style: "apa", format: "text").force_encoding(Encoding::UTF_8)
-
-            #@result.push([result_from_bibtex, result_from_crossref])
-            @array_of_bibtex_originals.push(bibtex_entry_of_author)
-          end
-
-
-          file_to_store.close
-        else
-
-
-        end
+  def compare_author_bibtex_with_crossref_select
+    array_of_bibtex_originals = params[:array_of_bibtex_originals]
+    array_of_bibtex_originals.split(',')
+    @array_of_bibtex_originals = BibtexEntry.where(id: array_of_bibtex_originals.split(','))
 
   end
 

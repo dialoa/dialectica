@@ -9,45 +9,13 @@
   </p>
   <hr />
   <p>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Original</th>
-          <th scope="col">Crossref</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @array_of_bibtex_originals.each do |bibtex_entry| %>
-          <tr>
-            <td>
-              <button type="button" class="btn btn-light text-left bibtex_entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>" >
-                <%= bibtex_entry.content %>
-              </button>
-              </td>
-            <td>
-              <% bibtex_entry.children.each do |child| %>
-              <button type="button" class="btn btn-light text-left bibtex_entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>">
-                <%= child.content %>
-                </button>
-                <hr />
-              <% end %>
-
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </p>
-  <p>
-    <% unless @array_of_bibtex_originals.empty? %>
-      <textarea name="chosen_entries" id="chosen_entries" rows="30" style="width:100%;"></textarea>
-      <hr>
-    <% end %>
-  </p>
-  <p>
-    <%= form_tag bibtex_compare_author_bibtex_with_crossref_post_path, multipart: true do %>
+    <%= form_tag bibtex_compare_author_bibtex_with_crossref_create_path, multipart: true do %>
       <%#= file_field_tag :file, class: "btn btn-secondary" %>
       <%= text_area_tag :text, nil, :rows => 15, style: 'width:100%;' %>
+      <br />
+      <br />
+      <strong>e-Mail</strong><br />
+      <%= text_field_tag :email %>
       <br />
       <br />
       <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
