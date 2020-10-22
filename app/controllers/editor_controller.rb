@@ -24,7 +24,7 @@ header-includes:
 ---
 # Introduction
 
-If a then b
+If a then b [@Brouwer_1954]
 
 ## Models of Language
 
@@ -52,20 +52,6 @@ start_references ='
 	author = {L. E. J. Brouwer},
 	title = {Points and Spaces},
 	journal = {Canadian Journal of Mathematics}
-}
-
-@article{Nagel_1968,
-	doi = {10.1126/science.161.3845.1000-a},
-	url = {https://doi.org/10.1126%2Fscience.161.3845.1000-a},
-	year = 1968,
-	month = {sep},
-	publisher = {American Association for the Advancement of Science ({AAAS})},
-	volume = {161},
-	number = {3845},
-	pages = {1000--1001},
-	author = {E. Nagel},
-	title = {Boston Studies in the Philosophy of Science. Vol. 3. In Memory of Norwood Russell Hanson. Proceedings of the Boston Colloquium, 1964-1966. {ROBERT} S. {COHEN} and {MARX} W. {WARTOFSKY}, Eds. Reidel, Dordrecht$\mathsemicolon$ Humanities Press, New York, 1968. xlx $\mathplus$ 489 pp., illus. {\textdollar}18.50. Synthese Library},
-	journal = {Science}
 }
 
 '

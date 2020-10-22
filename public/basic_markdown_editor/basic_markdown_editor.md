@@ -12,8 +12,7 @@ header-includes:
 ---
 # Introduction
 
-If a then b
-[@Brouwer_1954]
+If a then b [@Brouwer_1954]
 
 ## Models of Language
 
