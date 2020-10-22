@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_20_100108) do
+ActiveRecord::Schema.define(version: 2020_10_21_194351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,22 @@ ActiveRecord::Schema.define(version: 2020_10_20_100108) do
     t.bigint "issue_id"
     t.string "status", default: ""
     t.index ["issue_id"], name: "index_articles_on_issue_id"
+  end
+
+  create_table "bibtex_entries", force: :cascade do |t|
+    t.text "content", default: ""
+    t.bigint "bibtex_file_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_bibtex_entries_on_ancestry"
+    t.index ["bibtex_file_id"], name: "index_bibtex_entries_on_bibtex_file_id"
+  end
+
+  create_table "bibtex_files", force: :cascade do |t|
+    t.text "content", default: ""
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "blog_posts", force: :cascade do |t|

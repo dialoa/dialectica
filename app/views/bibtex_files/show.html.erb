@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @bibtex_file.content %>
+</p>
+
+<%= link_to 'Edit', edit_bibtex_file_path(@bibtex_file) %> |
+<%= link_to 'Back', bibtex_files_path %>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :bibtex_files
+  resources :bibtex_entries
   resources :submissions
   resources :stuffs
   resources :issues
@@ -34,6 +36,9 @@ Rails.application.routes.draw do
 
   get '/bibtex/bibtex_compare_bibtex_with_crossref(/:text)', to: 'bibtex#compare_bibtex_with_crossref', as: "bibtex_compare_bibtex_with_crossref"
   post '/bibtex/bibtex_compare_bibtex_with_crossref(/:text)', to: 'bibtex#compare_bibtex_with_crossref', as: "bibtex_compare_bibtex_with_crossref_post"
+
+  get '/bibtex/bibtex_compare_author_bibtex_with_crossref(/:text)', to: 'bibtex#compare_author_bibtex_with_crossref', as: "bibtex_compare_author_bibtex_with_crossref"
+  post '/bibtex/bibtex_compare_author_bibtex_with_crossref(/:text)', to: 'bibtex#compare_author_bibtex_with_crossref', as: "bibtex_compare_author_bibtex_with_crossref_post"
 
   get '/editor/editor', to: "editor#editor", as: 'editor'
   post '/editor/editor', to: "editor#editor"

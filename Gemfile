@@ -9,6 +9,8 @@ gem 'serrano'
 gem 'citeproc-ruby'
 gem 'csl-styles'
 gem 'bibtex-ruby'
+gem 'ancestry'
+
 
 #gem 'wkhtmltopdf-binary'
 #gem 'wicked_pdf'
