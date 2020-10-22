@@ -49,15 +49,15 @@ code block
       file.write(@inputs[:text])
     end
 
-    output = `whoami`
-    puts "Who am i?"
-    puts output
+    #output = `whoami`
+    #puts "Who am i?"
+    #puts output
 
-    output = `/usr/bin/pandoc -v`
-    puts "Pandoc Version:"
-    puts output
+    #output = `/usr/bin/pandoc -v`
+    #puts "Pandoc Version:"
+    #puts output
 
-    Open3.popen3("/usr/bin/pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md") do |stdin, stdout, stderr, wait_thr|
+    Open3.popen3("/usr/bin/pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md --bibliography=#{dir}/references.bib") do |stdin, stdout, stderr, wait_thr|
       stdin.puts "This is sent to the command"
       stdin.close                # we're done
       stdout_str = stdout.read   # read stdout to string. note that this will block until the command is done!
@@ -75,13 +75,13 @@ code block
       status = wait_thr.value    # will block until the command finishes; returns status that responds to .success? etc
 
 
-      output = `/usr/bin/pandoc -s -f markdown -t pdf /home/sandro/dialectica/public/basic_markdown_editor/basic_markdown_editor.md`
-      puts "full command:"
-      puts output
+      #output = `/usr/bin/pandoc -s -f markdown -t pdf /home/sandro/dialectica/public/basic_markdown_editor/basic_markdown_editor.md`
+      #puts "full command:"
+      #puts output
 
     end
 
-    `/usr/bin/pandoc -s -o #{dir}/basic_markdown_editor.pdf #{dir}/basic_markdown_editor.md`
+    #`/usr/bin/pandoc -s -o #{dir}/basic_markdown_editor.pdf #{dir}/basic_markdown_editor.md`
 
     #File.delete("#{dir}/basic_markdown_editor.md")
 

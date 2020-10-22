@@ -12,7 +12,7 @@ header-includes:
 ---
 # Introduction
 
-If a then b
+If a then b [@Beall_2005]
 
 ## Models of Language
 
@@ -21,8 +21,7 @@ If a then b
 ***bold it.*** and ___bold it.___
 
 ```
-this is
-a
+this is a
 code block
 ```
 
