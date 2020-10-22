@@ -1,0 +1,77 @@
+<div class="container">
+  <h1>Select Bibtex-Entries</h1>
+  <hr />
+  <p>
+    Click on the entries you want. All selected bibtex-entries are in the textarea below.
+    </p>
+  <p>
+    If something doesn't work or if you need something special, please contact me: <%= mail_to "sandro.raess@philosophie.ch", "sandro.raess@philosophie.ch" %>
+  </p>
+  <hr />
+  <p>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Original</th>
+          <th scope="col">Crossref</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @array_of_bibtex_originals.each do |bibtex_entry| %>
+          <tr>
+            <td>
+              <button type="button" class="btn btn-light text-left bibtex_entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>" >
+                <%= bibtex_entry.content %>
+              </button>
+              </td>
+            <td>
+              <% bibtex_entry.children.each do |child| %>
+              <button type="button" class="btn btn-light text-left bibtex_entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>">
+                <%= child.content %>
+                </button>
+                <hr />
+              <% end %>
+
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </p>
+  <p>
+      <textarea name="chosen_entries" id="chosen_entries" rows="30" style="width:100%;"></textarea>
+  </p>
+
+</div>
+
+<script>
+
+  $( document ).ready(function() {
+
+    $( ".bibtex_entry" ).click(function() {
+      bibtex_entry_id = $(this).attr("bibtex_entry_id");
+      class_for_bibtex_entry_id = ".bibtex_entry_id_" + bibtex_entry_id
+
+
+      //console.log($(this).text());
+      //console.log($(this).attr("bibtex_entry_id"));
+
+      $( class_for_bibtex_entry_id ).removeClass( 'btn-light').removeClass( 'btn-success').removeClass( 'selected-entry').addClass( 'btn-light');
+
+      $(this).removeClass( 'btn-light').addClass('btn-success').addClass( 'selected-entry');
+
+      all_bibtex = ""
+      $( ".selected-entry" ).each(function( index ) {
+        all_bibtex = all_bibtex + "\n \n" + $.trim($( this ).text());
+      });
+
+      $('#chosen_entries').val(all_bibtex);
+
+
+    });
+
+
+
+
+  });
+</script>
