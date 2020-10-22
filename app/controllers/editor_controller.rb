@@ -41,12 +41,48 @@ code block
 
 '
 
-    @inputs[:text] = @inputs[:text] ? @inputs[:text] : start_markdown
+start_references ='
+@article{Brouwer_1954,
+	doi = {10.4153/cjm-1954-001-9},
+	url = {https://doi.org/10.4153%2Fcjm-1954-001-9},
+	year = 1954,
+	publisher = {Canadian Mathematical Society},
+	volume = {6},
+	pages = {1--17},
+	author = {L. E. J. Brouwer},
+	title = {Points and Spaces},
+	journal = {Canadian Journal of Mathematics}
+}
 
+@article{Nagel_1968,
+	doi = {10.1126/science.161.3845.1000-a},
+	url = {https://doi.org/10.1126%2Fscience.161.3845.1000-a},
+	year = 1968,
+	month = {sep},
+	publisher = {American Association for the Advancement of Science ({AAAS})},
+	volume = {161},
+	number = {3845},
+	pages = {1000--1001},
+	author = {E. Nagel},
+	title = {Boston Studies in the Philosophy of Science. Vol. 3. In Memory of Norwood Russell Hanson. Proceedings of the Boston Colloquium, 1964-1966. {ROBERT} S. {COHEN} and {MARX} W. {WARTOFSKY}, Eds. Reidel, Dordrecht$\mathsemicolon$ Humanities Press, New York, 1968. xlx $\mathplus$ 489 pp., illus. {\textdollar}18.50. Synthese Library},
+	journal = {Science}
+}
+
+'
+
+    @inputs[:text] = @inputs[:text] ? @inputs[:text] : start_markdown
+    @inputs[:references] = @inputs[:references] ? @inputs[:references] : start_references
+
+    #markdown
     dir = Rails.root.join('public', 'basic_markdown_editor')
     Dir.mkdir(dir) unless Dir.exist?(dir)
     File.open(dir.join("basic_markdown_editor.md"), 'w+') do |file|
       file.write(@inputs[:text])
+    end
+
+    #references
+    File.open(dir.join("references.bib"), 'w+') do |file|
+      file.write(@inputs[:references])
     end
 
     #output = `whoami`
