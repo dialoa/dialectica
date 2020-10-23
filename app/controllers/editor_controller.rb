@@ -17,6 +17,7 @@ shorttitle: What is the connection between language and being?
 author: Sandro Räss
 date: May 9, 2020
 fontfamily: lmodern,changes
+bibliography: references.bib
 header-includes:
   \paperheight = 29.70 cm  \paperwidth = 21.0 cm  \hoffset        = 0.46 cm
   \headheight  =  0.81 cm  \textwidth  = 15.0 cm  \evensidemargin = 0.00 cm
@@ -79,13 +80,14 @@ start_references ='
     #puts "Pandoc Version:"
     #puts output
 
-    Open3.popen3("/usr/bin/pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md --bibliography=#{dir}/references.bib") do |stdin, stdout, stderr, wait_thr|
+    Open3.popen3("/usr/bin/pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md -C --bibliography=#{dir}/references.bib") do |stdin, stdout, stderr, wait_thr|
+    #Open3.popen3("/usr/bin/pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md") do |stdin, stdout, stderr, wait_thr|
       stdin.puts "This is sent to the command"
       stdin.close                # we're done
       stdout_str = stdout.read   # read stdout to string. note that this will block until the command is done!
       #puts stdout_str
-      puts "Stdout_str:"
-      puts stdout_str
+      #puts "Stdout_str:"
+      #puts stdout_str
       file_to_store = Tempfile.new("basic-markdown-editor-#{Date.today.to_s}.pdf")
       file_to_store.write(stdout_str)
       file_to_store.rewind

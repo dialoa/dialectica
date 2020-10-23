@@ -5,6 +5,7 @@ shorttitle: What is the connection between language and being?
 author: Sandro Räss
 date: May 9, 2020
 fontfamily: lmodern,changes
+bibliography: references.bib
 header-includes:
   \paperheight = 29.70 cm  \paperwidth = 21.0 cm  \hoffset        = 0.46 cm
   \headheight  =  0.81 cm  \textwidth  = 15.0 cm  \evensidemargin = 0.00 cm
