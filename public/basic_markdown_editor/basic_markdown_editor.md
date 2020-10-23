@@ -14,12 +14,6 @@ header-includes:
 
 If a then b [@Brouwer_1954]
 
-@Brouwer_1954
-
-[-@Brouwer_1954]
-
-[@Brouwer_1954, pp. 33-35, 38-39 and *passim*]
-
 ## Models of Language
 
 *italics* and _italics_
