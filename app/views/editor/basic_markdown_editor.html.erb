@@ -6,11 +6,12 @@
   <h1>Markdown-Editor</h1>
 
   <div class="row">
-      <div class="col-5">
+      <div class="col-12">
         <%= form_for :inputs, url: "/editor/basic_markdown_editor", method: :post do |form| %>
         <%= form.submit "Translate" %>
           <%#= form.text_area :text %>
-          <%= form.text_area :text, :class => "markdown", :rows => 40, id: "markdown_text_area", style: 'width:100%;' %>
+          <%#= form.text_area :text, :class => "markdown", :rows => 40, id: "markdown_text_area", style: 'width:100%;' %>
+          <%= form.text_area :text, id: "markdown_text_area" %>
           <br />
           <strong>References</strong>
           <%= form.text_area :references, :class => "markdown", :rows => 20, id: "references_text_area", style: 'width:100%;' %>
@@ -18,7 +19,7 @@
 
         <% end %>
       </div>
-      <div class="col-7">
+      <div class="col-12">
 
         <%#= link_to "Download", rails_blob_path(@stuff.file, disposition: "inline") %>
         <div class="embed-responsive" style="padding-bottom: 141.42%;">
@@ -37,9 +38,9 @@
 <script>
 
   $( document ).ready(function() {
-    //var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("markdown_text_area"), {
-    //  lineNumbers: true
-    //});
+    var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("markdown_text_area"), {
+
+    });
 
 
     //tinyMCE.init({
