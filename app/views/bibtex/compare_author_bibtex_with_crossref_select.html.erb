@@ -34,7 +34,7 @@
               </td>
             <td>
               <% bibtex_entry.children.each do |child| %>
-                <% unless child.blank? %>
+                <% unless child.blank? || child.id.blank? %>
                   <button type="button" class="btn btn-light text-left bibtex_entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>">
                     <%#= child.content %>
                     <% bibtex_parse = BibTeX.parse(child.content) %>
