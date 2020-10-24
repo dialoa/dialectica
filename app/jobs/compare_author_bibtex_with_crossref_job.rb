@@ -39,7 +39,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
               if @retries < 3
                 @retries += 1
                 puts "ERROR!!! RETRY: #{@retries}"
-                sleep 5
+                sleep 3
                 retry
               end
             end
@@ -50,7 +50,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
           if @retries < 3
             @retries += 1
             puts "ERROR!!! RETRY: #{@retries}"
-            sleep 300
+            sleep 500
             retry
           else
             #file = file + "ERROR for: #{line}"
