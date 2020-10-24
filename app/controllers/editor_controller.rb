@@ -80,10 +80,10 @@ start_references ='
     #puts "Pandoc Version:"
     #puts output
 
-    Open3.popen3("/usr/bin/pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md -C --bibliography=#{dir}/references.bib") do |stdin, stdout, stderr, wait_thr|
+    Open3.popen3("pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md -C --bibliography=#{dir}/references.bib") do |stdin, stdout, stderr, wait_thr|
     #Open3.popen3("/usr/bin/pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md") do |stdin, stdout, stderr, wait_thr|
-      stdin.puts "This is sent to the command"
-      stdin.close                # we're done
+      #stdin.puts "This is sent to the command"
+      #stdin.close                # we're done
       stdout_str = stdout.read   # read stdout to string. note that this will block until the command is done!
       #puts stdout_str
       #puts "Stdout_str:"
@@ -166,14 +166,12 @@ Cum sociis natoquel {--penatibus et magnis--}{>>FTP - 2013-05-13 08:20:18<<} dis
 
     #system("pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md")
 
-
-
     `pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md`
 
     #%x(pancritic -s -o #{dir}/pancritic.pdf #{dir}/pancritic.md)
 
-    output = `/home/sandro/.local/bin/texlive/bin/x86_64-linux/pdflatex -v`
-    puts output
+    #output = `/home/sandro/.local/bin/texlive/bin/x86_64-linux/pdflatex -v`
+    #puts output
 
     until File.exist?("#{dir}/pancritic.pdf")
       sleep 1
