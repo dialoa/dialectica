@@ -7,14 +7,14 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
 
     #@result = []
 
-      #cp = CiteProc::Processor.new style: 'apa', format: 'text'
+      cp = CiteProc::Processor.new style: 'apa', format: 'text'
 
       file_to_store = Tempfile.new('comparison')
       file_to_store.write(text)
       file_to_store.rewind
 
       b = BibTeX.open(file_to_store)
-      #cp.import BibTeX.open(file_to_store).to_citeproc
+      cp.import BibTeX.open(file_to_store).to_citeproc
 
       #every article in the author's bibtex file gets scanned
       b.each_with_index do |article, index|
@@ -23,11 +23,13 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
         bibtex_entry_of_author = BibtexEntry.create(content: result_from_bibtex)
 
         result_from_crossref = ""
-
+        citation_of_result_from_bibtex = (cp.render :bibliography, id: article.id).first
+        #byebug
         #check if doi is available
         #if article.try(:doi).nil? || article.doi.blank?
         begin
-          serrano = Serrano.works(query: result_from_bibtex)
+          #serrano = Serrano.works(query: result_from_bibtex)
+          serrano = Serrano.works(query: citation_of_result_from_bibtex)
 
           serrano["message"]["items"].first(10).each do |item|
             begin
