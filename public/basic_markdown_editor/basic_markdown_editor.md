@@ -2,7 +2,7 @@
 ---
 title: Logic and Metaphysics
 shorttitle: What is the connection between language and being?
-author: Sandro Räss
+author: Sandro Rässgggg
 date: May 9, 2020
 fontfamily: lmodern,changes
 bibliography: references.bib
