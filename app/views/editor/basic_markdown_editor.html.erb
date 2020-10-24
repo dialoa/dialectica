@@ -37,35 +37,39 @@
 <script>
 
   $( document ).ready(function() {
+    //var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("markdown_text_area"), {
+    //  lineNumbers: true
+    //});
 
-    tinyMCE.init({
+
+    //tinyMCE.init({
       //selector: 'textarea#markdown_text_area',
-      body_class: "",
+    //  body_class: "",
       //body_id : "markdown_tinymce_text_area",
-      menubar: "false",
-      plugins: ["link", "table", "code", "lists"],
-      toolbar: ["styleselect | bold italic | undo redo | link table | code | numlist bullist"]
-    });
+    //  menubar: "false",
+      //plugins: ["link", "table", "code", "lists"],
+      //toolbar: ["styleselect | bold italic | undo redo | link table | code | numlist bullist"]
+    //});
 
-    var converter = new showdown.Converter();
+    //var converter = new showdown.Converter();
 
-    $( "#button_from_markdown_to_html" ).click(function() {
+    //$( "#button_from_markdown_to_html" ).click(function() {
       //translate();
-    });
+    //});
 
-    tinymce.activeEditor.on('blur', function(e) {
+    //tinymce.activeEditor.on('blur', function(e) {
         //console.log(e.focusedEditor);
         //translate();
-    });
+    //});
 
-    function translate() {
-      var markdown = tinyMCE.activeEditor.getContent();
-      var html = converter.makeHtml(markdown);
-      $("#html_from_markdown_text_area").html(html);
+    //function translate() {
+    //  var markdown = tinyMCE.activeEditor.getContent();
+    //  var html = converter.makeHtml(markdown);
+    //  $("#html_from_markdown_text_area").html(html);
 
-      var markdown2 = converter.makeMarkdown(html);
-      $("#markdown_from_html").val(markdown2);
-    }
+    //  var markdown2 = converter.makeMarkdown(html);
+    //  $("#markdown_from_html").val(markdown2);
+    //}
 
   });
 </script>
