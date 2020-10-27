@@ -1,4 +1,3 @@
-
 ---
 title: Logic and Metaphysics
 shorttitle: What is the connection between language and being?
@@ -13,7 +12,7 @@ header-includes:
 ---
 # Introduction
 
-If a then b [@Brouwer_1954]
+If a then b or c or d [@Brouwer_1954]
 
 ## Models of Language
 
@@ -27,4 +26,3 @@ a
 code block
 ```
  ![Random Picture](https://i.picsum.photos/id/1041/5184/2916.jpg?hmac=TW_9o6HeD7H7I7NVo-S1Fa1iAvzQ10uvmJqsXvNoi0M)
-

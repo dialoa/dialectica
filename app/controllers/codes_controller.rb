@@ -1,5 +1,5 @@
 class CodesController < ApplicationController
-  before_action :set_code, only: [:show, :edit, :update, :destroy]
+  before_action :set_code, only: [:show, :edit, :update, :destroy, :editor]
 
   # GET /codes
   # GET /codes.json
@@ -10,6 +10,19 @@ class CodesController < ApplicationController
   # GET /codes/1
   # GET /codes/1.json
   def show
+    #@stuff = MarkdownConverter.new(@code.content, "").convert_markdown_to_pdf
+  end
+
+  def editor
+    if params[:inputs].present?
+      @code.update(content: params[:inputs][:text])
+    end
+
+    @stuff = MarkdownConverter.new(@code.content, "").convert_markdown_to_pdf
+  end
+
+  def editor_save
+
   end
 
   # GET /codes/new
