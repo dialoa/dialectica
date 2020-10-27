@@ -5,43 +5,44 @@
 <div class="container-fluid">
   <h1>Markdown-Editor</h1>
 
-  <div class="row">
-      <div class="col-6">
         <%#= form_for :inputs, url: "/editor/basic_markdown_editor", method: :post do |form| %>
         <%= form_for :inputs, path: codes_editor_post_path(@code), method: :post do |form| %>
-        <%= form.submit "Translate" %>
+        <%= form.submit "Translate", class: "btn btn-primary" %>
           <%#= form.text_area :text %>
           <%#= form.text_area :text, :class => "markdown", :rows => 40, id: "markdown_text_area", style: 'width:100%;' %>
-          <%= form.text_area :text, id: "markdown_text_area", value: @code.content %>
-          <br />
-          <%= form.submit "Translate" %><br /><br />
-          <strong>References</strong>
-          <p>
-            Upload BibTex-File or paste the content into the field below. You can use references in the file and in the field at the same time.
-          </p>
-          <p>
-          <%= form.file_field :bibtexfile, class: "btn btn-secondary" %>
-          </p>
-          <%#= form.text_area :references, :class => "markdown", :rows => 20, id: "references_text_area", style: 'width:100%;' %>
-          <%= form.text_area :references, id: "references_text_area" %>
-          <br />
-          <%= form.submit "Translate" %>
+        <div class="row">
+          <div class="col-6">
+            <%= form.text_area :text, id: "markdown_text_area", value: @code.content %>
+            <br />
+            <%#= form.submit "Translate", class: "" %>
+          </div>
+          <div class="col-6">
+            <div class="embed-responsive" style="padding-bottom: 141.42%;">
+                <iframe  class="embed-responsive-item" src="<%= rails_blob_path(@stuff.file, disposition: "inline") unless @stuff.nil? %>"></iframe>
+            </div>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-12 pt-2">
+            <strong>References</strong>
+            <p>
+              Upload a BibTex-File and / or edit the Bibtex in the field below.
+            </p>
+            <p>
+              When you press "Translate", the content of the Bibtex-File and the Bibtex in the field merge together.
+            </p>
+            <p>
+              <%= form.submit "Translate", class: "btn btn-primary" %>
+            </p>
+            <p>
+            <%= form.file_field :bibtexfile, class: "btn btn-secondary" %>
+            </p>
+            <%#= form.text_area :references, :class => "markdown", :rows => 20, id: "references_text_area", style: 'width:100%;' %>
+            <%= form.text_area :bibtex, id: "references_text_area", value: @code.bibtex %>
 
-        <% end %>
-      </div>
-      <div class="col-6">
-
-        <%#= link_to "Download", rails_blob_path(@stuff.file, disposition: "inline") %>
-        <div class="embed-responsive" style="padding-bottom: 141.42%;">
-            <iframe  class="embed-responsive-item" src="<%= rails_blob_path(@stuff.file, disposition: "inline") unless @stuff.nil? %>"></iframe>
+          <% end %>
+          </div>
         </div>
-        <%#= raw @result %>
-        <div id="html_from_markdown_text_area" class="">
-          <%#= @result %>
-        </div>
-      </div>
-
-  </div>
 </div>
 
 

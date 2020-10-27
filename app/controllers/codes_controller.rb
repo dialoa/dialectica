@@ -13,12 +13,72 @@ class CodesController < ApplicationController
     #@stuff = MarkdownConverter.new(@code.content, "").convert_markdown_to_pdf
   end
 
+  def my_codes
+    
+  end
+
   def editor
     if params[:inputs].present?
       @code.update(content: params[:inputs][:text])
+      bibtex = ""
+      bibtex = params[:inputs][:bibtex] if params[:inputs][:bibtex].present?
+      bibtex = bibtex + File.read(params[:inputs][:bibtexfile]) if params[:inputs][:bibtexfile].present?
+      #byebug
+      @code.update(bibtex: bibtex)
     end
 
-    @stuff = MarkdownConverter.new(@code.content, "").convert_markdown_to_pdf
+    @stuff = MarkdownConverter.new(@code.content, @code.bibtex).convert_markdown_to_pdf
+  end
+
+  def create_new_code_for_user
+    start_markdown ='
+---
+title: Logic and Metaphysics
+shorttitle: What is the connection between language and being?
+author: Sandro Räss
+date: May 9, 2020
+fontfamily: lmodern,changes
+bibliography: references.bib
+header-includes:
+  \paperheight = 29.70 cm  \paperwidth = 21.0 cm  \hoffset        = 0.46 cm
+  \headheight  =  0.81 cm  \textwidth  = 15.0 cm  \evensidemargin = 0.00 cm
+  \headsep     =  0.81 cm  \textheight = 9.00 in  \oddsidemargin  = 0.00 cm
+---
+# Introduction
+
+If a then b [@Brouwer_1954]
+
+## Models of Language
+
+*italics* and _italics_
+**bold** and __bold__
+***bold it.*** and ___bold it.___
+
+```
+this is
+a
+code block
+```
+ ![Random Picture](https://i.picsum.photos/id/1041/5184/2916.jpg?hmac=TW_9o6HeD7H7I7NVo-S1Fa1iAvzQ10uvmJqsXvNoi0M)
+
+'
+
+start_references ='
+@article{Brouwer_1954,
+  doi = {10.4153/cjm-1954-001-9},
+  url = {https://doi.org/10.4153%2Fcjm-1954-001-9},
+  year = 1954,
+  publisher = {Canadian Mathematical Society},
+  volume = {6},
+  pages = {1--17},
+  author = {L. E. J. Brouwer},
+  title = {Points and Spaces},
+  journal = {Canadian Journal of Mathematics}
+}
+
+'
+  @code = Code.create(content: start_markdown, bibtex: start_references)
+  redirect_to codes_editor_path(@code)
   end
 
   def editor_save
@@ -82,6 +142,6 @@ class CodesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def code_params
-      params.require(:code).permit(:content)
+      params.require(:code).permit(:content, :bibtex)
     end
 end

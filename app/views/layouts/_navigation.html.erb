@@ -6,14 +6,15 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <%= link_to "Blog", blog_posts_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Issues", issues_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Contents", articles_path, class: "nav-link" %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          General
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink9">
+          <%= link_to "Blog", blog_posts_path, class: "dropdown-item" %>
+          <%= link_to "Issues", issues_path, class: "dropdown-item" %>
+          <%= link_to "Contents", articles_path, class: "dropdown-item" %>
+        </div>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,12 +42,21 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Markdown-Editor
+          My Markdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <%= link_to "Create New Markdown", create_new_code_for_user_path, method: :post, class: "dropdown-item" %>
+          <%= link_to "Show all my Markdown", create_new_code_for_user_path, method: :post, class: "dropdown-item" %>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Markdown-Editor-Demo
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <%= link_to "Pancritic Editor", pancritic_editor_path, class: "dropdown-item" %>
           <%= link_to "Basic Markdown Editor", basic_markdown_editor_path, class: "dropdown-item" %>
-          <%= link_to "Etherpad-Editor", editor_path, class: "dropdown-item" %>
+          <%#= link_to "Etherpad-Editor", editor_path, class: "dropdown-item" %>
         </div>
       </li>
       <% #page_slugs = ["dialectica", "about-us", "contents", "how-to-subscribe", "how-to-submit", "advice-to-authors", "contact-us", "links"] %>
