@@ -14,7 +14,6 @@ header-includes:
 # Introduction
 
 If a then b [@Brouwer_1954]
-[@Baumgartner.2008]
 
 ## Models of Language
 
