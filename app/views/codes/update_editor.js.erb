@@ -2,7 +2,7 @@ var record_id = "#pdf-field";
 
 $( record_id ).fadeOut( "slow", function() {
 
-    content = $("<%= escape_javascript( render "codes/pdf-field", stuff: @stuff ) %>")
+    content = $("<%= escape_javascript( render "codes/pdf-field", stuff: @stuff ) %>");
 
     $(record_id).fadeOut("fast", function(){
       $(record_id).empty().append(content).fadeIn("fast");
