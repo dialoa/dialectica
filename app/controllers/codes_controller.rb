@@ -1,5 +1,5 @@
 class CodesController < ApplicationController
-  before_action :set_code, only: [:show, :edit, :update, :destroy, :editor]
+  before_action :set_code, only: [:show, :edit, :update, :destroy, :editor, :update_editor]
 
   # GET /codes
   # GET /codes.json
@@ -14,7 +14,7 @@ class CodesController < ApplicationController
   end
 
   def my_codes
-    
+    @codes = current_user.codes
   end
 
   def editor
@@ -25,9 +25,26 @@ class CodesController < ApplicationController
       bibtex = bibtex + File.read(params[:inputs][:bibtexfile]) if params[:inputs][:bibtexfile].present?
       #byebug
       @code.update(bibtex: bibtex)
+      @code.update(name: params[:inputs][:name]) if params[:inputs][:name].present?
     end
 
     @stuff = MarkdownConverter.new(@code.content, @code.bibtex).convert_markdown_to_pdf
+  end
+
+  def update_editor
+    if params[:inputs].present?
+      @code.update(content: params[:inputs][:text])
+      bibtex = ""
+      bibtex = params[:inputs][:bibtex] if params[:inputs][:bibtex].present?
+      bibtex = bibtex + File.read(params[:inputs][:bibtexfile]) if params[:inputs][:bibtexfile].present?
+      #byebug
+      @code.update(bibtex: bibtex)
+      @code.update(name: params[:inputs][:name]) if params[:inputs][:name].present?
+    end
+
+    @stuff = MarkdownConverter.new(@code.content, @code.bibtex).convert_markdown_to_pdf
+
+    render "codes/update_editor.js.erb"
   end
 
   def create_new_code_for_user
@@ -77,7 +94,10 @@ start_references ='
 }
 
 '
-  @code = Code.create(content: start_markdown, bibtex: start_references)
+  @code = Code.create(name: "Markdown - #{DateTime.now.strftime("%d/%m/%Y %H:%M")}", content: start_markdown, bibtex: start_references)
+  unless current_user.blank?
+    current_user.codes << @code unless current_user.codes.include?(@code)
+  end
   redirect_to codes_editor_path(@code)
   end
 
@@ -142,6 +162,6 @@ start_references ='
 
     # Only allow a list of trusted parameters through.
     def code_params
-      params.require(:code).permit(:content, :bibtex)
+      params.require(:code).permit(:content, :bibtex, :name)
     end
 end

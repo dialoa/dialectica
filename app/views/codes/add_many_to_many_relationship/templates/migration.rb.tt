@@ -1,0 +1,9 @@
+class <%= @camelcase %> < ActiveRecord::Migration[6.0]
+  def change
+    create_table :<%= @third_model_name %> do |t|
+      t.belongs_to :<%= @first_model.downcase.singularize %>
+      t.belongs_to :<%= @second_model.downcase.singularize %>
+      t.timestamps
+    end
+  end
+end

@@ -1,0 +1,8 @@
+Description:
+    creates_many_to_many_relationship. Expects models to exist
+
+Example:
+    rails g add_many_to_many_relationship Post --model Tag
+
+    This will create:
+        what/will/it/create

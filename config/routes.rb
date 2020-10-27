@@ -59,6 +59,8 @@ Rails.application.routes.draw do
 
   get '/codes/editor/:id', to: "codes#editor", as: "codes_editor"
   post '/codes/editor/:id', to: "codes#editor", as: "codes_editor_post"
+  post '/codes-tool/update_editor/:id', to: "codes#update_editor", as: "codes_update_editor"
 
+  get '/codes-tools/my_codes', to: "codes#my_codes", as: "my_codes"
   post '/codes-tools/create_new_code_for_user', to:"codes#create_new_code_for_user", as: "create_new_code_for_user"
 end

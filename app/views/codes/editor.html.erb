@@ -6,18 +6,24 @@
   <h1>Markdown-Editor</h1>
 
         <%#= form_for :inputs, url: "/editor/basic_markdown_editor", method: :post do |form| %>
-        <%= form_for :inputs, path: codes_editor_post_path(@code), method: :post do |form| %>
+        <%#= form_for :inputs, path: codes_editor_post_path(@code), method: :post do |form| %>
+        <%= form_for :inputs, url: codes_update_editor_path(@code), method: :post, remote: true do |form| %>
         <%= form.submit "Translate", class: "btn btn-primary" %>
+        <br />
           <%#= form.text_area :text %>
           <%#= form.text_area :text, :class => "markdown", :rows => 40, id: "markdown_text_area", style: 'width:100%;' %>
         <div class="row">
           <div class="col-6">
+            <p>
+              <strong>Name</strong><br />
+              <%= form.text_field :name, value: @code.name %>
+            </p>
             <%= form.text_area :text, id: "markdown_text_area", value: @code.content %>
             <br />
             <%#= form.submit "Translate", class: "" %>
           </div>
           <div class="col-6">
-            <div class="embed-responsive" style="padding-bottom: 141.42%;">
+            <div id="pdf-field" class="embed-responsive" style="padding-bottom: 141.42%;">
                 <iframe  class="embed-responsive-item" src="<%= rails_blob_path(@stuff.file, disposition: "inline") unless @stuff.nil? %>"></iframe>
             </div>
           </div>

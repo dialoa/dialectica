@@ -1,0 +1,17 @@
+<div class="container">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @codes.each do |code| %>
+        <tr>
+          <td><%= link_to code.name, codes_editor_path(code) %></td>
+        </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+</div>
