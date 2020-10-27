@@ -9,7 +9,7 @@
       <div class="col-5">
         <%= form_for :inputs, url: "/editor/pancritic_editor", method: :post do |form| %>
           <%#= form.text_area :text %>
-          <%= form.text_area :text, :class => "markdown", :rows => 40, id: "markdown_text_area", style: 'width:100%;' %>
+          <%= form.text_area :text, id: "markdown_text_area" %>
           <br />
           <%= form.submit "Translate" %>
         <% end %>
@@ -34,6 +34,15 @@
 <script>
 
   $( document ).ready(function() {
+
+    var myCodeMirror1 = CodeMirror.fromTextArea(document.getElementById("markdown_text_area"), {
+      theme: "default",
+      mode: 'markdown',
+      border: '1px solid #eee',
+      setsize: '100%'
+    });
+
+    myCodeMirror1.setSize("100%", "100%");
 
     tinyMCE.init({
       //selector: 'textarea#markdown_text_area',

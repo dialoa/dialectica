@@ -6,9 +6,13 @@ class EditorController < ApplicationController
   def basic_markdown_editor
     if params[:inputs].present?
       @inputs = OpenStruct.new(params[:inputs])
+      bibtexfile = params[:inputs][:bibtexfile]
+      #byebug
     else
       @inputs = OpenStruct.new()
     end
+
+
 
     start_markdown ='
 ---
@@ -38,7 +42,7 @@ this is
 a
 code block
 ```
-
+ ![Random Picture](https://i.picsum.photos/id/1041/5184/2916.jpg?hmac=TW_9o6HeD7H7I7NVo-S1Fa1iAvzQ10uvmJqsXvNoi0M)
 
 '
 
@@ -70,6 +74,11 @@ start_references ='
     #references
     File.open(dir.join("references.bib"), 'w+') do |file|
       file.write(@inputs[:references])
+      #if bibtex file is present
+      unless bibtexfile.blank?
+        file.write(File.read(bibtexfile))
+        #file = params[:file]
+      end
     end
 
     #output = `whoami`

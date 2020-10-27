@@ -2,7 +2,7 @@
 ---
 title: Logic and Metaphysics
 shorttitle: What is the connection between language and being?
-author: Sandro Rässgggg
+author: Sandro Räss
 date: May 9, 2020
 fontfamily: lmodern,changes
 bibliography: references.bib
@@ -14,6 +14,7 @@ header-includes:
 # Introduction
 
 If a then b [@Brouwer_1954]
+[@Baumgartner.2008]
 
 ## Models of Language
 
@@ -26,5 +27,5 @@ this is
 a
 code block
 ```
-
+ ![Random Picture](https://i.picsum.photos/id/1041/5184/2916.jpg?hmac=TW_9o6HeD7H7I7NVo-S1Fa1iAvzQ10uvmJqsXvNoi0M)
 
