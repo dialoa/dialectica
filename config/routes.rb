@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :codes
   resources :bibtex_files
   resources :bibtex_entries
   resources :submissions

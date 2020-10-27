@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_21_194351) do
+ActiveRecord::Schema.define(version: 2020_10_27_112922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,12 @@ ActiveRecord::Schema.define(version: 2020_10_21_194351) do
     t.index ["slug"], name: "index_blog_posts_on_slug", unique: true
   end
 
+  create_table "codes", force: :cascade do |t|
+    t.text "content", default: ""
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -150,6 +156,15 @@ ActiveRecord::Schema.define(version: 2020_10_21_194351) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", default: "submitted"
+  end
+
+  create_table "user_codes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "code_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code_id"], name: "index_user_codes_on_code_id"
+    t.index ["user_id"], name: "index_user_codes_on_user_id"
   end
 
   create_table "user_roles", force: :cascade do |t|

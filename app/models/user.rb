@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+has_many :user_codes
+has_many :codes, :through => :user_codes
 has_many :submission_users
 has_many :submissions, :through => :submission_users
   # Include default devise modules. Others available are:
