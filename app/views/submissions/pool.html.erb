@@ -1,38 +1,54 @@
 <div class="container">
 <h1>Pool</h1>
+<hr />
+<h3>Submissions without reviewers</h3>
 <p>
   <table class="table table-striped table-bordered">
   <thead>
     <tr>
+      <th>
+        Submission-Date
+        </th>
       <th scope="col">Title</th>
       <th scope="col">Author</th>
       <th scope="col">Area</th>
       <th scope="col">File</th>
       <th scope="col">Reviewers</th>
+      <th>
+        Action
+      </th>
     </tr>
   </thead>
   <tbody>
-    <% Submission.all.each do |submission| %>
-      <tr>
+    <% submissions_with_reviewer = Submission.all %>
+    <%# Submission.where.not(id: submissions_with_reviewer.pluck(:id)).each do |submission| %>
+    <% submissions_with_reviewer.each do |submission| %>
+      <tr class="<%= submission.submission_urgency %>">
+        <td>
+          <%= submission.created_at.strftime("%d/%m/%Y") %>
+        </td>
         <td>
           <%= submission.title %>
         </td>
         <td>
-          <%= submission.firstname %> <%= submission.lastname %>
+          Anonymous
+          <%#= submission.firstname %> <%#= submission.lastname %>
         </td>
         <td><%= submission.area %></td>
-        <td><%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") %></td>
+        <td><%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") if submission.file.attached?  %></td>
         <td>
-          <% submission.users.each do |user| %>
-            <%= user.email %><br />
-          <% end %>
+          <%= submission.users.count unless submission.users.empty? %>
+          <%# submission.users.each do |user| %>
+            <%#= user.email %>
+          <%# end %>
           <% if submission.users.empty? %>
-            No Reviewers yet
+            <strong>No Reviewers yet</strong>
           <% end %>
         </td>
         <td>
           <% if !current_user.nil? && current_user.submissions.where(id: submission.id).empty?  %>
             <%= link_to "I'll review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-primary my-2" %>
+            <%= link_to "I know someone who might review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
           <% end %>
         </td>
       </tr>

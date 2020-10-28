@@ -20,7 +20,7 @@
   <%= @submission.lastname %>
 </p>
 <p>
-  <%= link_to "Download", rails_blob_path(@submission.file, disposition: "attachment") %>
+  <%= link_to "Download", rails_blob_path(@submission.file, disposition: "attachment") if @submission.file.attached? %>
 </p>
 
 <%= link_to 'Edit', edit_submission_path(@submission) %> |

@@ -11,4 +11,14 @@ has_many :users, :through => :submission_users
     ["submitted", "rejected", "published", "review"]
   end
 
+  def submission_urgency
+    if created_at > Date.today - 1.week
+      return "table-success"
+    elsif created_at > Date.today - 1.month
+      return "table-primary"
+    else
+      return "table-danger"
+    end
+  end
+
 end

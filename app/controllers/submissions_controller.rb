@@ -1,5 +1,6 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:my_submissions]
 
   # GET /submissions
   # GET /submissions.json
@@ -10,6 +11,10 @@ class SubmissionsController < ApplicationController
   # GET /submissions/1
   # GET /submissions/1.json
   def show
+  end
+
+  def my_submissions
+    @submmissions = current_user.submissions
   end
 
   # GET /submissions/new
