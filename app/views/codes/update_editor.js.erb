@@ -1,11 +1,16 @@
 var record_id = "#pdf-field";
+//var record_id2 = "#references_text_area";
 
 $( record_id ).fadeOut( "slow", function() {
 
     content = $("<%= escape_javascript( render "codes/pdf-field", stuff: @stuff ) %>");
+    //content2 = "lol";
 
     $(record_id).fadeOut("fast", function(){
       $(record_id).empty().append(content).fadeIn("fast");
     });
+
+    //$("textarea#references_text_area").html("lol");
+  //  CodeMirror.fromTextArea(document.getElementById("references_text_area")).setValue(content2);
 
 });
