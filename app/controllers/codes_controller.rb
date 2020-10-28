@@ -1,5 +1,7 @@
+require 'zip'
+
 class CodesController < ApplicationController
-  before_action :set_code, only: [:show, :edit, :update, :destroy, :editor, :update_editor]
+  before_action :set_code, only: [:show, :edit, :update, :destroy, :editor, :update_editor, :download]
 
   # GET /codes
   # GET /codes.json
@@ -103,6 +105,19 @@ start_references ='
 
   def editor_save
 
+  end
+
+  def download
+    compressed_filestream = Zip::OutputStream.write_buffer do |zos|
+      zos.put_next_entry "#{@code.name}".parameterize + ".md"
+      zos.write @code.content
+
+      zos.put_next_entry "#{@code.name}".parameterize + ".bib"
+      zos.write @code.bibtex
+    end
+
+    compressed_filestream.rewind
+    send_data compressed_filestream.read, filename: "#{@code.name}.zip"
   end
 
   # GET /codes/new

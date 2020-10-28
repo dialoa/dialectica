@@ -63,4 +63,6 @@ Rails.application.routes.draw do
 
   get '/codes-tools/my_codes', to: "codes#my_codes", as: "my_codes"
   post '/codes-tools/create_new_code_for_user', to:"codes#create_new_code_for_user", as: "create_new_code_for_user"
+
+  get '/codes-tools/download/:id', to: "codes#download", as: "codes_download"
 end

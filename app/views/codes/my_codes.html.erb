@@ -3,12 +3,18 @@
     <thead>
       <tr>
         <th scope="col">Name</th>
+        <th>
+          Download
+          </th>
       </tr>
     </thead>
     <tbody>
       <% @codes.each do |code| %>
         <tr>
           <td><%= link_to code.name, codes_editor_path(code) %></td>
+          <td>
+            <%= link_to "Download", codes_download_path(code) %>
+            </td>
         </tr>
       <% end %>
 

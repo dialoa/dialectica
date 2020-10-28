@@ -45,6 +45,9 @@
             <div id="pdf-field" class="embed-responsive" style="padding-bottom: 141.42%;">
                 <iframe  class="embed-responsive-item" src="<%= rails_blob_path(@stuff.file, disposition: "inline") unless @stuff.nil? %>"></iframe>
             </div>
+            <p class="pt-2">
+              <%= link_to "Download Markdown and Bibtex", codes_download_path(@code), class: "btn btn-primary" %>
+            </p>
         </div>
 </div>
 </div>
