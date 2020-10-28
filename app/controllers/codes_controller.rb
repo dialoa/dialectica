@@ -2,7 +2,7 @@ require 'zip'
 
 class CodesController < ApplicationController
   before_action :set_code, only: [:show, :edit, :update, :destroy, :editor, :update_editor, :download]
-
+  before_action :authenticate_user!, only: [:my_codes]
   # GET /codes
   # GET /codes.json
   def index
