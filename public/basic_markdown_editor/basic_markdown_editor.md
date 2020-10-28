@@ -13,9 +13,9 @@ header-includes:
 ---
 # Introduction
 
-If a then b or c or d or Kant [@Baumgartner.2008]
+If a then b [@Brouwer_1954]
 
-## Models of Language and stuff
+## Models of Language
 
 *italics* and _italics_
 **bold** and __bold__
