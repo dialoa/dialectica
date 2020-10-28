@@ -49,6 +49,7 @@
           <% if !current_user.nil? && current_user.submissions.where(id: submission.id).empty?  %>
             <%= link_to "I'll review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-primary my-2" %>
             <%= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
+            <%= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
           <% end %>
         </td>
       </tr>
