@@ -1,7 +1,7 @@
 class MarkdownConverter
-  def initialize(markdown, references)
+  def initialize(yaml, markdown, references, template)
 
-    start_markdown ='
+    start_yaml ='
 ---
 title: Logic and Metaphysics
 shorttitle: What is the connection between language and being?
@@ -14,6 +14,9 @@ header-includes:
   \headheight  =  0.81 cm  \textwidth  = 15.0 cm  \evensidemargin = 0.00 cm
   \headsep     =  0.81 cm  \textheight = 9.00 in  \oddsidemargin  = 0.00 cm
 ---
+'
+
+    start_markdown ='
 # Introduction
 
 If a then b [@Brouwer_1954]
@@ -48,8 +51,10 @@ start_references ='
 
 '
 
+    @yaml = yaml || start_yaml
     @markdown = markdown || start_markdown
     @references = references || start_references
+    @template = template || "galley"
   end
 
   def convert_markdown_to_pdf
@@ -58,6 +63,7 @@ start_references ='
     dir = Rails.root.join('public', 'basic_markdown_editor')
     Dir.mkdir(dir) unless Dir.exist?(dir)
     File.open(dir.join("basic_markdown_editor.md"), 'w+') do |file|
+      file.write(create_yaml(@yaml, @template))
       file.write(@markdown)
     end
 
@@ -79,6 +85,39 @@ start_references ='
     end
 
     @stuff
+  end
+
+  def create_yaml(yaml, template)
+    final_yaml = ""
+    three_dashes ='
+---
+'
+
+if template == "galley"
+template ='
+  fontfamily: lmodern,changes
+  header-includes:
+    \paperheight = 29.70 cm  \paperwidth = 21.0 cm  \hoffset        = 0.46 cm
+    \headheight  =  0.81 cm  \textwidth  = 15.0 cm  \evensidemargin = 0.00 cm
+    \headsep     =  0.81 cm  \textheight = 9.00 in  \oddsidemargin  = 0.00 cm
+'
+elsif template == "proof"
+template ='
+  fontfamily: lmodern,changes
+  header-includes:
+    \usepackage{lineno}
+    \linenumbers
+    \usepackage{draftwatermark}
+    \SetWatermarkText{dialectica proof}
+    \SetWatermarkScale{.7}
+'
+
+end
+
+  final_yaml = three_dashes.chop + yaml.chop + template.chop + three_dashes.chop
+  puts final_yaml
+  final_yaml
+  #byebug
   end
 
   def basic_markdown_editor

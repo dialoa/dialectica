@@ -18,8 +18,18 @@
               <strong>Name</strong><br />
               <%= form.text_field :name, value: @code.name %>
             </p>
-            <%= form.text_area :text, id: "markdown_text_area", value: @code.content %>
-            <br />
+            <p>
+              <strong>Template</strong>
+              <%= form.select :template, options_for_select(Code.template_options.collect{ |u| [u, u] }) %>
+            </p>
+            <p>
+              <strong>Yaml</strong> (The spaces are important! Don't mess with the spaces!)
+            <%= form.text_area :yaml, id: "yaml_text_area", value: @code.yaml %>
+            </p>
+            <p>
+              <strong>Markdown</strong>
+              <%= form.text_area :text, id: "markdown_text_area", value: @code.content %>
+            </p>
             <%#= form.submit "Translate", class: "" %>
 
 
@@ -66,6 +76,10 @@
     myCodeMirror1.setSize("100%", "100%");
 
     var myCodeMirror2 = CodeMirror.fromTextArea(document.getElementById("references_text_area"), {
+      theme: "default"
+    });
+
+    var myCodeMirror3 = CodeMirror.fromTextArea(document.getElementById("yaml_text_area"), {
       theme: "default"
     });
 
