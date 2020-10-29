@@ -34,9 +34,7 @@
         <div class="embed-responsive" style="padding-bottom: 141.42%;">
             <iframe  class="embed-responsive-item" src="<%= rails_blob_path(@stuff.file, disposition: "inline") unless @stuff.nil? %>"></iframe>
         </div>
-        <p>
-          <%= link_to "Download Markdown and Bibtex",  %>
-        </p>
+
         <%#= raw @result %>
         <div id="html_from_markdown_text_area" class="">
           <%#= @result %>
