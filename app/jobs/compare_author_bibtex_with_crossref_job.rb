@@ -34,6 +34,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
           serrano["message"]["items"].first(10).each do |item|
             begin
               result_from_crossref = Serrano.content_negotiation(ids: item["DOI"], format: "text", style: "bibtex").force_encoding(Encoding::UTF_8)
+              #byebug
               #result_from_crossref = Serrano.content_negotiation(ids: item["DOI"], style: "bibtex")
               result_from_crossref = change_id_of_bibtex_entry(article.id, result_from_crossref)
               bibtex_entry_of_author.children.create(content: result_from_crossref.to_s.strip)
