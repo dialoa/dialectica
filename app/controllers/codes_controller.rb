@@ -34,7 +34,6 @@ class CodesController < ApplicationController
       template = params[:inputs][:template] if params[:inputs][:template].present?
     end
 
-
     @stuff = MarkdownConverter.new(@code.yaml, @code.content, @code.bibtex, template).convert_markdown_to_pdf
   end
 
