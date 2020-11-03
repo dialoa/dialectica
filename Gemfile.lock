@@ -353,6 +353,7 @@ DEPENDENCIES
   rails (~> 6.0.2, >= 6.0.2.1)
   rails-latex
   redcarpet
+  rubyzip
   sanitize
   sass-rails (>= 6)
   selenium-webdriver

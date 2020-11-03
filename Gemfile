@@ -10,6 +10,7 @@ gem 'citeproc-ruby'
 gem 'csl-styles'
 gem 'bibtex-ruby'
 gem 'ancestry'
+gem 'rubyzip'
 
 
 #gem 'wkhtmltopdf-binary'
