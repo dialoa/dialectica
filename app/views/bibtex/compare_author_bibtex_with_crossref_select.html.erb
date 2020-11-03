@@ -36,11 +36,11 @@
               <% bibtex_entry.children.each do |child| %>
                 <% unless child.blank? || child.id.blank? %>
                   <button type="button" class="btn btn-light text-left bibtex_entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>">
-                    <%#= raw child.content %>
-                    <% bibtex_parse = BibTeX.parse(child.content) %>
-                    <% bibtex_entry_cp = cp.import bibtex_parse.to_citeproc %>
+                    <%= raw child.content %>
+                    <%# bibtex_parse = BibTeX.parse(child.content) %>
+                    <%# bibtex_entry_cp = cp.import bibtex_parse.to_citeproc %>
                     <%#= bibtex_entry_cp.encoding %>
-                    <%= raw (bibtex_entry_cp.render :bibliography, id: bibtex_parse.first.id).first unless bibtex_parse.blank? %>
+                    <%#= raw (bibtex_entry_cp.render :bibliography, id: bibtex_parse.first.id).first unless bibtex_parse.blank? %>
                     <div class="child_of_button" style="display: none;" id="bibtex_entry_id_<%= bibtex_entry.id %>_content">
                       <%= child.content %>
                     </div>
