@@ -11,6 +11,7 @@ gem 'csl-styles'
 gem 'bibtex-ruby'
 gem 'ancestry'
 gem 'rubyzip'
+gem 'jsoneditor-rails'
 
 
 #gem 'wkhtmltopdf-binary'

@@ -145,6 +145,8 @@ GEM
     jbuilder (2.10.1)
       activesupport (>= 5.0.0)
     jmespath (1.4.0)
+    jsoneditor-rails (1.0.3)
+      sass-rails
     kramdown (2.3.0)
       rexml
     latex-decode (0.3.2)
@@ -342,6 +344,7 @@ DEPENDENCIES
   fuzzy-string-match
   iconv
   jbuilder (~> 2.7)
+  jsoneditor-rails
   kramdown
   listen (>= 3.0.5, < 3.2)
   meta-tags

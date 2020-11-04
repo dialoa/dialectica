@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Content:</strong>
+  <% json = JSON.parse(@json.content) %>
+  <%= json %>
+</p>
+<p>
+    <%#= json.sort %>
+</p>
+<p>
+  <% json.each do |item| %>
+    <% item.each do |key, value| %>
+      <%= key %>: <%= value %><br />
+    <% end %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_json_path(@json) %> |
+<%= link_to 'Back', jsons_path %>

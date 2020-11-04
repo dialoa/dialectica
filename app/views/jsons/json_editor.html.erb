@@ -1,0 +1,36 @@
+<div class="container">
+<p>
+  <strong>Content:</strong>
+  <% json = JSON.parse(@json.content) %>
+  <%= JSON.pretty_generate(json) %>
+</p>
+
+<div id="jsoneditor_<%= @json.id %>" style="width: 400px; height: 400px;"></div>
+<button id="jsoneditor_<%= @json.id %>_update" type="button" class="btn btn-primary">Save</button>
+</div>
+<script>
+    // create the editor
+    const container = document.getElementById("jsoneditor_<%= @json.id %>")
+    const options = {}
+    const editor = new JSONEditor(container, options)
+
+    // set json
+    const initialJson = <%= raw @json.content %>
+    editor.set(initialJson)
+
+    // get json
+    //const updatedJson = editor.get()
+
+    $( "#jsoneditor_<%= @json.id %>_update" ).click(function() {
+        $.ajax({
+          url: "/jsons-tools/editor_update/<%= @json.id %>.js",
+          method: 'POST',
+          data: { content: editor.get()},
+          headers: {
+            'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+          }
+        }).done(function(response) {
+        //$(".address-<%= @json.id %>-edit-placeholder").replaceWith(response);
+      })
+    });
+</script>

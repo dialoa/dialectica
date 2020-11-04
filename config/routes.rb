@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :jsons
   resources :codes
   resources :bibtex_files
   resources :bibtex_entries
@@ -65,4 +66,7 @@ Rails.application.routes.draw do
   post '/codes-tools/create_new_code_for_user', to:"codes#create_new_code_for_user", as: "create_new_code_for_user"
 
   get '/codes-tools/download/:id', to: "codes#download", as: "codes_download"
+
+  get '/jsons-tools/editor/:id', to: "jsons#json_editor", as: "json_editor"
+  post '/jsons-tools/editor_update/:id', to: "jsons#json_editor_update", as: "json_editor_update"
 end

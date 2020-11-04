@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_29_063257) do
+ActiveRecord::Schema.define(version: 2020_11_04_062511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,12 @@ ActiveRecord::Schema.define(version: 2020_10_29_063257) do
     t.string "title", default: ""
     t.date "published_at"
     t.text "description", default: ""
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "jsons", force: :cascade do |t|
+    t.jsonb "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
