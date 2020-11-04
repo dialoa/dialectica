@@ -32,7 +32,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
           serrano = Serrano.works(query: citation_of_result_from_bibtex)
 
           serrano["message"]["items"].first(10).each do |item|
-            bibtex_entry_of_author.children.create(content: item)
+            Json.create(content: item)
           end
         rescue
           @retries ||= 0

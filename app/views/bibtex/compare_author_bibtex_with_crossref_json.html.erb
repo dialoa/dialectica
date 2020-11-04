@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>JSON compare</h1>
+  <hr />
+  <p>
+    If something doesn't work or if you need something special, please contact me: <%= mail_to "sandro.raess@philosophie.ch", "sandro.raess@philosophie.ch" %>
+  </p>
+  <p>
+    Cookies have to be allowed or you might get an error page with the wrong diagnosis, eg. "The change you wanted was rejected. Maybe you tried to change something you didn't have access to."
+  </p>
+  <hr />
+  <div class="row">
+      <div class="col-12">
+        <h3>Convert</h3>
+        <p>
+          Convert a file from one format into another, eg. docx -> markdown.
+        </p>
+        <p>
+          <%= form_tag pandoc_command_path, multipart: true, remote: true do %>
+            <%= file_field_tag :file, class: "btn btn-secondary" %>
+            <br />
+            <br />
+            From:
+            <%#= select_tag :from, options_for_select(Stuff.pandoc_options.collect{ |u| [u, u] }) %>
+            <br>
+            <br />
+            To:
+            <%#= select_tag :to, options_for_select(Stuff.pandoc_options.collect{ |u| [u, u] }) %>
+            <%= hidden_field_tag :command, "pandoc_convert" %>
+            <br>
+            <br />
+            <%= button_tag "Convert", class: "btn btn-primary" %>
+          <% end %>
+        </p>
+      </div>
+  </div>
+</div>

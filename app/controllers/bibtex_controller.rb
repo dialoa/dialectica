@@ -27,6 +27,10 @@ class BibtexController < ApplicationController
 
   end
 
+  def compare_author_bibtex_with_crossref_json
+
+  end
+
   def compare_bibtex_with_crossref
 
     @result = []
