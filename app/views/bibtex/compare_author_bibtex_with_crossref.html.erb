@@ -13,8 +13,16 @@
   <hr />
   <p>
     <%= form_tag bibtex_compare_author_bibtex_with_crossref_create_path, multipart: true do %>
-      <%#= file_field_tag :file, class: "btn btn-secondary" %>
+    <p>
+        <strong>Upload a Bibtex or JSON File</strong><br />
+        <%= file_field_tag :file, class: "btn btn-secondary" %>
+    </p>
+    <p>
+      <strong>Or copy & paste Bibtex or JSON into the field</strong><br />
       <%= text_area_tag :text, nil, :rows => 15, style: 'width:100%;' %>
+    </p>
+
+      <%= select_tag :from, options_for_select(["json", "bibtex"]) %>
       <br />
       <br />
       <strong>e-Mail</strong><br />

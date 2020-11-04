@@ -1,12 +1,10 @@
 class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
   queue_as :default
 
-  def perform(text, email)
-    #@array_of_bibtex_originals = []
-    @array_of_bibtex_originals = ""
+  def perform(text, email, format)
 
-    #@result = []
-
+    if format == "bibtex"
+      @array_of_bibtex_originals = ""
       cp = CiteProc::Processor.new style: 'apa', format: 'text'
 
       file_to_store = Tempfile.new('comparison')
@@ -18,17 +16,12 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
 
       #every article in the author's bibtex file gets scanned
       b.each_with_index do |article, index|
-        #result_from_bibtex = (cp.render :bibliography, id: article.id).first
         result_from_bibtex = article
         bibtex_entry_of_author = BibtexEntry.create(content: result_from_bibtex)
 
         result_from_crossref = ""
         citation_of_result_from_bibtex = (cp.render :bibliography, id: article.id).first
-        #byebug
-        #check if doi is available
-        #if article.try(:doi).nil? || article.doi.blank?
         begin
-          #serrano = Serrano.works(query: result_from_bibtex)
           serrano = Serrano.works(query: citation_of_result_from_bibtex)
 
           serrano["message"]["items"].first(10).each do |item|
@@ -41,37 +34,23 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
             puts "ERROR!!! RETRY: #{@retries}"
             sleep 500
             retry
-          else
-            #file = file + "ERROR for: #{line}"
           end
         end
-          #serrano = Serrano.works(query: result_from_bibtex)
-          #result_from_crossref = + Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "text", style: "apa").force_encoding(Encoding::UTF_8)
-
-        #else
-        #  result_from_crossref = Serrano.content_negotiation(ids: article.doi, style: "apa", format: "text").force_encoding(Encoding::UTF_8)
-        #
-        #  result_from_crossref = change_id_of_bibtex_entry(article.id, result_from_crossref)
-        #
-        #  bibtex_entry_of_author.children.create(content: result_from_crossref.to_s.strip)
-        #end
-
-        #serrano["message"]["items"].first(10).each do |item|
-        #  BibtexEntry.create(content: Serrano.content_negotiation(ids: item["DOI"], format: "text", style: "apa").force_encoding(Encoding::UTF_8))
-        #end
-
-        #serrano = Serrano.works(query: line)
-        #result_from_crossref = Serrano.content_negotiation(ids: article.doi, style: "apa", format: "text").force_encoding(Encoding::UTF_8)
-
-        #@result.push([result_from_bibtex, result_from_crossref])
-        #@array_of_bibtex_originals.push(bibtex_entry_of_author)
         @array_of_bibtex_originals = @array_of_bibtex_originals + ", #{bibtex_entry_of_author.id}"
       end
-
-
       file_to_store.close
-
       BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_bibtex_originals, email).deliver_now
+
+    elsif format == "json"
+      json = JSON.parse(text)
+
+      json.each do |item|
+        serrano = Serrano.works(query: item)
+        serrano["message"]["items"].first(10).each do |item|
+          Json.create(content: item)
+        end
+      end
+    end
   end
 
   def perform_old(text, email)
