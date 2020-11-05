@@ -1,6 +1,36 @@
 <% cp = CiteProc::Processor.new style: 'apa', format: 'html' %>
 
 <div class="container-fluid">
+  <p>
+    <div id="json-in" data-type="json" class="in javascript" spellcheck="false" contenteditable="true">[
+  {
+    <span class="key">id</span>: <span class="string">"Q<span class="digit">23571040</span>"</span>,
+    <span class="key">type</span>: <span class="string">"article-journal"</span>,
+    <span class="key">title</span>: <span class="string">"Correlation <span class="native">of</span> the Base Strengths <span class="native">of</span> Amines <span class="digit">1</span>"</span>,
+    <span class="key">DOI</span>: <span class="string">"<span class="object"><span class="digit">10</span></span><span class="digit">.1021</span>/ja<span class="digit">01577</span>a<span class="digit">030</span>"</span>,
+    <span class="key">author</span>: [
+      {
+	<span class="key">given</span>: <span class="string">"<span class="object">H</span>. <span class="object">K</span>."</span>,
+	<span class="key">family</span>: <span class="string">"Hall"</span>
+      }
+    ],
+    <span class="key">issued</span>: [
+      {
+	date-<span class="key">parts</span>: [ <span class="string">"<span class="digit">1957</span>"</span>, <span class="string">"<span class="digit">1</span>"</span>, <span class="string">"<span class="digit">1</span>"</span> ]
+      }
+    ],
+    container-<span class="key">title</span>: <span class="string">"Journal <span class="native">of</span> the American Chemical Society"</span>,
+    <span class="key">volume</span>: <span class="string">"<span class="digit">79</span>"</span>,
+    <span class="key">issue</span>: <span class="string">"<span class="digit">20</span>"</span>,
+    <span class="key">page</span>: <span class="string">"<span class="digit">5441</span><span class="digit">-5444</span>"</span>
+  }
+]
+  </div>
+  <div id="json-out" data-type="json" class="out"></div>
+  </p>
+  <p>
+
+  </p>
   <%#= @format_type %>
   <h1>Select Bibtex-Entries</h1>
   <hr />
@@ -111,6 +141,43 @@
 <script>
 
   $( document ).ready(function() {
+
+    var Cite = require('citation-js')
+
+    // Set variables
+    var cite = new Cite()
+    var opt = {
+      format: 'string'
+    }
+
+    // Make shorter ref to function
+    var parseAsync = Cite.parse.input.async.chain
+
+    // Make a factory for callback
+    var callbackFactory = function (out) {
+      return function (data) {
+        out.html(cite.set(data).get(opt))
+      }
+    }
+
+     var $json_in = $('#json-in')
+     var jsonCb = callbackFactory($('#json-out'))
+
+     function update() {
+       // Get user options
+       opt.type = "html"
+       opt.style = "citation-apa"
+       opt.lang = "en-us"
+
+       // Set data (explicit parsing only recommended for async) and set html element to get output
+       parseAsync($json_in.text()).then(jsonCb)
+       //parseAsync($bibx_in.text()).then(bibxCb)
+       //parseAsync($wiki_in.text()).then(wikiCb)
+       //parseAsync($bibj_in.text()).then(bibjCb)
+     }
+
+     update();
+
 
     fill_chosen_entries();
 

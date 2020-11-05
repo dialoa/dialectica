@@ -36,7 +36,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
             retry
           end
         end
-        @array_of_originals = @array_of_bibtex_originals + ", #{bibtex_entry_of_author.id}"
+        @array_of_originals = @array_of_originals + ", #{bibtex_entry_of_author.id}"
       end
       file_to_store.close
       BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, format).deliver_now
