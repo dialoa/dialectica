@@ -17,6 +17,7 @@
         <thead>
           <tr>
             <th scope="col">Original</th>
+            <th scope="col">Custom</th>
             <th scope="col">Crossref</th>
           </tr>
         </thead>
@@ -32,6 +33,9 @@
                     <%= bibtex_entry.content %>
                   </div>
                 </button>
+                </td>
+                <td>
+                  <%= render 'jsons/json_editor', json: bibtex_entry %>
                 </td>
               <td>
                 <% bibtex_entry.children.each do |child| %>
