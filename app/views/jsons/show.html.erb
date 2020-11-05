@@ -5,6 +5,11 @@
   <% json = JSON.parse(@json.content) %>
   <%= json %>
 </p>
+  <p>
+    <strong>Citation.js</strong>
+      <%= render 'jsons/single_json', json: @json %>
+    </p>
+    <hr />
 <p>
     <%#= json.sort %>
 </p>

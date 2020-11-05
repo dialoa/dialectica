@@ -49,7 +49,9 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
         #citation_of_result_from_bibtex = (cp.render :bibliography, id: article.id).first
         serrano = Serrano.works(query: item["DOI"])
         serrano["message"]["items"].first(10).each do |inner_item|
-          original_json.children.create(content: inner_item)
+          #original_json.children.create(content: inner_item)
+          result_from_serrano = Serrano.content_negotiation(ids: inner_item["DOI"], format: "citeproc-json")
+          original_json.children.create(content: result_from_serrano)
         end
         @array_of_originals = @array_of_originals + ", #{original_json.id}"
         #byebug

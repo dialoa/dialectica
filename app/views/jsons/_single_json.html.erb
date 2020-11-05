@@ -1,0 +1,48 @@
+  <div id="json-in-<%= json.id %>" data-type="json" class="in javascript" spellcheck="false" contenteditable="true">
+    <%= json.content %>
+    <%#= json.content.class %>
+  </div>
+
+  <div id="json-out-<%= json.id %>" data-type="json" class="out">
+  </div>
+  <hr />
+
+  <script>
+
+    $( document ).ready(function() {
+
+      var Cite = require('citation-js')
+
+      // Set variables
+      var cite = new Cite()
+      var opt = {
+        format: 'string'
+      }
+
+      // Make shorter ref to function
+      var parseAsync = Cite.parse.input.async.chain
+
+      // Make a factory for callback
+      var callbackFactory = function (out) {
+        return function (data) {
+          out.html(cite.set(data).get(opt))
+        }
+      }
+
+       var $json_in = $("#json-in-<%= json.id %>")
+       var jsonCb = callbackFactory($('#json-out-<%= json.id %>'))
+
+       function update() {
+         // Get user options
+         opt.type = "html"
+         opt.style = "citation-apa"
+         opt.lang = "en-us"
+
+         // Set data (explicit parsing only recommended for async) and set html element to get output
+         parseAsync($json_in.text()).then(jsonCb)
+       }
+
+       update();
+
+    });
+  </script>
