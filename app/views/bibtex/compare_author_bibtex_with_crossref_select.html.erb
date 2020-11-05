@@ -35,9 +35,9 @@
               <td>
                 <%= render 'jsons/single_json', json: bibtex_entry %>
                 <button type="button" class="btn btn-success text-left bibtex_entry selected-entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>" >
-                  <%= bibtex_entry.content %>
+                  <%#= bibtex_entry.content %>
                   <div class="child_of_button" style="display: none;" id="bibtex_entry_id_<%= bibtex_entry.id %>_content">
-                    <%= bibtex_entry.content %>
+                    <%#= bibtex_entry.content %>
                   </div>
                 </button>
                 </td>
@@ -46,7 +46,7 @@
                   <% unless child.blank? || child.id.blank? %>
                   <%= render 'jsons/single_json', json: child %>
                     <button type="button" class="btn btn-light text-left bibtex_entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>">
-                      <%= child.content %>
+                      <%#= child.content %>
                       <%#= raw child.content %>
                       <%# bibtex_parse = BibTeX.parse(child.content) %>
                       <%# bibtex_entry_cp = cp.import bibtex_parse.to_citeproc %>

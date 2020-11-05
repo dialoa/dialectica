@@ -38,7 +38,8 @@ class CreateBibtexFileJob < ApplicationJob
 
           begin
             serrano = Serrano.works(query: line)
-            json.push(serrano["message"]["items"].first)
+            result_from_serrano = Serrano.content_negotiation(ids: serrano["message"]["items"].first["DOI"], format: "citeproc-json")
+            json.push(result_from_serrano)
           rescue
             @retries ||= 0
             if @retries < 3
