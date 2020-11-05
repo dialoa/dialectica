@@ -3,10 +3,10 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
 
   def perform(text, email, format)
 
-    if format == "bibtex"
-      @array_of_bibtex_originals = ""
-      cp = CiteProc::Processor.new style: 'apa', format: 'text'
+    cp = CiteProc::Processor.new style: 'apa', format: 'text'
+    @array_of_originals = ""
 
+    if format == "bibtex"
       file_to_store = Tempfile.new('comparison')
       file_to_store.write(text)
       file_to_store.rewind
@@ -25,7 +25,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
           serrano = Serrano.works(query: citation_of_result_from_bibtex)
 
           serrano["message"]["items"].first(10).each do |item|
-            Json.create(content: item)
+            bibtex_entry_of_author.children.create(content: result_from_crossref.to_s.strip)
           end
         rescue
           @retries ||= 0
@@ -36,20 +36,26 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
             retry
           end
         end
-        @array_of_bibtex_originals = @array_of_bibtex_originals + ", #{bibtex_entry_of_author.id}"
+        @array_of_originals = @array_of_bibtex_originals + ", #{bibtex_entry_of_author.id}"
       end
       file_to_store.close
-      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_bibtex_originals, email).deliver_now
+      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, format).deliver_now
 
     elsif format == "json"
       json = JSON.parse(text)
-
       json.each do |item|
-        serrano = Serrano.works(query: item)
-        serrano["message"]["items"].first(10).each do |item|
-          Json.create(content: item)
+        original_json = Json.create(content: text)
+        #byebug
+        #citation_of_result_from_bibtex = (cp.render :bibliography, id: article.id).first
+        serrano = Serrano.works(query: item["DOI"])
+        serrano["message"]["items"].first(10).each do |inner_item|
+          original_json.children.create(content: inner_item)
         end
+        @array_of_originals = @array_of_originals + ", #{original_json.id}"
+        #byebug
       end
+
+      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, format).deliver_now
     end
   end
 

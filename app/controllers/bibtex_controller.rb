@@ -4,10 +4,18 @@ require 'fuzzystringmatch'
 class BibtexController < ApplicationController
 
   def compare_author_bibtex_with_crossref_create
-    text = params[:text]
-    email = params[:email]
 
-    CompareAuthorBibtexWithCrossrefJob.perform_later(text, email)
+    email = params[:email]
+    format = params[:format]
+    file = params[:file]
+
+    if file.present?
+      text = file.read
+    else
+      text = params[:text]
+    end
+
+    CompareAuthorBibtexWithCrossrefJob.perform_later(text, email, format)
 
     redirect_to bibtex_compare_author_bibtex_with_crossref_path, notice: 'Wait for the mail!'
   end
@@ -17,9 +25,10 @@ class BibtexController < ApplicationController
   end
 
   def compare_author_bibtex_with_crossref_select
-    array_of_bibtex_originals = params[:array_of_bibtex_originals]
-    array_of_bibtex_originals.split(',')
-    @array_of_bibtex_originals = BibtexEntry.where(id: array_of_bibtex_originals.split(','))
+    array_of_originals = params[:array_of_originals]
+    @format = params[:format]
+    array_of_originals.split(',')
+    @array_of_originals = BibtexEntry.where(id: array_of_originals.split(','))
 
   end
 

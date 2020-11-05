@@ -46,7 +46,7 @@ Rails.application.routes.draw do
 
   post '/bibtex/bibtex_compare_author_bibtex_with_crossref_create', to: 'bibtex#compare_author_bibtex_with_crossref_create', as: "bibtex_compare_author_bibtex_with_crossref_create"
 
-  get '/bibtex/bibtex_compare_author_bibtex_with_crossref_select/:array_of_bibtex_originals', to: 'bibtex#compare_author_bibtex_with_crossref_select', as: "bibtex_compare_author_bibtex_with_crossref_select"
+  get '/bibtex/bibtex_compare_author_bibtex_with_crossref_select/:format/:array_of_originals/', to: 'bibtex#compare_author_bibtex_with_crossref_select', as: "bibtex_compare_author_bibtex_with_crossref_select"
 
   get '/editor/editor', to: "editor#editor", as: 'editor'
   post '/editor/editor', to: "editor#editor"
