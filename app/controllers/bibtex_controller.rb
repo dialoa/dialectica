@@ -26,9 +26,14 @@ class BibtexController < ApplicationController
 
   def compare_author_bibtex_with_crossref_select
     array_of_originals = params[:array_of_originals]
-    @format = params[:format]
+    @format_type = params[:format_type]
     array_of_originals.split(',')
-    @array_of_originals = BibtexEntry.where(id: array_of_originals.split(','))
+
+    if @format_type == "json"
+      @array_of_originals = Json.where(id: array_of_originals.split(','))
+    else
+      @array_of_originals = BibtexEntry.where(id: array_of_originals.split(','))
+    end
 
   end
 

@@ -1,6 +1,7 @@
 <% cp = CiteProc::Processor.new style: 'apa', format: 'html' %>
 
 <div class="container-fluid">
+  <%#= @format_type %>
   <h1>Select Bibtex-Entries</h1>
   <hr />
   <p>
@@ -9,7 +10,7 @@
   <p>
     If something doesn't work or if you need something special, please contact me: <%= mail_to "sandro.raess@philosophie.ch", "sandro.raess@philosophie.ch" %>
   </p>
-  <% if @format == "json" %>
+  <% if @format_type == "json" %>
     <hr />
     <p>
       <table class="table table-bordered">
@@ -34,6 +35,7 @@
                 <% bibtex_entry.children.each do |child| %>
                   <% unless child.blank? || child.id.blank? %>
                     <button type="button" class="btn btn-light text-left bibtex_entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>">
+                      <%= child.content %>
                       <%#= raw child.content %>
                       <%# bibtex_parse = BibTeX.parse(child.content) %>
                       <%# bibtex_entry_cp = cp.import bibtex_parse.to_citeproc %>
@@ -52,7 +54,7 @@
         </tbody>
       </table>
     </p>
-  <% else == "bibtex" %>
+  <% elsif @format_type == "bibtex" %>
   <hr />
   <p>
     <table class="table table-bordered">
