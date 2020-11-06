@@ -1,6 +1,9 @@
 <%#= json.id %>
 <div id="jsoneditor_<%= json.id %>" style="width: 400px; height: 400px;"></div>
 <button id="jsoneditor_<%= json.id %>_update" type="button" class="btn btn-primary">Save</button>
+
+<%#= render 'jsons/single_json', json: json %>
+
 <script>
     // create the editor
     var container = document.getElementById("jsoneditor_<%= json.id %>")
