@@ -1,4 +1,5 @@
-<div class="json_view" id="json_view_<%= json.id %>" class="border rounded">
+<% json_view_ancestry = json.has_parent? ? json.parent_id : json.id %>
+<div class="json_view json_view_ancestry_<%= json_view_ancestry %>" id="json_view_<%= json.id %>" class="border rounded" json_view_ancestry_id="<%= json_view_ancestry %>">
   <ul class="nav nav-tabs" id="nav_tabs_json_view_<%= json.id %>" role="tablist">
     <li class="nav-item" role="presentation">
       <a class="nav-link active" id="apa_view_<%= json.id %>-tab" data-toggle="tab" href="#apa_view_<%= json.id %>" role="tab" aria-controls="apa_view_<%= json.id %>" aria-selected="true">APA Style</a>
@@ -38,9 +39,9 @@
 
   <% if local_assigns[:select_option] %>
     <% if local_assigns[:selected] %>
-      <button type="button" class="btn btn-success m-1 selected_entry_comparator">Selected</button>
+      <button type="button" class="select_button_entry_comparator btn btn-success m-1 selected_entry_comparator">Selected</button>
     <% else %>
-      <button type="button" class="btn btn-outline-success m-1 select_entry_comparator">Select</button>
+      <button type="button" class="select_button_entry_comparator btn btn-light m-1">Select</button>
     <% end %>
   <% end %>
 
