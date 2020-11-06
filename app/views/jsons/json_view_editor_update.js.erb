@@ -2,7 +2,7 @@ var json_view_id = "#json_view_<%= @json.id %>"
 
 $( json_view_id ).fadeOut( "slow", function() {
 
-    content = $("<%= escape_javascript( render "jsons/json_view", json: @json ) %>")
+    content = $("<%= escape_javascript( render "jsons/json_view", json: @json, select_option: true ) %>")
 
     $(json_view_id).replaceWith(function(){
       return $(content).hide().fadeIn("slow");

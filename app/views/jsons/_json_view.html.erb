@@ -1,4 +1,4 @@
-<div id="json_view_<%= json.id %>">
+<div class="json_view" id="json_view_<%= json.id %>" class="border rounded">
   <ul class="nav nav-tabs" id="nav_tabs_json_view_<%= json.id %>" role="tablist">
     <li class="nav-item" role="presentation">
       <a class="nav-link active" id="apa_view_<%= json.id %>-tab" data-toggle="tab" href="#apa_view_<%= json.id %>" role="tab" aria-controls="apa_view_<%= json.id %>" aria-selected="true">APA Style</a>
@@ -14,17 +14,17 @@
     </li>
   </ul>
   <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="apa_view_<%= json.id %>" role="tabpanel" aria-labelledby="apa_view_<%= json.id %>-tab">
-      <div id="apa_<%= json.id %>">
+    <div class="tab-pane fade show active p-1" id="apa_view_<%= json.id %>" role="tabpanel" aria-labelledby="apa_view_<%= json.id %>-tab">
+      <div class="apa" id="apa_<%= json.id %>">
 
       </div>
     </div>
-    <div class="tab-pane fade show " id="bibtex_view_<%= json.id %>" role="tabpanel" aria-labelledby="bibtex_view_<%= json.id %>-tab">
-      <div id="bibtex_<%= json.id %>">
+    <div class="tab-pane fade show p-1" id="bibtex_view_<%= json.id %>" role="tabpanel" aria-labelledby="bibtex_view_<%= json.id %>-tab">
+      <div class="bibtex" id="bibtex_<%= json.id %>">
 
       </div>
     </div>
-    <div class="tab-pane fade" id="raw_json_view_<%= json.id %>" role="tabpanel" aria-labelledby="raw_json_view_<%= json.id %>-tab">
+    <div class="tab-pane fade p-1" id="raw_json_view_<%= json.id %>" role="tabpanel" aria-labelledby="raw_json_view_<%= json.id %>-tab">
       <div id="raw_json_<%= json.id %>">
         <%= json.content %>
       </div>
@@ -32,10 +32,17 @@
     <div class="tab-pane fade" id="editor_tab_view_<%= json.id %>" role="tabpanel" aria-labelledby="editor_tab_view_<%= json.id %>-tab">
       <div id="jsoneditor_<%= json.id %>" style="width: 400px; height: 400px;">
       </div>
-      <br />
-      <button id="json_view_editor_update_<%= json.id %>" type="button" class="btn btn-primary">Update</button>
+      <button id="json_view_editor_update_<%= json.id %>" type="button" class="btn btn-primary m-1">Update</button>
     </div>
   </div>
+
+  <% if local_assigns[:select_option] %>
+    <% if local_assigns[:selected] %>
+      <button type="button" class="btn btn-success m-1 selected_entry_comparator">Selected</button>
+    <% else %>
+      <button type="button" class="btn btn-outline-success m-1 select_entry_comparator">Select</button>
+    <% end %>
+  <% end %>
 
   <script>
 
