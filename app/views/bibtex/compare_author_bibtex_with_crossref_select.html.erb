@@ -97,28 +97,27 @@
 
   $( document ).ready(function() {
 
-    $( ".select_button_entry_comparator" ).click(function() {
-      json_view_ancestry_id = $(this).parent().attr("json_view_ancestry_id");
-      json_view_ancestry = ".json_view_ancestry_" + json_view_ancestry_id
+    $(document).on('click', '.select_button_entry_comparator', function() {
+        json_view_ancestry_id = $(this).parent().attr("json_view_ancestry_id");
+        json_view_ancestry = ".json_view_ancestry_" + json_view_ancestry_id
 
-      if ($(this).hasClass('selected_entry_comparator')) {
-        $(json_view_ancestry).each(function() {
-          $(this).find(".select_button_entry_comparator").removeClass('selected_entry_comparator').removeClass("btn-success").removeClass("btn-light").addClass("btn-light").text("Select");
-        })
-      } else {
-        $(json_view_ancestry).each(function() {
-          $(this).find(".select_button_entry_comparator").removeClass('selected_entry_comparator').removeClass("btn-success").removeClass("btn-light").addClass("btn-light").text("Select");
-        })
-        $(this).addClass( 'selected_entry_comparator').removeClass("btn-light").addClass("btn-success");
-        $(this).text("Selected");
-      }
+        if ($(this).hasClass('selected_entry_comparator')) {
+          $(json_view_ancestry).each(function() {
+            $(this).find(".select_button_entry_comparator").removeClass('selected_entry_comparator').removeClass("btn-success").removeClass("btn-light").addClass("btn-light").text("Select");
+          })
+        } else {
+          $(json_view_ancestry).each(function() {
+            $(this).find(".select_button_entry_comparator").removeClass('selected_entry_comparator').removeClass("btn-success").removeClass("btn-light").addClass("btn-light").text("Select");
+          })
+          $(this).addClass( 'selected_entry_comparator').removeClass("btn-light").addClass("btn-success");
+          $(this).text("Selected");
+        }
 
-      //$( json_view_ancestry_id ).removeClass("btn-success").removeClass("btn-outline-success").addClass("btn-outline-success");
-      //$( this ).addClass("btn-success").toggleClass("");
+        fill_chosen_entries();
+
     });
 
-    get_apa_of_selected_entries()
-
+        fill_chosen_entries();
   });
 
   function get_apa_of_selected_entries(){
@@ -126,6 +125,15 @@
       console.log($(this).parent().find(".apa").text());
       console.log($(this).parent().attr("json_view_id"))
     })
+  }
+
+  function fill_chosen_entries() {
+    all_entries = ""
+    $('.selected_entry_comparator').each(function() {
+      all_entries = all_entries + "\n \n" + $.trim($(this).parent().find(".apa").text());
+    })
+
+    $('#chosen_entries').val(all_entries);
   }
 
 </script>
