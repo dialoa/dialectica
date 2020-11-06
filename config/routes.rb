@@ -69,6 +69,9 @@ Rails.application.routes.draw do
 
   get '/codes-tools/download/:id', to: "codes#download", as: "codes_download"
 
+  get '/jsons-tools/json_view/:id', to: "jsons#json_view", as: "json_view"
   get '/jsons-tools/editor/:id', to: "jsons#json_editor", as: "json_editor"
   post '/jsons-tools/editor_update/:id', to: "jsons#json_editor_update", as: "json_editor_update"
+
+  post '/jsons-tools/json_view_editor_update/:id', to: "jsons#json_view_editor_update", as: "json_view_editor_update"
 end

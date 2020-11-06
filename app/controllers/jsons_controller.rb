@@ -1,5 +1,5 @@
 class JsonsController < ApplicationController
-  before_action :set_json, only: [:show, :edit, :update, :destroy, :json_editor, :json_editor_update]
+  before_action :set_json, only: [:show, :edit, :update, :destroy, :json_editor, :json_editor_update, :json_view, :json_view_editor_update]
 
   # GET /jsons
   # GET /jsons.json
@@ -69,6 +69,15 @@ class JsonsController < ApplicationController
     content = params[:content]
     @json.update(content: content.to_json)
     #render head :ok
+  end
+
+  def json_view
+
+  end
+
+  def json_view_editor_update
+    content = params[:content]
+    @json.update(content: content.to_json)
   end
 
   private
