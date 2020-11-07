@@ -39,7 +39,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
         @array_of_originals = @array_of_originals + ", #{bibtex_entry_of_author.id}"
       end
       file_to_store.close
-      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, format).deliver_now
+      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, "json").deliver_now
 
     elsif format == "json"
       json = JSON.parse(text)
@@ -62,7 +62,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
         #byebug
       end
 
-      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, format).deliver_now
+      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, "json").deliver_now
     end
   end
 
