@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get '/about-us', to: 'pages#show', id: "about-us"
   get '/dashboard', to: 'static_pages#dashboard', as: "dashboard"
   get '/bibtex', to: 'static_pages#bibtex', as: "bibtex"
+  get '/submission_welcome', to: 'static_pages#submission_welcome', as: "submission_welcome"
 
   get '/pandoc', to: 'pandoc#pandoc', as: "pandoc"
   post 'pandoc/pandoc_command', to: 'pandoc#pandoc_command', as: "pandoc_command"
