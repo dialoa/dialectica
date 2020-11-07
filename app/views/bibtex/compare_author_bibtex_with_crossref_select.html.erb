@@ -88,7 +88,12 @@
   <% end %>
 
   <p>
-      <textarea name="chosen_entries" id="chosen_entries" rows="30" style="width:100%;"></textarea>
+    <strong>JSON</strong>
+      <textarea name="chosen_entries_for_json" id="chosen_entries_for_json" rows="30" style="width:100%;"></textarea>
+  </p>
+  <p>
+    <strong>Bibtex</strong>
+      <textarea name="chosen_entries_for_bibtex" id="chosen_entries_for_bibtex" rows="30" style="width:100%;"></textarea>
   </p>
 
 </div>
@@ -128,12 +133,17 @@
   }
 
   function fill_chosen_entries() {
-    all_entries = ""
+    all_entries_for_json = ""
     $('.selected_entry_comparator').each(function() {
-      all_entries = all_entries + "\n \n" + $.trim($(this).parent().find(".apa").text());
+      all_entries_for_json = all_entries_for_json + "\n \n" + $.trim($(this).parent().find(".raw_json").text());
     })
+    $('#chosen_entries_for_json').val(all_entries_for_json);
 
-    $('#chosen_entries').val(all_entries);
+    all_entries_for_bibtex = ""
+    $('.selected_entry_comparator').each(function() {
+      all_entries_for_bibtex = all_entries_for_bibtex + "\n \n" + $.trim($(this).parent().find(".bibtex").text());
+    })
+    $('#chosen_entries_for_bibtex').val(all_entries_for_bibtex);
   }
 
 </script>

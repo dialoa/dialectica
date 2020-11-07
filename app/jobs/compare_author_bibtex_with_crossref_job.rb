@@ -48,7 +48,10 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
         original_json = Json.create(content: item)
         #byebug
         #citation_of_result_from_bibtex = (cp.render :bibliography, id: article.id).first
-        serrano = Serrano.works(query:item_json.to_s)
+        #possible = CiteProc.process item_json, :style => :apa
+        #byebug
+        search_query_string =  item_json["title"] + ", " + item_json["author"].first["given"] + " " + item_json["author"].first["family"]
+        serrano = Serrano.works(query: search_query_string)
 
         serrano["message"]["items"].first(10).each do |inner_item|
           #original_json.children.create(content: inner_item)
