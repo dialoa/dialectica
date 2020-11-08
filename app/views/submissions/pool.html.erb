@@ -1,60 +1,27 @@
 <div class="container">
 <h1>Pool</h1>
 <hr />
-<h3>Submissions without reviewers</h3>
 <p>
-  <table class="table table-striped table-bordered table-hover">
-  <thead>
-    <tr>
-      <th>
-        Submission-Date
-        </th>
-      <th scope="col">Title</th>
-      <th scope="col">Author</th>
-      <th scope="col">Area</th>
-      <th scope="col">File</th>
-      <th scope="col">Reviewers</th>
-      <th>
-        Action
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <% submissions_with_reviewer = Submission.all %>
-    <%# Submission.where.not(id: submissions_with_reviewer.pluck(:id)).each do |submission| %>
-    <% submissions_with_reviewer.each do |submission| %>
-      <tr class="<%= submission.submission_urgency %>">
-        <td>
-          <%= submission.created_at.strftime("%d/%m/%Y") %>
-        </td>
-        <td>
-          <%= submission.title %>
-        </td>
-        <td>
-          Anonymous
-          <%#= submission.firstname %> <%#= submission.lastname %>
-        </td>
-        <td><%= submission.area %></td>
-        <td><%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") if submission.file.attached?  %></td>
-        <td>
-          <%= submission.users.count unless submission.users.empty? %>
-          <%# submission.users.each do |user| %>
-            <%#= user.email %>
-          <%# end %>
-          <% if submission.users.empty? %>
-            <strong>No Reviewers yet</strong>
-          <% end %>
-        </td>
-        <td>
-          <% if !current_user.nil? && current_user.submissions.where(id: submission.id).empty?  %>
-            <%= link_to "I'll review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-primary my-2" %>
-            <%= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
-            <%= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
 </p>
+<% unless user_signed_in? %>
+<p>
+  <strong>If you are a reviewer, please log in </strong><br /><br />
+    <%= link_to('Login', new_user_session_path, class: "btn btn-primary") %>
+</p>
+
+<% else %>
+
+<% submissions_without_reviewers = Submission.left_outer_joins(:users).where( users: { id: nil } ) %>
+<% submissions_with_reviewers = Submission.where.not(id: submissions_without_reviewers.pluck(:id)) %>
+
+<h3>Submissions without reviewers</h3>
+<%= render 'submissions/table_for_submissions', submissions: submissions_without_reviewers.order(:created_at) %>
+<hr />
+
+<h3>Submissions with reviewers</h3>
+<%= render 'submissions/table_for_submissions', submissions: submissions_with_reviewers.order(:created_at) %>
+
+<% end %>
+
 </div>

@@ -11,7 +11,7 @@
       <div class="card-body">
         <h5 class="card-title">I'm an Author</h5>
         <p class="card-text">I'd like to submit a paper to Dialectia.</p>
-        <a href="#" class="btn btn-primary">Submit a Paper</a>
+        <%= link_to "Submit a Paper", new_submission_path, class: "btn btn-primary" %>
       </div>
     </div>
 
@@ -19,7 +19,7 @@
       <div class="card-body">
         <h5 class="card-title">I'm a Reviewer</h5>
         <p class="card-text">I'd like to review papers for Dialectica.</p>
-        <a href="#" class="btn btn-primary">Log in</a>
+        <%= link_to "To the pool", submission_pool_path, class: "btn btn-primary" %>
       </div>
     </div>
 
