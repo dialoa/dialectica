@@ -102,20 +102,25 @@ class PandocController < ApplicationController
     stuff.file.attach(file)
 
     #stuff = Stuff.find(params[:stuff])
-    #file = params[:file]
+    file = params[:file]
     docx = stuff.file.download.force_encoding('UTF-8')
 
-    dir = Rails.root.join('public', 'dummyreferences')
+    dir = Rails.root.join('public', 'pandoc_convert')
     #Dir.mkdir(dir) unless Dir.exist?(dir)
     #File.open(dir.join("basic_markdown_editor.md"), 'w+') do |file|
     #  file.write(@inputs[:text])
     #end
 
-    # Pandoc -s --filter=pandoc-citeproc --bibliography=dummyreferences.bib -o output.tex input.md
+    # pandoc -s --filter=pandoc-citeproc --bibliography=dummyreferences.bib -o output.tex input.md
     #@converted = PandocRuby.convert(docx, :s, {f: :markdown, to: :latex}, '--filter=pandoc-citeproc', '--bibliography=dummyreferences.bib')
-    @converted = PandocRuby.convert(docx, :s, {f: :markdown, to: :latex}, '--citeproc', "--bibliography=#{dir}/dummyreferences.bib")
+    @converted = PandocRuby.convert(docx, :s, {f: :markdown, to: :latex}, '--citeproc', "--bibliography=#{dir}/dummyreferences.bib", "--biblatex")
 
+    #File.open(dir.join("pandoc_convert.md"), 'w+') do |file_s|
+    #  file_s.write(file.read)
+    #end
 
+    #`pandoc -s #{dir}/pandoc_convert.md -o #{dir}/pandoc_convert.tex --filter=pandoc-citeproc --bibliography=#{dir}/dummyreferences.bib`
+    #`pandoc -s #{dir}/pandoc_convert.md -o #{dir}/pandoc_convert.tex --citeproc --bibliography=#{dir}/dummyreferences.bib --biblatex`
 
     send_data @converted, filename: "markdown_reconverted.tex"
 
