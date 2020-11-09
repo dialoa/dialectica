@@ -95,7 +95,7 @@ Rails.application.configure do
     port:                 587,
     domain:               'gmail.com',
     user_name:             'dialecticaphilosophie@gmail.com',
-    password:              Rails.application.credentials.gmail_password,
+    password:              ENV['GMAIL_PASSWORD'],
     authentication:       'plain',
     enable_starttls_auto: true }
 
