@@ -6,6 +6,7 @@
   <div class="form-inputs">
     <%= f.input :title %>
     <%= f.input :area, collection: Submission.areas.map {|p| [t("#{p}"), p]} %>
+    <%= f.input :email %>
     <div class="row">
         <div class="col-6">
           <%= f.input :firstname %>

@@ -22,7 +22,7 @@
         <%= submission.created_at.strftime("%d/%m/%Y") %>
       </td>
       <td>
-        <%= submission.title %>
+        <%= link_to submission.title, submission_path(submission) %>
       </td>
       <td>
         Anonymous
@@ -46,7 +46,7 @@
         <% else %>
           <%= link_to "I won't review it anymore", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-danger btn-block my-2" %>
         <% end %>
-        <%= mail_to "", "I know someone who might review it", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica. It is called \"#{submission.title}\" and it might fall in your area of expertise. \n\n Please check it out! View it here: #{submission_pool_url} \n\n Best regards", class: "btn btn-success btn-block my-2" %>
+        <%= mail_to "", "I know someone who might review it", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica. It is called \"#{submission.title}\" and it might fall in your area of expertise. \n\n Please check it out! View it here: #{submission_url(submission)} \n\n Kind regards", class: "btn btn-success btn-block my-2" %>
         <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
       </td>
     </tr>
