@@ -92,4 +92,33 @@ class PandocController < ApplicationController
 
     stuff.delete
   end
+
+  def pandoc_reconvert
+
+    file = params[:file]
+    filename = file.original_filename
+
+    stuff = Stuff.create(filename: filename)
+    stuff.file.attach(file)
+
+    #stuff = Stuff.find(params[:stuff])
+    #file = params[:file]
+    docx = stuff.file.download.force_encoding('UTF-8')
+
+    dir = Rails.root.join('public', 'dummyreferences')
+    #Dir.mkdir(dir) unless Dir.exist?(dir)
+    #File.open(dir.join("basic_markdown_editor.md"), 'w+') do |file|
+    #  file.write(@inputs[:text])
+    #end
+
+    # Pandoc -s --filter=pandoc-citeproc --bibliography=dummyreferences.bib -o output.tex input.md
+    #@converted = PandocRuby.convert(docx, :s, {f: :markdown, to: :latex}, '--filter=pandoc-citeproc', '--bibliography=dummyreferences.bib')
+    @converted = PandocRuby.convert(docx, :s, {f: :markdown, to: :latex}, '--citeproc', "--bibliography=#{dir}/dummyreferences.bib")
+
+
+
+    send_data @converted, filename: "markdown_reconverted.tex"
+
+    stuff.delete
+  end
 end

@@ -49,5 +49,19 @@
           <% end %>
         </p>
       </div>
+      <div class="col-6">
+        <h3>Reconvert</h3>
+        <p>
+          From Markdown to Latex
+        </p>
+        <p>
+          <%= form_tag pandoc_reconvert_path, multipart: true do %>
+            <%= file_field_tag :file, class: "btn btn-secondary" %>
+            <br />
+            <br />
+            <%= button_tag "Reconvert", class: "btn btn-primary" %>
+          <% end %>
+        </p>
+      </div>
   </div>
 </div>
