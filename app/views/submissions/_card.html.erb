@@ -3,6 +3,10 @@
   <div class="card-body">
     <h5 class="card-title"><%= submission.title %></h5>
     <hr class="bg-light" />
+    <%= submission.file.attached? %>
+    <% if submission.file.attached? %>
+      <% submission.file.previewable? %>
+    <% end %>
     <p>
       <% if submission.file.attached? %>
         <% if submission.file.previewable? %>
@@ -11,7 +15,7 @@
         <% elsif submission.file.variable? %>
           <%= link_to(image_tag(submission.file.variant(resize: "200x200")), rails_blob_path(submission.file, disposition: "attachment"))%>
         <% else %>
-          <%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") %>
+          <%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment"), class: "text-white" %>
         <% end %>
       <% end %>
     </p>
