@@ -1,3 +1,5 @@
+<%= tinymce_assets %>
+<%= tinymce %>
 
 <%= simple_form_for(@submission) do |f| %>
   <%= f.error_notification %>
@@ -18,6 +20,10 @@
     <p>
       <strong>Upload File</strong><br />
       <%= f.file_field :file %>
+    </p>
+    <p>
+      <strong>History</strong><br />
+        <%= f.text_area :history, :class => "tinymce", :rows => 40, :cols => 120 %>
     </p>
 
   </div>

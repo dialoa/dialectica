@@ -1,0 +1,32 @@
+<h3><%= submission.title %></h3>
+<hr />
+<ul class="nav nav-pills mb-3" id="pills-tab-submission-<%= submission.id %>-random-id-<%= random_id %>" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link active" id="pills-action-tab" data-toggle="pill" href="#pills-action-<%= submission.id %>-random-id-<%= random_id %>" role="tab" aria-controls="pills-action" aria-selected="true">Action</a>
+  </li>
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" id="pills-history-tab" data-toggle="pill" href="#pills-history-<%= submission.id %>-random-id-<%= random_id %>" role="tab" aria-controls="pills-history" aria-selected="false">History</a>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tab-submission-<%= submission.id %>-content">
+  <div class="tab-pane fade show active" id="pills-action-<%= submission.id %>-random-id-<%= random_id %>" role="tabpanel" aria-labelledby="pills-action-tab">
+    <% unless current_user.nil? %>
+      <%  if current_user.submissions.where(id: submission.id).empty?  %>
+        <%= link_to "I'll review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-primary btn-block my-2" %>
+        <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
+      <% else %>
+        <%= link_to "I won't review it anymore", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-danger btn-block my-2" %>
+      <% end %>
+    <%= mail_to "", "I know someone who might review it", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica. It is called \"#{submission.title}\" and it might fall in your area of expertise. \n\n Please check it out! View it here: #{submission_url(submission)} \n\n Kind regards", class: "btn btn-success btn-block my-2" %>
+    <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
+    <% end %>
+  </div>
+  <div class="tab-pane fade" id="pills-history-<%= submission.id %>-random-id-<%= random_id %>" role="tabpanel" aria-labelledby="pills-history-tab">
+    <p class="card-text">
+      <strong>History: </strong>
+    </p>
+    <div class="border rounded p-2">
+      <%= raw Sanitize.fragment(submission.history, Sanitize::Config::RELAXED) %>
+    </div>
+  </div>
+</div>

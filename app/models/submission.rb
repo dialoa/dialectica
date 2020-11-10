@@ -1,7 +1,7 @@
 class Submission < ApplicationRecord
 has_many :submission_users
 has_many :users, :through => :submission_users
-  has_one_attached :file
+has_one_attached :file
 
   def self.areas
     ["metaphysics", "epistemology", "philosophy of science", "ethics"]
@@ -13,11 +13,11 @@ has_many :users, :through => :submission_users
 
   def submission_urgency
     if created_at > Date.today - 2.weeks
-      return "table-primary"
+      return "primary text-white"
     elsif created_at > Date.today - 4.weeks
-      return "table-warning"
+      return "warning text-white"
     else
-      return "table-danger"
+      return "danger text-white"
     end
   end
 

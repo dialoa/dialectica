@@ -59,6 +59,8 @@ Rails.application.routes.draw do
   get '/editor/pancritic_editor', to: "editor#pancritic_editor", as: "pancritic_editor"
   post '/editor/pancritic_editor', to: "editor#pancritic_editor", as: "pancritic_editor_post"
 
+
+  get '/submission_panel/:id', to: "submissions#panel", as: "submission_panel"
   get '/submission_pool', to: "submissions#pool", as: "submission_pool"
   post '/submissions_add_user_to_submission/:user_id/:submission_id', to: "submissions#add_user_to_submission", as: "submissions_add_user_to_submission"
   post '/submissions_remove_user_from_submission/:user_id/:submission_id', to: "submissions#remove_user_from_submission", as: "submissions_remove_user_from_submission"

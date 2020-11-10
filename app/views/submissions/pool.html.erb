@@ -1,28 +1,57 @@
-<div class="container">
-<h1>Pool</h1>
-<hr />
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-9 border-right">
+      <h1>Pool</h1>
+      <hr />
+      <%= render 'submissions/in_groups', submissions: Submission.all %>
+
+    </div>
+    <div class="col-3">
+      <h1>Panel</h1>
+      <hr />
+      <div id="panel-information-field" class="border rounded p-2">
+        <p>
+          <strong>Select an entry on the left side to display more information.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+
 <p>
 
 </p>
-<% unless user_signed_in? %>
-<p>
-  <strong>If you are a reviewer, please log in </strong><br /><br />
-    <%= link_to('Login', new_user_session_path, class: "btn btn-primary") %>
-</p>
+<%#= render 'submissions/card', submission: Submission.last %>
 
-<% else %>
+<%#= render 'submissions/in_groups', submissions: Submission.all %>
 
 <% submissions_without_reviewers = Submission.left_outer_joins(:users).where( users: { id: nil } ) %>
 <% submissions_with_reviewers = Submission.where.not(id: submissions_without_reviewers.pluck(:id)) %>
 
-<h3>Submissions without reviewers</h3>
-<%= render 'submissions/table_for_submissions', submissions: submissions_without_reviewers.order(:created_at) %>
-<hr />
-
-<h3>Submissions with reviewers</h3>
-<%= render 'submissions/table_for_submissions', submissions: submissions_with_reviewers.order(:created_at) %>
-<hr />
-
-<% end %>
-
 </div>
+
+<script>
+
+  $( document ).ready(function() {
+
+    $(document).on('click', '.pool-select-button', function() {
+      submission_id = $(this).attr("value");
+      console.log(submission_id);
+
+
+
+      $.ajax({
+        url: "/submission_panel/" + submission_id + ".js",
+        method: 'GET',
+        headers: {
+          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+        }
+      }).done(function(response) {
+      $("#panel-information-field").html(response);
+    })
+
+    });
+  });
+
+
+</script>
