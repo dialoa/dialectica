@@ -13,7 +13,7 @@ gem 'ancestry'
 gem 'rubyzip'
 gem 'jsoneditor-rails'
 gem 'mini_magick'
-
+#gem 'poppler' 
 
 #gem 'wkhtmltopdf-binary'
 #gem 'wicked_pdf'
