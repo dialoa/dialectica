@@ -4,13 +4,10 @@
     <h5 class="card-title"><%= submission.title %></h5>
     <hr class="bg-light" />
     <p class="card-text">
-      <strong>Submission-Date: </strong><%= submission.created_at.strftime("%d/%m/%Y") %>
-    </p>
-    <p class="card-text">
-      <strong>Status: </strong><%= submission.status %>
-    </p>
-    <p class="card-text">
       <strong>Download: </strong><%= link_to "File", rails_blob_path(submission.file, disposition: "attachment") if submission.file.attached? %>
+    </p>
+    <p>
+      <%= image_tag submission.file.preview(resize: "200x200>") if submission.file.attached? && submission.file.previewable? %>
     </p>
       <button type="button" class="btn btn-light pool-select-button" value="<%=submission.id%>">Select</button>
     <%#= render 'submissions/panel', submission: submission, random_id: SecureRandom.random_number(10000000) %>

@@ -1,4 +1,10 @@
 <h3><%= submission.title %></h3>
+<p class="card-text">
+  <strong>Submission-Date: </strong><%= submission.created_at.strftime("%d/%m/%Y") %>
+</p>
+<p class="card-text">
+  <strong>Status: </strong><%= submission.status %>
+</p>
 <hr />
 <ul class="nav nav-pills mb-3" id="pills-tab-submission-<%= submission.id %>-random-id-<%= random_id %>" role="tablist">
   <li class="nav-item" role="presentation">

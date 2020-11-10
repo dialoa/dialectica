@@ -12,6 +12,7 @@ gem 'bibtex-ruby'
 gem 'ancestry'
 gem 'rubyzip'
 gem 'jsoneditor-rails'
+gem 'mini_magick'
 
 
 #gem 'wkhtmltopdf-binary'
