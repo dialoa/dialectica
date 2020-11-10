@@ -67,7 +67,6 @@ class SubmissionsController < ApplicationController
   end
 
   def pool
-
     @selection = params[:selection].present? ? params[:selection] : "without_reviewers"
     submissions_without_reviewers = Submission.left_outer_joins(:users).where( users: { id: nil } )
 
@@ -78,7 +77,7 @@ class SubmissionsController < ApplicationController
     elsif @selection == "by_me"
       @submissions = current_user.submissions.order(:created_at)
     elsif @selection == "all"
-      @submissions = Submission.all
+      @submissions = Submission.all.order(:created_at)
     end
     #@submissions = Submission.all.order(:created_at)
 
