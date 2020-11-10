@@ -3,11 +3,17 @@
   <div class="card-body">
     <h5 class="card-title"><%= submission.title %></h5>
     <hr class="bg-light" />
-    <p class="card-text">
-      <strong>Download: </strong><%= link_to "File", rails_blob_path(submission.file, disposition: "attachment") if submission.file.attached? %>
-    </p>
     <p>
-      <%= image_tag submission.file.preview(resize: "200x200>") if submission.file.attached? && submission.file.previewable? %>
+      <% if submission.file.attached? %>
+        <% if submission.file.previewable? %>
+          <%= link_to(image_tag(submission.file.preview(resize: "200x200>")),  rails_blob_path(submission.file, disposition: "attachment"))
+          %>
+        <% elsif submission.file.variable? %>
+          <%= link_to(image_tag(submission.file.variant(resize: "200x200")), rails_blob_path(submission.file, disposition: "attachment"))%>
+        <% else %>
+          <%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") %>
+        <% end %>
+      <% end %>
     </p>
       <button type="button" class="btn btn-light pool-select-button" value="<%=submission.id%>">Select</button>
     <%#= render 'submissions/panel', submission: submission, random_id: SecureRandom.random_number(10000000) %>
