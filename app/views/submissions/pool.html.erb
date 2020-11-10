@@ -3,9 +3,20 @@
   <div class="row">
     <div class="col-9 border-right">
       <h1>Pool</h1>
+      <p>
+        <% submission_option_list = [
+        ["Submissions without reviewers", "without_reviewers"],
+        ["Submissions with reviewers", "with_reviewers"],
+        ["Submissions to be reviewed by me", "by_me"],
+        ["All submissions", "all"]] %>
+        <div class="list-group">
+          <% submission_option_list.each do |element| %>
+            <a href="<%= submission_pool_path(selection: element[1]) %>" class="list-group-item list-group-item-action <%= "active" if @selection == element[1] %>"><%= element[0] %></a>
+          <% end %>
+        </div>
+      </p>
       <hr />
-      <%= render 'submissions/in_groups', submissions: Submission.all %>
-
+      <%= render 'submissions/in_groups', submissions: @submissions %>
     </div>
     <div class="col-3">
       <h1>Panel</h1>
@@ -36,9 +47,7 @@
 
     $(document).on('click', '.pool-select-button', function() {
       submission_id = $(this).attr("value");
-      console.log(submission_id);
-
-
+      //console.log(submission_id);
 
       $.ajax({
         url: "/submission_panel/" + submission_id + ".js",

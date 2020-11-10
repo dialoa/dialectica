@@ -68,6 +68,21 @@ class SubmissionsController < ApplicationController
 
   def pool
 
+    @selection = params[:selection].present? ? params[:selection] : "without_reviewers"
+    submissions_without_reviewers = Submission.left_outer_joins(:users).where( users: { id: nil } )
+
+    if @selection == "without_reviewers"
+      @submissions = submissions_without_reviewers.order(:created_at)
+    elsif @selection == "with_reviewers"
+      @submissions = Submission.where.not(id: submissions_without_reviewers.pluck(:id)).order(:created_at)
+    elsif @selection == "by_me"
+      @submissions = current_user.submissions.order(:created_at)
+    elsif @selection == "all"
+      @submissions = Submission.all
+    end
+    #@submissions = Submission.all.order(:created_at)
+
+    #submissions_with_reviewers = Submission.where.not(id: submissions_without_reviewers.pluck(:id))
   end
 
   def panel
