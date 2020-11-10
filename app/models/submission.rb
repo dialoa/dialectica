@@ -1,7 +1,9 @@
 class Submission < ApplicationRecord
-has_many :submission_users
-has_many :users, :through => :submission_users
-has_one_attached :file
+  has_many :submission_users
+  has_many :users, :through => :submission_users
+  has_one_attached :file
+
+  after_create :add_create_to_history
 
   def self.areas
     ["metaphysics", "epistemology", "philosophy of science", "ethics"]
@@ -19,6 +21,11 @@ has_one_attached :file
     else
       return "danger text-white"
     end
+  end
+
+  def add_create_to_history
+    history = self.history + "<p><strong>#{self.created_at.strftime("%d.%m.%Y")}</strong> Submission created </p>"
+    self.update(history: history)
   end
 
 end

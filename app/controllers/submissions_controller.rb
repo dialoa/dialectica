@@ -79,6 +79,7 @@ class SubmissionsController < ApplicationController
     @submission = Submission.find(params[:submission_id])
     @user.submissions << @submission if @user.submissions.where(id: @submission.id).empty?
 
+    @submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}</strong> Reviewer signed up for review </p>")
 
     redirect_to submission_pool_path, notice: 'Submission was added to your Profile'
   end
@@ -89,6 +90,7 @@ class SubmissionsController < ApplicationController
     @user.submissions.delete(@submission)
     #@user.submissions << @submission if @user.submissions.where(id: @submission.id).empty?
 
+    @submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}</strong> Signed up reviewer abandoned review </p>")
 
     redirect_to submission_pool_path, notice: 'Submission was removd from your Profile'
   end
