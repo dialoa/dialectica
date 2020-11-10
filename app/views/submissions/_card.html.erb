@@ -5,7 +5,7 @@
     <hr class="bg-light" />
     <%= submission.file.attached? %>
     <% if submission.file.attached? %>
-      <% submission.file.previewable? %>
+      <%= submission.file.previewable? %>
     <% end %>
     <p>
       <% if submission.file.attached? %>
