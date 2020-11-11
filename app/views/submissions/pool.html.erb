@@ -8,7 +8,7 @@
         ["Submissions without reviewers: #{@submissions_with_reviewers.count}", "without_reviewers"],
         ["Submissions with reviewers: #{@submissions_without_reviewers.count}", "with_reviewers"],
         ["Submissions to be reviewed by me", "by_me"],
-        ["All open submissions: #{Submission.all.count}", "all"],
+        ["All submissions: #{Submission.all.count}", "all"],
         ["Submissions suggested to me", "suggested_to_me"]] %>
         <div class="list-group">
           <% submission_option_list.each do |element| %>

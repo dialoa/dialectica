@@ -30,11 +30,14 @@ class SubmissionsController < ApplicationController
   # POST /submissions.json
   def create
     @submission = Submission.new(submission_params)
-    @submission.history = @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} created Submission</p>"
+    #@submission.history = @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} created Submission</p>"
 
     respond_to do |format|
       if @submission.save
-        format.html { redirect_to @submission, notice: 'Submission was successfully created.' }
+        format.html {
+          @submission.add_to_history(current_user, "Created Submission")
+          redirect_to @submission, notice: 'Submission was successfully created.'
+        }
         format.json { render :show, status: :created, location: @submission }
       else
         format.html { render :new }
@@ -98,9 +101,9 @@ class SubmissionsController < ApplicationController
     @submission = Submission.find(params[:submission_id])
     @user.submissions << @submission if @user.submissions.where(id: @submission.id).empty?
 
-    @submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} signed up as Internal Referee</p>")
-
-    redirect_to submission_pool_path, notice: 'Submission was added to your Profile'
+    #@submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} signed up as Internal Referee</p>")
+    @submission.add_to_history(current_user, "Signed up as Internal Referee")
+    redirect_to submission_pool_path, notice: 'Signed up as Internal Referee'
   end
 
   def remove_user_from_submission
@@ -109,9 +112,10 @@ class SubmissionsController < ApplicationController
     @user.submissions.delete(@submission)
     #@user.submissions << @submission if @user.submissions.where(id: @submission.id).empty?
 
-    @submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} quit as Internal Referee</p>")
+    #@submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} quit as Internal Referee</p>")
+    @submission.add_to_history(current_user, "Quit as Internal Referee")
 
-    redirect_to submission_pool_path, notice: 'Submission was removd from your Profile'
+    redirect_to submission_pool_path, notice: 'Quit as Internal Referee'
   end
 
   private

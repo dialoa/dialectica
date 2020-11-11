@@ -3,6 +3,8 @@ class Submission < ApplicationRecord
   has_many :users, :through => :submission_users
   has_one_attached :file
 
+  has_many :reports
+
   #after_create :add_create_to_history
 
   def self.areas
@@ -31,6 +33,11 @@ class Submission < ApplicationRecord
 
   def add_create_to_history
     history = self.history + "<p><strong>#{self.created_at.strftime("%d.%m.%Y")} - #{current_user.firstname} #{current_user.lastname}</strong> Submission created </p>"
+    self.update(history: history)
+  end
+
+  def add_to_history(user, message)
+    history = self.history + "<p><strong>#{self.created_at.strftime("%d.%m.%Y")} - #{user.name}</strong>: " + message + "</p>"
     self.update(history: history)
   end
 

@@ -1,0 +1,20 @@
+<div class="border rounded p-2 my-2">
+  <p>
+    <strong>Report by <%= report.user.name unless report.user.blank? %></strong>
+  </p>
+  <hr />
+  <%= raw Sanitize.fragment(report.content, Sanitize::Config::RELAXED) %>
+
+<p>
+  <% if report.file.attached? %>
+    <% if report.file.previewable? %>
+      <%= link_to(image_tag(report.file.preview(resize: "200x200>")),  rails_blob_path(report.file, disposition: "attachment"))
+      %>
+    <% elsif report.file.variable? %>
+      <%= link_to(image_tag(report.file.variant(resize: "200x200")), rails_blob_path(report.file, disposition: "attachment"))%>
+    <% else %>
+      <%= link_to "Download", rails_blob_path(report.file, disposition: "attachment"), class: "text-white" %>
+    <% end %>
+  <% end %>
+</p>
+</div>

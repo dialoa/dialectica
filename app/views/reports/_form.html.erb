@@ -1,0 +1,23 @@
+<%= tinymce_assets %>
+<%= tinymce %>
+
+<%= simple_form_for(@report) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <p>
+    <strong>Upload File</strong><br /><br />
+    <%= f.file_field :file %>
+  </p>
+
+  <p>
+    <strong>Content</strong>
+  </p>
+  <div class="form-inputs">
+    <%= f.text_area :content, :class => "tinymce", :rows => 40, :cols => 120 %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

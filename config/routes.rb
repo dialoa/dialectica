@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :reports
   resources :jsons
   resources :codes
   resources :bibtex_files
@@ -79,4 +80,6 @@ Rails.application.routes.draw do
   post '/jsons-tools/editor_update/:id', to: "jsons#json_editor_update", as: "json_editor_update"
 
   post '/jsons-tools/json_view_editor_update/:id', to: "jsons#json_view_editor_update", as: "json_view_editor_update"
+
+  get '/report-tools/new_for_reviewer/:submission_id', to: "reports#new_for_reviewer", as: "new_report_for_reviewer"
 end
