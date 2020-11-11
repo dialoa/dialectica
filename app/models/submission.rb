@@ -15,6 +15,27 @@ class Submission < ApplicationRecord
     ["submitted", "rejected", "published", "review"]
   end
 
+  def self.frame_statuses
+    ["non-active", "half-active", "active", "proposed"]
+  end
+
+  def frame_status
+    case
+    when self.users.count == 2 then "active"
+    when self.users.count == 1 then "half-active"
+    else "non-active"
+    end
+  end
+
+  def frame_status_color
+    case
+    when self.frame_status == "active" then "border-warning thick-borders-3"
+    when self.frame_status == "half-active" then "border-primary thick-borders-3"
+      when self.frame_status == "non-active" then ""
+      else ""
+    end
+  end
+
   def submission_urgency
     if created_at > Date.today - 2.weeks
       return "success text-white"

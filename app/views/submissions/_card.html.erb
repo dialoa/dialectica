@@ -1,5 +1,5 @@
 <% random_id = SecureRandom.random_number(10000000) %>
-<div id="submission-<%= submission.id %> submission-<%= submission.id %>-random-id-<%= random_id %>" class="card h-100 mb-3 bg-<%= submission.submission_urgency %> border-primary thick-borders-2" style="">
+<div id="submission-<%= submission.id %> submission-<%= submission.id %>-random-id-<%= random_id %>" class="card h-100 mb-3 bg-<%= submission.submission_urgency %> <%= submission.frame_status_color %>" style="">
   <div class="card-body">
     <h5 class="card-title"><%= submission.title %></h5>
     <hr class="bg-light" />

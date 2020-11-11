@@ -103,7 +103,7 @@ class SubmissionsController < ApplicationController
 
     #@submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} signed up as Internal Referee</p>")
     @submission.add_to_history(current_user, "Signed up as Internal Referee")
-    redirect_to submission_pool_path, notice: 'Signed up as Internal Referee'
+    redirect_to submission_pool_path(selection: "by_me"), notice: 'Signed up as Internal Referee'
   end
 
   def remove_user_from_submission
