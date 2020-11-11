@@ -73,6 +73,7 @@ class SubmissionsController < ApplicationController
   def pool
     @selection = params[:selection].present? ? params[:selection] : "without_reviewers"
 
+    #@submissions_without_reviewers = Submission.includes(:users).where( :users => { :id => nil } )
     @submissions_without_reviewers = Submission.left_outer_joins(:users).where( users: { id: nil } )
     @submissions_with_reviewers = Submission.where.not(id: @submissions_without_reviewers.pluck(:id)).order(:created_at)
 

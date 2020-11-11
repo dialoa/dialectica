@@ -20,6 +20,11 @@
 <hr />
 <div class="tab-content" id="pills-tab-submission-<%= submission.id %>-content">
   <div class="tab-pane fade show active" id="pills-action-<%= submission.id %>-random-id-<%= random_id %>" role="tabpanel" aria-labelledby="pills-action-tab">
+    <% if current_user.nil? %>
+    <p>
+        <strong>  <%= link_to('Please log in', new_user_session_path) %></strong>
+    </p>
+    <% end %>
     <% unless current_user.nil? %>
     <%= mail_to "", "Suggest to someone else", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn btn-success btn-block my-2" %>
     <% if is_user_reviewer?(current_user) %>
@@ -37,8 +42,8 @@
 
       <% if is_user_editor?(current_user) %>
         <hr />
-        <%= link_to "Reject", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
-        <%= link_to "Accept", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-danger btn-block my-2" %>
+        <%= link_to "Accept", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
+        <%= link_to "Reject", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-danger btn-block my-2" %>
       <% end %>
     <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
     <% end %>

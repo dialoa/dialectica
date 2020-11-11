@@ -1,45 +1,23 @@
+<% random_id = SecureRandom.random_number(10000000) %>
 <div class="card" style="">
   <div class="card-body">
     <h5 class="card-title"><%= submission.title %></h5>
     <p class="card-text">
-      <strong>Submission-Date: </strong><%= submission.created_at.strftime("%d/%m/%Y") %>
-    </p>
-    <p class="card-text">
-      <strong>Author: </strong>Anonymous
-    </p>
-    <p class="card-text">
-      <strong>Area: </strong><%= submission.area %>
-    </p>
-    <p class="card-text">
-      <strong>Status: </strong><%= submission.status %>
-    </p>
-    <p class="card-text">
-      <strong>Download: </strong><%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") if submission.file.attached? %>
-    </p>
-    <p class="card-text">
+      <strong><%= submission.created_at.strftime("%d.%m.%Y") %></strong><br />
 
-      <%# submission.users.each do |user| %>
-        <%#= user.email %>
-      <%# end %>
-      <% unless submission.users.empty? %>
-        <strong>Reviewers: </strong><%= submission.users.count %>
-      <% else %>
-        <strong>No Reviewers yet</strong>
-      <% end %>
-    </p>
-
-    <p class="card-text">
-      <% unless current_user.nil? %>
-        <% if current_user.submissions.where(id: submission.id).empty?  %>
-          <%= link_to "I'll review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-primary btn-block my-2" %>
+      <% if submission.file.attached? %>
+        <% if submission.file.previewable? %>
+          <%= link_to(image_tag(submission.file.preview(resize: "200x200>")),  rails_blob_path(submission.file, disposition: "attachment"))
+          %>
+        <% elsif submission.file.variable? %>
+          <%= link_to(image_tag(submission.file.variant(resize: "200x200")), rails_blob_path(submission.file, disposition: "attachment"))%>
         <% else %>
-          <%= link_to "I won't review it anymore", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-danger btn-block my-2" %>
+          <%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment"), class: "text-white" %>
         <% end %>
-        <%= mail_to "", "I know someone who might review it", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica. It is called \"#{submission.title}\" and it might fall in your area of expertise. \n\n Please check it out! View it here: #{submission_pool_url} \n\n Best regards", class: "btn btn-success btn-block my-2" %>
       <% end %>
-
     </p>
 
+    <%= render 'submissions/panel', submission: submission, random_id: random_id %>
 
   </div>
 </div>
