@@ -3,6 +3,9 @@
   <div class="card-body">
     <h5 class="card-title"><%= submission.title %></h5>
     <hr class="bg-light" />
+    <% if !current_user.blank? && !SuggestionSubmission.where(user_id: current_user.id).where(submission_id: submission.id).empty? %>
+      <h5><span class="badge badge-pill badge-info text-white">Suggested to you</span></h5>
+    <% end %>
     <p class="card-text">
       <strong><%= submission.created_at.strftime("%d.%m.%Y") %></strong><br />
 

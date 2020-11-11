@@ -76,7 +76,7 @@ class SubmissionsController < ApplicationController
     #@submissions_without_reviewers = Submission.includes(:users).where( :users => { :id => nil } )
     @submissions_without_reviewers = Submission.left_outer_joins(:users).where( users: { id: nil } )
     @submissions_with_reviewers = Submission.where.not(id: @submissions_without_reviewers.pluck(:id)).order(:created_at)
-
+    @submissions_suggested_to_me = Submission.where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
     if @selection == "without_reviewers"
       @submissions = @submissions_without_reviewers.order(:created_at)
     elsif @selection == "with_reviewers"
@@ -86,7 +86,7 @@ class SubmissionsController < ApplicationController
     elsif @selection == "all"
       @submissions = Submission.all.order(:created_at)
     elsif @selection == "suggested_to_me"
-      @submissions = Submission.all.order(:created_at)
+      @submissions = @submissions_suggested_to_me
     end
     #@submissions = Submission.all.order(:created_at)
 

@@ -8,7 +8,8 @@
         ["Submissions without reviewers: #{@submissions_without_reviewers.count}", "without_reviewers"],
         ["Submissions with reviewers: #{@submissions_with_reviewers.count}", "with_reviewers"],
         ["Submissions to be reviewed by me: #{current_user.submissions.count unless current_user.blank?}", "by_me"],
-        ["All submissions: #{Submission.all.count}", "all"]] %>
+        ["All submissions: #{Submission.all.count}", "all"],
+        ["Submissions suggested to me: #{@submissions_suggested_to_me.count}", "suggested_to_me"]] %>
         <div class="list-group">
           <% submission_option_list.each do |element| %>
             <a href="<%= submission_pool_path(selection: element[1]) %>" class="list-group-item list-group-item-action <%= "active" if @selection == element[1] %>"><%= element[0] %></a>
