@@ -97,6 +97,11 @@ class SubmissionsController < ApplicationController
 
   end
 
+  def create_suggestion_to_user
+    SuggestionSubmission.create(user_id: params[:user_id], submission_id: params[:submission_id])
+    redirect_to submission_pool_path, notice: 'Suggestion added'
+  end
+
   def add_user_to_submission
     @user = User.find(params[:user_id])
     @submission = Submission.find(params[:submission_id])

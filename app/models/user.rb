@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+has_many :suggestion_submissions
 has_many :reports
 has_many :user_codes
 has_many :codes, :through => :user_codes

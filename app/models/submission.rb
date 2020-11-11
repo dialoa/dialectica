@@ -2,6 +2,7 @@ class Submission < ApplicationRecord
   has_many :submission_users
   has_many :users, :through => :submission_users
   has_one_attached :file
+  has_one :suggestion_submission
 
   has_many :reports
 
