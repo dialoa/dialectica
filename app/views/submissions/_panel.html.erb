@@ -18,13 +18,24 @@
 <div class="tab-content" id="pills-tab-submission-<%= submission.id %>-content">
   <div class="tab-pane fade show active" id="pills-action-<%= submission.id %>-random-id-<%= random_id %>" role="tabpanel" aria-labelledby="pills-action-tab">
     <% unless current_user.nil? %>
+    <%= mail_to "", "Suggest to someone else", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica. It is called \"#{submission.title}\" and it might fall in your area of expertise. \n\n Please check it out! View it here: #{submission_url(submission)} \n\n Kind regards", class: "btn btn-success btn-block my-2" %>
+    <% if is_user_reviewer?(current_user) %>
+      <hr />
       <%  if current_user.submissions.where(id: submission.id).empty?  %>
-        <%= link_to "I'll review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-primary btn-block my-2" %>
+        <%= link_to "Sign up as Internal Referee", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-primary btn-block my-2" %>
         <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
       <% else %>
-        <%= link_to "I won't review it anymore", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-danger btn-block my-2" %>
+        <%= link_to "Quit as Internal Referee", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-danger btn-block my-2" %>
+        <%= link_to "Propose for publication", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-primary btn-block my-2" %>
       <% end %>
-    <%= mail_to "", "I know someone who might review it", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica. It is called \"#{submission.title}\" and it might fall in your area of expertise. \n\n Please check it out! View it here: #{submission_url(submission)} \n\n Kind regards", class: "btn btn-success btn-block my-2" %>
+    <% end %>
+
+
+      <% if is_user_editor?(current_user) %>
+        <hr />
+        <%= link_to "Reject", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
+        <%= link_to "Accept", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-danger btn-block my-2" %>
+      <% end %>
     <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
     <% end %>
   </div>

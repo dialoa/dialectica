@@ -30,6 +30,7 @@ class SubmissionsController < ApplicationController
   # POST /submissions.json
   def create
     @submission = Submission.new(submission_params)
+    @submission.history = @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} created Submission</p>"
 
     respond_to do |format|
       if @submission.save
@@ -68,15 +69,19 @@ class SubmissionsController < ApplicationController
 
   def pool
     @selection = params[:selection].present? ? params[:selection] : "without_reviewers"
-    submissions_without_reviewers = Submission.left_outer_joins(:users).where( users: { id: nil } )
+
+    @submissions_without_reviewers = Submission.left_outer_joins(:users).where( users: { id: nil } )
+    @submissions_with_reviewers = Submission.where.not(id: @submissions_without_reviewers.pluck(:id)).order(:created_at)
 
     if @selection == "without_reviewers"
-      @submissions = submissions_without_reviewers.order(:created_at)
+      @submissions = @submissions_without_reviewers.order(:created_at)
     elsif @selection == "with_reviewers"
-      @submissions = Submission.where.not(id: submissions_without_reviewers.pluck(:id)).order(:created_at)
+      @submissions = @submissions_with_reviewers
     elsif @selection == "by_me"
       @submissions = current_user.submissions.order(:created_at)
     elsif @selection == "all"
+      @submissions = Submission.all.order(:created_at)
+    elsif @selection == "suggested_to_me"
       @submissions = Submission.all.order(:created_at)
     end
     #@submissions = Submission.all.order(:created_at)
@@ -93,7 +98,7 @@ class SubmissionsController < ApplicationController
     @submission = Submission.find(params[:submission_id])
     @user.submissions << @submission if @user.submissions.where(id: @submission.id).empty?
 
-    @submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}</strong> Reviewer signed up for review </p>")
+    @submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} signed up as Internal Referee</p>")
 
     redirect_to submission_pool_path, notice: 'Submission was added to your Profile'
   end
@@ -104,7 +109,7 @@ class SubmissionsController < ApplicationController
     @user.submissions.delete(@submission)
     #@user.submissions << @submission if @user.submissions.where(id: @submission.id).empty?
 
-    @submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}</strong> Signed up reviewer abandoned review </p>")
+    @submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} quit as Internal Referee</p>")
 
     redirect_to submission_pool_path, notice: 'Submission was removd from your Profile'
   end

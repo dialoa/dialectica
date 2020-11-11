@@ -3,11 +3,9 @@
   <div class="card-body">
     <h5 class="card-title"><%= submission.title %></h5>
     <hr class="bg-light" />
-    <%= submission.file.attached? %>
-    <% if submission.file.attached? %>
-      <%= submission.file.previewable? %>
-    <% end %>
-    <p>
+    <p class="card-text">
+      <strong><%= submission.created_at.strftime("%d.%m.%Y") %></strong>
+
       <% if submission.file.attached? %>
         <% if submission.file.previewable? %>
           <%= link_to(image_tag(submission.file.preview(resize: "200x200>")),  rails_blob_path(submission.file, disposition: "attachment"))
