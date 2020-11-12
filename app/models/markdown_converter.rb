@@ -79,11 +79,10 @@ start_references ='
       file_to_store = Tempfile.new("basic-markdown-editor-#{Date.today.to_s}.pdf")
       file_to_store.write(stdout_str)
       file_to_store.rewind
-      @stuff = Stuff.create(filename: "basic_markdown_editor #{DateTime.now}")
+      @stuff = Stuff.create(filename: "basic_markdown_editor #{DateTime.now}", error: stderr.read)
       @stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
       file_to_store.close
       status = wait_thr.value
-      @stderr = stderr.read
       puts "STDERR FROM OPEN3"
       puts stderr.read
     end

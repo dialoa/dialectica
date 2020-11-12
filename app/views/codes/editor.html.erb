@@ -53,6 +53,14 @@
           </div>
           <div class="col-6">
             <div id="pdf-field" class="embed-responsive" style="padding-bottom: 141.42%;">
+              <% unless @stuff.error.blank? %>
+              <div class="alert alert-danger" role="alert">
+                ERROR!
+              </div>
+              <p>
+                <%= simple_format @stuff.error %>
+              </p>
+              <% end %>
                 <iframe  class="embed-responsive-item" src="<%= rails_blob_path(@stuff.file, disposition: "inline") unless @stuff.nil? %>"></iframe>
             </div>
             <p class="pt-2">

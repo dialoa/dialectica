@@ -14,7 +14,6 @@
 @aall:1925
 @aaltola_e:2014
 @aanderaa:1971
-@aarnio:1999
 @aaron_ri-etal:1961
 @aaron_ri:1931
 @aaron_ri:1933
