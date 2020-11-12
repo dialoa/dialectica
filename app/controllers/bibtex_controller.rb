@@ -90,18 +90,21 @@ class BibtexController < ApplicationController
   def bibtex_comma_seperated_list_of_bibtex_keys
 
     @result = ""
+    @result2 = ""
 
     if params[:text].present?
       text = params[:text]
 
       file_to_store = Tempfile.new('comparison')
-      file_to_store.write(text)
+      #file_to_store.write(text)
+      file_to_store.write(text.squish)
       file_to_store.rewind
 
       b = BibTeX.open(file_to_store)
 
       b.each_with_index do |article, index|
         @result = @result + "@" + article.id + ", "
+        @result2 = @result2 + "@" + article.id + "\n"
       end
 
       @result = @result[0..@result.size-3]

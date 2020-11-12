@@ -69,11 +69,12 @@ start_references ='
 
     #references
     File.open(dir.join("references.bib"), 'w+') do |file|
-      file.write(@references)
+      #file.write(@references)
+      file.write(@references.squish)
     end
 
     #convert
-    Open3.popen3("pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md -C --bibliography=#{dir}/references.bib") do |stdin, stdout, stderr, wait_thr|
+    Open3.popen3("pandoc -s -f markdown -t pdf #{dir}/basic_markdown_editor.md -C --bibliography=#{dir}/references.bib --pdf-engine=xelatex") do |stdin, stdout, stderr, wait_thr|
       stdout_str = stdout.read
       file_to_store = Tempfile.new("basic-markdown-editor-#{Date.today.to_s}.pdf")
       file_to_store.write(stdout_str)
@@ -82,6 +83,9 @@ start_references ='
       @stuff.file.attach(io: file_to_store, filename: "basic-markdown-editor-#{Date.today.to_s}.pdf")
       file_to_store.close
       status = wait_thr.value
+      @stderr = stderr.read
+      puts "STDERR FROM OPEN3"
+      puts stderr.read
     end
 
     @stuff

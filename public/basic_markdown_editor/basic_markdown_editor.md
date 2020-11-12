@@ -8,21 +8,103 @@
     \paperheight = 29.70 cm  \paperwidth = 21.0 cm  \hoffset        = 0.46 cm
     \headheight  =  0.81 cm  \textwidth  = 15.0 cm  \evensidemargin = 0.00 cm
     \headsep     =  0.81 cm  \textheight = 9.00 in  \oddsidemargin  = 0.00 cm
----
-# Introduction
+---# Introduction
 
-If a then b [@Brouwer_1954]
-
-## Models of Language
-
-*italics* and _italics_
-**bold** and __bold__
-***bold it.*** and ___bold it.___
-
-```
-this is
-a
-code block
-```
- ![Random Picture](https://i.picsum.photos/id/1041/5184/2916.jpg?hmac=TW_9o6HeD7H7I7NVo-S1Fa1iAvzQ10uvmJqsXvNoi0M)
-
+@aalders-deblois:1992
+@aall:1925
+@aaltola_e:2014
+@aanderaa:1971
+@aarnio:1999
+@aaron_ri-etal:1961
+@aaron_ri:1931
+@aaron_ri:1933
+@aaron_ri:1934
+@aaron_ri:1939
+@aaron_ri:1939a
+@aaron_ri:1942
+@aaron_ri:1945
+@aaron_ri:1946
+@aaron_ri:1952
+@aaron_ri:1956
+@fano_v:2019
+@zanetti_l:2019
+@logins_a:2019
+@wright_c:1984
+@carruthers:1984
+@noonan:1984a
+@hale_b:1984
+@weiner_j:1984
+@luntley:1984
+@mcdowell:1984
+@mcculloch_g:1986
+@diamond_c:1984
+@bell_de:1984b
+@aaron_ri:1957
+@aaronson_bs:1971
+@aaronson_s:2013
+@aars:1903
+@aars:1905
+@aars:1909
+@aars:1910
+@aarsleff:1994
+@aarsleff:2006
+@aasen:2016
+@aasen:2016a
+@aasen:2017
+@abaci:2008
+@abaci:2013
+@abaci:2014
+@abaci:2016
+@abaci:2017
+@abad-fernandez:2009
+@abad:2009
+@abadia:2008
+@abadia:2011
+@abasnezhad_a-hosseini:2014
+@abate_cj:1977
+@abath_aj-queiroz:2005
+@abath_aj:2008
+@abath_aj:2012
+@abath_aj:2012a
+@abattouy_m:2002
+@abb-etal:1996a
+@abbati-mania:1981
+@abbatte_m:2007
+@abbey_a-etal:1996
+@abbey:1996
+@abbey:2006
+@abbott_b-hudson:1981
+@abbott_b:1974
+@abbott_b:1974a
+@abbott_b:1975
+@abbott_b:1989
+@abbott_b:1995
+@abbott_b:1995a
+@abbott_b:1997
+@abbott_b:1997a
+@abbott_b:1999
+@abbott_b:2000
+@abbott_b:2002
+@abbott_b:2002a
+@abbott_b:2003
+@abbott_b:2008
+@abbott_b:2012
+@abbott_b:2013
+@abbott_cc:1979
+@abbott_tk:1904
+@abbott_w:1983
+@abbruzzese:1997
+@abbruzzese:2007
+@abbruzzese:2007a
+@abbruzzese:2008
+@abdelbar-etal:2000
+@abdelbar-hedetniemi:1998
+@abdelbar:1998
+@abdelrahman:1971
+@abdullah_an:1991
+@abdullah_pa:2010
+@abdullallah:1925
+@abdulsayeed:1999
+@abe-li:1996
+@abecassis_e:1997
+@abeille:2006 
