@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_11_193028) do
+ActiveRecord::Schema.define(version: 2020_11_12_070835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(version: 2020_11_11_193028) do
     t.string "status", default: "submitted"
     t.string "email", default: ""
     t.text "history", default: ""
+    t.string "proposed", default: "false"
   end
 
   create_table "suggestion_submissions", force: :cascade do |t|

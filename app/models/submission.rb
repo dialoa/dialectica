@@ -13,11 +13,15 @@ class Submission < ApplicationRecord
   end
 
   def self.statuses
-    ["submitted", "rejected", "published", "review"]
+    ["submitted", "rejected", "accepted", "proposed", "published", "review"]
   end
 
   def self.frame_statuses
     ["non-active", "half-active", "active", "proposed"]
+  end
+
+  def self.proposed_statuses
+    ["false", "true"]
   end
 
   def frame_status

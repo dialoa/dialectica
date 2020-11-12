@@ -97,9 +97,29 @@ class SubmissionsController < ApplicationController
 
   end
 
+  def update_status_of_submission
+    submission = Submission.find(params[:submission_id])
+    submission.update(status: params[:status])
+    redirect_to submission_path(submission), notice: 'Suggestion added'
+  end
+
   def create_suggestion_to_user
     SuggestionSubmission.create(user_id: params[:user_id], submission_id: params[:submission_id])
     redirect_to submission_pool_path, notice: 'Suggestion added'
+  end
+
+  def propose_submission
+    submission = Submission.find(params[:submission_id])
+    submission.update(proposed: "true")
+    submission.add_to_history(current_user, "Proposed Submission")
+    redirect_to submission_path(submission), notice: 'Submission has been proposed'
+  end
+
+  def withdraw_proposal_of_submission
+    submission = Submission.find(params[:submission_id])
+    submission.update(proposed: "false")
+    submission.add_to_history(current_user, "Withdrew proposal of Submission")
+    redirect_to submission_path(submission), notice: 'Submission proposal has been withdrawn'
   end
 
   def add_user_to_submission

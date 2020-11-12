@@ -46,7 +46,12 @@
         <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
       <% else %>
         <%= link_to "Add Report", new_report_for_reviewer_path(submission.id), class: "btn btn-info btn-block my-2" %>
-        <%= link_to "Propose for publication", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-primary btn-block my-2" %>
+        <% if submission.proposed == "false" %>
+          <%= link_to "Propose for publication", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-primary btn-block my-2" %>
+        <% else %>
+          <%= link_to "Withdraw proposal of publication", withdraw_proposal_of_submission_path(submission.id, submission.id), method: :post, class: "btn btn-primary btn-block my-2" %>
+        <% end %>
+
         <%= link_to "Quit as Internal Referee", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-danger btn-block my-2" %>
       <% end %>
     <% end %>
