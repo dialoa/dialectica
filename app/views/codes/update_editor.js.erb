@@ -1,14 +1,20 @@
 var record_id = "#pdf-field";
+var error_field_id = "#error-field";
 var bibtex = "<%= escape_javascript (@code.bibtex.to_s) %>";
 //var record_id2 = "#references_text_area";
 
 $( record_id ).fadeOut( "slow", function() {
 
     content = $("<%= escape_javascript( render "codes/pdf-field", stuff: @stuff ) %>");
+    content2 = $("<%= escape_javascript( render "codes/error", stuff: @stuff ) %>");
     //content2 = "lol";
 
     $(record_id).fadeOut("fast", function(){
       $(record_id).empty().append(content).fadeIn("fast");
+    });
+
+    $(error_field_id).fadeOut("fast", function(){
+      $(error_field_id).empty().append(content2).fadeIn("fast");
     });
 
     //$("textarea#references_text_area").html("lol");

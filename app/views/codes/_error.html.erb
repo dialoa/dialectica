@@ -1,0 +1,8 @@
+<% unless stuff.error.blank? %>
+<div class="alert alert-danger" role="alert">
+  ERROR!
+</div>
+<p>
+  <%= simple_format stuff.error %>
+</p>
+<% end %>
