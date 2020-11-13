@@ -62,7 +62,7 @@ class Submission < ApplicationRecord
     elsif created_at > Date.today - 6.weeks
       return "bg-color-light-red"
     elsif created_at > Date.today - 8.weeks
-      return "bg-color-dark-red"
+      return "bg-color-dark-red text-white"
     elsif created_at > Date.today - 10.weeks
       return "bg-color-violet"
     elsif created_at > Date.today - 12.weeks
