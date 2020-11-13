@@ -11,17 +11,6 @@
     <% end %>
     <p class="card-text">
       <strong><%= submission.created_at.strftime("%d.%m.%Y") %></strong><br />
-
-      <% if submission.file.attached? %>
-        <% if submission.file.previewable? %>
-          <%= link_to(image_tag(submission.file.preview(resize: "200x200>")),  rails_blob_path(submission.file, disposition: "attachment"))
-          %>
-        <% elsif submission.file.variable? %>
-          <%= link_to(image_tag(submission.file.variant(resize: "200x200")), rails_blob_path(submission.file, disposition: "attachment"))%>
-        <% else %>
-          <%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment"), class: "text-white" %>
-        <% end %>
-      <% end %>
     </p>
       <button type="button" class="btn btn-light pool-select-button" value="<%=submission.id%>">Select</button>
     <%#= render 'submissions/panel', submission: submission, random_id: SecureRandom.random_number(10000000) %>

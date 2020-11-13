@@ -2,17 +2,17 @@
 
   <div class="row">
     <div class="col-9 border-right">
-      <h1>Pool</h1>
+      <h3><i>dialectica</i> Editorial Committee </h3>
       <p>
         <% submission_option_list = [
-        ["Submissions without reviewers: #{@submissions_without_reviewers.count}", "without_reviewers"],
-        ["Submissions with reviewers: #{@submissions_with_reviewers.count}", "with_reviewers"],
-        ["Submissions to be reviewed by me: #{current_user.submissions.count unless current_user.blank?}", "by_me"],
-        ["All submissions: #{Submission.all.count}", "all"],
-        ["Submissions suggested to me: #{@submissions_suggested_to_me.count}", "suggested_to_me"]] %>
-        <div class="list-group">
+        ["submissions without reviewers: #{@submissions_without_reviewers.count} (#{@submissions_without_reviewers.map(&:id).join(",")})", "without_reviewers"],
+        ["submissions with reviewers: #{@submissions_with_reviewers.count}", "with_reviewers"],
+        ["submissions to be reviewed by me: #{current_user.submissions.count unless current_user.blank?}  (#{current_user.submissions.map(&:id).join(",")})", "by_me"],
+        ["submissions suggested to me: #{@submissions_suggested_to_me.count}", "suggested_to_me"],
+        ["all submissions: #{Submission.all.count}", "all"]] %>
+        <div class="small">
           <% submission_option_list.each do |element| %>
-            <a href="<%= submission_pool_path(selection: element[1]) %>" class="list-group-item list-group-item-action <%= "active" if @selection == element[1] %>"><%= element[0] %></a>
+            <a href="<%= submission_pool_path(selection: element[1]) %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == element[1] %>"><%= element[0] %></a><br />
           <% end %>
         </div>
       </p>
