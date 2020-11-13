@@ -1,18 +1,28 @@
 <% random_id = SecureRandom.random_number(10000000) %>
-<div id="submission-<%= submission.id %> submission-<%= submission.id %>-random-id-<%= random_id %>" class="card h-100 mb-3 bg-<%= submission.submission_urgency %> <%= submission.frame_status_color %>" style="">
+<div id="submission-<%= submission.id %> submission-<%= submission.id %>-random-id-<%= random_id %>" class="card h-100 mb-3 <%= submission.submission_urgency %> <%= submission.get_frame_status_color(current_user) %> btn btn-light pool-select-button" style="" value="<%=submission.id%>">
   <div class="card-body">
-    <h5 class="card-title"><%= submission.title %></h5>
+    <p class="card-text">
+      <strong>#<%= submission.id %> - <%= submission.created_at.strftime("%m/%d/%Y") %></strong>
+    </p>
     <hr class="bg-light" />
+    <p class="card-text">
+      <strong><%= submission.title %></strong>
+    </p>
     <% if !current_user.blank? && !SuggestionSubmission.where(user_id: current_user.id).where(submission_id: submission.id).empty? %>
-      <h5><span class="badge badge-pill badge-info text-white">Suggested to you</span></h5>
+      <h5><span class="badge badge-pill badge-info text-white">suggested to you</span></h5>
     <% end %>
     <% if submission.proposed == "true" %>
       <h5><span class="badge badge-pill badge-success text-white">Proposed</span></h5>
     <% end %>
+    <% if true %>
     <p class="card-text">
-      <strong><%= submission.created_at.strftime("%d.%m.%Y") %></strong><br />
+      <strong><%= submission.firstname %> <%= submission.lastname %></strong>
     </p>
+    <% end %>
+    <% if false %>
       <button type="button" class="btn btn-light pool-select-button" value="<%=submission.id%>">Select</button>
-    <%#= render 'submissions/panel', submission: submission, random_id: SecureRandom.random_number(10000000) %>
+      <%#= render 'submissions/panel', submission: submission, random_id: SecureRandom.random_number(10000000) %>
+    <% end %>
+
   </div>
 </div>

@@ -24,6 +24,18 @@ class Submission < ApplicationRecord
     ["false", "true"]
   end
 
+  def get_frame_status_color(user)
+    submissions_suggested_to_me = Submission.where(id: SuggestionSubmission.where(user_id: user.id).pluck(:submission_id)).pluck(:id)
+    #byebug
+    case
+    when submissions_suggested_to_me.include?(self.id) then "border-info thick-borders-3"
+    #when SuggestionSubmission.where(user_id: user.id).where(submission_id: self.id).empty? then "border-info thick-borders-3"
+    when self.users.count == 2 then "border-warning thick-borders-3"
+    when self.users.count == 1 then "border-primary thick-borders-3"
+    else ""
+    end
+  end
+
   def frame_status
     case
     when self.users.count == 2 then "active"
@@ -34,24 +46,27 @@ class Submission < ApplicationRecord
 
   def frame_status_color
     case
+    when self.frame_status == "suggested_to_me" then "border-info thick-borders-3"
     when self.frame_status == "active" then "border-warning thick-borders-3"
     when self.frame_status == "half-active" then "border-primary thick-borders-3"
-      when self.frame_status == "non-active" then ""
-      else ""
+    when self.frame_status == "non-active" then ""
+    else ""
     end
   end
 
   def submission_urgency
     if created_at > Date.today - 2.weeks
-      return "success text-white"
+      return "bg-color-light-green"
     elsif created_at > Date.today - 4.weeks
-      return "success text-white"
+      return "bg-color-dark-green"
     elsif created_at > Date.today - 6.weeks
-      return "danger text-white"
+      return "bg-color-light-red"
     elsif created_at > Date.today - 8.weeks
-      return "danger text-white"
+      return "bg-color-dark-red"
     elsif created_at > Date.today - 10.weeks
-      return "dark text-white"
+      return "bg-color-violet"
+    elsif created_at > Date.today - 12.weeks
+      return "bg-color-dark-grey"
     else
       return "dark text-white"
     end

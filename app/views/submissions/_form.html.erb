@@ -11,20 +11,22 @@
     <%#= f.input :email %>
     <div class="row">
         <div class="col-6">
-          <%#= f.input :firstname %>
+          <%= f.input :firstname %>
         </div>
         <div class="col-6">
-          <%#= f.input :lastname %>
+          <%= f.input :lastname %>
         </div>
     </div>
     <p>
       <strong>Upload File</strong><br />
       <%= f.file_field :file %>
     </p>
+    <% if false %>
     <p>
       <strong>History</strong><br />
         <%= f.text_area :history, :class => "tinymce", :rows => 40, :cols => 120 %>
     </p>
+    <% end %>
 
   </div>
 

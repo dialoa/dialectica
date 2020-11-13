@@ -1,5 +1,28 @@
 $first-color: #164da2;
 
+$colors: (
+  light-green: #90EE90,
+  dark-green: #006400,
+  light-red: #CD5C5C,
+  dark-red: #8B0000,
+  violet: #9932CC,
+  dark-grey: #A9A9A9,
+  black: #000000
+);
+
+@mixin color-modifiers {
+  @each $name, $hex in $colors {
+    &-#{$name} {
+      background-color: $hex !important;
+    }
+  }
+}
+
+.bg-color {
+  @include color-modifiers;
+}
+
+
 .bg-first-color {
   background-color: $first-color;
 }

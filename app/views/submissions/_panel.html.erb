@@ -6,6 +6,18 @@
 <p class="card-text">
   <strong>Status: </strong><%= submission.status %>
 </p>
+<p>
+  <% if submission.file.attached? %>
+    <% if submission.file.previewable? %>
+      <%= link_to(image_tag(submission.file.preview(resize: "200x200>")),  rails_blob_path(submission.file, disposition: "attachment"))
+      %>
+    <% elsif submission.file.variable? %>
+      <%= link_to(image_tag(submission.file.variant(resize: "200x200")), rails_blob_path(submission.file, disposition: "attachment"))%>
+    <% else %>
+      <%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment"), class: "text-white" %>
+    <% end %>
+  <% end %>
+</p>
 <hr />
 <ul class="nav nav-pills mb-3" id="pills-tab-submission-<%= submission.id %>-random-id-<%= random_id %>" role="tablist">
   <li class="nav-item" role="presentation">
