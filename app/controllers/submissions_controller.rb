@@ -79,13 +79,14 @@ class SubmissionsController < ApplicationController
     @submissions_suggested_to_me = Submission.alive.where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
     @proposed_submissions = Submission.alive.where(proposed: "true")
     @dead_submissions = Submission.dead
+    @submissions_to_be_reviewed_by_me = current_user.submissions.alive.order(:created_at)
 
     if @selection == "without_reviewers"
       @submissions = @submissions_without_reviewers.order(:created_at)
     elsif @selection == "with_reviewers"
       @submissions = @submissions_with_reviewers
     elsif @selection == "by_me"
-      @submissions = current_user.submissions.order(:created_at)
+      @submissions = @submissions_to_be_reviewed_by_me
     elsif @selection == "all"
       @submissions = Submission.all.order(:created_at)
     elsif @selection == "suggested_to_me"
@@ -127,6 +128,20 @@ class SubmissionsController < ApplicationController
     submission.update(proposed: "false")
     submission.add_to_history(current_user, "Withdrew proposal of Submission")
     redirect_to submission_path(submission), notice: 'Submission proposal has been withdrawn'
+  end
+
+  def make_submission_dead
+    submission = Submission.find(params[:submission_id])
+    submission.update(dead: "true")
+    submission.add_to_history(current_user, "Submission is dead")
+    redirect_to submission_path(submission), notice: 'Submission is dead'
+  end
+
+  def make_submission_alive
+    submission = Submission.find(params[:submission_id])
+    submission.update(dead: "false")
+    submission.add_to_history(current_user, "Submission is alive")
+    redirect_to submission_path(submission), notice: 'Submission is alive'
   end
 
   def add_user_to_submission

@@ -70,6 +70,9 @@ Rails.application.routes.draw do
   post '/submission_tools/propose_submission/:submission_id/', to: "submissions#propose_submission", as: "propose_submission"
   post '/submission_tools/withdraw_proposal_of_submission/:submission_id/', to: "submissions#withdraw_proposal_of_submission", as: "withdraw_proposal_of_submission"
 
+  post '/submission_tools/make_submission_dead/:submission_id/', to: "submissions#make_submission_dead", as: "make_submission_dead"
+  post '/submission_tools/make_submission_alive/:submission_id/', to: "submissions#make_submission_alive", as: "make_submission_alive"
+
   get '/codes/editor/:id', to: "codes#editor", as: "codes_editor"
   post '/codes/editor/:id', to: "codes#editor", as: "codes_editor_post"
   post '/codes-tool/update_editor/:id', to: "codes#update_editor", as: "codes_update_editor"

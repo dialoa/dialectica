@@ -7,7 +7,7 @@
         <% submission_option_list = [
         ["submissions without reviewers: #{@submissions_without_reviewers.count} (#{@submissions_without_reviewers.order(:id).map(&:id).join(",")})", "without_reviewers"],
         ["submissions with reviewers: #{@submissions_with_reviewers.count}", "with_reviewers"],
-        ["submissions to be reviewed by me: #{current_user.submissions.count unless current_user.blank?}  (#{current_user.submissions.order(:id).map(&:id).join(",")})", "by_me"],
+        ["submissions to be reviewed by me: #{@submissions_to_be_reviewed_by_me.count}  (#{@submissions_to_be_reviewed_by_me.order(:id).map(&:id).join(",")})", "by_me"],
         ["submissions suggested to me: #{@submissions_suggested_to_me.count}", "suggested_to_me"],
         ["proposed submissions: #{@proposed_submissions.count}", "proposed_submissions"],
         ["all open submissions: #{Submission.all.count}", "all"],
