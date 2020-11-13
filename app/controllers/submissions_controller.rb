@@ -80,6 +80,7 @@ class SubmissionsController < ApplicationController
     @proposed_submissions = Submission.alive.where(proposed: "true")
     @dead_submissions = Submission.dead
     @submissions_to_be_reviewed_by_me = current_user.submissions.alive.order(:created_at)
+    @all_submissions = Submission.alive.order(:created_at)
 
     if @selection == "without_reviewers"
       @submissions = @submissions_without_reviewers.order(:created_at)
@@ -88,7 +89,7 @@ class SubmissionsController < ApplicationController
     elsif @selection == "by_me"
       @submissions = @submissions_to_be_reviewed_by_me
     elsif @selection == "all"
-      @submissions = Submission.all.order(:created_at)
+      @submissions = @all_submissions
     elsif @selection == "suggested_to_me"
       @submissions = @submissions_suggested_to_me
     elsif @selection == "proposed_submissions"

@@ -10,7 +10,7 @@
         ["submissions to be reviewed by me: #{@submissions_to_be_reviewed_by_me.count}  (#{@submissions_to_be_reviewed_by_me.order(:id).map(&:id).join(",")})", "by_me"],
         ["submissions suggested to me: #{@submissions_suggested_to_me.count}", "suggested_to_me"],
         ["proposed submissions: #{@proposed_submissions.count}", "proposed_submissions"],
-        ["all open submissions: #{Submission.all.count}", "all"],
+        ["all open submissions: #{@all_submissions.count}", "all"],
         ["dead submissions: #{@dead_submissions.count}", "dead_submissions"]
         ] %>
         <div class="small">
