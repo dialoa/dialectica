@@ -8,6 +8,9 @@ class Submission < ApplicationRecord
 
   #after_create :add_create_to_history
 
+  scope :dead, -> { where(dead: "true") }
+  scope :alive, -> { where(dead: "false") }
+
   def self.areas
     ["metaphysics", "epistemology", "philosophy of science", "ethics"]
   end
@@ -21,6 +24,10 @@ class Submission < ApplicationRecord
   end
 
   def self.proposed_statuses
+    ["false", "true"]
+  end
+
+  def self.dead_statuses
     ["false", "true"]
   end
 
@@ -68,7 +75,7 @@ class Submission < ApplicationRecord
     elsif created_at > Date.today - 12.weeks
       return "bg-color-dark-grey"
     else
-      return "dark text-white"
+      return "bg-dark text-white"
     end
   end
 

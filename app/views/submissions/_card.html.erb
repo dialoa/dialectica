@@ -14,7 +14,7 @@
     <% if submission.proposed == "true" %>
       <h5><span class="badge badge-pill badge-success text-white">Proposed</span></h5>
     <% end %>
-    <% if true %>
+    <% if submission.dead == "true" %>
     <p class="card-text">
       <strong><%= submission.firstname %> <%= submission.lastname %></strong>
     </p>

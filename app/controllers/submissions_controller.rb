@@ -74,9 +74,12 @@ class SubmissionsController < ApplicationController
     @selection = params[:selection].present? ? params[:selection] : "without_reviewers"
 
     #@submissions_without_reviewers = Submission.includes(:users).where( :users => { :id => nil } )
-    @submissions_without_reviewers = Submission.left_outer_joins(:users).where( users: { id: nil } )
-    @submissions_with_reviewers = Submission.where.not(id: @submissions_without_reviewers.pluck(:id)).order(:created_at)
-    @submissions_suggested_to_me = Submission.where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
+    @submissions_without_reviewers = Submission.alive.left_outer_joins(:users).where( users: { id: nil } )
+    @submissions_with_reviewers = Submission.alive.where.not(id: @submissions_without_reviewers.pluck(:id)).order(:created_at)
+    @submissions_suggested_to_me = Submission.alive.where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
+    @proposed_submissions = Submission.alive.where(proposed: "true")
+    @dead_submissions = Submission.dead
+
     if @selection == "without_reviewers"
       @submissions = @submissions_without_reviewers.order(:created_at)
     elsif @selection == "with_reviewers"
@@ -87,6 +90,10 @@ class SubmissionsController < ApplicationController
       @submissions = Submission.all.order(:created_at)
     elsif @selection == "suggested_to_me"
       @submissions = @submissions_suggested_to_me
+    elsif @selection == "proposed_submissions"
+      @submissions = @proposed_submissions
+    elsif @selection == "dead_submissions"
+      @submissions = @dead_submissions
     end
     #@submissions = Submission.all.order(:created_at)
 
