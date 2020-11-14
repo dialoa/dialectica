@@ -75,7 +75,7 @@ class Submission < ApplicationRecord
     elsif created_at > Date.today - 12.weeks
       return "bg-color-dark-grey"
     else
-      return "bg-dark text-white"
+      return "bg-color-black text-white"
     end
   end
 
@@ -87,6 +87,11 @@ class Submission < ApplicationRecord
   def add_to_history(user, message)
     history = self.history + "<p><strong>#{self.created_at.strftime("%d.%m.%Y")} - #{user.name}</strong>: " + message + "</p>"
     self.update(history: history)
+  end
+
+  def self.make_old_submissions_dead
+    old_submissions = Submission.where("created_at < ?", Date.today - 13.weeks)
+    old_submissions.update_all(dead: "true")
   end
 
 end

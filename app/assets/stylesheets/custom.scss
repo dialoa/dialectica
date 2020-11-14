@@ -15,6 +15,10 @@ $colors: (
     &-#{$name} {
       background-color: $hex !important;
     }
+
+    &-#{$name}:hover {
+      background-color: lighten($hex, 10%) !important;
+    }
   }
 }
 
