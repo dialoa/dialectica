@@ -18,11 +18,11 @@
         <%= file_field_tag :file, class: "btn btn-secondary" %>
     </p>
     <p>
-      <strong>Or copy & paste Bibtex or JSON into the field</strong><br />
+      <strong>Or copy & paste Bibtex, JSON or Text into the field</strong><br />
       <%= text_area_tag :text, nil, :rows => 15, style: 'width:100%;' %>
     </p>
 
-      <%= select_tag :format, options_for_select(["json", "bibtex"]) %>
+      <%= select_tag :format, options_for_select(["json", "bibtex", "text"]) %>
       <br />
       <br />
       <strong>e-Mail</strong><br />

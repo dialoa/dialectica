@@ -7,6 +7,31 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
     @array_of_originals = ""
 
     if format == "bibtex"
+
+      parsed_bibtex = BibTeX.parse(bibtex_file)
+      parsed_bibtex.each_with_index do |article, index|
+        bibtex_entry_of_author = BibtexEntry.create(content: article)
+
+        rendered_bibtex = (cp.render :bibliography, id: article.id).first
+
+        serrano = Serrano.works(query: rendered_bibtex)
+
+        serrano["message"]["items"].first(10).each do |item|
+          result_from_crossref = Serrano.content_negotiation(ids: item["DOI"], format: "text", style: "bibtex").force_encoding(Encoding::UTF_8)
+          bibtex_entry_of_author.children.create(content: result_from_crossref.to_s.strip)
+        end
+
+      end
+
+      article_text
+
+    elsif format == "json"
+
+    elsif format == "text"
+
+    end
+
+    if format == "bibtex"
       file_to_store = Tempfile.new('comparison')
       file_to_store.write(text)
       file_to_store.rewind
