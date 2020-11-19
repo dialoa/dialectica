@@ -53,7 +53,7 @@
         <% @array_of_originals.each do |bibtex_entry| %>
           <tr>
             <td>
-              <button type="button" class="btn btn-success text-left bibtex_entry selected-entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>" >
+              <button type="button" class="btn btn-light text-left bibtex_entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>" >
                 <%#= bibtex_entry.content %>
                 <% bibtex_parse = BibTeX.parse(bibtex_entry.content) %>
                 <% bibtex_entry_cp = cp.import bibtex_parse.to_citeproc %>
