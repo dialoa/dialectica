@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_13_193004) do
+ActiveRecord::Schema.define(version: 2020_11_19_223202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,7 +125,9 @@ ActiveRecord::Schema.define(version: 2020_11_13_193004) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "ancestry"
+    t.bigint "bibtex_entry_id"
     t.index ["ancestry"], name: "index_jsons_on_ancestry"
+    t.index ["bibtex_entry_id"], name: "index_jsons_on_bibtex_entry_id"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -229,6 +231,7 @@ ActiveRecord::Schema.define(version: 2020_11_13_193004) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bibtex_files", "codes"
+  add_foreign_key "jsons", "bibtex_entries"
   add_foreign_key "reports", "submissions"
   add_foreign_key "reports", "users"
 end

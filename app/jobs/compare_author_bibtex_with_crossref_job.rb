@@ -7,65 +7,18 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
     @array_of_originals = ""
 
     if format == "bibtex"
-
       parsed_bibtex = BibTeX.parse(bibtex_file)
       parsed_bibtex.each_with_index do |article, index|
         bibtex_entry_of_author = BibtexEntry.create(content: article)
-
-        rendered_bibtex = (cp.render :bibliography, id: article.id).first
-
-        serrano = Serrano.works(query: rendered_bibtex)
-
-        serrano["message"]["items"].first(10).each do |item|
-          result_from_crossref = Serrano.content_negotiation(ids: item["DOI"], format: "text", style: "bibtex").force_encoding(Encoding::UTF_8)
-          bibtex_entry_of_author.children.create(content: result_from_crossref.to_s.strip)
-        end
-
-      end
-
-      article_text
-
-    elsif format == "json"
-
-    elsif format == "text"
-
-    end
-
-    if format == "bibtex"
-      file_to_store = Tempfile.new('comparison')
-      file_to_store.write(text)
-      file_to_store.rewind
-
-      b = BibTeX.open(file_to_store)
-      cp.import BibTeX.open(file_to_store).to_citeproc
-
-      #every article in the author's bibtex file gets scanned
-      b.each_with_index do |article, index|
-        result_from_bibtex = article
-        bibtex_entry_of_author = BibtexEntry.create(content: result_from_bibtex)
-
-        result_from_crossref = ""
-        citation_of_result_from_bibtex = (cp.render :bibliography, id: article.id).first
-        begin
-          serrano = Serrano.works(query: citation_of_result_from_bibtex)
-
-          serrano["message"]["items"].first(10).each do |item|
-            bibtex_entry_of_author.children.create(content: result_from_crossref.to_s.strip)
-          end
-        rescue
-          @retries ||= 0
-          if @retries < 3
-            @retries += 1
-            puts "ERROR!!! RETRY: #{@retries}"
-            sleep 500
-            retry
-          end
-        end
         @array_of_originals = @array_of_originals + ", #{bibtex_entry_of_author.id}"
+        rendered_bibtex = (cp.render :bibliography, id: article.id).first
+        serrano = Serrano.works(query: rendered_bibtex)
+        serrano["message"]["items"].first(10).each do |inner_item|
+          result_from_serrano = Serrano.content_negotiation(ids: inner_item["DOI"], format: "citeproc-json")
+          Json.create(content: result_from_serrano, bibtex_entry: bibtex_entry_of_author.id)
+        end
       end
-      file_to_store.close
-      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, "json").deliver_now
-
+      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, "bibtex").deliver_now
     elsif format == "json"
       json = JSON.parse(text)
       json.each do |item|
@@ -88,6 +41,19 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
       end
 
       BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, "json").deliver_now
+
+    elsif format == "text"
+      text.split("\n").each do |line|
+        next if line.blank?
+          bibtex_entry_of_author = BibtexEntry.create(content: line)
+          @array_of_originals = @array_of_originals + ", #{bibtex_entry_of_author.id}"
+          serrano = Serrano.works(query: line)
+          serrano["message"]["items"].first(10).each do |inner_item|
+            result_from_serrano = Serrano.content_negotiation(ids: inner_item["DOI"], format: "citeproc-json")
+            Json.create(content: result_from_serrano, bibtex_entry: bibtex_entry_of_author.id)
+          end
+      end
+      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, "bibtex").deliver_now
     end
   end
 
