@@ -5,9 +5,9 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
 
     cp = CiteProc::Processor.new style: 'apa', format: 'text'
     @array_of_originals = ""
-
     if format == "bibtex"
-      parsed_bibtex = BibTeX.parse(bibtex_file)
+      parsed_bibtex = BibTeX.parse(text)
+      cp.import BibTeX.parse(text).to_citeproc
       parsed_bibtex.each_with_index do |article, index|
         bibtex_entry_of_author = BibtexEntry.create(content: article)
         @array_of_originals = @array_of_originals + ", #{bibtex_entry_of_author.id}"
@@ -15,7 +15,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
         serrano = Serrano.works(query: rendered_bibtex)
         serrano["message"]["items"].first(10).each do |inner_item|
           result_from_serrano = Serrano.content_negotiation(ids: inner_item["DOI"], format: "citeproc-json")
-          Json.create(content: result_from_serrano, bibtex_entry: bibtex_entry_of_author.id)
+          Json.create(content: result_from_serrano.to_s.strip, bibtex_entry_id: bibtex_entry_of_author.id.to_i)
         end
       end
       BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, "bibtex").deliver_now
@@ -34,7 +34,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
         serrano["message"]["items"].first(10).each do |inner_item|
           #original_json.children.create(content: inner_item)
           result_from_serrano = Serrano.content_negotiation(ids: inner_item["DOI"], format: "citeproc-json")
-          original_json.children.create(content: result_from_serrano)
+          original_json.children.create(content: result_from_serrano.to_s.strip)
         end
         @array_of_originals = @array_of_originals + ", #{original_json.id}"
         #byebug
@@ -50,7 +50,7 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
           serrano = Serrano.works(query: line)
           serrano["message"]["items"].first(10).each do |inner_item|
             result_from_serrano = Serrano.content_negotiation(ids: inner_item["DOI"], format: "citeproc-json")
-            Json.create(content: result_from_serrano, bibtex_entry: bibtex_entry_of_author.id)
+            Json.create(content: result_from_serrano.to_s.strip, bibtex_entry: bibtex_entry_of_author.id)
           end
       end
       BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, "bibtex").deliver_now

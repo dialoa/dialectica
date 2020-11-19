@@ -57,15 +57,21 @@
                 <%#= bibtex_entry.content %>
                 <% bibtex_parse = BibTeX.parse(bibtex_entry.content) %>
                 <% bibtex_entry_cp = cp.import bibtex_parse.to_citeproc %>
-                <%= (bibtex_entry_cp.render :bibliography, id: bibtex_parse.first.id).first %>
+                <%= raw (bibtex_entry_cp.render :bibliography, id: bibtex_parse.first.id).first %>
                 <div class="child_of_button" style="display: none;" id="bibtex_entry_id_<%= bibtex_entry.id %>_content">
                   <%= bibtex_entry.content %>
                 </div>
               </button>
               </td>
             <td>
-              <% bibtex_entry.children.each do |child| %>
+              <%# bibtex_entry.children.each do |child| %>
+              <% Json.where(bibtex_entry_id: bibtex_entry.id).each do |child| %>
                 <% unless child.blank? || child.id.blank? %>
+
+                <%= render 'jsons/json_view', json: child, select_option: true %>
+                  <hr />
+
+                <% if false %>
                   <button type="button" class="btn btn-light text-left bibtex_entry bibtex_entry_id_<%= bibtex_entry.id %>" bibtex_entry_id="<%= bibtex_entry.id %>">
                     <%#= raw child.content %>
                     <%# bibtex_parse = BibTeX.parse(child.content) %>
@@ -77,6 +83,7 @@
                     </div>
                   </button>
                   <hr />
+                  <% end %>
                 <% end %>
               <% end %>
             </td>
