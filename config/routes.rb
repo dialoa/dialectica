@@ -63,6 +63,7 @@ Rails.application.routes.draw do
 
   get '/submission_panel/:id', to: "submissions#panel", as: "submission_panel"
   get '/submission_pool', to: "submissions#pool", as: "submission_pool"
+  get '/submission_tools/show_pool/:id', to: "submissions#show_pool", as: "submission_show_pool"
   post '/submissions_add_user_to_submission/:user_id/:submission_id', to: "submissions#add_user_to_submission", as: "submissions_add_user_to_submission"
   post '/submissions_remove_user_from_submission/:user_id/:submission_id', to: "submissions#remove_user_from_submission", as: "submissions_remove_user_from_submission"
   post '/submission_tools/create_suggestion_to_user/', to: "submissions#create_suggestion_to_user", as: "submissions_create_suggestion_to_user"
