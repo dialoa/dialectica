@@ -1,4 +1,13 @@
-<% json_view_ancestry = json.has_parent? ? json.parent_id : json.id %>
+<%# json_view_ancestry = json.has_parent? ? json.parent_id : json.id %>
+<%# json.bibtex_entry.blank? %>
+<% if json.has_parent? %>
+  <% json_view_ancestry = json.parent_id %>
+<% elsif !json.bibtex_entry.blank? %>
+  <% json_view_ancestry = json.bibtex_entry.id %>
+<% else %>
+    <% json_view_ancestry = json.id %>
+<% end %>
+
 <div class="json_view json_view_ancestry_<%= json_view_ancestry %>" id="json_view_<%= json.id %>" class="border rounded" json_view_ancestry_id="<%= json_view_ancestry %>">
   <ul class="nav nav-tabs" id="nav_tabs_json_view_<%= json.id %>" role="tablist">
     <li class="nav-item" role="presentation">

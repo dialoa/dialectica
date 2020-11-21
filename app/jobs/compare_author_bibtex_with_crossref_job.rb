@@ -50,10 +50,10 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
           serrano = Serrano.works(query: line)
           serrano["message"]["items"].first(10).each do |inner_item|
             result_from_serrano = Serrano.content_negotiation(ids: inner_item["DOI"], format: "citeproc-json")
-            Json.create(content: result_from_serrano.to_s.strip, bibtex_entry: bibtex_entry_of_author.id)
+            Json.create(content: result_from_serrano.to_s.strip, bibtex_entry_id: bibtex_entry_of_author.id)
           end
       end
-      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, "bibtex").deliver_now
+      BibtexMailer.bibtex_is_ready_to_compare_email(@array_of_originals, email, "text").deliver_now
     end
   end
 
