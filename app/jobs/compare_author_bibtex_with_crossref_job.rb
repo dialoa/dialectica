@@ -22,8 +22,9 @@ class CompareAuthorBibtexWithCrossrefJob < ApplicationJob
     elsif format == "json"
       json = JSON.parse(text)
       json.each do |item|
-        item_json = JSON.parse(item)
-        original_json = Json.create(content: item)
+        #byebug
+        item_json = item
+        original_json = Json.create(content: JSON.parse(item))
         #byebug
         #citation_of_result_from_bibtex = (cp.render :bibliography, id: article.id).first
         #possible = CiteProc.process item_json, :style => :apa

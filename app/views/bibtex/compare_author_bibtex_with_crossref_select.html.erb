@@ -189,10 +189,18 @@
 
   function fill_chosen_entries() {
     all_entries_for_json = ""
-    $('.selected_entry_comparator').each(function() {
-      all_entries_for_json = all_entries_for_json + "\n \n" + $.trim($(this).parent().find(".raw_json").text());
+    $('.selected_entry_comparator').each(function(index) {
+      //all_entries_for_json = all_entries_for_json + $.trim($(this).parent().find(".raw_json").text()) + ", ";
+
+      var isLastElement = index == $('.selected_entry_comparator').length -1;
+      if (isLastElement) {
+          all_entries_for_json = all_entries_for_json + $.trim($(this).parent().find(".raw_json").text());
+      } else {
+        all_entries_for_json = all_entries_for_json + $.trim($(this).parent().find(".raw_json").text()) + ", ";
+      }
+
     })
-    $('#chosen_entries_for_json').val(all_entries_for_json);
+    $('#chosen_entries_for_json').val("[" + all_entries_for_json + "]");
 
     all_entries_for_bibtex = ""
     $('.selected_entry_comparator').each(function() {
