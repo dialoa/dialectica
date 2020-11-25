@@ -6,24 +6,25 @@
 <% unless current_user.nil? %>
   <%= form_tag submissions_create_suggestion_to_user_path do %>
     <%#= file_field_tag :file, class: "btn btn-secondary" %>
-    <%= hidden_field_tag :submission_id, submission.id %>
-    <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
-    <%= button_tag "suggest to another internal", class: "btn btn-light border" %>
-    <br />
     <%= select_tag :user_id, options_for_select(User.all.collect{ |u| [u.name, u.id] }) %>
+    <%= hidden_field_tag :submission_id, submission.id %>
+    <br />
+    <br />
+    <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
+    <%= button_tag "Send Suggestion", class: "btn bg-color-light-green btn-block", id: "actual_bibtex_enter_button" %>
   <% end %>
-<%= mail_to "", "send to external referee", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn btn-light border my-2" %>
+<%= mail_to "", "Suggest per mail", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn bg-color-light-green btn-block my-2" %>
 <%#= link_to "Suggest to another user", submissions_create_suggestion_to_user_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
 
 <% if is_user_reviewer?(current_user) %>
   <hr />
   <%  if current_user.submissions.where(id: submission.id).empty?  %>
-    <%= link_to "fish this", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
+    <%= link_to "Sign up as Internal Referee", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn bg-color-dark-green text-white btn-block my-2" %>
     <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
   <% else %>
-    <%= link_to "upload file", new_report_for_reviewer_path(submission.id), class: "btn btn-light border my-2" %>
+    <%= link_to "Add Report", new_report_for_reviewer_path(submission.id), class: "btn btn-info btn-block my-2" %>
     <% if submission.proposed == "false" %>
-      <%= link_to "propose", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
+      <%= link_to "Propose for publication", propose_submission_path(submission.id, submission.id), method: :post, class: "btn bg-color-dark-green text-white btn-block my-2" %>
     <% else %>
       <%= link_to "Withdraw proposal of publication", withdraw_proposal_of_submission_path(submission.id, submission.id), method: :post, class: "btn bg-color-light-red btn-block my-2" %>
     <% end %>
@@ -35,8 +36,8 @@
 
   <% if is_user_reviewer?(current_user) && submission.dead == "false" %>
     <hr />
-    <%= link_to "Accept", make_submission_dead_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
-    <%= link_to "Reject", make_submission_dead_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
+    <%= link_to "Accept", make_submission_dead_path(submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
+    <%= link_to "Reject", make_submission_dead_path(submission.id), method: :post, class: "btn btn-danger btn-block my-2" %>
   <% end %>
 <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
 <% end %>

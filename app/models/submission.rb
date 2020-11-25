@@ -15,6 +15,10 @@ class Submission < ApplicationRecord
     ["metaphysics", "epistemology", "philosophy of science", "ethics"]
   end
 
+  def self.gender_options
+    ["male", "female", "transgender"]
+  end
+
   def self.statuses
     ["submitted", "rejected", "accepted", "proposed", "published", "review"]
   end

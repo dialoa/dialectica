@@ -18,6 +18,14 @@
         </div>
     </div>
     <p>
+      Country *
+      <br />
+          <%= f.country_select :country %>
+    </p>
+
+    <%= f.input :gender, collection: Submission.gender_options.map {|p| [t("#{p}"), p]} %>
+    <%= f.input :other_authors %>
+    <p>
       <strong>Upload File</strong><br />
       <%= f.file_field :file %>
     </p>

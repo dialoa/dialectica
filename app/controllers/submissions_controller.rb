@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool]
-  before_action :authenticate_user!, only: [:my_submissions]
+  before_action :authenticate_user!, only: [:my_submissions, :pool]
 
   # GET /submissions
   # GET /submissions.json
@@ -13,7 +13,7 @@ class SubmissionsController < ApplicationController
   def show
   end
 
-  def show
+  def show_pool
   end
 
   def my_submissions
@@ -178,6 +178,6 @@ class SubmissionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def submission_params
-      params.require(:submission).permit(:title, :area, :firstname, :lastname, :file, :email, :history)
+      params.require(:submission).permit(:title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors)
     end
 end
