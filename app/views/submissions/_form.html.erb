@@ -18,12 +18,14 @@
         </div>
     </div>
     <p>
-      Country *
+      Country*
       <br />
           <%= f.country_select :country %>
     </p>
 
-    <%= f.input :gender, collection: Submission.gender_options.map {|p| [t("#{p}"), p]} %>
+
+    <%= f.input :gender, label: "Gender**", collection: Submission.gender_options.map {|p| [t("#{p}"), p]} %>
+
     <%= f.input :other_authors %>
     <p>
       <strong>Upload File</strong><br />
@@ -41,4 +43,11 @@
   <div class="form-actions">
     <%= f.button :submit, class: "btn btn-primary my-2" %>
   </div>
+
+  <hr />
+  <p>
+    * of primary institutional affiliation (otherwise of residence), for statistical purposes only
+    <br />
+    ** for statistical purposes only
+  </p>
 <% end %>
