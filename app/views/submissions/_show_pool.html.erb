@@ -14,5 +14,15 @@
   <div class="col-4">
     <h3>History</h3>
     <%= raw submission.history %>
+    <hr />
+    <h3>Attachments</h3>
+    <% if submission.attachments.empty? %>
+      <p>
+        No Attachments yet.
+        </p>
+    <% end %>
+      <% submission.attachments.each_with_index do |attachment, index| %>
+        <%= link_to "Download File ##{index + 1}", rails_blob_path(attachment, disposition: "attachment") %><br />
+      <% end %>
   </div>
 </div>

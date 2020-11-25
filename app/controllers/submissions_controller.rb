@@ -115,11 +115,19 @@ class SubmissionsController < ApplicationController
     redirect_to submission_path(submission), notice: 'Suggestion added'
   end
 
-  def add_file_to_submission
+  def upload_file_to_submission
     submission = Submission.find(params[:submission_id])
     submission.attachments.attach(params[:attachments])
     message = "Uploaded file to submission"
     submission.add_to_history(current_user, message)
+    redirect_to submission_path(submission), notice: message
+  end
+
+  def add_comment_to_submission
+    submission = Submission.find(params[:submission_id])
+    comment = params[:comment]
+    message = "Added Comment"
+    submission.add_to_history(current_user, comment)
     redirect_to submission_path(submission), notice: message
   end
 

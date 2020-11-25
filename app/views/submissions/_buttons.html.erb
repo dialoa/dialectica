@@ -18,8 +18,11 @@
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#uploadfileModal">
           upload file
         </button>
+        <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#addCommentModal">
+          add comment
+        </button>
           <%#= link_to "suggest to another internal", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
-          <%= link_to "upload file", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
+          <%#= link_to "upload file", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
           <% if submission.proposed == "false" %>
             <%= link_to "propose", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
           <% else %>
@@ -85,14 +88,43 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= form_tag submissions_create_suggestion_to_user_path do %>
+        <%= form_tag upload_file_to_submission_path(submission), multipart: true do %>
           <%#= file_field_tag :file, class: "btn btn-secondary" %>
-          <%= hidden_field_tag :submission_id, submission.id %>
+          <%#= hidden_field_tag :submission_id, submission.id %>
           <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
-          <strong>Who: </strong> <%= select_tag :user_id, options_for_select(User.all.collect{ |u| [u.name, u.id] }) %>
+          <%= file_field_tag :attachments %>
           <br />
           <br />
-          <%= button_tag "suggest to this internal", class: "btn btn-light border" %>
+          <%= button_tag "upload file", class: "btn btn-light border" %>
+
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CommentModal -->
+<div class="modal fade" id="addCommentModal" tabindex="-1" aria-labelledby="addCommentModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCommentModalLabel">Suggestion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_tag add_comment_to_submission_path(submission) do %>
+          <%#= file_field_tag :file, class: "btn btn-secondary" %>
+          <%#= hidden_field_tag :submission_id, submission.id %>
+          <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
+          <%= text_field_tag :comment %>
+          <br />
+          <br />
+          <%= button_tag "add comment", class: "btn btn-light border" %>
 
         <% end %>
       </div>
