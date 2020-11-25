@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
   <div class="row">
-    <div class="col-12">
+    <div class="col-9 border-right">
       <h3><i>dialectica</i> Editorial Committee </h3>
       <p>
         <% submission_option_list = [
@@ -22,6 +22,13 @@
       <hr />
       <%= render 'submissions/in_groups', submissions: @submissions %>
     </div>
+    <div class="col-3">
+      <div id="panel-information-field" class="border rounded p-2">
+        <p>
+          <strong>Select an entry on the left side to display more information.</strong>
+        </p>
+      </div>
+    </div>
   </div>
 
 <p>
@@ -41,22 +48,18 @@
   $( document ).ready(function() {
 
     $(document).on('click', '.pool-select-button', function() {
-
       submission_id = $(this).attr("value");
-
-      window.location.href = "/submissions/" + submission_id;
-
       //console.log(submission_id);
 
-      //$.ajax({
-      //  url: "/submission_panel/" + submission_id + ".js",
-      //  method: 'GET',
-      //  headers: {
-      //    'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
-      //  }
-      //}).done(function(response) {
-      //$("#panel-information-field").html(response);
-    //})
+      $.ajax({
+        url: "/submission_panel/" + submission_id + ".js",
+        method: 'GET',
+        headers: {
+          'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+        }
+      }).done(function(response) {
+      $("#panel-information-field").html(response);
+    })
 
     });
   });

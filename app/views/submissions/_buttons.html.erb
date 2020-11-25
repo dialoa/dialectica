@@ -23,7 +23,7 @@
           <%= link_to "fish this", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
           <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
         <% else %>
-          <%= link_to "upload file", new_report_for_reviewer_path(submission.id), class: "btn btn-light border my-2" %>
+          <%= link_to "upload file", upload_file_to_submission(submission.id), class: "btn btn-light border my-2" %>
           <% if submission.proposed == "false" %>
             <%= link_to "propose", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
           <% else %>

@@ -115,16 +115,28 @@ class SubmissionsController < ApplicationController
     redirect_to submission_path(submission), notice: 'Suggestion added'
   end
 
+  def add_file_to_submission
+    submission = Submission.find(params[:submission_id])
+    submission.attachments.attach(params[:attachments])
+    message = "Uploaded file to submission"
+    submission.add_to_history(current_user, message)
+    redirect_to submission_path(submission), notice: message
+  end
+
+
+
   def create_suggestion_to_user
     SuggestionSubmission.create(user_id: params[:user_id], submission_id: params[:submission_id])
-    redirect_to submission_pool_path, notice: 'Suggestion added'
+    #redirect_to submission_pool_path, notice: 'Suggestion added'
+    redirect_to submission_path(params[:submission_id]), notice: 'Suggestion added'
   end
 
   def propose_submission
     submission = Submission.find(params[:submission_id])
     submission.update(proposed: "true")
     submission.add_to_history(current_user, "Proposed Submission")
-    redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(params[:submission_id]), notice: 'Proposed Submission'
   end
 
   def withdraw_proposal_of_submission
@@ -155,7 +167,8 @@ class SubmissionsController < ApplicationController
 
     #@submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} signed up as Internal Referee</p>")
     @submission.add_to_history(current_user, "Signed up as Internal Referee")
-    redirect_to submission_pool_path(selection: "by_me"), notice: 'Signed up as Internal Referee'
+    #redirect_to submission_pool_path(selection: "by_me"), notice: 'Signed up as Internal Referee'
+    redirect_to submission_path(@submission), notice: 'Signed up as Internal Referee'
   end
 
   def remove_user_from_submission
@@ -167,7 +180,8 @@ class SubmissionsController < ApplicationController
     #@submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} quit as Internal Referee</p>")
     @submission.add_to_history(current_user, "Quit as Internal Referee")
 
-    redirect_to submission_pool_path, notice: 'Quit as Internal Referee'
+    #redirect_to submission_pool_path, notice: 'Quit as Internal Referee'
+    redirect_to submission_path(@submission), notice: 'Quit as Internal Referee'
   end
 
   private
@@ -178,6 +192,6 @@ class SubmissionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def submission_params
-      params.require(:submission).permit(:title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors)
+      params.require(:submission).permit(:title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments)
     end
 end
