@@ -3,20 +3,15 @@
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Dialectica</h1>
   <p class="lead">Dialectica is a general analytic philosophy journal. It is edited in Switzerland, publishes predominantly systematic and theoretical philosophy and aims to become the best journal on the European Continent.</p>
-  <hr />
-  <div class="text-center">
-    
-  </div>
-  <div class="row">
-    <div class="col-6">
-      <h3>Registration</h3>
-      <%#= render 'devise/registration/new' %>
+    <% if user_signed_in? %>
+
+    <% else %>
+      <hr />
+    <div class="text-center">
+      <h4><%= link_to('Login', new_user_session_path) %> | <%= link_to "Sign Up", new_user_registration_path %></h4>
     </div>
-    <div class="col-6">
-      <h3>Login</h3>
-      <%#= render 'devise/sessions/new' %>
-    </div>
-  </div>
+
+    <% end %>
 
   <hr />
 
