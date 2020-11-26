@@ -2,10 +2,10 @@ $first-color: #164da2;
 
 $colors: (
   light-green: #90EE90,
-  dark-green: #006400,
-  light-red: #CD5C5C,
-  dark-red: #8B0000,
-  violet: #9932CC,
+  dark-green: #32CD32,
+  light-red: #FF4500,
+  dark-red: #DC143C,
+  violet: #FF1493,
   dark-grey: #A9A9A9,
   black: #000000
 );
@@ -16,9 +16,39 @@ $colors: (
       background-color: $hex !important;
     }
 
+  //  &-#{$name}:hover {
+  //    background-color: lighten($hex, 10%) !important;
+    //}
+
     &-#{$name}:hover {
+      transform: scale(1.09); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
       background-color: lighten($hex, 10%) !important;
     }
+
+    // &-#{$name}:hover {
+    //  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    //  transform: translate3d(0, 0, 0);
+    //  backface-visibility: hidden;
+    //  perspective: 1000px;
+    // }
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
   }
 }
 

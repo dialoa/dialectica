@@ -1,5 +1,5 @@
 <% random_id = SecureRandom.random_number(10000000) %>
-<div id="submission-<%= submission.id %> submission-<%= submission.id %>-random-id-<%= random_id %>" class="card h-100 mb-3 <%= submission.submission_urgency %> <%= submission.get_frame_status_color(current_user) %> btn btn-light pool-select-button" style="" value="<%=submission.id%>">
+<div id="submission-<%= submission.id %> submission-<%= submission.id %>-random-id-<%= random_id %>" class="card h-100 mb-3 <%= submission.submission_urgency %> <%= submission.get_frame_status_color(current_user) %> <%= "animate__animated animate__shakeX animate__slow animate__repeat-2" if submission.suggested_to_me?(current_user) %> btn btn-light pool-select-button" style="" value="<%=submission.id%>">
   <div class="card-body">
     <p class="card-text">
       <strong>#<%= submission.id %> - <%= l submission.created_at, format: :usa %></strong>

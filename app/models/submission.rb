@@ -1,4 +1,4 @@
-class Submission < ApplicationRecord  
+class Submission < ApplicationRecord
   has_many :submission_users
   has_many :users, :through => :submission_users
   has_one_attached :file
@@ -64,6 +64,11 @@ class Submission < ApplicationRecord
     when self.frame_status == "non-active" then ""
     else ""
     end
+  end
+
+  def suggested_to_me?(user)
+    submissions_suggested_to_me = Submission.where(id: SuggestionSubmission.where(user_id: user.id).pluck(:submission_id)).pluck(:id)
+    submissions_suggested_to_me.include?(self.id)
   end
 
   def submission_urgency

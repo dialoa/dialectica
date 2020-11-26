@@ -4,13 +4,30 @@
   <h1 class="display-4">Dialectica</h1>
   <p class="lead">Dialectica is a general analytic philosophy journal. It is edited in Switzerland, publishes predominantly systematic and theoretical philosophy and aims to become the best journal on the European Continent.</p>
   <hr />
+  <div class="text-center">
+    
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <h3>Registration</h3>
+      <%#= render 'devise/registration/new' %>
+    </div>
+    <div class="col-6">
+      <h3>Login</h3>
+      <%#= render 'devise/sessions/new' %>
+    </div>
+  </div>
+
+  <hr />
+
 </div>
 
 <div class="container">
   <div class="card-deck mb-3 text-center">
+
     <div class="card mb-4 shadow-sm">
       <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Dashboard</h4>
+        <h4 class="my-0 font-weight-normal">Refereeing</h4>
       </div>
       <div class="card-body">
         <h1 class="card-title pricing-card-title"></h1>
@@ -25,34 +42,82 @@
       <%= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
       </div>
     </div>
+
     <div class="card mb-4 shadow-sm">
       <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Current Issue</h4>
-      </div>
-      <div class="card-body">
-        <% issue = Issue.last %>
-        <% unless issue.nil? %>
-        <h5 class="card-title pricing-card-title"><%= issue.title %></h5>
-        <hr />
-        <ul class="list-unstyled mt-3 mb-4">
-          <li><%= issue.description %></li>
-        </ul>
-        <%= link_to "To the Issue", issue_path(Issue.last), class: "btn btn-lg btn-block btn-primary" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Open-Access Blog</h4>
+        <h4 class="my-0 font-weight-normal">Bibliography</h4>
       </div>
       <div class="card-body">
         <h1 class="card-title pricing-card-title"></h1>
         <ul class="list-unstyled mt-3 mb-4">
-          <li>See the latest developments</li>
-          <li></li>
+          <li>Supervise new submissions</li>
+          <li>Make assessments</li>
+          <li>Take part in discussions</li>
+          <li>
+            Write comments
+            </li>
         </ul>
-        <%= link_to "To the Blog", blog_posts_path, class: "btn btn-lg btn-block btn-primary" %>
+      <%= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Journals</h4>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title"></h1>
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>Supervise new submissions</li>
+          <li>Make assessments</li>
+          <li>Take part in discussions</li>
+          <li>
+            Write comments
+            </li>
+        </ul>
+      <%= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
       </div>
     </div>
   </div>
+
+    <div class="card-deck mb-3 text-center">
+
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">Books</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title"></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Supervise new submissions</li>
+            <li>Make assessments</li>
+            <li>Take part in discussions</li>
+            <li>
+              Write comments
+              </li>
+          </ul>
+        <%= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
+        </div>
+      </div>
+
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">OA</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title pricing-card-title"></h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Supervise new submissions</li>
+            <li>Make assessments</li>
+            <li>Take part in discussions</li>
+            <li>
+              Write comments
+              </li>
+          </ul>
+        <%= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
+        </div>
+      </div>
+
+    </div>
+
 </div>

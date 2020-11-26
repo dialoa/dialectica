@@ -7,7 +7,7 @@
 
       <% if user_signed_in? %>
 
-        <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "text-white") %> | 
+        <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "text-white") %> |
         <%= link_to 'Edit account', edit_user_registration_path, class: "text-white" %>
       <% else %>
 
