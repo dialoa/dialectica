@@ -108,7 +108,7 @@
 
 <!-- CommentModal -->
 <div class="modal fade" id="addCommentModal" tabindex="-1" aria-labelledby="addCommentModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="addCommentModalLabel">Suggestion</h5>
@@ -117,16 +117,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= form_tag add_comment_to_submission_path(submission) do %>
-          <%#= file_field_tag :file, class: "btn btn-secondary" %>
-          <%#= hidden_field_tag :submission_id, submission.id %>
-          <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
-          <%= text_field_tag :comment %>
-          <br />
-          <br />
-          <%= button_tag "add comment", class: "btn btn-light border" %>
-
+        <%= tinymce_assets %>
+        <%= tinymce %>
+        <%= simple_form_for :comment, url: add_comment_to_submission_path(submission) do |f| %>
+          <%#= f.input :comment, as: :text %>
+          <%= f.text_area :comment, :class => "tinymce", :rows => 40, :cols => 120 %>
+          <%= f.submit "add comment", class: "btn btn-light border my-2" %>
         <% end %>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -1,4 +1,4 @@
-class Submission < ApplicationRecord
+class Submission < ApplicationRecord  
   has_many :submission_users
   has_many :users, :through => :submission_users
   has_one_attached :file
@@ -90,7 +90,12 @@ class Submission < ApplicationRecord
   end
 
   def add_to_history(user, message)
-    history = self.history + "<p><strong>#{self.created_at.strftime("%d.%m.%Y")} - #{user.name}</strong>: " + message + "</p>"
+    history = self.history + "<p><strong>#{self.created_at.strftime("%d.%m.%Y")} - #{user.name}</strong>: <br>" + message + "</p>"
+    self.update(history: history)
+  end
+
+  def add_attachment_to_history(user, attachment)
+    history = self.history + "<p><strong>#{self.created_at.strftime("%d.%m.%Y")} - #{user.name}</strong>: <br>" + "#{link_to "Download File", rails_blob_path(attachment, disposition: "attachment")}" + "</p>"
     self.update(history: history)
   end
 
