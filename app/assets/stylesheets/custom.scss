@@ -82,3 +82,16 @@ blockquote{
 .thick-borders-3{
   border-width: 3px !important;
 }
+
+.arrow-animation {
+  //transform: rotate(45deg);
+  //transform: rotate(270deg);
+}
+
+.arrow-animation {
+  //transform: rotate(45deg);
+  transform: rotate(90deg);
+}
+.arrow-animation.collapsed {
+  transform: rotate(0deg);
+}

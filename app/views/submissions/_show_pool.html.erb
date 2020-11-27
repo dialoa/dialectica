@@ -13,8 +13,11 @@
   </div>
   <div class="col-4">
     <h3>History</h3>
-    <%= raw submission.history %>
-    <hr />
+    <%#= raw submission.history %>
+    <% submission.histories.order(:created_at).reverse_order.each do |history| %>
+      <%= render 'histories/show', history: history %>
+      <hr />
+    <% end %>
     <h3>Attachments</h3>
     <% if submission.attachments.empty? %>
       <p>

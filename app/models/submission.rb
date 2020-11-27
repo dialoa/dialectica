@@ -3,6 +3,7 @@ class Submission < ApplicationRecord
   has_many :users, :through => :submission_users
   has_one_attached :file
   has_many_attached :attachments
+  has_many :histories
   #has_many :suggestion_submissions
 
   has_many :reports
@@ -95,8 +96,9 @@ class Submission < ApplicationRecord
   end
 
   def add_to_history(user, message)
-    history = self.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")} - #{user.name}</strong>: <br>" + message + "</p>"
-    self.update(history: history)
+    #history = self.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")} - #{user.name}</strong>: <br>" + message + "</p>"
+    #self.update(history: history)
+    history = History.create(content: message, user_id: user.id, submission_id: self.id)
   end
 
   def add_attachment_to_history(user, attachment)

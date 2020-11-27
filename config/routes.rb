@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :histories
   resources :reports
   resources :jsons
   resources :codes
