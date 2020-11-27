@@ -62,7 +62,7 @@ reviewers = ["Andrea Giananti","Arturs Logins","Claudio Calosi","Catharine Diehl
 
 reviewers.each do |reviewer|
   acronym = reviewer.split(/ |-/).map(&:first).join.upcase
-  new_user = User.create(email: acronym, password: "epikur", password_confirmation: "epikur", firstname: reviewer.split.first, lastname: reviewer.split.second)
+  new_user = User.create(email: acronym, password: acronym, password_confirmation: acronym, firstname: reviewer.split.first, lastname: reviewer.split.second)
   new_user.roles << Role.find_by_name("reviewer")
   new_user.roles << Role.find_by_name("author")
 end
