@@ -5,7 +5,7 @@
       <h3><i>dialectica</i> Editorial Committee </h3>
       <p>
         <% submission_option_list = [
-        ["submissions without reviewers: #{@submissions_without_reviewers.count} (#{@submissions_without_reviewers.order(:id).map(&:id).join(",")})", "without_reviewers"],
+        #["submissions without reviewers: #{@submissions_without_reviewers.count} (#{@submissions_without_reviewers.order(:id).map(&:id).join(",")})", "without_reviewers"],
         ["submissions with reviewers: #{@submissions_with_reviewers.count}", "with_reviewers"],
         ["submissions to be reviewed by me: #{@submissions_to_be_reviewed_by_me.count}  (#{@submissions_to_be_reviewed_by_me.order(:id).map(&:id).join(",")})", "by_me"],
         ["submissions suggested to me: #{@submissions_suggested_to_me.count}", "suggested_to_me"],
@@ -14,6 +14,11 @@
         ["dead submissions: #{@dead_submissions.count}", "dead_submissions"]
         ] %>
         <div class="small">
+          <a href="<%= submission_pool_path(selection: "without_reviewers") %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == "without_reviewers" %>">submissions without reviewers: <%= "#{@submissions_without_reviewers.count}" %></a>
+          (<% @submissions_without_reviewers.order(:id).each do |item| %>
+             <%= link_to item.id, submission_path(item) %>,
+          <% end %>)
+           <br />
           <% submission_option_list.each do |element| %>
             <a href="<%= submission_pool_path(selection: element[1]) %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == element[1] %>"><%= element[0] %></a><br />
           <% end %>
