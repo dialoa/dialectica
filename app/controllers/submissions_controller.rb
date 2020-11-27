@@ -137,8 +137,11 @@ class SubmissionsController < ApplicationController
 
 
   def create_suggestion_to_user
-    SuggestionSubmission.create(user_id: params[:user_id], submission_id: params[:submission_id])
+    submission = Submission.find(params[:submission_id])
+    SuggestionSubmission.create(user_id: params[:user_id], submission_id: submission.id)
     #redirect_to submission_pool_path, notice: 'Suggestion added'
+    message = "suggested to #{User.find(params[:user_id]).name}"
+    submission.add_to_history(current_user, message)
     redirect_to submission_path(params[:submission_id]), notice: 'Suggestion added'
   end
 
