@@ -15,8 +15,11 @@
         ] %>
         <div class="small">
           <a href="<%= submission_pool_path(selection: "without_reviewers") %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == "without_reviewers" %>">submissions without reviewers: <%= "#{@submissions_without_reviewers.count}" %></a>
-          (<% @submissions_without_reviewers.order(:id).each do |item| %>
-             <%= link_to item.id, submission_path(item) %>,
+          (<% @submissions_without_reviewers.order(:id).each_with_index do |item, index| %>
+             <%= link_to item.id, submission_path(item) %>
+          <% unless @submissions_without_reviewers.size-1 == index %>
+             ,
+           <% end %>
           <% end %>)
            <br />
           <% submission_option_list.each do |element| %>
