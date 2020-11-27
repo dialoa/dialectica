@@ -95,7 +95,7 @@ class Submission < ApplicationRecord
   end
 
   def add_to_history(user, message)
-    history = self.history + "<p><strong>#{self.created_at.strftime("%d.%m.%Y")} - #{user.name}</strong>: <br>" + message + "</p>"
+    history = self.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")} - #{user.name}</strong>: <br>" + message + "</p>"
     self.update(history: history)
   end
 

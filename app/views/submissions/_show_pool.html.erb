@@ -22,7 +22,7 @@
         </p>
     <% end %>
       <% submission.attachments.each_with_index do |attachment, index| %>
-        <%= link_to "Download File ##{index + 1}", rails_blob_path(attachment, disposition: "attachment") %><br />
+        <%= link_to "Download #{attachment.filename}", rails_blob_path(attachment, disposition: "attachment") %><br />
       <% end %>
   </div>
 </div>

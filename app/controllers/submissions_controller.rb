@@ -119,7 +119,8 @@ class SubmissionsController < ApplicationController
     submission = Submission.find(params[:submission_id])
     submission.attachments.attach(params[:attachments])
     message = "Uploaded a file: "
-    link = helpers.link_to("Download File", rails_blob_path(submission.attachments.order(:created_at).last, disposition: "attachment"))
+    attachment = submission.attachments.order(:created_at).last
+    link = helpers.link_to("Download #{attachment.filename}", rails_blob_path(attachment, disposition: "attachment"))
     submission.add_to_history(current_user, message + " " + link)
     #submission.add_attachment_to_history(current_user, submission.attachments.order(:created_at).last)
     redirect_to submission_path(submission), notice: message
