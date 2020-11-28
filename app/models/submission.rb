@@ -7,11 +7,14 @@ class Submission < ApplicationRecord
   #has_many :suggestion_submissions
 
   has_many :reports
+  has_many :blocked_users
 
   #after_create :add_create_to_history
 
   scope :dead, -> { where(dead: "true") }
   scope :alive, -> { where(dead: "false") }
+  #scope :visible_to_user, -> { where(dead: "false") }
+  scope :not_blacklisted, ->(user) { where.not(id: BlockedUser.where(user_id: user.id).pluck(:submission_id)) }
 
   def self.areas
     ["metaphysics", "epistemology", "philosophy of science", "ethics"]

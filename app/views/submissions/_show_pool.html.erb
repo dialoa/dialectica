@@ -27,6 +27,16 @@
       <% submission.attachments.each_with_index do |attachment, index| %>
         <%= link_to "#{attachment.filename}", rails_blob_path(attachment, disposition: "attachment") %><br />
       <% end %>
+      <hr />
+      <h3>Blacklisted Users</h3>
+      <% if submission.blocked_users.empty? %>
+        <p>
+          No one is blacklisted
+          </p>
+      <% end %>
+        <% submission.blocked_users.each_with_index do |blocked_user, index| %>
+          <%= blocked_user.user.name %><br />
+        <% end %>
   </div>
 </div>
 <p>

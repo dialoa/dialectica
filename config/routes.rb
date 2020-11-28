@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :blocked_users
   resources :histories
   resources :reports
   resources :jsons

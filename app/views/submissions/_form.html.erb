@@ -31,12 +31,14 @@
       <strong>upload file</strong><br />
       <%= f.file_field :file %>
     </p>
-    <% if true %>
+    <% if false %>
     <p>
       <strong>History</strong><br />
         <%= f.text_area :history, :class => "tinymce", :rows => 40, :cols => 120 %>
     </p>
     <% end %>
+
+    <%= f.input :blocked_users, as: :select, collection: User.all, label: "blacklist users", required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users"}, multiple: true} %>
 
   </div>
 
@@ -51,3 +53,16 @@
     ** for statistical purposes only
   </p>
 <% end %>
+
+<script>
+    $(document).ready(function(){
+      $('.chosen-select').chosen({
+        allow_single_deselect: true,
+        no_results_text: 'No Results',
+        inherit_select_classes: false,
+        search_contains: true,
+        width: '100%'
+      });
+
+    });
+</script>

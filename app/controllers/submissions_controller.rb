@@ -34,11 +34,14 @@ class SubmissionsController < ApplicationController
   def create
     @submission = Submission.new(submission_params)
     #@submission.history = @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} created Submission</p>"
-
+    #byebug
     respond_to do |format|
       if @submission.save
         format.html {
           @submission.add_to_history(current_user, "Created Submission")
+          params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
+            BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
+          end
           redirect_to @submission, notice: 'Submission was successfully created.'
         }
         format.json { render :show, status: :created, location: @submission }
@@ -77,13 +80,13 @@ class SubmissionsController < ApplicationController
     @selection = params[:selection].present? ? params[:selection] : "without_reviewers"
 
     #@submissions_without_reviewers = Submission.includes(:users).where( :users => { :id => nil } )
-    @submissions_without_reviewers = Submission.alive.left_outer_joins(:users).where( users: { id: nil } )
-    @submissions_with_reviewers = Submission.alive.where.not(id: @submissions_without_reviewers.pluck(:id)).order(:created_at)
-    @submissions_suggested_to_me = Submission.alive.where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
-    @proposed_submissions = Submission.alive.where(proposed: "true")
-    @dead_submissions = Submission.dead
-    @submissions_to_be_reviewed_by_me = current_user.submissions.alive.order(:created_at)
-    @all_submissions = Submission.alive.order(:created_at)
+    @submissions_without_reviewers = Submission.alive.not_blacklisted(current_user).left_outer_joins(:users).where( users: { id: nil } )
+    @submissions_with_reviewers = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id)).order(:created_at)
+    @submissions_suggested_to_me = Submission.alive.not_blacklisted(current_user).where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
+    @proposed_submissions = Submission.alive.not_blacklisted(current_user).where(proposed: "true")
+    @dead_submissions = Submission.dead.not_blacklisted(current_user)
+    @submissions_to_be_reviewed_by_me = current_user.submissions.alive.not_blacklisted(current_user).order(:created_at)
+    @all_submissions = Submission.alive.not_blacklisted(current_user).order(:created_at)
 
     if @selection == "without_reviewers"
       @submissions = @submissions_without_reviewers.order(:created_at)
