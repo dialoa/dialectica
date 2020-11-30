@@ -69,6 +69,9 @@ Rails.application.routes.draw do
   post '/submissions_add_user_to_submission/:user_id/:submission_id', to: "submissions#add_user_to_submission", as: "submissions_add_user_to_submission"
   post '/submissions_remove_user_from_submission/:user_id/:submission_id', to: "submissions#remove_user_from_submission", as: "submissions_remove_user_from_submission"
   post '/submission_tools/create_suggestion_to_user/', to: "submissions#create_suggestion_to_user", as: "submissions_create_suggestion_to_user"
+
+  post '/submission_tools/send_to_external_referee/:submission_id', to: "submissions#send_to_external_referee", as: "submissions_send_to_external_referee"
+
   post '/submission_tools/update_status_of_submission/:submission_id/:status', to: "submissions#update_status_of_submission", as: "update_status_of_submission"
   post '/submission_tools/propose_submission/:submission_id/', to: "submissions#propose_submission", as: "propose_submission"
   post '/submission_tools/withdraw_proposal_of_submission/:submission_id/', to: "submissions#withdraw_proposal_of_submission", as: "withdraw_proposal_of_submission"

@@ -57,7 +57,13 @@ class SubmissionsController < ApplicationController
   def update
     respond_to do |format|
       if @submission.update(submission_params)
-        format.html { redirect_to @submission, notice: 'Submission was successfully updated.' }
+        format.html {
+          @submission.add_to_history(current_user, "Updated Submission")
+          params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
+            BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
+          end
+          redirect_to @submission, notice: 'Submission was successfully updated.'
+        }
         format.json { render :show, status: :ok, location: @submission }
       else
         format.html { render :edit }
@@ -146,6 +152,17 @@ class SubmissionsController < ApplicationController
     message = "suggested to #{User.find(params[:user_id]).name}"
     submission.add_to_history(current_user, message)
     redirect_to submission_path(params[:submission_id]), notice: 'Suggestion added'
+  end
+
+  def send_to_external_referee
+    @mail = params[:send_to_external_referee][:mail]
+    @subject = params[:send_to_external_referee][:subject]
+    @body = params[:send_to_external_referee][:body]
+
+    message = "sent to external referee: " + @mail
+    submission = Submission.find(params[:submission_id])
+    submission.add_to_history(current_user, message)
+    #redirect_to submission_path(params[:submission_id]), notice: message
   end
 
   def propose_submission
