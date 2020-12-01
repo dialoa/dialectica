@@ -21,7 +21,7 @@
             add comment
           </button>
         <% else %>
-        <%= link_to "leave this", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
+        <%= link_to "leave it", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#suggestionModal">
           suggest to internal reviewer
         </button>
@@ -38,9 +38,9 @@
           <%#= link_to "suggest to another internal", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
           <%#= link_to "upload file", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
           <% if submission.proposed == "false" %>
-            <%= link_to "propose", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
+            <%#= link_to "propose", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
           <% else %>
-          <%= link_to "proposed", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2 disabled" %>
+          <%#= link_to "proposed", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2 disabled" %>
             <%#= link_to "Withdraw proposal of publication", withdraw_proposal_of_submission_path(submission.id, submission.id), method: :post, class: "btn bg-color-light-red btn-block my-2" %>
           <% end %>
 
@@ -166,7 +166,7 @@
           <%= f.input :subject, input_html: {value: "dialectica refereeing - \"#{submission.title} \""} %>
           </p>
           <p>
-            <%= f.input :body, as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, current_user)} %>
+            <%= f.input :body, as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, current_user), rows: 25} %>
           </p>
           <%= f.submit "Continue (this opens up your mail program)", class: "btn btn-light border my-2" %>
         <% end %>
