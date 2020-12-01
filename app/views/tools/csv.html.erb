@@ -1,0 +1,14 @@
+<h1>Tools#csv</h1>
+<p>Find me in app/views/tools/csv.html.erb</p>
+<%= simple_form_for :csv, url: tools_csv_path, method: :post do |f| %>
+<p>
+  <%= f.file_field :csv_file %>
+</p>
+  <%= f.submit "Upload", class: "btn btn-light border my-2" %>
+<% end %>
+<%= @array_of_hash %>
+<br />
+<br />
+<% @array_of_hash.each do |hash| %>
+  <%#= hash.inspect %>
+<% end %>

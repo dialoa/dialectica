@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'tools/csv', to: 'tools#csv', as: "tools_csv"
+  post 'tools/csv', to: 'tools#csv'
   resources :blocked_users
   resources :histories
   resources :reports

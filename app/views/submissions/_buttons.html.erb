@@ -149,7 +149,7 @@
       <div class="modal-body">
         <%= simple_form_for :send_to_external_referee, url: submissions_send_to_external_referee_path(submission), remote: true do |f| %>
         <p>
-          <%= f.text_field :mail, value: "Please enter email" %>
+          <%= f.input :mail, value: "Please enter email" %>
         </p>
         <p>
           <%= f.text_field :subject, value: "Submission on Dialectica: \"#{submission.title} \"" %>
