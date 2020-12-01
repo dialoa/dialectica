@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_28_060952) do
+ActiveRecord::Schema.define(version: 2020_12_01_104007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,6 +208,7 @@ ActiveRecord::Schema.define(version: 2020_11_28_060952) do
     t.string "country", default: ""
     t.string "gender", default: ""
     t.string "other_authors", default: ""
+    t.text "comment", default: ""
   end
 
   create_table "suggestion_submissions", force: :cascade do |t|

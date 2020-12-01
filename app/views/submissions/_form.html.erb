@@ -40,6 +40,14 @@
 
     <%= f.input :blocked_users, as: :select, collection: User.all, label: "blacklist users", required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users"}, multiple: true} %>
 
+
+    <% if true %>
+    <p>
+      <strong>Comment</strong><br />
+        <%= f.text_area :comment, :class => "tinymce", :rows => 10 %>
+    </p>
+    <% end %>
+
   </div>
 
   <div class="form-actions">
