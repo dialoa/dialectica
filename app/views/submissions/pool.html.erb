@@ -10,10 +10,12 @@
         #["submissions to be reviewed by me: #{@submissions_to_be_reviewed_by_me.count}  (#{@submissions_to_be_reviewed_by_me.order(:id).map(&:id).join(",")})", "by_me"],
         ["submissions suggested to me: #{@submissions_suggested_to_me.count}", "suggested_to_me"],
         ["proposed submissions: #{@proposed_submissions.count}", "proposed_submissions"],
-        ["all open submissions: #{@all_submissions.count}", "all"],
+        ["all open submissions: #{@all_open_submissions.count}", "all_open"],
         ["dead submissions: #{@dead_submissions.count}", "dead_submissions"]
         ] %>
         <div class="small">
+          <a href="<%= submission_pool_path(selection: "all") %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == "all" %>">all submissions: <%= "#{@all_submissions.count}" %></a>
+          <br />
           <a href="<%= submission_pool_path(selection: "without_reviewers") %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == "without_reviewers" %>">submissions without reviewers: <%= "#{@submissions_without_reviewers.count}" %></a>
           (<% @submissions_without_reviewers.order(:id).each_with_index do |item, index| %>
              <%= link_to item.id, submission_path(item) %>
@@ -36,7 +38,24 @@
         </div>
       </p>
       <hr />
-      <%= render 'submissions/in_groups', submissions: @submissions %>
+      </div>
+      <div class="col-9">
+        <%= render 'submissions/in_groups', submissions: @submissions %>
+      </div>
+    <div class="col-3">
+      <h3>Welcome to the fishpond!</h3>
+      <p>
+        Click on a fish to see its history
+      </p>
+      <p>
+        "fish" it to become an internal reviewer, suggest it to others
+      </p>
+      <p>
+        build a case for it
+        </p>
+        <p>
+          "propose" it to put it on the EC's menu
+        </p>
     </div>
   </div>
 

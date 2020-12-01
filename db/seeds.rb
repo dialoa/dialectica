@@ -27,18 +27,18 @@ submissions_with_different_dates = [
   "On philosophical analysis"
 ]
 
-submissions_with_different_dates.each_with_index do |submission, index|
-  Submission.create(title: submission, created_at: Date.today - index.weeks)
-end
+#submissions_with_different_dates.each_with_index do |submission, index|
+#  Submission.create(title: submission, created_at: Date.today - index.weeks)
+#end
 
-dead_submissions = [
-  "Aristotelian Metaphysics",
-  "Metaphysics without Thought Experiments"
-]
+#dead_submissions = [
+#  "Aristotelian Metaphysics",
+#  "Metaphysics without Thought Experiments"
+#]
 
-dead_submissions.each_with_index do |submission, index|
-  Submission.create(title: submission, created_at: Date.today - 20.weeks, firstname: "Manfred", lastname: "Meier", dead: "true")
-end
+#dead_submissions.each_with_index do |submission, index|
+#  Submission.create(title: submission, created_at: Date.today - 20.weeks, firstname: "Manfred", lastname: "Meier", dead: "true")
+#end
 
 reviewers = [{"mail"=>"andrea.giananti@unifr.ch", "first_name"=>"Andrea", "last_name"=>"Giananti"}, {"mail"=>"arturs.logins@uzh.ch", "first_name"=>"Arturs", "last_name"=>"Logins"}, {"mail"=>"Claudio.Calosi@unige.ch", "first_name"=>"Claudio", "last_name"=>"Calosi"}, {"mail"=>"catharine.diehl@utoronto.ca", "first_name"=>"Catharine", "last_name"=>"Diehl"}, {"mail"=>"weibel@philos.uzh.ch", "first_name"=>"Christian", "last_name"=>"Weibel"}, {"mail"=>"davoodbahjat@gmail.com", "first_name"=>"Davood", "last_name"=>"Bahjat"}, {"mail"=>"donnchadh.oconaill@unifr.ch", "first_name"=>"Donnchadh", "last_name"=>"O'Conaill"}, {"mail"=>"D.Vanello.1@warwick.ac.uk", "first_name"=>"Daniel", "last_name"=>"Vanello"}, {"mail"=>"edgar.phillips@gmail.com", "first_name"=>"Edgar", "last_name"=>"Phillips"}, {"mail"=>"fabrice.correia@unige.ch", "first_name"=>"Fabrice", "last_name"=>"Correia"}, {"mail"=>"francois.pellet@uni-muenster.de", "first_name"=>"François", "last_name"=>"Pellet"}, {"mail"=>"Fabrice.Teroni@unige.ch", "first_name"=>"Fabrice", "last_name"=>"Teroni"}, {"mail"=>"giova_merlo@yahoo.it", "first_name"=>"Giovanni", "last_name"=>"Merlo"}, {"mail"=>"julien.dutant@kcl.ac.uk", "first_name"=>"Julien", "last_name"=>"Dutant"}, {"mail"=>"joerg.loeschke@philos.uzh.ch", "first_name"=>"Jörg", "last_name"=>"Löschke"}, {"mail"=>"jan.plate@gmail.com", "first_name"=>"Jan", "last_name"=>"Plate"}, {"mail"=>"jonaswaechter@yahoo.com", "first_name"=>"Jonas", "last_name"=>"Waechter"}, {"mail"=>"matthias.egg@philo.unibe.ch", "first_name"=>"Matthias", "last_name"=>"Egg"}, {"mail"=>"maria.scarpati@unine.ch", "first_name"=>"Maria", "last_name"=>"Scarpati"}, {"mail"=>"mike.stuart.post@gmail.com", "first_name"=>"Mike", "last_name"=>"Stuart"}, {"mail"=>"nemo.krueger@stud.unilu.ch", "first_name"=>"Nemo", "last_name"=>"Krüger"}, {"mail"=>"philipp.blum@philosophie.ch", "first_name"=>"Philipp", "last_name"=>"Blum"}, {"mail"=>"patrik.engisch@unifr.ch", "first_name"=>"Patrik", "last_name"=>"Engisch"}, {"mail"=>"Paolo.Natali@unige.ch", "first_name"=>"Paolo", "last_name"=>"Natali"}, {"mail"=>"Robert.Michels@unige.ch", "first_name"=>"Robert", "last_name"=>"Michels"}, {"mail"=>"sharon.casu@unifr.ch", "first_name"=>"Sharon", "last_name"=>"Casu"}, {"mail"=>"hirvonen.philosophy@gmail.com", "first_name"=>"Sanna", "last_name"=>"Hirvonen"}, {"mail"=>"sebastian.muders@ethik.uzh.ch", "first_name"=>"Sebastian", "last_name"=>"Muders"}, {"mail"=>"Stephanie.Rennick@glasgow.ac.uk", "first_name"=>"Stephanie", "last_name"=>"Rennick"}, {"mail"=>"sandro.raess@philosophie.ch", "first_name"=>"Sandro", "last_name"=>"Räss"}, {"mail"=>"thomas.schindler1980@gmail.com", "first_name"=>"Thomas", "last_name"=>"Schindler"}, {"mail"=>"zoe.christoff@gmail.com", "first_name"=>"Zoé", "last_name"=>"Christoff"}]
 
