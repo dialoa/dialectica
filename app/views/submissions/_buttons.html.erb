@@ -6,17 +6,24 @@
 <% unless current_user.nil? %>
 <div class="row">
     <div class="col-12">
-      <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#send_to_external_refereeModal">
-        send to external referee
-      </button>
       <%#= mail_to "", "send to external referee", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, as it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn btn-light border my-2" %>
       <% if is_user_reviewer?(current_user) %>
         <%  if current_user.submissions.where(id: submission.id).empty?  %>
           <%= link_to "fish this", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
           <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
+          <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#suggestionModal">
+            suggest to internal reviewer
+          </button>
+          <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#uploadfileModal">
+            upload file
+          </button>
+          <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#addCommentModal">
+            add comment
+          </button>
         <% else %>
+        <%= link_to "leave this", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#suggestionModal">
-          suggest to another internal
+          suggest to internal reviewer
         </button>
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#uploadfileModal">
           upload file
@@ -24,6 +31,10 @@
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#addCommentModal">
           add comment
         </button>
+        <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#send_to_external_refereeModal">
+          send to external referee
+        </button>
+
           <%#= link_to "suggest to another internal", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
           <%#= link_to "upload file", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
           <% if submission.proposed == "false" %>
@@ -32,7 +43,7 @@
           <%= link_to "proposed", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2 disabled" %>
             <%#= link_to "Withdraw proposal of publication", withdraw_proposal_of_submission_path(submission.id, submission.id), method: :post, class: "btn bg-color-light-red btn-block my-2" %>
           <% end %>
-          <%= link_to "leave this", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
+
         <% end %>
       <% end %>
     </div>
@@ -149,18 +160,17 @@
       <div class="modal-body">
         <%= simple_form_for :send_to_external_referee, url: submissions_send_to_external_referee_path(submission), remote: true do |f| %>
         <p>
-          <%= f.input :mail, value: "Please enter email" %>
+          <%= f.input :mail, placeholder: 'example: user@domain.com' %>
         </p>
         <p>
-          <%= f.text_field :subject, value: "Submission on Dialectica: \"#{submission.title} \"" %>
+          <%= f.input :subject, input_html: {value: "dialectica refereeing - \"#{submission.title} \""} %>
           </p>
           <p>
-            <%= f.text_area :body, value: "Dear Reviewer \n\n There is a submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, as it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}" %>
+            <%= f.input :body, as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, current_user)} %>
           </p>
           <%= f.submit "Continue (this opens up your mail program)", class: "btn btn-light border my-2" %>
         <% end %>
         <%#= mail_to "", "send to external referee", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, as it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn btn-light border my-2" %>
-send_to_external_referee
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -21,7 +21,7 @@ class Submission < ApplicationRecord
   end
 
   def self.gender_options
-    ["male", "female", "transgender"]
+    ["male", "female", "non-binary", "none of the above"]
   end
 
   def self.statuses
@@ -38,6 +38,46 @@ class Submission < ApplicationRecord
 
   def self.dead_statuses
     ["false", "true"]
+  end
+
+  def self.send_to_external_referee_text(submission, user)
+"Dear
+
+May I ask you whether you would be willing to referee the appended paper
+\"#{submission.title}\", recently submitted to dialectica.
+You may comment freely and/or use the form below. If you do not have
+time to do us this favour (it would be best if you could do it in about
+a month) and/or want to suggest another referee, please feel free to
+tell me so. Many thanks in advance and all the best
+
+#{user.firstname}
+member of the Editorial Committee of dialectica
+
+Dialectica
+Referee Form
+
+Please assess the paper's originality and the quality of its
+argumentation in relation to its length. If you think the paper should
+be shortened or expanded, please indicate where.
+As many authors of dialectica are not native speakers of English, minor
+mistakes should not be held too much against the authors (even if, of
+course, they would have to be corrected for publication).
+Please bear in mind that Journal policy is to make available as much of
+their reports as possible to the authors and adopt a judicious tone in
+their assessment, while not forgetting that, if a paper is of very poor
+quality the report must indicate this.
+
+1. Please characterise the submitted paper by checking the
+relevant box:
+[ ] Accepted with no or minor revisions
+[ ] Accepted with major revisions
+[ ] Rejected with possible resubmission
+[ ] rejected
+
+[ ] The paper should not have been sent to referees, but rejected outright.
+
+
+2. Comments"
   end
 
   def get_frame_status_color(user)

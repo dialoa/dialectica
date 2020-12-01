@@ -1,2 +1,6 @@
-console.log("<%= @subject.to_s %>");
-window.location.href = "mailto:<%= @mail %> ?cc=dialectica@philosophie.ch ?subject=<%= url_encode(@subject) %> ?body=<%#= url_encode(@body) %>";
+location.href = "mailto:<%= @mail %>?body=<%= url_encode(@body) %>&cc=dialectica@philosophie.ch&subject=<%= url_encode(@subject) %>";
+//mailto:dfdf@me.com?body=Dear
+//cc=dialectica@philosophie.ch?subject=dialectica%20refereeing%20-%20%22Focus%20effects%20in%20number%20sentences%20revisited%20%22?
+
+//mailto:m.mustermann@domain.de?body=Hallo%20Max,%0D%0A%0D%0Ahier%20steht%20die%20Nachricht.
+//console.log("mailto:<%= @mail %>?cc=dialectica@philosophie.ch?subject=<%= url_encode(@subject) %>?body=<%= url_encode(@body) %>")

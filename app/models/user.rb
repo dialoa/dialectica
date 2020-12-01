@@ -19,4 +19,6 @@ has_many :blocked_users
    def name
      "#{self.firstname} #{self.lastname}"
    end
+
+
 end
