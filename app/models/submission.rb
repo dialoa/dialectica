@@ -4,6 +4,7 @@ class Submission < ApplicationRecord
   has_one_attached :file
   has_many_attached :attachments
   has_many :histories
+  has_many :requested_reviewers
   #has_many :suggestion_submissions
 
   has_many :reports

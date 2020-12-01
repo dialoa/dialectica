@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_104007) do
+ActiveRecord::Schema.define(version: 2020_12_01_105653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,15 @@ ActiveRecord::Schema.define(version: 2020_12_01_104007) do
     t.bigint "user_id"
     t.index ["submission_id"], name: "index_reports_on_submission_id"
     t.index ["user_id"], name: "index_reports_on_user_id"
+  end
+
+  create_table "requested_reviewers", force: :cascade do |t|
+    t.string "firstname", default: ""
+    t.string "lastname", default: ""
+    t.string "email", default: ""
+    t.string "status", default: "open"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "roles", force: :cascade do |t|

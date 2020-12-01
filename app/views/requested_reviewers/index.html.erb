@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Requested Reviewers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Email</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @requested_reviewers.each do |requested_reviewer| %>
+      <tr>
+        <td><%= requested_reviewer.firstname %></td>
+        <td><%= requested_reviewer.lastname %></td>
+        <td><%= requested_reviewer.email %></td>
+        <td><%= requested_reviewer.status %></td>
+        <td><%= link_to 'Show', requested_reviewer %></td>
+        <td><%= link_to 'Edit', edit_requested_reviewer_path(requested_reviewer) %></td>
+        <td><%= link_to 'Destroy', requested_reviewer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Requested Reviewer', new_requested_reviewer_path %>
