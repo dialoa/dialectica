@@ -44,6 +44,9 @@ Rails.application.routes.draw do
   get "/bibtex_tools/replace_underscore", to: "bibtex#replace_underscore", as: "replace_underscore"
   post "/bibtex_tools/replace_underscore", to: "bibtex#replace_underscore"
 
+  post "/bibtex_tools/replace_underscore_forwards", to: "bibtex#replace_underscore_forwards", as: "replace_underscore_forwards"
+  post "/bibtex_tools/replace_underscore_backwards", to: "bibtex#replace_underscore_backwards", as: "replace_underscore_backwards"
+
   get '/bibtex/bibtex_comma_seperated_list_of_bibtex_keys(/:text)', to: 'bibtex#bibtex_comma_seperated_list_of_bibtex_keys', as: "bibtex_comma_seperated_list_of_bibtex_keys"
   post '/bibtex/bibtex_comma_seperated_list_of_bibtex_keys(/:text)', to: 'bibtex#bibtex_comma_seperated_list_of_bibtex_keys', as: "bibtex_comma_seperated_list_of_bibtex_keys_post"
 

@@ -123,19 +123,32 @@ class BibtexController < ApplicationController
 
   def replace_underscore
 
-    if params[:replace_file].present?
-      file = params[:replace_file][:replace_file]
-      filename = file.original_filename
-      text = file.read
-
-      text = text.gsub('_', '---::---')
-      #byebug
-
-      send_data text, filename: "#{filename.split('.').first}_replace_underscore.bib"
-    end
-
 
     #send_file '/path/to.jpeg', :type => 'image/jpeg', :disposition => 'inline'
+  end
+
+  def replace_underscore_forwards
+    file = params[:replace_file][:replace_file]
+    filename = file.original_filename
+    text = file.read
+    text = change_underscore_in_bibtex_key(text, '_', '---::---')
+    send_data text, filename: "#{filename.split('.').first}_underscore_replaced.bib"
+  end
+
+  def replace_underscore_backwards
+    file = params[:replace_file][:replace_file]
+    filename = file.original_filename
+    text = file.read
+    text = change_underscore_in_bibtex_key(text, '---::---', '_')
+    send_data text, filename: "#{filename.split('.').first}_underscored.bib"
+  end
+
+  def squish_bibtex_file
+
+  end
+
+  def squish_bibtex_filex
+
   end
 
   def bibtex_create
@@ -216,6 +229,16 @@ class BibtexController < ApplicationController
     end
 
     article_text
+  end
+
+  def change_underscore_in_bibtex_key(bibtex_code, expression_to_replace, expression_that_replaces)
+    bobba = BibTeX.parse(bibtex_code)
+
+    bobba.each_with_index do |article, index|
+      article.id = article.id.gsub(expression_to_replace, expression_that_replaces)
+    end
+    #bobba.save
+    bobba
   end
 
 end

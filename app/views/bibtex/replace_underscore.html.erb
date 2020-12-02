@@ -1,13 +1,30 @@
 <div class="container">
   <h1>Replace Underscore</h1>
-  <%= simple_form_for :replace_file, url: replace_underscore_path, method: :post do |f| %>
-  <p>
-    <%= f.file_field :replace_file %>
-  </p>
-    <%= f.submit "Replace", class: "btn btn-light border my-2" %>
-  <% end %>
-  <p>
-    Replaces all occurences of "_" with "---::---" (without the quotes).
-  </p>
-  <%= @result %>
+  <hr />
+
+  <div class="row">
+    <div class="col-6">
+      <%= simple_form_for :replace_file, url: replace_underscore_forwards_path, method: :post do |f| %>
+      <p>
+        <%= f.file_field :replace_file %>
+      </p>
+        <%= f.submit "replace underscores", class: "btn btn-light border my-2" %>
+      <% end %>
+      <p>
+        Replaces occurences of "_" with in the keys "---::---" (without the quotes).
+      </p>
+    </div>
+      <div class="col-6">
+        <%= simple_form_for :replace_file, url: replace_underscore_backwards_path, method: :post do |f| %>
+        <p>
+          <%= f.file_field :replace_file %>
+        </p>
+          <%= f.submit "underscore again", class: "btn btn-light border my-2" %>
+        <% end %>
+        <p>
+          Replaces occurences of "---::---" in the keys with "_"  (without the quotes).
+        </p>
+      </div>
+  </div>
+  <%#= @result %>
 </div>
