@@ -147,8 +147,20 @@ class BibtexController < ApplicationController
 
   end
 
-  def squish_bibtex_filex
+  def squish_bibtex_file_execute
+    file = params[:bibtex][:file]
+    filename = file.original_filename
+    bibtex_text = file.read
 
+    bobba = BibTeX.parse(bibtex_text)
+    bibtex_text_squished = ""
+
+    bobba.each_with_index do |article, index|
+      #article.id = id_of_author_bibtex
+      #byebug
+      bibtex_text_squished = bibtex_text_squished + article.to_s.squish + "\n" unless article.blank?
+    end
+    send_data bibtex_text_squished, filename: "#{filename.split('.').first}_squished.bib"
   end
 
   def bibtex_create

@@ -1,0 +1,19 @@
+<div class="container">
+  <h1>Squish Bibtex</h1>
+  <hr />
+
+  <div class="row">
+    <div class="col-12">
+      <%= simple_form_for :bibtex, url: squish_bibtex_file_execute_path, method: :post do |f| %>
+      <p>
+        <%= f.file_field :file %>
+      </p>
+        <%= f.submit "squish", class: "btn btn-light border my-2" %>
+      <% end %>
+      <p>
+        makes bibtex-entries appear on one line.
+      </p>
+    </div>
+  </div>
+  <%#= @result %>
+</div>
