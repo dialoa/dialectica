@@ -6,7 +6,7 @@
     </svg>
 
   </button>
-  <strong><%= history.user.name %> - <%= l(history.created_at, format: :usa) %></strong>
+  <strong><%= history.user.name unless history.user.blank? %> - <%= l(history.created_at, format: :usa) %></strong>
 </p>
 <div class="collapse show" id="collapse-history-<%= history.id %>">
   <div class="card card-body">

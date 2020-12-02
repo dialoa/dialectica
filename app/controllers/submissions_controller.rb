@@ -201,6 +201,22 @@ class SubmissionsController < ApplicationController
     redirect_to submission_path(submission), notice: 'Submission is alive'.downcase
   end
 
+  def accept_submission
+    submission = Submission.find(params[:submission_id])
+    submission.update(dead: "true")
+    message = "Submission accepted".downcase
+    submission.add_to_history(current_user, message)
+    redirect_to submission_path(submission), notice: message
+  end
+
+  def reject_submission
+    submission = Submission.find(params[:submission_id])
+    submission.update(dead: "true")
+    message = "Submission rejected".downcase
+    submission.add_to_history(current_user, message)
+    redirect_to submission_path(submission), notice: message
+  end
+
   def add_user_to_submission
     @user = User.find(params[:user_id])
     @submission = Submission.find(params[:submission_id])

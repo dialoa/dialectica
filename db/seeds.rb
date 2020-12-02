@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Role.roles.each do |role|
-  Role.create(name: role)
+  Role.create(name: role) unless Role.where(name: role).exists?
 end
 
 submissions_with_different_dates = [
@@ -40,11 +40,11 @@ submissions_with_different_dates = [
 #  Submission.create(title: submission, created_at: Date.today - 20.weeks, firstname: "Manfred", lastname: "Meier", dead: "true")
 #end
 
-reviewers = [{"mail"=>"andrea.giananti@unifr.ch", "first_name"=>"Andrea", "last_name"=>"Giananti"}, {"mail"=>"arturs.logins@uzh.ch", "first_name"=>"Arturs", "last_name"=>"Logins"}, {"mail"=>"Claudio.Calosi@unige.ch", "first_name"=>"Claudio", "last_name"=>"Calosi"}, {"mail"=>"catharine.diehl@utoronto.ca", "first_name"=>"Catharine", "last_name"=>"Diehl"}, {"mail"=>"weibel@philos.uzh.ch", "first_name"=>"Christian", "last_name"=>"Weibel"}, {"mail"=>"davoodbahjat@gmail.com", "first_name"=>"Davood", "last_name"=>"Bahjat"}, {"mail"=>"donnchadh.oconaill@unifr.ch", "first_name"=>"Donnchadh", "last_name"=>"O'Conaill"}, {"mail"=>"D.Vanello.1@warwick.ac.uk", "first_name"=>"Daniel", "last_name"=>"Vanello"}, {"mail"=>"edgar.phillips@gmail.com", "first_name"=>"Edgar", "last_name"=>"Phillips"}, {"mail"=>"fabrice.correia@unige.ch", "first_name"=>"Fabrice", "last_name"=>"Correia"}, {"mail"=>"francois.pellet@uni-muenster.de", "first_name"=>"François", "last_name"=>"Pellet"}, {"mail"=>"Fabrice.Teroni@unige.ch", "first_name"=>"Fabrice", "last_name"=>"Teroni"}, {"mail"=>"giova_merlo@yahoo.it", "first_name"=>"Giovanni", "last_name"=>"Merlo"}, {"mail"=>"julien.dutant@kcl.ac.uk", "first_name"=>"Julien", "last_name"=>"Dutant"}, {"mail"=>"joerg.loeschke@philos.uzh.ch", "first_name"=>"Jörg", "last_name"=>"Löschke"}, {"mail"=>"jan.plate@gmail.com", "first_name"=>"Jan", "last_name"=>"Plate"}, {"mail"=>"jonaswaechter@yahoo.com", "first_name"=>"Jonas", "last_name"=>"Waechter"}, {"mail"=>"matthias.egg@philo.unibe.ch", "first_name"=>"Matthias", "last_name"=>"Egg"}, {"mail"=>"maria.scarpati@unine.ch", "first_name"=>"Maria", "last_name"=>"Scarpati"}, {"mail"=>"mike.stuart.post@gmail.com", "first_name"=>"Mike", "last_name"=>"Stuart"}, {"mail"=>"nemo.krueger@stud.unilu.ch", "first_name"=>"Nemo", "last_name"=>"Krüger"}, {"mail"=>"philipp.blum@philosophie.ch", "first_name"=>"Philipp", "last_name"=>"Blum"}, {"mail"=>"patrik.engisch@unifr.ch", "first_name"=>"Patrik", "last_name"=>"Engisch"}, {"mail"=>"Paolo.Natali@unige.ch", "first_name"=>"Paolo", "last_name"=>"Natali"}, {"mail"=>"Robert.Michels@unige.ch", "first_name"=>"Robert", "last_name"=>"Michels"}, {"mail"=>"sharon.casu@unifr.ch", "first_name"=>"Sharon", "last_name"=>"Casu"}, {"mail"=>"hirvonen.philosophy@gmail.com", "first_name"=>"Sanna", "last_name"=>"Hirvonen"}, {"mail"=>"sebastian.muders@ethik.uzh.ch", "first_name"=>"Sebastian", "last_name"=>"Muders"}, {"mail"=>"Stephanie.Rennick@glasgow.ac.uk", "first_name"=>"Stephanie", "last_name"=>"Rennick"}, {"mail"=>"sandro.raess@philosophie.ch", "first_name"=>"Sandro", "last_name"=>"Räss"}, {"mail"=>"thomas.schindler1980@gmail.com", "first_name"=>"Thomas", "last_name"=>"Schindler"}, {"mail"=>"zoe.christoff@gmail.com", "first_name"=>"Zoé", "last_name"=>"Christoff"}]
+reviewers = [{"mail"=>"andrea.giananti@unifr.ch", "first_name"=>"Andrea", "last_name"=>"Giananti"}, {"mail"=>"arturs.logins@uzh.ch", "first_name"=>"Arturs", "last_name"=>"Logins"}, {"mail"=>"Claudio.Calosi@unige.ch", "first_name"=>"Claudio", "last_name"=>"Calosi"}, {"mail"=>"catharine.diehl@utoronto.ca", "first_name"=>"Catharine", "last_name"=>"Diehl"}, {"mail"=>"weibel@philos.uzh.ch", "first_name"=>"Christian", "last_name"=>"Weibel"}, {"mail"=>"davoodbahjat@gmail.com", "first_name"=>"Davood", "last_name"=>"Bahjat"}, {"mail"=>"donnchadh.oconaill@unifr.ch", "first_name"=>"Donnchadh", "last_name"=>"O'Conaill"}, {"mail"=>"d.vanello.1@warwick.ac.uk", "first_name"=>"Daniel", "last_name"=>"Vanello"}, {"mail"=>"edgar.phillips@gmail.com", "first_name"=>"Edgar", "last_name"=>"Phillips"}, {"mail"=>"fabrice.correia@unige.ch", "first_name"=>"Fabrice", "last_name"=>"Correia"}, {"mail"=>"francois.pellet@uni-muenster.de", "first_name"=>"François", "last_name"=>"Pellet"}, {"mail"=>"Fabrice.Teroni@unige.ch", "first_name"=>"Fabrice", "last_name"=>"Teroni"}, {"mail"=>"giova_merlo@yahoo.it", "first_name"=>"Giovanni", "last_name"=>"Merlo"}, {"mail"=>"julien.dutant@kcl.ac.uk", "first_name"=>"Julien", "last_name"=>"Dutant"}, {"mail"=>"joerg.loeschke@philos.uzh.ch", "first_name"=>"Jörg", "last_name"=>"Löschke"}, {"mail"=>"jan.plate@gmail.com", "first_name"=>"Jan", "last_name"=>"Plate"}, {"mail"=>"jonaswaechter@yahoo.com", "first_name"=>"Jonas", "last_name"=>"Waechter"}, {"mail"=>"matthias.egg@philo.unibe.ch", "first_name"=>"Matthias", "last_name"=>"Egg"}, {"mail"=>"maria.scarpati@unine.ch", "first_name"=>"Maria", "last_name"=>"Scarpati"}, {"mail"=>"mike.stuart.post@gmail.com", "first_name"=>"Mike", "last_name"=>"Stuart"}, {"mail"=>"nemo.krueger@stud.unilu.ch", "first_name"=>"Nemo", "last_name"=>"Krüger"}, {"mail"=>"philipp.blum@philosophie.ch", "first_name"=>"Philipp", "last_name"=>"Blum"}, {"mail"=>"patrik.engisch@unifr.ch", "first_name"=>"Patrik", "last_name"=>"Engisch"}, {"mail"=>"Paolo.Natali@unige.ch", "first_name"=>"Paolo", "last_name"=>"Natali"}, {"mail"=>"Robert.Michels@unige.ch", "first_name"=>"Robert", "last_name"=>"Michels"}, {"mail"=>"sharon.casu@unifr.ch", "first_name"=>"Sharon", "last_name"=>"Casu"}, {"mail"=>"hirvonen.philosophy@gmail.com", "first_name"=>"Sanna", "last_name"=>"Hirvonen"}, {"mail"=>"sebastian.muders@ethik.uzh.ch", "first_name"=>"Sebastian", "last_name"=>"Muders"}, {"mail"=>"Stephanie.Rennick@glasgow.ac.uk", "first_name"=>"Stephanie", "last_name"=>"Rennick"}, {"mail"=>"sandro.raess@philosophie.ch", "first_name"=>"Sandro", "last_name"=>"Räss"}, {"mail"=>"thomas.schindler1980@gmail.com", "first_name"=>"Thomas", "last_name"=>"Schindler"}, {"mail"=>"zoe.christoff@gmail.com", "first_name"=>"Zoé", "last_name"=>"Christoff"}]
 
 reviewers.each do |reviewer|
   #acronym = reviewer.first.split(/ |-/).map(&:first).join.downcase
-  new_user = User.create(email: reviewer["mail"], password: "epikur", password_confirmation: "epikur", firstname: reviewer["first_name"], lastname: reviewer["last_name"])
+  new_user = User.create(email: reviewer["mail"].downcase, password: "epikur", password_confirmation: "epikur", firstname: reviewer["first_name"], lastname: reviewer["last_name"])
   new_user.roles << Role.find_by_name("reviewer")
   new_user.roles << Role.find_by_name("author")
 end
@@ -67,62 +67,57 @@ reviewer.roles << Role.find_by_name("author")
 author = User.create(email: "author@mail.com", password: "epikur", password_confirmation: "epikur", firstname: "Author", lastname: "Author")
 author.roles << Role.find_by_name("author")
 
-fresh_submissions = [
-{
-	"id": 4061,
-	"date": "23.4.2020",
-	"title": "Internal Intentionalism and the understanding of emotion experience",
-	"file_name": "4061.pdf"},
-{
-	"id": 4080,
-	"date": "24.6.2020",
-	"title": "A New Contact Paradox",
-	"file_name": "4080.pdf"},
-{
-	"id": 4005,
-	"date": "20.12.2019",
-	"title": "A New View of Self-Constitution",
-	"file_name": "4005.pdf"},
-{
-	"id": 4096,
-	"date": "03.07.2016",
-	"title": "Focus effects in number sentences revisited",
-	"file_name": "4096.pdf"},
-{
-	"id": 4109,
-	"date": "20.8.2020",
-	"title": "In Defense of the Content-Priority View of Emotion",
-	"file_name": "4109.pdf"},
-{
-	"id": 4112,
-	"date": "19.8.2020",
-	"title": "The Mental States First Theory of Promising",
-	"file_name": "4112.pdf"},
-{
-	"id": 4120,
-	"date": "03.8.2016",
-	"title": "Time Travel and Ability",
-	"file_name": "4120.pdf"},
-{
-	"id": 4123,
-	"date": "08.8.2016",
-	"title": "Realism, Naturalism, and Hazlett’s Challenge concerning Epistemic Value",
-	"file_name": "4123.pdf"},
-{
-	"id": 4132,
-	"date": "25.9.2020",
-	"title": "Molefe on the Value of Community for Personhood",
-	"file_name": "4132.pdf"},
-{
-	"id": 4058,
-	"date": "13.5.2020",
-	"title": "Boghossian, Bellarmine and Galileo: historical evidence for epistemic relativism",
-	"file_name": "4058.pdf"}
-]
+
+fresh_submissions = [{"id"=>"4005", "created_at"=>"20.12.2019", "dead"=>"false", "pdf_name"=>"4005.pdf", "email"=>"iskra.fileva@gmail.com", "name"=>"Iskra Fileva", "other_authors"=>"Linda Brakel", "country"=>"US", "title"=>"A New View of Self-Constitution", nil=>nil, "status"=>"internal refereeing", "gender"=>"female", "mail"=>nil, "firstname"=>"Iskra", "lastname"=>"Fileva"}, {"id"=>"4058", "created_at"=>"13.5.2020", "dead"=>"false", "pdf_name"=>"4058.pdf", "email"=>"Maarten.VanDyck@UGent.be", "name"=>"Wim Vanrie", "other_authors"=>"Maarten van Dyck", "country"=>"Belgium", "title"=>"Boghossian, Bellarmine and Galileo: historical evidence for epistemic relativism", nil=>nil, "status"=>"internal refereeing", "gender"=>"male", "mail"=>nil, "firstname"=>"Wim", "lastname"=>"Vanrie"}, {"id"=>"4061", "created_at"=>"23.4.2020", "dead"=>"false", "pdf_name"=>"4061.pdf", "email"=>"sarnaud@gc.cuny.edu", "name"=>"Sarah Arnaud", "other_authors"=>"Kathryn Pendoley", "country"=>"US", "title"=>"Internal Intentionalism and the understanding of emotion experience", nil=>nil, "status"=>"internal refereeing", "gender"=>"female", "mail"=>nil, "firstname"=>"Sarah", "lastname"=>"Arnaud"}, {"id"=>"4080", "created_at"=>"24.6.2020", "dead"=>"false", "pdf_name"=>"4080.pdf", "email"=>"jon.perez@ehu.eus", "name"=>"Jon Laraudogoitia ", "other_authors"=>nil, "country"=>"Spain", "title"=>"A New Contact Paradox", nil=>nil, "status"=>"internal refereeing", "gender"=>"male", "mail"=>nil, "firstname"=>"Jon", "lastname"=>"Laraudogoitia"}, {"id"=>"4096", "created_at"=>"3.8.2020", "dead"=>"false", "pdf_name"=>"4096.pdf", "email"=>"katharina.felka@uni-graz.at", "name"=>"Katharina Felka", "other_authors"=>nil, "country"=>"Austria", "title"=>"Focus effects in number sentences revisited", nil=>nil, "status"=>"at refereeing stage", "gender"=>"female", "mail"=>nil, "firstname"=>"Katharina", "lastname"=>"Felka"}, {"id"=>"4109", "created_at"=>"20.8.2020", "dead"=>"false", "pdf_name"=>"4109.pdf", "email"=>"jean.moritz.mueller@gmail.com", "name"=>"Moritz Müller", "other_authors"=>nil, "country"=>"Germany", "title"=>"In Defense of the Content-Priority View of Emotion", nil=>nil, "status"=>"at refereeing stage", "gender"=>"male", "mail"=>nil, "firstname"=>"Moritz", "lastname"=>"Müller"}, {"id"=>"4112", "created_at"=>"19.8.2020", "dead"=>"false", "pdf_name"=>"4112.pdf", "email"=>"libermana@uindy.edu", "name"=>"Alida Liberman", "other_authors"=>nil, "country"=>"US", "title"=>"The Mental States First Theory of Promising", nil=>nil, "status"=>"internal refereeing", "gender"=>"female", "mail"=>nil, "firstname"=>"Alida", "lastname"=>"Liberman"}, {"id"=>"4120", "created_at"=>"3.9.2020", "dead"=>"true", "pdf_name"=>"4120.pdf", "email"=>"s1772889@sms.ed.ac.uk", "name"=>"Olivia Coombes", "other_authors"=>nil, "country"=>"UK", "title"=>"Time Travel and Ability", nil=>nil, "status"=>"done", "gender"=>"female ", "mail"=>nil, "firstname"=>"Olivia", "lastname"=>"Coombes"}, {"id"=>"4123", "created_at"=>"8.9.2020", "dead"=>"true", "pdf_name"=>"4123.pdf", "email"=>"timperrine@gmail.com", "name"=>"Timothy Perrine", "other_authors"=>nil, "country"=>"US", "title"=>"Realism, Naturalism, and Hazlett’s Challenge concerning Epistemic Value", nil=>nil, "status"=>"done", "gender"=>"male", "mail"=>nil, "firstname"=>"Timothy", "lastname"=>"Perrine"}, {"id"=>"4132", "created_at"=>"25.9.2020", "dead"=>"true", "pdf_name"=>"4132.pdf", "email"=>"philosophy@kirklougheed.com", "name"=>"Kirk Lougheed", "other_authors"=>nil, "country"=>"South Africa", "title"=>"Molefe on the Value of Community for Personhood", nil=>nil, "status"=>"done", "gender"=>"male", "mail"=>nil, "firstname"=>"Kirk", "lastname"=>"Lougheed"}]
 
 fresh_submissions.each do |submission|
-  sub = Submission.create(title: submission[:title], id: submission[:id], created_at: Date.parse(submission[:date]))
-  sub.file.attach(io: File.open("#{Rails.root}/public/submissions/#{submission[:file_name]}"), filename: submission[:file_name])
+  #sub = Submission.create(title: submission[:title], id: submission[:id], created_at: Date.parse(submission[:date]))
+
+   #sub = Submission.create(submission)
+  cleared_hash = submission.reject{|k,v| !Submission.column_names.member?(k.to_s) }
+  sub = Submission.create(cleared_hash)
+  #byebug
+  #sub.file.attach(io: File.open("#{Rails.root}/public/submissions/#{submission[:pdf_name]}"), filename: submission[:pdf_name])
+  sub.file.attach(io: File.open("#{Rails.root}/public/submissions/#{submission["pdf_name"]}"), filename: submission["pdf_name"])
 end
+
+#4005
+User.find_by_email("donnchadh.oconaill@unifr.ch").submissions << Submission.find(4005)
+User.find_by_email("d.vanello.1@warwick.ac.uk").submissions << Submission.find(4005)
+User.find_by_email("giova_merlo@yahoo.it").submissions << Submission.find(4005)
+
+#4058
+User.find_by_email("matthias.egg@philo.unibe.ch").submissions << Submission.find(4058)
+
+#4061
+User.find_by_email("fabrice.teroni@unige.ch").submissions << Submission.find(4061)
+
+#4080
+User.find_by_email("matthias.egg@philo.unibe.ch").submissions << Submission.find(4080)
+User.find_by_email("claudio.calosi@unige.ch").submissions << Submission.find(4080)
+
+#4096
+User.find_by_email("catharine.diehl@utoronto.ca").submissions << Submission.find(4096)
+
+#4109
+User.find_by_email("fabrice.teroni@unige.ch").submissions << Submission.find(4109)
+User.find_by_email("edgar.phillips@gmail.com").submissions << Submission.find(4109)
+
+#4112
+User.find_by_email("patrik.engisch@unifr.ch").submissions << Submission.find(4112)
+User.find_by_email("philipp.blum@philosophie.ch").submissions << Submission.find(4112)
+User.find_by_email("d.vanello.1@warwick.ac.uk").submissions << Submission.find(4112)
+
+#4120
+User.find_by_email("stephanie.rennick@glasgow.ac.uk").submissions << Submission.find(4120)
+
+#4123
+User.find_by_email("jan.plate@gmail.com").submissions << Submission.find(4123)
+User.find_by_email("fabrice.correia@unige.ch").submissions << Submission.find(4123)
+
+#4132
+User.find_by_email("joerg.loeschke@philos.uzh.ch").submissions << Submission.find(4132)
+
+
 
 #@message.image.attach(io: File.open('/path/to/file'), filename: 'file.pdf', content_type: 'application/pdf')

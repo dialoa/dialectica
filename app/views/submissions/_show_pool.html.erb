@@ -39,6 +39,15 @@
           <%= blocked_user.user.name %><br />
         <% end %>
       <% end %>
+      <% unless submission.users.empty? %>
+        <hr />
+        <h3>Internal Reviewer</h3>
+        <% submission.users.each do |reviewer| %>
+          <%= reviewer.name %><br />
+        <% end %>
+      <% end %>
+
+
   </div>
 </div>
 <% if is_user_editor?(current_user) %>

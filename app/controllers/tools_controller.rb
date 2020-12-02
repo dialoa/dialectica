@@ -9,12 +9,13 @@ class ToolsController < ApplicationController
     unless csv_file.blank?
       csv = CSV.read(csv_file, :headers => true)
       csv.each do |row|
-        user = Hash.new
+        user = row.to_hash
+        #user = Hash.new
         user["mail"] = Mail::Address.new(row["mail"]).address
         #row["mail"].scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i) { |x| puts x }
-        user["first_name"] = row["name"].split.first
-        user["last_name"] = row["name"].split.last
-        #user = row.to_hash
+        user["firstname"] = row["name"].split.first
+        user["lastname"] = row["name"].split.last
+        #byebug
         @array_of_hash.push(user)
       end
     end

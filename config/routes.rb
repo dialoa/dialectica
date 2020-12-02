@@ -84,6 +84,10 @@ Rails.application.routes.draw do
   post '/submission_tools/make_submission_dead/:submission_id/', to: "submissions#make_submission_dead", as: "make_submission_dead"
   post '/submission_tools/make_submission_alive/:submission_id/', to: "submissions#make_submission_alive", as: "make_submission_alive"
 
+  post '/submission_tools/reject_submission/:submission_id/', to: "submissions#reject_submission", as: "reject_submission"
+  post '/submission_tools/accept_submission/:submission_id/', to: "submissions#accept_submission", as: "accept_submission"
+
+
   get '/codes/editor/:id', to: "codes#editor", as: "codes_editor"
   post '/codes/editor/:id', to: "codes#editor", as: "codes_editor_post"
   post '/codes-tool/update_editor/:id', to: "codes#update_editor", as: "codes_update_editor"
