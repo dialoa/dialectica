@@ -121,6 +121,23 @@ class BibtexController < ApplicationController
 
   end
 
+  def replace_underscore
+
+    if params[:replace_file].present?
+      file = params[:replace_file][:replace_file]
+      filename = file.original_filename
+      text = file.read
+
+      text = text.gsub('_', '---::---')
+      #byebug
+
+      send_data text, filename: "#{filename.split('.').first}_replace_underscore.bib"
+    end
+
+
+    #send_file '/path/to.jpeg', :type => 'image/jpeg', :disposition => 'inline'
+  end
+
   def bibtex_create
     text = params[:text]
     format_string = params[:format_string]

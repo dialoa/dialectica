@@ -41,6 +41,9 @@ Rails.application.routes.draw do
   get '/bibtex_create', to: 'bibtex#bibtex_create', as: "bibtex_create"
   post '/bibtex_create', to: 'bibtex#bibtex_create'
 
+  get "/bibtex_tools/replace_underscore", to: "bibtex#replace_underscore", as: "replace_underscore"
+  post "/bibtex_tools/replace_underscore", to: "bibtex#replace_underscore"
+
   get '/bibtex/bibtex_comma_seperated_list_of_bibtex_keys(/:text)', to: 'bibtex#bibtex_comma_seperated_list_of_bibtex_keys', as: "bibtex_comma_seperated_list_of_bibtex_keys"
   post '/bibtex/bibtex_comma_seperated_list_of_bibtex_keys(/:text)', to: 'bibtex#bibtex_comma_seperated_list_of_bibtex_keys', as: "bibtex_comma_seperated_list_of_bibtex_keys_post"
 

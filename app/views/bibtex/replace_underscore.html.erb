@@ -1,0 +1,13 @@
+<div class="container">
+  <h1>Replace Underscore</h1>
+  <%= simple_form_for :replace_file, url: replace_underscore_path, method: :post do |f| %>
+  <p>
+    <%= f.file_field :replace_file %>
+  </p>
+    <%= f.submit "Replace", class: "btn btn-light border my-2" %>
+  <% end %>
+  <p>
+    Replaces all occurences of "_" with "---::---" (without the quotes).
+  </p>
+  <%= @result %>
+</div>
