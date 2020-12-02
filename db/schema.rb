@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_105653) do
+ActiveRecord::Schema.define(version: 2020_12_02_122040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,6 +178,8 @@ ActiveRecord::Schema.define(version: 2020_12_01_105653) do
     t.string "status", default: "open"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "submission_id", null: false
+    t.index ["submission_id"], name: "index_requested_reviewers_on_submission_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -266,4 +268,5 @@ ActiveRecord::Schema.define(version: 2020_12_01_105653) do
   add_foreign_key "jsons", "bibtex_entries"
   add_foreign_key "reports", "submissions"
   add_foreign_key "reports", "users"
+  add_foreign_key "requested_reviewers", "submissions"
 end

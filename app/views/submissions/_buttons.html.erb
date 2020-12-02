@@ -158,9 +158,27 @@
         </button>
       </div>
       <div class="modal-body">
+        <p>
+          <% if RequestedReviewer.where(submission_id: submission.id).count > 0 %>
+            <div class="border rounded p-1">
+            <strong>this submission has already been sent to: <br /></strong>
+              <% RequestedReviewer.where(submission_id: submission.id).each do |reviewer| %>
+                <%= reviewer.firstname %> <%= reviewer.lastname %> <%= reviewer.email %>
+                <br />
+              <% end %>
+              </div>
+              <hr />
+          <% end %>
+        </p>
         <%= simple_form_for :send_to_external_referee, url: submissions_send_to_external_referee_path(submission), remote: true do |f| %>
         <p>
           <%= f.input :mail, placeholder: 'example: user@domain.com' %>
+        </p>
+        <p>
+          <%= f.input :firstname, placeholder: 'Lara' %>
+        </p>
+        <p>
+          <%= f.input :lastname, placeholder: 'Wilson' %>
         </p>
         <p>
           <%= f.input :subject, input_html: {value: "dialectica refereeing - \"#{submission.title} \""} %>

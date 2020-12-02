@@ -24,7 +24,7 @@
     </p>
 
 
-    <%= f.input :gender, label: "gender**", collection: Submission.gender_options.map {|p| [t("#{p}"), p]} %>
+    <%#= f.input :gender, label: "gender**", collection: Submission.gender_options.map {|p| [t("#{p}"), p]} %>
 
     <%= f.input :other_authors, label: "other authors" %>
     <p>
@@ -57,8 +57,6 @@
   <hr />
   <p>
     * of primary institutional affiliation (otherwise of residence), for statistical purposes only
-    <br />
-    ** for statistical purposes only
   </p>
 <% end %>
 

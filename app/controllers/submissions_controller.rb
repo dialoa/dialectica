@@ -161,10 +161,14 @@ class SubmissionsController < ApplicationController
     @mail = params[:send_to_external_referee][:mail]
     @subject = params[:send_to_external_referee][:subject]
     @body = params[:send_to_external_referee][:body]
+    @firstname = params[:send_to_external_referee][:firstname]
+    @lastname = params[:send_to_external_referee][:lastname]
 
-    message = "sent to external referee: " + @mail
+    message = "sent to external referee: #{@firstname} #{@lastname} #{@mail}"
     submission = Submission.find(params[:submission_id])
     submission.add_to_history(current_user, message)
+    RequestedReviewer.create(email: @mail, firstname: @firstname, lastname: @lastname, submission_id: submission.id)
+    #byebug
     #redirect_to submission_path(params[:submission_id]), notice: message
   end
 
