@@ -8,12 +8,12 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          General
+          Blog
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink9">
-          <%= link_to "Blog", blog_posts_path, class: "dropdown-item" %>
-          <%= link_to "Issues", issues_path, class: "dropdown-item" %>
-          <%= link_to "Contents", articles_path, class: "dropdown-item" %>
+          <%= link_to "refereeing", blog_posts_path(category: "refereeing"), class: "dropdown-item" %>
+          <%#= link_to "Issues", issues_path, class: "dropdown-item" %>
+          <%#= link_to "Contents", articles_path, class: "dropdown-item" %>
         </div>
       </li>
       <li class="nav-item dropdown">
