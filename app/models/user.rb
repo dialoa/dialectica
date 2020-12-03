@@ -7,6 +7,9 @@ has_many :submission_users
 has_many :submissions, :through => :submission_users
 has_many :histories
 has_many :blocked_users
+has_many :blog_posts
+
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

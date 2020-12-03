@@ -1,9 +1,6 @@
 <!-- blog_post Content -->
  <div class="container">
-
-
      <!-- Post Content Column -->
-
        <% if is_user_admin?(current_user) %>
         <%= link_to "Edit entry", edit_blog_post_path(blog_post), class: "btn btn-primary my-2" %>
        <% end %>
@@ -16,6 +13,11 @@
 
        <!-- Title -->
        <h1 class="mt-4 text-center"><%= blog_post.title %></h1>
+       <% unless blog_post.user.blank? %>
+         <p class="text-center">
+           <%= blog_post.user.name %>
+         </p>
+       <% end %>
        <% unless blog_post.created_at.blank? %>
          <p class="text-center">
            <small class=""><%= l(blog_post.created_at, format: :long) %></small>

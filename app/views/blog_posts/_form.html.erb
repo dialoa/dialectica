@@ -7,12 +7,12 @@
 
   <div class="form-inputs">
     <%= f.input :title %>
-    <%#= f.input :description %>
+    <%= f.input :description, placeholder: "Very short summary of what you have to say." %>
     <%#= f.input :keywords %>
     <%#= f.input :hiddensearch_field %>
     <% category = BlogPost.category_options.sample %>
     <% category = local_assigns[:category] if local_assigns[:category] %>
-    <%= category %>
+    <%#= category %>
     <%= f.hidden_field :category, value: category %>
     <%= f.text_area :content, :class => "tinymce", :rows => 15 %>
   </div>
