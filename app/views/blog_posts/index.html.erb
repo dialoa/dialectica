@@ -4,7 +4,9 @@
       <h1 class="my-4"><%= @category %></h1>
     </div>
       <div class="text-center">
-        <%= link_to 'New Entry', new_blog_post_path(category: @category), class: "btn btn-primary my-2" %>
+        <% if user_signed_in? %>
+          <%= link_to 'New Entry', new_blog_post_path(category: @category), class: "btn btn-primary my-2" %>
+        <% end %>
       </div>
       <hr />
     <%#= render "blog_posts/search_form", blog_posts: @blog_posts %>

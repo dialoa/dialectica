@@ -16,6 +16,12 @@
 
        <!-- Title -->
        <h1 class="mt-4 text-center"><%= blog_post.title %></h1>
+       <% unless blog_post.created_at.blank? %>
+         <p class="text-center">
+           <small class=""><%= l(blog_post.created_at, format: :long) %></small>
+           <br />
+         </p>
+       <% end %>
        <hr>
 
        <!-- Description and Keywords -->

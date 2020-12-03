@@ -11,7 +11,10 @@
           Blog
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink9">
-          <%= link_to "refereeing", blog_posts_path(category: "refereeing"), class: "dropdown-item" %>
+          <% ["refereeing", "OA"].each do |category| %>
+            <%= link_to category, blog_posts_path(category: category), class: "dropdown-item" %>
+          <% end %>
+
           <%#= link_to "Issues", issues_path, class: "dropdown-item" %>
           <%#= link_to "Contents", articles_path, class: "dropdown-item" %>
         </div>
