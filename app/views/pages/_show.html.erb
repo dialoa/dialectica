@@ -1,6 +1,4 @@
 <!-- Page Content -->
- <div class="container">
-
    <div class="row">
 
      <!-- Post Content Column -->
@@ -45,66 +43,14 @@
 
      <!-- Sidebar Widgets Column -->
      <div class="col-md-4">
+         <% if user_signed_in? %>
+          <div class="text-center">
+           <%= link_to 'New Entry', new_blog_post_path(category: page.title), class: "btn btn-primary my-2" %>
+          </div>
+         <% end %>
 
-       <!-- Search Widget -->
-       <div class="card my-4">
-         <h5 class="card-header">Search</h5>
-         <div class="card-body">
-           <div class="input-group">
-             <input type="text" class="form-control" placeholder="Search for...">
-             <span class="input-group-btn">
-               <button class="btn btn-secondary" type="button">Go!</button>
-             </span>
-           </div>
-         </div>
-       </div>
-
-       <!-- Categories Widget -->
-       <div class="card my-4">
-         <h5 class="card-header">Categories</h5>
-         <div class="card-body">
-           <div class="row">
-             <div class="col-lg-6">
-               <ul class="list-unstyled mb-0">
-                 <li>
-                   <a href="#">Lorem</a>
-                 </li>
-                 <li>
-                   <a href="#">Ipsum</a>
-                 </li>
-                 <li>
-                   <a href="Sed">Freebies</a>
-                 </li>
-               </ul>
-             </div>
-             <div class="col-lg-6">
-               <ul class="list-unstyled mb-0">
-                 <li>
-                   <a href="#">Diam</a>
-                 </li>
-                 <li>
-                   <a href="#">Erat</a>
-                 </li>
-                 <li>
-                   <a href="#">Labore</a>
-                 </li>
-               </ul>
-             </div>
-           </div>
-         </div>
-       </div>
-
-       <!-- Side Widget -->
-       <div class="card my-4">
-         <h5 class="card-header">Dialectica</h5>
-         <div class="card-body">
-           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-         </div>
-       </div>
-
+       <%= render partial: "blog_posts/card", collection: BlogPost.where(category: page.title).order(:created_at).last(3), as: :blog_post %>
      </div>
 
    </div>
    <!-- /.row -->
-
- </div>

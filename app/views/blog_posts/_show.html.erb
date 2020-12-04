@@ -1,6 +1,7 @@
 <!-- blog_post Content -->
  <div class="container">
      <!-- Post Content Column -->
+     <%= link_to "Back", blog_posts_path(category: blog_post.category), class: "btn btn-light border my-2" %>
        <% if is_user_admin?(current_user) %>
         <%= link_to "Edit entry", edit_blog_post_path(blog_post), class: "btn btn-primary my-2" %>
        <% end %>

@@ -14,6 +14,13 @@
           <% ["refereeing", "OA"].each do |category| %>
             <%= link_to category, blog_posts_path(category: category), class: "dropdown-item" %>
           <% end %>
+          <% page_slugs = ["bibliography", "journals", "books"] %>
+          <% page_slugs.each do |slug| %>
+            <% page = Page.find_by_slug(slug) %>
+            <% if page.present? %>
+              <%= link_to page.title.downcase, page_path(page), class: "dropdown-item" %>
+            <% end %>
+          <% end %>
 
           <%#= link_to "Issues", issues_path, class: "dropdown-item" %>
           <%#= link_to "Contents", articles_path, class: "dropdown-item" %>
@@ -67,7 +74,8 @@
         </div>
       </li>
       <% #page_slugs = ["dialectica", "about-us", "contents", "how-to-subscribe", "how-to-submit", "advice-to-authors", "contact-us", "links"] %>
-      <% page_slugs = ["dialectica", "about-us", "contact-us"] %>
+      <%# page_slugs = ["dialectica", "about-us", "contact-us"] %>
+      <% page_slugs = [] %>
       <% page_slugs.each do |slug| %>
         <% page = Page.find_by_slug(slug) %>
         <% if page.present? %>

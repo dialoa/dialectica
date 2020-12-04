@@ -43,7 +43,7 @@
         <%= render 'submissions/in_groups', submissions: @submissions %>
       </div>
     <div class="col-3">
-      <h3>Welcome to the fishpond!</h3>
+      <h3>welcome to the fishpond!</h3>
       <p>
         Click on a fish to see its history
       </p>
@@ -56,6 +56,15 @@
         <p>
           "propose" it to put it on the EC's menu
         </p>
+        <hr />
+        <h3>latest activities</h3>
+        <% History.order(:created_at).last(5).each do |history| %>
+          <p>
+              #<%= history.submission.id %> - "<%= history.submission.title %>"
+          </p>
+          <%= render 'histories/show', history: history, collapse_status: "" %>
+          <hr />
+        <% end %>
     </div>
   </div>
 
