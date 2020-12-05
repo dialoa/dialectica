@@ -1,7 +1,7 @@
 <div class="row">
   <% blog_posts.each do |blog_post| %>
     <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3">
-      <%= render 'card', blog_post: blog_post %>
+      <%= render 'blog_posts/card', blog_post: blog_post %>
     </div>
   <% end %>
 </div>
