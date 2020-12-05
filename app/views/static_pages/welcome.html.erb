@@ -42,6 +42,7 @@
         <ul class="list-unstyled mt-3 mb-4">
           <li>Check out our Bibliography</li>
         </ul>
+        <%= link_to "to the blog", page_path(Page.find_by_slug("bibliography")), class: "btn btn-lg btn-block btn-primary" if Page.find_by_slug("bibliography").present? %>
       <%#= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
       </div>
     </div>
@@ -55,6 +56,7 @@
         <ul class="list-unstyled mt-3 mb-4">
           <li>Help us with the Journals</li>
         </ul>
+        <%= link_to "to the blog", page_path(Page.find_by_slug("journals")), class: "btn btn-lg btn-block btn-primary" if Page.find_by_slug("journals").present? %>
       <%#= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
       </div>
     </div>
@@ -71,6 +73,7 @@
           <ul class="list-unstyled mt-3 mb-4">
             <li>Take a look at our books</li>
           </ul>
+        <%= link_to "to the blog", page_path(Page.find_by_slug("books")), class: "btn btn-lg btn-block btn-primary" if Page.find_by_slug("books").present? %>
         <%#= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
         </div>
       </div>
