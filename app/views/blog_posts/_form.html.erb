@@ -6,11 +6,11 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :description, placeholder: "Very short summary of what you have to say." %>
+    <%= f.input :title, placeholder: "" %>
+    <%= f.input :description, placeholder: "Very short summary of what you want to say." %>
     <%#= f.input :keywords %>
     <%#= f.input :hiddensearch_field %>
-    <% category = BlogPost.category_options.sample %>
+    <% category = @blog_post.category %>
     <% category = local_assigns[:category] if local_assigns[:category] %>
     <%#= category %>
     <%= f.hidden_field :category, value: category %>
