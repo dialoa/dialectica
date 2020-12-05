@@ -1,0 +1,32 @@
+<div class="card my-1 <%= dom_id(blog_post) %>">
+  <div class="card-body">
+    <h5 class="card-title text-center"><%= blog_post.title %></h5>
+    <div class="text-justify">
+      <% unless blog_post.user.blank? %>
+        <p class="text-center text-justify mx-2">
+          <small class="text-muted"><%= blog_post.user.name %></small>
+        </p>
+      <% end %>
+      <% unless blog_post.created_at.blank? %>
+        <p class="text-center">
+          <small class=""><%= l(blog_post.created_at, format: :long) %></small>
+          <br />
+        </p>
+      <% end %>
+      <% unless blog_post.keywords.blank? %>
+        <p class="text-center text-justify mx-2">
+          <small class="text-muted"><strong>Keywords: </strong><%= blog_post.keywords %></small>
+        </p>
+      <% end %>
+      <% unless blog_post.description.blank? %>
+        <p class="text-center">
+          <small class=""><%= blog_post.description%></small>
+          <br />
+        </p>
+      <% end %>
+      <p class="text-center mt-auto">
+        <%= link_to "Read more", blog_post_path(blog_post) %>
+      </p>
+    </div>
+  </div>
+</div>

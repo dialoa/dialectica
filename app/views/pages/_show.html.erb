@@ -49,7 +49,7 @@
           </div>
          <% end %>
 
-       <%= render partial: "blog_posts/card", collection: BlogPost.where(category: page.title).order(:created_at).last(3), as: :blog_post %>
+       <%= render partial: "blog_posts/card_without_h-100", collection: BlogPost.where(category: page.title).order(:created_at).last(3), as: :blog_post %>
      </div>
 
    </div>
