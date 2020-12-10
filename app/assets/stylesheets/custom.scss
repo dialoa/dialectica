@@ -10,6 +10,12 @@ $colors: (
   black: #000000
 );
 
+@for $i from 1 through 10 {
+  .thick-borders-#{$i}{
+    border-width: #{$i}px !important;
+  }
+}
+
 @mixin color-modifiers {
   @each $name, $hex in $colors {
     &-#{$name} {
@@ -77,10 +83,6 @@ blockquote{
   line-height:1.6;
   position: relative;
   background:#EDEDED;
-}
-
-.thick-borders-3{
-  border-width: 3px !important;
 }
 
 .arrow-animation {

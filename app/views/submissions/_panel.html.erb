@@ -36,7 +36,7 @@
   </div>
   <div class="tab-pane fade" id="pills-history-<%= submission.id %>-random-id-<%= random_id %>" role="tabpanel" aria-labelledby="pills-history-tab">
     <p class="card-text">
-      <strong>History: </strong>
+      <strong>history: </strong>
     </p>
     <div class="border rounded p-2">
       <%= raw Sanitize.fragment(submission.history, Sanitize::Config::RELAXED) %>

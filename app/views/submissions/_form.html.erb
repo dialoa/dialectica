@@ -6,34 +6,34 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title, label: "title" %>
+    <%= f.input :title, label: "title", placeholder: "Towards a Reformed Liberal and Scientific Naturalism " %>
     <%#= f.input :area, collection: Submission.areas.map {|p| [t("#{p}"), p]} %>
     <%#= f.input :email %>
     <div class="row">
         <div class="col-6">
-          <%= f.input :firstname, label: "first name" %>
+          <%= f.input :firstname, label: "first name", placeholder: "Kevin" %>
         </div>
         <div class="col-6">
-          <%= f.input :lastname, label: "last name" %>
+          <%= f.input :lastname, label: "last name", placeholder: "Mulligan" %>
         </div>
     </div>
     <p>
       country*
       <br />
-          <%= f.country_select :country %>
+          <%= f.country_select :country, priority_countries: ["CH", "FR", "GB", "DE", "US"], selected: "CH" %>
     </p>
 
 
     <%#= f.input :gender, label: "gender**", collection: Submission.gender_options.map {|p| [t("#{p}"), p]} %>
 
-    <%= f.input :other_authors, label: "other authors" %>
+    <%= f.input :other_authors, label: "other authors (please provide a complete list)", placeholder: "Laura Smith, Jonas Hamilton, Kim Ruthers" %>
     <p>
-      <strong>upload file</strong><br />
+      <strong>upload file (pdf format) </strong><br />
       <%= f.file_field :file %>
     </p>
     <% if false %>
     <p>
-      <strong>History</strong><br />
+      <strong>history</strong><br />
         <%= f.text_area :history, :class => "tinymce", :rows => 40, :cols => 120 %>
     </p>
     <% end %>
@@ -43,8 +43,8 @@
 
     <% if true %>
     <p>
-      <strong>Comment</strong><br />
-        <%= f.text_area :comment, :class => "tinymce", :rows => 10 %>
+      <strong>comment</strong><br />
+        <%= f.text_area :comment, class: "tinymce", :rows => 10 %>
     </p>
     <% end %>
 

@@ -38,7 +38,7 @@
           <%#= link_to "suggest to another internal", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
           <%#= link_to "upload file", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
           <% if submission.proposed == "false" %>
-            <%#= link_to "propose", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
+            <%= link_to "propose", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
           <% else %>
           <%#= link_to "proposed", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2 disabled" %>
             <%#= link_to "Withdraw proposal of publication", withdraw_proposal_of_submission_path(submission.id, submission.id), method: :post, class: "btn bg-color-light-red btn-block my-2" %>
@@ -152,7 +152,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="send_to_external_refereeModalLabel">Suggestion</h5>
+        <h5 class="modal-title" id="send_to_external_refereeModalLabel">send this out</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -161,7 +161,7 @@
         <p>
           <% if RequestedReviewer.where(submission_id: submission.id).count > 0 %>
             <div class="border rounded p-1">
-            <strong>this submission has already been sent to: <br /></strong>
+            <strong>this submission has already been sent to <br /></strong>
               <% RequestedReviewer.where(submission_id: submission.id).each do |reviewer| %>
                 <%= reviewer.firstname %> <%= reviewer.lastname %> <%= reviewer.email %>
                 <br />
@@ -172,26 +172,29 @@
         </p>
         <%= simple_form_for :send_to_external_referee, url: submissions_send_to_external_referee_path(submission), remote: true do |f| %>
         <p>
-          <%= f.input :mail, placeholder: 'example: user@domain.com' %>
+          <%= f.input :mail, label: "email address", placeholder: 'example: user@domain.com' %>
         </p>
         <p>
-          <%= f.input :firstname, placeholder: 'Lara' %>
+          <%= f.input :firstname, label: "first name", placeholder: 'Lara' %>
         </p>
         <p>
-          <%= f.input :lastname, placeholder: 'Wilson' %>
+          <%= f.input :lastname, label: "last name", placeholder: 'Wilson' %>
         </p>
         <p>
-          <%= f.input :subject, input_html: {value: "dialectica refereeing - \"#{submission.title} \""} %>
+          bcc: <br />dialectica@philosophie.ch
+        </p>
+        <p>
+          <%= f.input :subject, label: "subject", input_html: {value: "dialectica refereeing - \"#{submission.title} \""} %>
           </p>
           <p>
-            <%= f.input :body, as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, current_user), rows: 25} %>
+            <%= f.input :body, label: "body", as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, current_user), rows: 25} %>
           </p>
-          <%= f.submit "Continue (this opens up your mail program)", class: "btn btn-light border my-2" %>
+          <%= f.submit "continue (this opens up your mail program)", class: "btn btn-light border my-2" %>
         <% end %>
         <%#= mail_to "", "send to external referee", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, as it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn btn-light border my-2" %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">dismiss</button>
       </div>
     </div>
   </div>

@@ -7,51 +7,50 @@
     <div id="pdf-field" class="embed-responsive" style="padding-bottom: 141.42%;">
         <iframe  class="embed-responsive-item" src="<%= rails_blob_path(submission.file, disposition: "inline") unless submission.nil? || !submission.file.attached? %>"></iframe>
         <% if submission.nil? || !submission.file.attached? %>
-          <strong>No File uploaded</strong>
+          <strong>no file uploaded</strong>
         <% end %>
     </div>
   </div>
   <div class="col-4">
-    <h3>History</h3>
+    <h3>#<%= submission.id %></h3>
+    <hr />
+    <h3>history</h3>
     <%#= raw submission.history %>
     <% submission.histories.order(:created_at).reverse_order.each do |history| %>
       <%= render 'histories/show', history: history %>
       <hr />
     <% end %>
     <% if false %>
-    <h3>Attachments</h3>
+    <h3>attachments</h3>
     <% if submission.attachments.empty? %>
       <p>
-        No Attachments yet.
+        no attachments yet.
         </p>
     <% end %>
       <% submission.attachments.each_with_index do |attachment, index| %>
         <%= link_to "#{attachment.filename}", rails_blob_path(attachment, disposition: "attachment") %><br />
       <% end %>
       <hr />
-      <h3>Blacklisted Users</h3>
+      <h3>blacklisted users</h3>
       <% if submission.blocked_users.empty? %>
         <p>
-          No one is blacklisted
-          </p>
+          no one is blacklisted
+        </p>
       <% end %>
         <% submission.blocked_users.each_with_index do |blocked_user, index| %>
           <%= blocked_user.user.name %><br />
         <% end %>
       <% end %>
       <% unless submission.users.empty? %>
-        <hr />
-        <h3>Internal Reviewer</h3>
+        <h3>internal reviewer</h3>
         <% submission.users.each do |reviewer| %>
           <%= reviewer.name %><br />
         <% end %>
       <% end %>
-
-
   </div>
 </div>
 <% if is_user_editor?(current_user) %>
   <p>
-    <%= link_to "Edit Submission", edit_submission_path(submission) %>
+    <%= link_to "edit submission", edit_submission_path(submission) %>
   </p>
 <% end %>

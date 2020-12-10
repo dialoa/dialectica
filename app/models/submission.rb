@@ -85,10 +85,10 @@ relevant box:
     submissions_suggested_to_me = Submission.where(id: SuggestionSubmission.where(user_id: user.id).pluck(:submission_id)).pluck(:id)
     #byebug
     case
-    when submissions_suggested_to_me.include?(self.id) then "border-info thick-borders-3"
+    when submissions_suggested_to_me.include?(self.id) then "border-info thick-borders-6"
     #when SuggestionSubmission.where(user_id: user.id).where(submission_id: self.id).empty? then "border-info thick-borders-3"
-    when self.users.count == 2 then "border-warning thick-borders-3"
-    when self.users.count == 1 then "border-primary thick-borders-3"
+    when self.users.count == 2 then "border-warning thick-borders-6"
+    when self.users.count == 1 then "border-primary thick-borders-6"
     else ""
     end
   end
