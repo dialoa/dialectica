@@ -39,10 +39,10 @@
       </p>
       <hr />
       </div>
-      <div class="col-9">
+      <div class="col-sm-12 col-md-9 order-2 order-md-1">
         <%= render 'submissions/in_groups', submissions: @submissions %>
       </div>
-    <div class="col-3">
+    <div class="col-sm-12 col-md-3 order-1 order-md-2">
       <h3>welcome to the fishpond!</h3>
       <ul>
         <li>
@@ -63,7 +63,7 @@
       </ul>
         <hr />
         <h5>latest activities</h5>
-        <div class="overflow-auto" style="height: 450px;">
+        <div class="overflow-auto small" style="height: 450px;">
           <% History.order(:created_at).last(10).each do |history| %>
             <p>
                 #<%= history.submission.id %> - "<%= history.submission.title %>"
