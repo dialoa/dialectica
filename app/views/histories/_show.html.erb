@@ -1,7 +1,7 @@
 <% collapse_status = "" %>
 <% collapse_status = local_assigns[:collapse_status] if local_assigns[:collapse_status] %>
 
-<div class="history-<%= history.id %>">
+<div class="history-<%= history.id %> small">
   <p>
     <button class="btn btn-light arrow-animation <%= collapse_status %> border" type="button" data-toggle="collapse" data-target="#collapse-history-<%= history.id %>" aria-expanded="true" aria-controls="collapse-history-<%= history.id %>">
       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

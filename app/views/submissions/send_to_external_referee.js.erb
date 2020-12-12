@@ -1,6 +1,34 @@
-location.href = "mailto:<%= @mail %>?body=<%= url_encode(@body) %>&cc=dialectica@philosophie.ch&subject=<%= url_encode(@subject) %>";
+//location.href = "mailto:<%= @mail %>?body=<%= url_encode(@body) %>&cc=dialectica@philosophie.ch&subject=<%= url_encode(@subject) %>";
 //mailto:dfdf@me.com?body=Dear
 //cc=dialectica@philosophie.ch?subject=dialectica%20refereeing%20-%20%22Focus%20effects%20in%20number%20sentences%20revisited%20%22?
 
 //mailto:m.mustermann@domain.de?body=Hallo%20Max,%0D%0A%0D%0Ahier%20steht%20die%20Nachricht.
 //console.log("mailto:<%= @mail %>?cc=dialectica@philosophie.ch?subject=<%= url_encode(@subject) %>?body=<%= url_encode(@body) %>")
+
+if (<%= @sending_option.nil? %>) {
+
+    location.href = "mailto:<%= @mail %>?body=<%= url_encode(@body) %>&cc=dialectica@philosophie.ch&subject=<%= url_encode(@subject) %>";
+
+    $('.modal').modal('hide');
+
+    setTimeout(
+      function()
+      {
+        window.location.href = "/submissions/" + <%= @submission.id %>;
+      }, 1000);
+ }
+else {
+    $('.modal').modal('hide');
+
+    setTimeout(
+      function()
+      {
+        window.location.href = "/submissions/" + <%= @submission.id %>;
+      }, 1000);
+
+      setTimeout(
+        function()
+        {
+          alert("check your mail box!");
+        }, 2000);
+ }

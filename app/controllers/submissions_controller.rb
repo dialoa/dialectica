@@ -152,7 +152,7 @@ class SubmissionsController < ApplicationController
     submission = Submission.find(params[:submission_id])
     SuggestionSubmission.create(user_id: params[:user_id], submission_id: submission.id)
     #redirect_to submission_pool_path, notice: 'Suggestion added'
-    message = "suggested to #{User.find(params[:user_id]).name}".downcase
+    message = "suggested to #{User.find(params[:user_id]).name}"
     submission.add_to_history(current_user, message)
     redirect_to submission_path(params[:submission_id]), notice: 'Suggestion added'.downcase
   end
@@ -164,12 +164,21 @@ class SubmissionsController < ApplicationController
     @firstname = params[:send_to_external_referee][:firstname]
     @lastname = params[:send_to_external_referee][:lastname]
 
+    @sending_option = params[:send_directly]
+
     message = "sent to external referee: #{@firstname} #{@lastname} #{@mail}"
     submission = Submission.find(params[:submission_id])
+    @submission = submission
     submission.add_to_history(current_user, message)
     RequestedReviewer.create(email: @mail, firstname: @firstname, lastname: @lastname, submission_id: submission.id)
     #byebug
     #redirect_to submission_path(params[:submission_id]), notice: message
+
+    if params[:send_directly]
+      #byebug
+    else
+      #byebug
+    end
   end
 
   def propose_submission
