@@ -16,5 +16,9 @@
     <div class="card card-body">
       <%= raw history.content %>
     </div>
+    <% if history.user == current_user %>
+      <%= link_to 'edit', edit_history_path(history) %> |
+      <%= link_to 'destroy', history, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
   </div>
 </div>

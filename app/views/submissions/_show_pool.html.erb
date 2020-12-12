@@ -41,7 +41,7 @@
           <%= blocked_user.user.name %><br />
         <% end %>
       <% end %>
-      <% unless submission.users.empty? %>
+      <% if false && !submission.users.empty? %>
         <h3>internal reviewer</h3>
         <% submission.users.each do |reviewer| %>
           <%= reviewer.name %><br />

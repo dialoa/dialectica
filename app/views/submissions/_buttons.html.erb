@@ -9,6 +9,15 @@
       <%#= mail_to "", "send to external referee", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, as it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn btn-light border my-2" %>
       <% if is_user_reviewer?(current_user) %>
         <%  if current_user.submissions.where(id: submission.id).empty?  %>
+        <% if !submission.users.empty? %>
+          <div class="d-inline-block">
+            <strong>internal review</strong><br />
+            <% submission.users.each do |reviewer| %>
+              <%= reviewer.name %><br />
+            <% end %>
+            </div>
+        <% end %>
+
           <%= link_to "fish this", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
           <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
           <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#suggestionModal">
@@ -21,6 +30,14 @@
             add comment
           </button>
         <% else %>
+        <% if !submission.users.empty? %>
+          <div class="d-inline-block">
+            <strong>internal review</strong><br />
+            <% submission.users.each do |reviewer| %>
+              <%= reviewer.name %><br />
+            <% end %>
+            </div>
+        <% end %>
         <%= link_to "leave it", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#suggestionModal">
           suggest to internal reviewer
@@ -43,7 +60,6 @@
           <%#= link_to "proposed", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2 disabled" %>
             <%#= link_to "Withdraw proposal of publication", withdraw_proposal_of_submission_path(submission.id, submission.id), method: :post, class: "btn bg-color-light-red btn-block my-2" %>
           <% end %>
-
         <% end %>
       <% end %>
     </div>
