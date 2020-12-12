@@ -1,4 +1,7 @@
 class Submission < ApplicationRecord
+
+  include Rails.application.routes.url_helpers
+
   has_many :submission_users
   has_many :users, :through => :submission_users
   has_one_attached :file
@@ -41,7 +44,8 @@ class Submission < ApplicationRecord
     ["false", "true"]
   end
 
-  def self.send_to_external_referee_text(submission, user)
+  def self.send_to_external_referee_text(submission, submission_blob_url, user)
+    #byebug
 "Dear
 
 May I ask you whether you would be willing to referee the appended paper
@@ -50,6 +54,9 @@ You may comment freely and/or use the form below. If you do not have
 time to do us this favour (it would be best if you could do it in about
 a month) and/or want to suggest another referee, please feel free to
 tell me so. Many thanks in advance and all the best
+
+Download the paper here:
+#{submission_blob_url}
 
 #{user.firstname}
 member of the Editorial Committee of dialectica

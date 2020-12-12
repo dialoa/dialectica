@@ -202,10 +202,10 @@
           bcc: <br />dialectica@philosophie.ch
         </p>
         <p>
-          <%= f.input :subject, label: "subject", input_html: {value: "dialectica refereeing - \"#{submission.title} \""} %>
+          <%= f.input :subject, label: "subject", input_html: {value: "dialectica refereeing - \"#{submission.title}\""} %>
           </p>
           <p>
-            <%= f.input :body, label: "body", as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, current_user), rows: 25} %>
+            <%= f.input :body, label: "body", as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, rails_blob_url(submission.file), current_user), rows: 25} %>
           </p>
           <%= f.submit "send via private email program (this opens up your mail program)", class: "btn btn-light border my-2" %>
           <br />
