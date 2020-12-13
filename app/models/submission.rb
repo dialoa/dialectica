@@ -32,6 +32,7 @@ class Submission < ApplicationRecord
     ["submitted", "rejected", "accepted", "proposed", "published", "review"]
   end
 
+
   def self.frame_statuses
     ["non-active", "half-active", "active", "proposed"]
   end

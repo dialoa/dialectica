@@ -16,6 +16,9 @@
     <%= f.input :firstname, label: "first name" %>
     <%= f.input :lastname, label: "last name" %>
 
+    <%= f.input :notify_me_when_i_am_suggested_as_an_internal_referee, collection: User.notify_me_when_i_am_suggested_as_an_internal_referee_options.map {|p| [t("#{p}"), p]} %>
+    <%= f.input :notify_me_when_something_happens_to_my_fish, collection: User.notify_me_when_something_happens_to_my_fish_options.map {|p| [t("#{p}"), p]} %>
+
     <%= f.input :password,
                 label: "password",
                 hint: "leave it blank if you don't want to change it",

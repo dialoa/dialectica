@@ -49,4 +49,12 @@ has_many :blog_posts
     end
   end
 
+  def self.notify_me_when_i_am_suggested_as_an_internal_referee_options
+    ["no", "yes"]
+  end
+
+  def self.notify_me_when_something_happens_to_my_fish_options
+    ["no", "yes"]
+  end
+
 end
