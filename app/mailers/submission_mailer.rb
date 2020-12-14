@@ -15,8 +15,8 @@ class SubmissionMailer < ApplicationMailer
     mail(to: user.email, subject: subject, body: body)
   end
 
-  def send_notification_of_suggestion(user)
-
+  def send_notification_of_suggestion(user, subject, body)
+    mail(to: user.email, subject: subject, body: body)
   end
 
 end

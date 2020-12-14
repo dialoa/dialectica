@@ -157,7 +157,15 @@ class SubmissionsController < ApplicationController
   def create_suggestion_to_user
     submission = Submission.find(params[:submission_id])
     SuggestionSubmission.create(user_id: params[:user_id], submission_id: submission.id)
+    suggested_to_user = User.find(params[:user_id])
     #redirect_to submission_pool_path, notice: 'Suggestion added'
+body =
+"
+Dear #{suggested_to_user.name}
+
+#{helpers.link_to submission.title, submission_url(submission)} has been suggested to you by #{current_user.name}.
+"
+    SubmissionMailer.send_notification_of_suggestion(suggested_to_user, "dialectica - a submission has been suggested to you", body) if suggested_to_user.notify_me_when_i_am_suggested_as_an_internal_referee == "yes"
     message = "suggested to #{User.find(params[:user_id]).name}"
     submission.add_to_history(current_user, message)
     redirect_to submission_path(params[:submission_id]), notice: 'Suggestion added'.downcase
