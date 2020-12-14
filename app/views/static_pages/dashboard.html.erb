@@ -1,26 +1,64 @@
 <div class="container">
-
-    <h1>New Submissions</h1>
-
-    <table class="table table-striped table-bordered">
+  <h1>Dashboard</h1>
+  <hr />
+  <h2>EC-members</h2>
+  <table class="table table-light table-striped table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">name</th>
+      <th scope="col">email</th>
+      <th scope="col">notify me if i am suggested</th>
+      <th scope="col">notify me if something happens to my fish</th>
+      <th scope="col">articles fished total</th>
+      <th scope="col">articles fished alive</th>
+      <th scope="col">articles for which they are blacklisted</th>
+      <th scope="col">activities</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.all.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.notify_me_when_i_am_suggested_as_an_internal_referee %></td>
+        <td><%= user.notify_me_when_something_happens_to_my_fish %></td>
+        <td><%= user.submissions.count %></td>
+        <td><%= user.submissions.alive.count %></td>
+        <td><%= BlockedUser.where(user_id: user.id).count %></td>
+        <td><%= user.histories.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+    <hr />
+    <h2>articles - fish - submissions</h2>
+    <table class="table table-light table-striped table-bordered">
       <thead>
         <tr>
-          <th scope="col">Title</th>
-          <th scope="col">Author</th>
-          <th scope="col">Status</th>
-          <th scope="col">Options</th>
+          <th scope="col">number</th>
+          <th scope="col">title</th>
+          <th scope="col">date</th>
+          <th scope="col">author</th>
+          <th scope="col">email</th>
+          <th scope="col">country</th>
+          <th scope="col">EC-members blacklisted</th>
+          <th scope="col">internal reviewers</th>
+          <th scope="col">external reviewers</th>
         </tr>
       </thead>
       <tbody>
-        <% Article.submitted.each do |article| %>
-        <tr>
-          <td><%= article.title %></td>
-          <td><%= article.author %></td>
-          <td><%= article.status %></td>
-          <td>
-            <button type="button" class="btn btn-primary btn-sm">Assign Reviewers</button> <button type="button" class="btn btn-info btn-sm">Show Discussion</button> <button type="button" class="btn btn-danger btn-sm">Reject</button> 
-          </td>
-        </tr>
+        <% Submission.all.each do |submission| %>
+          <tr>
+            <td><%= submission.id %></td>
+            <td><%= submission.title %></td>
+            <td><%= submission.firstname %> <%= submission.lastname %></td>
+            <td><%= submission.email %></td>
+            <td><%= submission.country %></td>
+            <td><%= BlockedUser.where(submission_id: submission.id).count %></td>
+            <td><%= SuggestionSubmission.where(submission_id: submission.id).count %></td>
+            <td><%= submission.users.count %></td>
+            <td>-</td>
+          </tr>
         <% end %>
       </tbody>
     </table>

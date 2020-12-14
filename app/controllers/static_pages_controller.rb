@@ -13,6 +13,10 @@ class StaticPagesController < ApplicationController
   end
 
   def submission_welcome
+
+  end
+
+  def dashboard
     
   end
 

@@ -76,6 +76,7 @@
     <hr />
     <%= link_to "Accept", accept_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
     <%= link_to "Reject", reject_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
+    <%= link_to "Resurrect", reject_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
   <% end %>
 <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
 <% end %>
