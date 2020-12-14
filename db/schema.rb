@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_13_062008) do
+ActiveRecord::Schema.define(version: 2020_12_14_130602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,25 @@ ActiveRecord::Schema.define(version: 2020_12_13_062008) do
     t.text "bibtex", default: ""
     t.string "name", default: ""
     t.text "yaml", default: ""
+  end
+
+  create_table "external_referee_submissions", force: :cascade do |t|
+    t.bigint "external_referee_id"
+    t.bigint "submission_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "status", default: "no answer"
+    t.date "date_of_answer"
+    t.index ["external_referee_id"], name: "index_external_referee_submissions_on_external_referee_id"
+    t.index ["submission_id"], name: "index_external_referee_submissions_on_submission_id"
+  end
+
+  create_table "external_referees", force: :cascade do |t|
+    t.string "firstname", default: ""
+    t.string "lastname", default: ""
+    t.string "email", default: ""
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|

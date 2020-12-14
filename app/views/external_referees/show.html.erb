@@ -1,0 +1,19 @@
+<div class="container">
+<p>
+  <strong>Firstname:</strong>
+  <%= @external_referee.firstname %>
+</p>
+
+<p>
+  <strong>Lastname:</strong>
+  <%= @external_referee.lastname %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @external_referee.email %>
+</p>
+
+<%= link_to 'Edit', edit_external_referee_path(@external_referee) %> |
+<%= link_to 'Back', external_referees_path %>
+  </div>

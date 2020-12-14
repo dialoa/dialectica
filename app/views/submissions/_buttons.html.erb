@@ -76,7 +76,7 @@
     <hr />
     <%= link_to "Accept", accept_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
     <%= link_to "Reject", reject_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
-    <%= link_to "Resurrect", reject_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
+    <%#= link_to "Resurrect", reject_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
   <% end %>
 <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success btn-block my-2" %>
 <% end %>
@@ -178,11 +178,12 @@
       </div>
       <div class="modal-body">
         <p>
-          <% if RequestedReviewer.where(submission_id: submission.id).count > 0 %>
+          <% if !submission.external_referee_submissions.empty? %>
             <div class="border rounded p-1">
             <strong>this submission has already been sent to <br /></strong>
-              <% RequestedReviewer.where(submission_id: submission.id).each do |reviewer| %>
-                <%= reviewer.firstname %> <%= reviewer.lastname %> <%= reviewer.email %>
+              <% submission.external_referee_submissions.each do |ers| %>
+                <%= ers.external_referee.name_and_email %>
+                 | <%= ers.status %>
                 <br />
               <% end %>
               </div>
@@ -190,6 +191,7 @@
           <% end %>
         </p>
         <%= simple_form_for :send_to_external_referee, url: submissions_send_to_external_referee_path(submission), remote: true do |f| %>
+        <% if false %>
         <p>
           <%= f.input :mail, label: "email address", placeholder: 'example: user@domain.com' %>
         </p>
@@ -198,6 +200,14 @@
         </p>
         <p>
           <%= f.input :lastname, label: "last name", placeholder: 'Wilson' %>
+        </p>
+        <% end %>
+        <p>
+          <%= f.input :external_referee, label: "external referee", as: :select, collection: ExternalReferee.all, label: "external referee", required: false, label_method: :name_and_email, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select external referee"}, multiple: false} %>
+        </p>
+        <p>
+          external referee not in the database yet? <br />
+          <%= link_to "add an external referee here", new_external_referee_path %> and come back
         </p>
         <p>
           bcc: <br />dialectica@philosophie.ch
@@ -220,3 +230,15 @@
     </div>
   </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+      $('.chosen-select').chosen({
+        no_results_text: 'No Results',
+        inherit_select_classes: false,
+        search_contains: true,
+        width: '100%'
+      });
+
+    });
+</script>

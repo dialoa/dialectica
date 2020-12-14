@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>External Referees</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Email</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @external_referees.each do |external_referee| %>
+      <tr>
+        <td><%= external_referee.firstname %></td>
+        <td><%= external_referee.lastname %></td>
+        <td><%= external_referee.email %></td>
+        <td><%= link_to 'Show', external_referee %></td>
+        <td><%= link_to 'Edit', edit_external_referee_path(external_referee) %></td>
+        <td><%= link_to 'Destroy', external_referee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New External Referee', new_external_referee_path %>

@@ -63,4 +63,25 @@
       </tbody>
     </table>
 
+    <hr />
+    <h2>external referees</h2>
+    <table class="table table-light table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">name</th>
+          <th scope="col">email</th>
+          <th scope="col">numbers of articles referenced</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% ExternalReferee.all.each do |referee| %>
+          <tr>
+            <td><%= referee.firstname %> <%= referee.lastname %></td>
+            <td><%= referee.email %></td>
+            <td><%= referee.submissions.count %> </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
 </div>

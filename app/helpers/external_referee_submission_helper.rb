@@ -1,0 +1,2 @@
+module ExternalRefereeSubmissionHelper
+end

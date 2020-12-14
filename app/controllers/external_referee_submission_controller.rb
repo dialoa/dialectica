@@ -1,0 +1,3 @@
+class ExternalRefereeSubmissionController < ApplicationController
+  
+end

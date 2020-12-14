@@ -172,19 +172,24 @@ Dear #{suggested_to_user.name}
   end
 
   def send_to_external_referee
-    @mail = params[:send_to_external_referee][:mail]
+    #@mail = params[:send_to_external_referee][:mail]
     @subject = params[:send_to_external_referee][:subject]
     @body = params[:send_to_external_referee][:body]
-    @firstname = params[:send_to_external_referee][:firstname]
-    @lastname = params[:send_to_external_referee][:lastname]
+    #@firstname = params[:send_to_external_referee][:firstname]
+    #@lastname = params[:send_to_external_referee][:lastname]
+    @external_referee = ExternalReferee.find(params[:send_to_external_referee][:external_referee])
+
+    @mail = @external_referee.email
 
     @sending_option = params[:send_directly]
 
-    message = "sent to external referee: #{@firstname} #{@lastname} #{@mail}"
+    message = "sent to external referee: #{@external_referee.name_and_email}"
     submission = Submission.find(params[:submission_id])
     @submission = submission
     submission.add_to_history(current_user, message)
-    RequestedReviewer.create(email: @mail, firstname: @firstname, lastname: @lastname, submission_id: submission.id)
+    #ExternalReferee.create(email: @mail, firstname: @firstname, lastname: @lastname)
+    submission.external_referees << @external_referee
+    #RequestedReviewer.create(email: @mail, firstname: @firstname, lastname: @lastname, submission_id: submission.id)
     #byebug
     #redirect_to submission_path(params[:submission_id]), notice: message
 
