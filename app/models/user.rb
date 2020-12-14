@@ -57,4 +57,10 @@ has_many :blog_posts
     ["no", "yes"]
   end
 
+  def self.send_notification
+    User.where(notify_me_when_something_happens_to_my_fish: "yes").each do |user|
+      SubmissionMailer.
+    end
+  end
+
 end

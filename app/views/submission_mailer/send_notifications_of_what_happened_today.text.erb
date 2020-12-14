@@ -1,0 +1,11 @@
+dialectica - report
+
+<% @histories.each do |history| %>
+
+<% end %>
+
+history_ids = []
+
+user.submissions.each do |submission|
+  history_ids =  history_ids + History.where(created_at: DateTime.now-1.day..DateTime.now, submission_id: submission.id).pluck(:id)
+end

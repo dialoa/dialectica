@@ -21,4 +21,8 @@ every 1.day, at: '4:30 am' do
   runner "Submission.make_old_submissions_dead"
 end
 
+every 1.day, at: '4:30 am' do
+  #runner "User.send_notifications"
+end
+
 # Learn more: http://github.com/javan/whenever

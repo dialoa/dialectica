@@ -11,4 +11,12 @@ class SubmissionMailer < ApplicationMailer
     mail(to: email, cc: current_user.email, subject: subject, body: body)
   end
 
+  def send_notifications_of_what_happened_today(user)
+    mail(to: user.email)
+  end
+
+  def send_notification_of_suggestion(user)
+
+  end
+
 end
