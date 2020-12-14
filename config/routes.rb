@@ -89,6 +89,7 @@ Rails.application.routes.draw do
   post '/submission_tools/withdraw_proposal_of_submission/:submission_id/', to: "submissions#withdraw_proposal_of_submission", as: "withdraw_proposal_of_submission"
   post '/submission_tools/upload_file_to_submission/:submission_id/', to: "submissions#upload_file_to_submission", as: "upload_file_to_submission"
   post '/submission_tools/add_comment_to_submission/:id/', to: "submissions#add_comment_to_submission", as: "add_comment_to_submission"
+  get '/submission_tools/send_notifications/', to: "submissions#send_notifications", as: "send_notifications"
 
   post '/submission_tools/make_submission_dead/:submission_id/', to: "submissions#make_submission_dead", as: "make_submission_dead"
   post '/submission_tools/make_submission_alive/:submission_id/', to: "submissions#make_submission_alive", as: "make_submission_alive"

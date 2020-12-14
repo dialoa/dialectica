@@ -121,6 +121,12 @@ class SubmissionsController < ApplicationController
 
   end
 
+  def send_notifications
+    User.send_notifications
+    #render status: :ok
+    redirect_to root_path, notice: "notifications are being sent"
+  end
+
   def update_status_of_submission
     submission = Submission.find(params[:submission_id])
     submission.update(status: params[:status])

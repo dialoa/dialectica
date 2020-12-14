@@ -57,9 +57,30 @@ has_many :blog_posts
     ["no", "yes"]
   end
 
-  def self.send_notification
+  def self.send_notifications
+    #byebug
+    subject = "dialectica - report"
+    #byebug
     User.where(notify_me_when_something_happens_to_my_fish: "yes").each do |user|
-      SubmissionMailer.
+
+body = ""
+      user.submissions.each do |submission|
+        histories_today = submission.histories.where(created_at: DateTime.now-1.day..DateTime.now)
+        #byebug
+        unless histories_today.empty?
+          body = body + "##{submission.id} - #{submission.title} \n\n"
+          histories_today.each do |history|
+            body = body + "#{history.user.name} #{I18n.l history.created_at, format: :usa} \n"
+            body = body + "#{ActionController::Base.helpers.strip_tags history.content} \n \n"
+          end
+        end
+      end
+
+      unless body.blank?
+        body = body.prepend("dialectica - report \n\n")
+        SubmissionMailer.send_notifications_of_what_happened_today(user, subject, body).deliver_now
+      end
+
     end
   end
 
