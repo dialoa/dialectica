@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :external_referee_submissions
   resources :external_referees
   resources :requested_reviewers
   get 'tools/csv', to: 'tools#csv', as: "tools_csv"

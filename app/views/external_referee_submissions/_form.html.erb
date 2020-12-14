@@ -1,0 +1,19 @@
+
+<%= simple_form_for(@external_referee_submission) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :status, label: "status", collection: ExternalRefereeSubmission.status_options.map {|p| [t("#{p}"), p]} %>
+
+
+    <%#= f.input :date_of_answer, label:"date_of_answer" %>
+    <%= f.input :date_of_answer, as: :date, start_year: Date.today.year - 1,
+                            end_year: Date.today.year + 1,
+                            order: [:day, :month, :year] %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "update" %>
+  </div>
+<% end %>

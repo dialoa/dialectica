@@ -1,0 +1,1 @@
+json.partial! "external_referee_submissions/external_referee_submission", external_referee_submission: @external_referee_submission
