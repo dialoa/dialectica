@@ -118,4 +118,6 @@ Rails.application.routes.draw do
   get '/report-tools/new_for_reviewer/:submission_id', to: "reports#new_for_reviewer", as: "new_report_for_reviewer"
 
   post '/external_referee_submission_tools/fast_update/:id', to: "external_referee_submissions#fast_update", as: "external_referee_submissions_fast_update"
+
+  post '/external_referee_tools/fast_create/:submission_id', to: "external_referees#fast_create", as: "external_referee_fast_create"
 end

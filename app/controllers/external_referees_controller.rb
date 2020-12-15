@@ -37,6 +37,13 @@ class ExternalRefereesController < ApplicationController
     end
   end
 
+  def fast_create
+    #add history entry
+    @external_referee = ExternalReferee.create(external_referee_params)
+    @submission = Submission.find(params[:submission_id])
+    #@external_referee_submission.update(external_referee_submission_params)
+  end
+
   # PATCH/PUT /external_referees/1
   # PATCH/PUT /external_referees/1.json
   def update

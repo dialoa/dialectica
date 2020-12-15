@@ -1,0 +1,44 @@
+<div class="send_to_external_referee_submission_id_<%= submission.id %>">
+  <%= render 'external_referee_submissions/requested_referees_for_submission', submission: submission %>
+  <p>
+    (external referee not in the database yet? Add here: <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#send_to_external_referee_submission_id_<%= submission.id %>_collapse" aria-expanded="false" aria-controls="send_to_external_referee_submission_id_<%= submission.id %>_collapse">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+          </svg>
+        </button> )
+      <div class="collapse" id="send_to_external_referee_submission_id_<%= submission.id %>_collapse">
+        <div class="card card-body">
+          <%= render 'external_referees/form_for_fast_create', submission: submission %>
+        </div>
+      </div>
+  </p>
+  <%= simple_form_for :send_to_external_referee, url: submissions_send_to_external_referee_path(submission), remote: true do |f| %>
+  <% if false %>
+  <p>
+    <%= f.input :mail, label: "email address", placeholder: 'example: user@domain.com' %>
+  </p>
+  <p>
+    <%= f.input :firstname, label: "first name", placeholder: 'Lara' %>
+  </p>
+  <p>
+    <%= f.input :lastname, label: "last name", placeholder: 'Wilson' %>
+  </p>
+  <% end %>
+  <p>
+    <%= f.input :external_referee, label: "select external referee", as: :select, collection: ExternalReferee.all, label: "external referee", required: false, label_method: :name_and_email, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select external referee"}, multiple: false} %>
+  </p>
+  <p>
+    bcc: <br />dialectica@philosophie.ch
+  </p>
+  <p>
+    <%= f.input :subject, label: "subject", input_html: {value: "dialectica refereeing - \"#{submission.title}\""} %>
+    </p>
+    <p>
+      <%= f.input :body, label: "body", as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, rails_blob_url(submission.file), current_user), rows: 25} %>
+    </p>
+    <%= f.submit "send via private email program (this opens up your mail program)", class: "btn btn-light border my-2" %>
+    <br />
+    <%= f.submit "send directly", name: 'send_directly', class: "btn btn-light border my-2" %>
+  <% end %>
+</div>

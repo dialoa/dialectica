@@ -52,7 +52,11 @@ class ExternalRefereeSubmissionsController < ApplicationController
   end
 
   def fast_update
+    submission = @external_referee_submission.submission
     @external_referee_submission.update(external_referee_submission_params)
+    external_referee = @external_referee_submission.external_referee
+    message = "external referee update: #{@external_referee_submission.status} - #{external_referee.name}"
+    submission.add_to_history(current_user, message + " ")
   end
 
   # DELETE /external_referee_submissions/1

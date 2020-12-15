@@ -177,39 +177,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= render 'external_referee_submissions/requested_referees_for_submission', submission: submission %>
-        <%= simple_form_for :send_to_external_referee, url: submissions_send_to_external_referee_path(submission), remote: true do |f| %>
-        <% if false %>
-        <p>
-          <%= f.input :mail, label: "email address", placeholder: 'example: user@domain.com' %>
-        </p>
-        <p>
-          <%= f.input :firstname, label: "first name", placeholder: 'Lara' %>
-        </p>
-        <p>
-          <%= f.input :lastname, label: "last name", placeholder: 'Wilson' %>
-        </p>
-        <% end %>
-        <p>
-          <%= f.input :external_referee, label: "external referee", as: :select, collection: ExternalReferee.all, label: "external referee", required: false, label_method: :name_and_email, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select external referee"}, multiple: false} %>
-        </p>
-        <p>
-          external referee not in the database yet? <br />
-          <%= link_to "add an external referee here", new_external_referee_path %> and come back
-        </p>
-        <p>
-          bcc: <br />dialectica@philosophie.ch
-        </p>
-        <p>
-          <%= f.input :subject, label: "subject", input_html: {value: "dialectica refereeing - \"#{submission.title}\""} %>
-          </p>
-          <p>
-            <%= f.input :body, label: "body", as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, rails_blob_url(submission.file), current_user), rows: 25} %>
-          </p>
-          <%= f.submit "send via private email program (this opens up your mail program)", class: "btn btn-light border my-2" %>
-          <br />
-          <%= f.submit "send directly", name: 'send_directly', class: "btn btn-light border my-2" %>
-        <% end %>
+        <%= render 'external_referee_submissions/send_to_external_referee', submission: submission %>
         <%#= mail_to "", "send to external referee", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, as it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn btn-light border my-2" %>
       </div>
       <div class="modal-footer">

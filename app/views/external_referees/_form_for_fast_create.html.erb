@@ -1,0 +1,14 @@
+<%= simple_form_for(ExternalReferee.new, remote: true, method: :post, url: external_referee_fast_create_path(submission_id: submission.id)) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :firstname, label:"first name", placeholder: "Kevin" %>
+    <%= f.input :lastname, label:"last name", placeholder: "Mulligan" %>
+    <%= f.input :email, label:"email", placeholder: "kevin.mulligan@gmail.com" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "create external referee", class: "btn btn-light border" %>
+  </div>
+<% end %>

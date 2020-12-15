@@ -64,7 +64,7 @@
         <hr />
         <h5>latest activities</h5>
         <div class="overflow-auto small" style="height: 450px;">
-          <% History.order(:created_at).last(10).each do |history| %>
+          <% History.order(:created_at).last(10).reverse.each do |history| %>
             <p>
                 #<%= link_to history.submission.id, submission_path(history.submission) %> - "<%= link_to history.submission.title, submission_path(history.submission) %>"
             </p>
