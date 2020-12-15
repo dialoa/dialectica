@@ -1,5 +1,5 @@
 
-<%= simple_form_for(external_referee_submission, url: root_path) do |f| %>
+<%= simple_form_for(external_referee_submission, remote: true, method: :post, url: external_referee_submissions_fast_update_path(external_referee_submission)) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -8,7 +8,7 @@
 
 
     <%#= f.input :date_of_answer, label:"date_of_answer" %>
-    <%= f.input :date_of_answer, as: :date, start_year: Date.today.year - 1,
+    <%= f.input :date_of_answer, label: "date of answer", as: :date, start_year: Date.today.year - 1,
                             end_year: Date.today.year + 1,
                             order: [:day, :month, :year] %>
   </div>

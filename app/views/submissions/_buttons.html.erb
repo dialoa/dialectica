@@ -177,19 +177,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>
-          <% if !submission.external_referee_submissions.empty? %>
-            <div class="border rounded p-1">
-            <strong>this submission has already been sent to <br /></strong>
-              <% submission.external_referee_submissions.each do |ers| %>
-                <%= ers.external_referee.name_and_email %>
-                 | <%= ers.status %> | <%= link_to "edit", edit_external_referee_submission_path(ers) %> | <%= link_to 'delete', external_referee_submission_path(ers), method: :delete, data: { confirm: 'Are you sure?' } %>
-                <br />
-              <% end %>
-              </div>
-              <hr />
-          <% end %>
-        </p>
+        <%= render 'external_referee_submissions/requested_referees_for_submission', submission: submission %>
         <%= simple_form_for :send_to_external_referee, url: submissions_send_to_external_referee_path(submission), remote: true do |f| %>
         <% if false %>
         <p>

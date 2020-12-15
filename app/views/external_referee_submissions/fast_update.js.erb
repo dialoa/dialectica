@@ -1,0 +1,16 @@
+var element_id = ".<%= dom_id(@external_referee_submission) %>";
+
+
+$( element_id ).each(function( index ) {
+  console.log( index + ": " + $( this ).text() );
+
+  $( this ).fadeOut( "slow", function() {
+
+      content = $("<%= escape_javascript( render "external_referee_submissions/show", external_referee_submission: @external_referee_submission ) %>")
+
+      $( this ).replaceWith(function(){
+        return $(content).hide().fadeIn("slow");
+      });
+
+  });
+});

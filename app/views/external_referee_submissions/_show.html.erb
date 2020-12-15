@@ -1,6 +1,11 @@
-<div id="<%= dom_id(external_referee_submission) %>">
-  <%= external_referee_submission.external_referee.name_and_email %><br />
-    <%= external_referee_submission.status %> <%#= link_to "edit", edit_external_referee_submission_path(external_referee_submission) %> <%#= link_to 'delete', external_referee_submission_path(external_referee_submission), method: :delete, data: { confirm: 'Are you sure?' } %>
+<div id="<%= dom_id(external_referee_submission) %>" class="small <%= dom_id(external_referee_submission) %>">
+  <%= external_referee_submission.external_referee.name_and_email %> - <%= l(external_referee_submission.created_at, format: :usa) %> <br />
+    <%= external_referee_submission.status %>
+    <% unless external_referee_submission.status == "no answer" %>
+      - <%= l(external_referee_submission.date_of_answer, format: :usa) unless external_referee_submission.date_of_answer.nil? %>
+    <% end %>
+
+    <%#= link_to "edit", edit_external_referee_submission_path(external_referee_submission) %> <%#= link_to 'delete', external_referee_submission_path(external_referee_submission), method: :delete, data: { confirm: 'Are you sure?' } %>
     <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>

@@ -1,5 +1,5 @@
 class ExternalRefereeSubmissionsController < ApplicationController
-  before_action :set_external_referee_submission, only: [:show, :edit, :update, :destroy]
+  before_action :set_external_referee_submission, only: [:show, :edit, :update, :destroy, :fast_update]
 
   # GET /external_referee_submissions
   # GET /external_referee_submissions.json
@@ -49,6 +49,10 @@ class ExternalRefereeSubmissionsController < ApplicationController
         format.json { render json: @external_referee_submission.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def fast_update
+    @external_referee_submission.update(external_referee_submission_params)
   end
 
   # DELETE /external_referee_submissions/1

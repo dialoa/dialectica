@@ -116,4 +116,6 @@ Rails.application.routes.draw do
   post '/jsons-tools/json_view_editor_update/:id', to: "jsons#json_view_editor_update", as: "json_view_editor_update"
 
   get '/report-tools/new_for_reviewer/:submission_id', to: "reports#new_for_reviewer", as: "new_report_for_reviewer"
+
+  post '/external_referee_submission_tools/fast_update/:id', to: "external_referee_submissions#fast_update", as: "external_referee_submissions_fast_update"
 end
