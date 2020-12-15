@@ -183,7 +183,7 @@
             <strong>this submission has already been sent to <br /></strong>
               <% submission.external_referee_submissions.each do |ers| %>
                 <%= ers.external_referee.name_and_email %>
-                 | <%= ers.status %> | <%= link_to "edit", edit_external_referee_submission_path(ers) %>
+                 | <%= ers.status %> | <%= link_to "edit", edit_external_referee_submission_path(ers) %> | <%= link_to 'delete', external_referee_submission_path(ers), method: :delete, data: { confirm: 'Are you sure?' } %>
                 <br />
               <% end %>
               </div>

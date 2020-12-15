@@ -1,0 +1,9 @@
+<p>
+  <% if !submission.external_referee_submissions.empty? %>
+    <strong>this submission has already been sent to <br /></strong>
+      <% submission.external_referee_submissions.each do |ers| %>
+        <%= render 'external_referee_submissions/show', external_referee_submission: ers %>
+      <% end %>
+      <hr />
+  <% end %>
+</p>

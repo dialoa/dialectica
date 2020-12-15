@@ -47,6 +47,10 @@
           <%= reviewer.name %><br />
         <% end %>
       <% end %>
+      <% if true %>
+      <hr />
+      <%= render 'external_referee_submissions/requested_referees_for_submission', submission: submission %>
+      <% end %>
   </div>
 </div>
 <% if is_user_editor?(current_user) %>
