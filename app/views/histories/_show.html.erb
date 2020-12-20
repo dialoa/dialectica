@@ -1,6 +1,22 @@
 <% collapse_status = "" %>
 <% collapse_status = local_assigns[:collapse_status] if local_assigns[:collapse_status] %>
 
+<% if strip_tags(history.content).length < 50 %>
+<div class="history-<%= history.id %> small">
+  <p>
+    <strong><%= history.user.name unless history.user.blank? %> - <%= l(history.created_at, format: :usa) %></strong>
+  </p>
+    <div class="card card-body">
+      <%= raw history.content %>
+    </div>
+    <% if history.user == current_user %>
+      <%= link_to 'edit', edit_history_path(history) %> |
+      <%= link_to 'destroy', history, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+</div>
+
+<% else %>
+
 <div class="history-<%= history.id %> small">
   <p>
     <button class="btn btn-light arrow-animation <%= collapse_status %> border" type="button" data-toggle="collapse" data-target="#collapse-history-<%= history.id %>" aria-expanded="true" aria-controls="collapse-history-<%= history.id %>">
@@ -22,3 +38,5 @@
     <% end %>
   </div>
 </div>
+
+<% end %>
