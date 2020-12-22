@@ -87,30 +87,30 @@ class SubmissionsController < ApplicationController
 
     #@submissions_without_reviewers = Submission.includes(:users).where( :users => { :id => nil } )
     @submissions_without_reviewers = Submission.alive.not_blacklisted(current_user).left_outer_joins(:users).where( users: { id: nil } )
-    @submissions_with_reviewers = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id)).order(:created_at)
+    @submissions_with_reviewers = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id)).order(:appearance_date)
     @submissions_suggested_to_me = Submission.alive.not_blacklisted(current_user).where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
     @proposed_submissions = Submission.alive.not_blacklisted(current_user).where(proposed: "true")
     @dead_submissions = Submission.dead.not_blacklisted(current_user)
-    @submissions_to_be_reviewed_by_me = current_user.submissions.alive.not_blacklisted(current_user).order(:created_at)
-    @all_submissions = Submission.not_blacklisted(current_user).order(:created_at)
-    @all_open_submissions = Submission.alive.not_blacklisted(current_user).order(:created_at)
+    @submissions_to_be_reviewed_by_me = current_user.submissions.alive.not_blacklisted(current_user).order(:appearance_date)
+    @all_submissions = Submission.not_blacklisted(current_user).order(:appearance_date)
+    @all_open_submissions = Submission.alive.not_blacklisted(current_user).order(:appearance_date)
 
     if @selection == "without_reviewers"
-      @submissions = @submissions_without_reviewers.order(:created_at)
+      @submissions = @submissions_without_reviewers.order(:appearance_date)
     elsif @selection == "with_reviewers"
-      @submissions = @submissions_with_reviewers.order(:created_at)
+      @submissions = @submissions_with_reviewers.order(:appearance_date)
     elsif @selection == "by_me"
-      @submissions = @submissions_to_be_reviewed_by_me.order(:created_at)
+      @submissions = @submissions_to_be_reviewed_by_me.order(:appearance_date)
     elsif @selection == "all"
-      @submissions = @all_submissions.order(:created_at)
+      @submissions = @all_submissions.order(:appearance_date)
     elsif @selection == "all_open"
-      @submissions = @all_open_submissions.order(:created_at)
+      @submissions = @all_open_submissions.order(:appearance_date)
     elsif @selection == "suggested_to_me"
-      @submissions = @submissions_suggested_to_me.order(:created_at)
+      @submissions = @submissions_suggested_to_me.order(:appearance_date)
     elsif @selection == "proposed_submissions"
-      @submissions = @proposed_submissions.order(:created_at)
+      @submissions = @proposed_submissions.order(:appearance_date)
     elsif @selection == "dead_submissions"
-      @submissions = @dead_submissions.order(:created_at)
+      @submissions = @dead_submissions.order(:appearance_date)
     end
     #@submissions = Submission.all.order(:created_at)
 
@@ -228,6 +228,14 @@ Dear #{suggested_to_user.name}
     submission.update(dead: "false")
     submission.add_to_history(current_user, "Submission is alive".downcase)
     redirect_to submission_path(submission), notice: 'Submission is alive'.downcase
+  end
+
+  def resurrect_submission
+    submission = Submission.find(params[:submission_id])
+    submission.update(appearance_date: Date.today)
+    message = "Submission resurrected".downcase
+    submission.add_to_history(current_user, message)
+    redirect_to submission_path(submission), notice: message
   end
 
   def accept_submission

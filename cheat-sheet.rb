@@ -27,3 +27,11 @@ rails g add_many_to_many_relationship  Account --model option
 </section>
 
 "https://player.vimeo.com/video/334631596?muted=1&amp;autoplay=1&amp;loop=1&amp;title=0&amp;byline=0&amp;portrait=0"
+
+Submission.all.each_with_index do |sub, index|
+  sub.update(appearance_date: Date.today - index.weeks)
+end
+
+Submissian.all.each do |sub|
+  sub.update(appearance_date: sub.created_at.to_date)
+end

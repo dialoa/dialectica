@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
   get '/about-us', to: 'pages#show', id: "about-us"
   get '/dashboard', to: 'static_pages#dashboard', as: "dashboard"
+  get '/dashboard2', to: 'static_pages#dashboard2', as: "dashboard2"
   get '/bibtex', to: 'static_pages#bibtex', as: "bibtex"
   get '/submission_welcome', to: 'static_pages#submission_welcome', as: "submission_welcome"
 
@@ -95,6 +96,9 @@ Rails.application.routes.draw do
 
   post '/submission_tools/make_submission_dead/:submission_id/', to: "submissions#make_submission_dead", as: "make_submission_dead"
   post '/submission_tools/make_submission_alive/:submission_id/', to: "submissions#make_submission_alive", as: "make_submission_alive"
+
+  post '/submission_tools/resurrect_submission/:submission_id/', to: "submissions#resurrect_submission", as: "resurrect_submission"
+
 
   post '/submission_tools/reject_submission/:submission_id/', to: "submissions#reject_submission", as: "reject_submission"
   post '/submission_tools/accept_submission/:submission_id/', to: "submissions#accept_submission", as: "accept_submission"

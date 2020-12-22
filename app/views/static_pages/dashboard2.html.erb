@@ -1,0 +1,38 @@
+<div class="container">
+  <h1>Dashboard2</h1>
+    <hr />
+    <h2>articles - fish - submissions</h2>
+    <table class="table table-light table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">number</th>
+          <th scope="col">title</th>
+          <th scope="col">date</th>
+          <th scope="col">author</th>
+          <th scope="col">email</th>
+          <th scope="col">country</th>
+          <th scope="col">EC-members blacklisted</th>
+          <th scope="col">suggested EC members</th>
+          <th scope="col">internal reviewers</th>
+          <th scope="col">external reviewers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% Submission.all.each do |submission| %>
+          <tr>
+            <td><%= submission.id %></td>
+            <td><%= submission.title %></td>
+            <td><%= l(submission.created_at, format: :usa) %></td>
+            <td><%= submission.firstname %> <%= submission.lastname %></td>
+            <td><%= submission.email %></td>
+            <td><%= submission.country %></td>
+            <td><%= BlockedUser.where(submission_id: submission.id).count %></td>
+            <td><%= SuggestionSubmission.where(submission_id: submission.id).count %></td>
+            <td><%= submission.users.count %></td>
+            <td><%= submission.external_referees.count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+</div>
