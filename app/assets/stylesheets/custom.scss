@@ -10,6 +10,11 @@ $colors: (
   black: #000000
 );
 
+$yellow-colors: (
+  light-yellow: #fdfd96,
+  dark-yellow: #FAFA0F
+);
+
 @for $i from 1 through 10 {
   .thick-borders-#{$i}{
     border-width: #{$i}px !important;
@@ -40,6 +45,16 @@ $colors: (
   }
 }
 
+@mixin color-backgrounds {
+  @each $name, $hex in $yellow-colors {
+    &-#{$name} {
+      border-color: $hex !important;
+      border-radius: 25px;
+      border: 2px;
+    }
+  }
+}
+
 @keyframes shake {
   10%, 90% {
     transform: translate3d(-1px, 0, 0);
@@ -62,6 +77,9 @@ $colors: (
   @include color-modifiers;
 }
 
+.border {
+  @include color-backgrounds;
+}
 
 .bg-first-color {
   background-color: $first-color;
