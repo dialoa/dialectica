@@ -26,7 +26,7 @@
   </p>
   <% end %>
   <p>
-    <%= f.input :external_referee, label: "select external referee", as: :select, collection: ExternalReferee.all, label: "external referee", required: false, label_method: :name_and_email, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select external referee"}, multiple: false} %>
+    <%= f.input :external_referee, label: "select external referee", as: :select, collection: ExternalReferee.all.order(:lastname), label: "external referee", required: false, label_method: :name_and_email, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select external referee"}, multiple: false} %>
   </p>
   <p>
     bcc: <br />dialectica@philosophie.ch

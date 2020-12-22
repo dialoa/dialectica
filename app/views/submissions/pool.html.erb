@@ -58,14 +58,13 @@
         </ul>
       </div>
       </div>
+      <hr />
       <div class="row">
-            <hr />
       <div class="col-sm-12 col-md-9 order-2 order-md-1">
         <%= render 'submissions/in_groups', submissions: @submissions %>
       </div>
     <div class="col-sm-12 col-md-3 order-1 order-md-2">
 
-        <hr />
         <h5>latest activities</h5>
         <div class="overflow-auto small" style="height: 450px;">
           <% History.order(:created_at).last(10).reverse.each do |history| %>
