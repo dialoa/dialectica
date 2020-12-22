@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
   <div class="row">
-    <div class="col-12">
+    <div class="col-sm-12 col-md-9">
       <h3>welcome to the fishpond</h3>
       <p>
         <% submission_option_list = [
@@ -37,30 +37,34 @@
           <% end %>
         </div>
       </p>
-      <hr />
       </div>
+      <div class="col-sm-12 col-md-3">
+        <ul>
+          <li>
+            click on a fish to see its history
+          </li>
+          <li>
+            "fish" it to become an internal reviewer
+          </li>
+          <li>
+             suggest some fish to others
+          </li>
+          <li>
+            build a case for one of them
+          </li>
+          <li>
+            "propose" it to put it on the EC's menu
+          </li>
+        </ul>
+      </div>
+      </div>
+      <div class="row">
+            <hr />
       <div class="col-sm-12 col-md-9 order-2 order-md-1">
         <%= render 'submissions/in_groups', submissions: @submissions %>
       </div>
     <div class="col-sm-12 col-md-3 order-1 order-md-2">
-      <h3>welcome to the fishpond!</h3>
-      <ul>
-        <li>
-          click on a fish to see its history
-        </li>
-        <li>
-          "fish" it to become an internal reviewer
-        </li>
-        <li>
-           suggest some fish to others
-        </li>
-        <li>
-          build a case for one of them
-        </li>
-        <li>
-          "propose" it to put it on the EC's menu
-        </li>
-      </ul>
+
         <hr />
         <h5>latest activities</h5>
         <div class="overflow-auto small" style="height: 450px;">
