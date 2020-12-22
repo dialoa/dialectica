@@ -16,6 +16,9 @@ has_many :external_referees, :through => :external_referee_submissions
   has_many :blocked_users
 
   #after_create :add_create_to_history
+  after_create :add_appearance_date
+
+
 
   scope :dead, -> { where(dead: "true") }
   scope :alive, -> { where(dead: "false") }
@@ -127,17 +130,17 @@ relevant box:
   end
 
   def submission_urgency
-    if created_at > Date.today - 2.weeks
+    if appearance_date > Date.today - 2.weeks
       return "bg-color-light-green"
-    elsif created_at > Date.today - 4.weeks
+    elsif appearance_date > Date.today - 4.weeks
       return "bg-color-dark-green"
-    elsif created_at > Date.today - 6.weeks
+    elsif appearance_date > Date.today - 6.weeks
       return "bg-color-light-red"
-    elsif created_at > Date.today - 8.weeks
+    elsif appearance_date > Date.today - 8.weeks
       return "bg-color-dark-red text-white"
-    elsif created_at > Date.today - 10.weeks
+    elsif appearance_date > Date.today - 10.weeks
       return "bg-color-violet"
-    elsif created_at > Date.today - 12.weeks
+    elsif appearance_date > Date.today - 12.weeks
       return "bg-color-dark-grey"
     else
       return "bg-color-black text-white"
@@ -147,6 +150,12 @@ relevant box:
   def add_create_to_history
     history = self.history + "<p><strong>#{self.created_at.strftime("%d.%m.%Y")} - #{current_user.firstname} #{current_user.lastname}</strong> Submission created </p>"
     self.update(history: history)
+  end
+
+  def add_appearance_date
+    #byebug
+    self.update(appearance_date: self.created_at.to_date)
+    puts self.appearance_date
   end
 
   def add_to_history(user, message)
