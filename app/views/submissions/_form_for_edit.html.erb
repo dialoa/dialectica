@@ -23,7 +23,7 @@
           <%= f.country_select :country, priority_countries: ["CH", "FR", "GB", "DE", "US"], selected: "CH" %>
     </p>
 
-
+    <%= f.input :appearance_date, label: "appearance date" %>
     <%#= f.input :gender, label: "gender**", collection: Submission.gender_options.map {|p| [t("#{p}"), p]} %>
 
     <%= f.input :other_authors, label: "other authors (please provide a complete list)", placeholder: "Laura Smith, Jonas Hamilton, Kim Ruthers" %>

@@ -88,6 +88,7 @@ class SubmissionsController < ApplicationController
     #@submissions_without_reviewers = Submission.includes(:users).where( :users => { :id => nil } )
     @submissions_without_reviewers = Submission.alive.not_blacklisted(current_user).left_outer_joins(:users).where( users: { id: nil } )
     @submissions_with_reviewers = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id)).order(:appearance_date)
+    @submissions_with_one_reviewer = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id)).order(:appearance_date)
     @submissions_suggested_to_me = Submission.alive.not_blacklisted(current_user).where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
     @proposed_submissions = Submission.alive.not_blacklisted(current_user).where(proposed: "true")
     @dead_submissions = Submission.dead.not_blacklisted(current_user)
