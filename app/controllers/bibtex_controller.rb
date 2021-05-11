@@ -184,6 +184,12 @@ class BibtexController < ApplicationController
 
   end
 
+  def get_dialectica_articles_from_crossref
+    issn = "1746-8361"
+    serrano = Serrano.works(query: issn)
+    byebug
+  end
+
   def squish_bibtex_file_execute
     file = params[:bibtex][:file]
     filename = file.original_filename

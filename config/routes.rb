@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   get '/bibtex/get_bib_from_biblio(/:text)', to: 'bibtex#get_bib_from_biblio', as: "bibtex_get_bib_from_biblio"
   post '/bibtex/get_bib_from_biblio(/:text)', to: 'bibtex#get_bib_from_biblio', as: "bibtex_get_bib_from_biblio_post"
 
+  get '/bibtex/get_dialectica_articles_from_crossref', to: "bibtex#get_dialectica_articles_from_crossref", as: "get_dialectica_articles_from_crossref"
 
   get '/bibtex/bibtex_compare_bibtex_with_crossref(/:text)', to: 'bibtex#compare_bibtex_with_crossref', as: "bibtex_compare_bibtex_with_crossref"
   post '/bibtex/bibtex_compare_bibtex_with_crossref(/:text)', to: 'bibtex#compare_bibtex_with_crossref', as: "bibtex_compare_bibtex_with_crossref_post"
