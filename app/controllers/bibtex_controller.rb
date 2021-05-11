@@ -192,22 +192,46 @@ class BibtexController < ApplicationController
     #serrano = Serrano.works(query: "", filter: { container_title: "Dialectica" })
     #@result = serrano
 
-    source = 'https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&mailto=sandro.raess@philosophie.ch'
-    resp = Net::HTTP.get_response(URI.parse(source))
-    data = resp.body
-    @result = JSON.parse(data)
+    #source = 'https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&mailto=sandro.raess@philosophie.ch'
+    #resp = Net::HTTP.get_response(URI.parse(source))
+    #data = resp.body
+    #@result = JSON.parse(data)
 
-    @result_items = @result["message"]["items"]
+    #@result_items = @result["message"]["items"]
 
+    first_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&mailto=sandro.raess@philosophie.ch')
+    second_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&offset=1000&mailto=sandro.raess@philosophie.ch')
+    @result_items = first_json + second_json
     attributes = %w{author year title doi}
     csv = CSV.generate(headers: true) do |csv|
       csv << attributes
 
       @result_items.each do |item|
+        author = ""
+        if !item["author"].blank?
+          item["author"].each do |name, index|
+            author = author + "#{name["given"]} #{name["family"]}"
+            unless index == item["author"].size - 1
+              author = author + ", "
+            end
+          end
+        end
+
+        year = ""
+        if !item["published-print"].blank?
+          year = item["published-print"]["date-parts"][0][0]
+        end
+
+        title = ""
+        if !item["title"].blank?
+          title = item["title"][0]
+        end
+
+
         item_array = [
-          item["author"],
-          item["published-print"],
-          item["title"],
+          author,
+          year,
+          title,
           item["DOI"]
         ]
         csv << item_array
@@ -328,6 +352,17 @@ class BibtexController < ApplicationController
     end
     #bobba.save
     bobba
+  end
+
+  private
+
+  def get_json_from_crossref(url)
+    source = url
+    resp = Net::HTTP.get_response(URI.parse(source))
+    data = resp.body
+    result = JSON.parse(data)
+
+    result_items = result["message"]["items"]
   end
 
 end
