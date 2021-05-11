@@ -1,5 +1,7 @@
 require 'tempfile'
 require 'fuzzystringmatch'
+require 'net/http'
+require 'json_converter'
 
 class BibtexController < ApplicationController
 
@@ -185,9 +187,41 @@ class BibtexController < ApplicationController
   end
 
   def get_dialectica_articles_from_crossref
-    issn = "1746-8361"
-    serrano = Serrano.works(query: issn)
-    byebug
+    #issn = "1746-8361"
+    #serrano = Serrano.works(query_container_title: "dialectica")
+    #serrano = Serrano.works(query: "", filter: { container_title: "Dialectica" })
+    #@result = serrano
+
+    source = 'https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&mailto=sandro.raess@philosophie.ch'
+    resp = Net::HTTP.get_response(URI.parse(source))
+    data = resp.body
+    @result = JSON.parse(data)
+
+    @result_items = @result["message"]["items"]
+
+    attributes = %w{author year title doi}
+    csv = CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      @result_items.each do |item|
+        item_array = [
+          item["author"],
+          item["published-print"],
+          item["title"],
+          item["DOI"]
+        ]
+        csv << item_array
+      end
+    end
+
+    send_data csv, filename: "dialectica-on-crossref.csv"
+    #converter = JsonConverter.new
+
+    #json = @result
+
+    #csv = converter.generate_csv(json)               # Generate a CSV string...
+    #converter.write_to_csv(json, 'boiled_frogs.csv') # ... or write your CSV to a file
+
   end
 
   def squish_bibtex_file_execute

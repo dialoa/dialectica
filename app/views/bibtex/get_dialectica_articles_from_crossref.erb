@@ -1,0 +1,10 @@
+<div class="container">
+<%#= @result.inspect %>
+<hr />
+<% @result["message"]["items"].each do |entry| %>
+<% skip if entry.blank? %>
+<strong><%= entry["author"] %></strong> - <%= entry["DOI"] %> - <%= entry["title"] %>
+  <%#= entry.inspect %>
+  <hr>
+<% end %>
+</div>
