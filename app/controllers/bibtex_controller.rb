@@ -3,6 +3,43 @@ require 'fuzzystringmatch'
 
 class BibtexController < ApplicationController
 
+  def get_bib_from_biblio
+
+    @found = ""
+    @not_found = ""
+    @result = ""
+
+    if params[:text].present?
+      text = params[:text]
+
+      file_to_store = Tempfile.new('comparison')
+      #file_to_store.write(text)
+      file_to_store.write(text.squish)
+      file_to_store.rewind
+
+      File.open("#{Rails.root}/dialectica/biblio.bib") do |f|
+        f.each_line do |line|
+          if line =~ /rowland_c:2008/
+            puts "Found line: #{line}"
+            @result =+ line
+          end
+        end
+      end
+
+      #b = BibTeX.open("#{Rails.root}/dialectica/biblio.bib")
+      #text.split("\n").each do |line|
+      #  next if line.blank?
+      #  byebug
+      #end
+
+
+      file_to_store.close
+    else
+
+    end
+
+  end
+
   def compare_author_bibtex_with_crossref_create
 
     email = params[:email]

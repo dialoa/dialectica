@@ -1,0 +1,41 @@
+<div class="container">
+  <h1>Bibtex</h1>
+  <hr />
+  <p>
+    <%= @result %>
+  </p>
+  <p>
+    If something doesn't work or if you need something special, please contact me: <%= mail_to "sandro.raess@philosophie.ch", "sandro.raess@philosophie.ch" %>
+  </p>
+  <hr />
+  <p>
+    Enter a reference list or bibliography and get it returned as bibtex or json.<br />
+    <strong>Note:</strong> The longer the list is, the longer it takes.<br />
+    <br />
+    It could take hours, depending on how busy Crossref is.
+  </p>
+  <p>
+    <%= form_tag bibtex_get_bib_from_biblio_post_path, multipart: true do %>
+      <%#= file_field_tag :file, class: "btn btn-secondary" %>
+      <%= text_area_tag :text, nil, :rows => 15, style: 'width:100%;' %>
+      <br />
+      <br />
+      <%#= select_tag :format_string, options_for_select(Stuff.bibtex_options.collect{ |u| [u, u] }) %>
+      <br />
+      <br />
+      <strong>e-Mail</strong><br />
+      <%#= text_field_tag :email %>
+      <br />
+      <br />
+      <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
+      <%= button_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
+    <% end %>
+  </p>
+  <p>
+    <strong>Example</strong>
+    <br />
+    rowland_c:2008
+    <br />
+    dawson_a:1999
+    </p>
+</div>
