@@ -202,6 +202,7 @@ class BibtexController < ApplicationController
     first_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&mailto=sandro.raess@philosophie.ch')
     second_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&offset=1000&mailto=sandro.raess@philosophie.ch')
     @result_items = first_json + second_json
+
     attributes = %w{author year title doi}
     csv = CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -209,7 +210,7 @@ class BibtexController < ApplicationController
       @result_items.each do |item|
         author = ""
         if !item["author"].blank?
-          item["author"].each do |name, index|
+          item["author"].each_with_index do |name, index|
             author = author + "#{name["given"]} #{name["family"]}"
             unless index == item["author"].size - 1
               author = author + ", "
