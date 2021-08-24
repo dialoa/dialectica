@@ -40,18 +40,26 @@
 
     <%#= f.input :blocked_users, as: :select, collection: User.all, label: "blacklist users", required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users"}, multiple: true} %>
 
-    <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#blacklist_users_option" aria-expanded="false" aria-controls="blacklist_users_option">
-      blacklist users
-    </button>
-      <div class="collapse" id="blacklist_users_option">
-        <div class="card card-body">
-          <%= f.input :blocked_users, as: :select, collection: User.all, label: false, required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users that should be blacklisted"}, multiple: true} %>
-        </div>
-      </div>
+  <% if user_signed_in? %>
+  <br>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#blacklist_users_option" aria-expanded="false" aria-controls="blacklist_users_option">
+    blacklist users?
+  </button>
+
+  <div class="collapse" id="blacklist_users_option">
+    <div class="card card-body">
+      <%= f.input :blocked_users, as: :select, collection: User.all, label: false, required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users that should be blacklisted"}, multiple: true} %>
+    </div>
+  </div>
+  <br>
+  <br>
+  <% end %>
+
+
 
     <% if true %>
     <p>
-      <strong>comment</strong><br />
+      <strong>comments</strong><br />
         <%= f.text_area :comment, class: "tinymce", :rows => 10 %>
     </p>
     <% end %>

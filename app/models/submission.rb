@@ -8,7 +8,7 @@ has_many :external_referees, :through => :external_referee_submissions
   has_many :users, :through => :submission_users
   has_one_attached :file
   has_many_attached :attachments
-  has_many :histories
+  has_many :histories, dependent: :destroy
   has_many :requested_reviewers
   #has_many :suggestion_submissions
 
@@ -51,6 +51,9 @@ has_many :external_referees, :through => :external_referee_submissions
   end
 
   def self.send_to_external_referee_text(submission, submission_blob_url, user)
+    if user.blank?
+      user = User.find_by_email("anonymous_user@mail.com")
+    end
     #byebug
 "Dear
 
@@ -161,6 +164,7 @@ relevant box:
   def add_to_history(user, message)
     #history = self.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")} - #{user.name}</strong>: <br>" + message + "</p>"
     #self.update(history: history)
+    #byebug
     history = History.create(content: message, user_id: user.id, submission_id: self.id)
   end
 

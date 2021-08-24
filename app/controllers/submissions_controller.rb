@@ -35,10 +35,17 @@ class SubmissionsController < ApplicationController
     @submission = Submission.new(submission_params)
     #@submission.history = @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} created Submission</p>"
     #byebug
+
+    if current_user.blank?
+      user = User.find_by_email("anonymous_user@mail.com")
+    else
+      user = current_user
+    end
+
     respond_to do |format|
       if @submission.save
         format.html {
-          @submission.add_to_history(current_user, "Created Submission".downcase)
+          @submission.add_to_history(user, "Created Submission".downcase)
           params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
             BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
           end
