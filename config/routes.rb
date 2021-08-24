@@ -24,7 +24,9 @@ Rails.application.routes.draw do
   get 'articles/:id/markdown', to: 'articles#markdown', as: "article_markdown"
 
   devise_for :users
-  root 'static_pages#welcome'
+
+  root "submissions#pool"
+  #root 'static_pages#welcome'
 
   resources :pages
 
