@@ -40,12 +40,15 @@ class SubmissionsController < ApplicationController
       user = User.find_by_email("anonymous_user@mail.com")
     else
       user = current_user
+      @submission.submitted_by_user_id = user.id
     end
 
     respond_to do |format|
       if @submission.save
         format.html {
-          @submission.add_to_history(user, "Created Submission".downcase)
+          if user == current_user
+            @submission.add_to_history(current_user, "Created Submission".downcase)
+          end
           params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
             BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
           end
@@ -84,7 +87,7 @@ class SubmissionsController < ApplicationController
   def destroy
     @submission.destroy
     respond_to do |format|
-      format.html { redirect_to submissions_url, notice: 'Submission was successfully destroyed.'.downcase }
+      format.html { redirect_to submissions_url, notice: 'Submission was successfully deleted.'.downcase }
       format.json { head :no_content }
     end
   end
@@ -294,6 +297,6 @@ Dear #{suggested_to_user.name}
 
     # Only allow a list of trusted parameters through.
     def submission_params
-      params.require(:submission).permit(:title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date)
+      params.require(:submission).permit(:title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id)
     end
 end

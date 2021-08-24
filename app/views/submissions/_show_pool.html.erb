@@ -14,7 +14,19 @@
   <div class="col-4">
     <h3>#<%= submission.id %></h3>
     <hr />
-    <h3>history</h3>
+    <h4>history</h4>
+    <% if submission.submitted_by_user_id.blank? %>
+    <div class="small">
+        <div class="card card-body">
+          <p>
+            Author - <%= l(submission.created_at, format: :usa) %> <br>
+            submitted: "<%= submission.title %>"
+          </p>
+        </div>
+    </div>
+    <hr>
+    <% end %>
+
     <%#= raw submission.history %>
     <% submission.histories.order(:created_at).reverse_order.each do |history| %>
       <%= render 'histories/show', history: history %>

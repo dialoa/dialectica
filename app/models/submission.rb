@@ -25,6 +25,10 @@ has_many :external_referees, :through => :external_referee_submissions
   #scope :visible_to_user, -> { where(dead: "false") }
   scope :not_blacklisted, ->(user) { where.not(id: BlockedUser.where(user_id: user.id).pluck(:submission_id)) }
 
+  def name
+    "#{self.firstname} #{self.lastname}"
+  end
+
   def self.areas
     ["metaphysics", "epistemology", "philosophy of science", "ethics"]
   end
@@ -177,5 +181,7 @@ relevant box:
     old_submissions = Submission.where("created_at < ?", Date.today - 13.weeks)
     old_submissions.update_all(dead: "true")
   end
+
+
 
 end

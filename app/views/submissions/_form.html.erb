@@ -18,6 +18,9 @@
         </div>
     </div>
     <p>
+      <%= f.input :lastname, label: "email", placeholder: "kevin.mulligan@email.com" %>
+    </p>
+    <p>
       country*
       <br />
           <%= f.country_select :country, priority_countries: ["CH", "FR", "GB", "DE", "US"], selected: "CH" %>
@@ -40,20 +43,20 @@
 
     <%#= f.input :blocked_users, as: :select, collection: User.all, label: "blacklist users", required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users"}, multiple: true} %>
 
-  <% if user_signed_in? %>
-  <br>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#blacklist_users_option" aria-expanded="false" aria-controls="blacklist_users_option">
-    blacklist users?
-  </button>
+  <div class="<%= "d-none" unless user_signed_in? %>"
+    <br>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#blacklist_users_option" aria-expanded="false" aria-controls="blacklist_users_option">
+      blacklist users?
+    </button>
 
-  <div class="collapse" id="blacklist_users_option">
-    <div class="card card-body">
-      <%= f.input :blocked_users, as: :select, collection: User.all, label: false, required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users that should be blacklisted"}, multiple: true} %>
+    <div class="collapse" id="blacklist_users_option">
+      <div class="card card-body">
+        <%= f.input :blocked_users, as: :select, collection: User.all, label: false, required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users that should be blacklisted"}, multiple: true} %>
+      </div>
     </div>
+    <br>
+    <br>
   </div>
-  <br>
-  <br>
-  <% end %>
 
 
 
