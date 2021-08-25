@@ -199,9 +199,29 @@ class BibtexController < ApplicationController
 
     #@result_items = @result["message"]["items"]
 
-    first_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&mailto=sandro.raess@philosophie.ch')
-    second_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&offset=1000&mailto=sandro.raess@philosophie.ch')
-    @result_items = first_json + second_json
+    #first_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&mailto=sandro.raess@philosophie.ch')
+    #second_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&offset=1000&mailto=sandro.raess@philosophie.ch')
+    #third_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:1746-8361&rows=1000&mailto=sandro.raess@philosophie.ch')
+
+    #first_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:0012-2017&rows=1000&mailto=sandro.raess@philosophie.ch')
+    #second_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:0012-2017&rows=1000&offset=1000&mailto=sandro.raess@philosophie.ch')
+    #third_json = get_json_from_crossref('https://api.crossref.org/works?filter=issn:0012-2017&rows=1000&offset=2000&mailto=sandro.raess@philosophie.ch')
+
+    rows = "&rows=1000"
+    mailto = "&mailto=sandro.raess@philosophie.ch"
+    source = "https://api.crossref.org/works?filter=issn:0031-8116"
+    offset = "&offset="
+    resp = Net::HTTP.get_response(URI.parse(source + rows + mailto))
+    data = resp.body
+    result = JSON.parse(data)
+    result_items = result["message"]["items"]
+
+    total_results = result["message"]["total-results"]
+    (total_results / 1000).times do |index|
+      result_items = result_items + get_json_from_crossref(source + rows + offset + "#{(index + 1)*1000}" + mailto)
+    end
+
+    @result_items = result_items
 
     attributes = %w{author year title doi}
     csv = CSV.generate(headers: true) do |csv|
