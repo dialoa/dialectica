@@ -286,18 +286,16 @@
   }
 
   function swiggel() {
-    console.log("swiggel");
-    //console.log(d3.select("#your_article_is_here_sign"));
-    var x = d3.select("#your_article_is_here_sign").attr("x");
-    var y = d3.select("#your_article_is_here_sign").attr("y");
     d3.select("#your_article_is_here_sign")
     .transition()
-    .duration(1500)
+    .ease(d3.easeLinear)
+    .duration(1000)
     //.attr("x", function (d) { return this.x + 100})
     .attr("transform", `translate(${5},${0})`)
     //.attr("transform", `translate(${this.x}, 0)`)
     .transition()
-    .duration(1500)      // apply it over 2000 milliseconds
+    .ease(d3.easeLinear)
+    .duration(1000)
     .attr("transform", `translate(${-5},${0})`)
 
   //  .attr('x', 920)     // move the circle to 920 on the x axis
