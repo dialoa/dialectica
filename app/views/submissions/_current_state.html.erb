@@ -7,231 +7,231 @@
 
 <script>
 
-  var treeData = {
-    name: "article submitted",
-    children: [
-      {
-      name: "article assessed by editor",
-      children: []
-    },
-    {
-    name: "rejected",
-      children: []
-    }
-    ]
+  var cachedWidth = $(window).width();
+
+  drawCurrentState("#diagram");
+
+  $( window ).resize(function() {
+
+  var newWidth = $(window).width();
+  if(newWidth !== cachedWidth){
+    console.log("resize!");
+    $("#diagram").empty();
+    drawCurrentState("#diagram");
+    cachedWidth = newWidth;
   }
 
-  width = $( "#diagram" ).width();//500
-  height = 500;
+});
+
+  //functions
+
+  function drawCurrentState(container){
+    margin = ({top: 10, right: 10, bottom: 10, left: 10});
+    //var width = $( "#diagram" ).width();//500
+    var width = 700;
+    //var standard_box_size = ({width: 300, height: 30});
+    var standard_box_size = ({width: 200, height: 25});
 
 
-	drawTree('#diagram', treeData)
+    //var height = standard_box_size.height * 8;
+    var height = 500;
+    var standart_font = "13px 'Helvetica Neue'";
+    var standard_class = "bg-first-color rounded p-1 text-white text-center";
+    var rejected_class = "bg-danger rounded p-1 text-white text-center";
+    var information_class = "bg-info rounded p-1 text-white text-center";
+    var flangeSize = 10;
+    var padding1 = standard_box_size.height + 5;
+    var padding2 = 10;
 
-	function drawTree(container, data){
+    var main_nodes = [
+      {x: 100, y: 10},
+    ]
 
-		const maximum_depth_level = 7;
+    var times = 6;
+    for(var i=0; i < times; i++){
+      new_coordinates = [];
+      new_x = main_nodes[0].x
+      new_y = main_nodes[0].y + ((standard_box_size.height + 50) * (i + 1))
 
-		dy = 50;
-		dx = 200;
-		//console.log("maximum_depth_level: " + maximum_depth_level);
-		//height = maximum_depth_level * dx;  //$(window).height();
-
-		margin = ({top: 50, right: 50, bottom: 50, left: width/2});
-
-		tree = d3.tree().nodeSize([dx, dy]);
-		diagonal = d3.linkHorizontal().x(d => d.x).y(d => d.y);
-
-    function generateArrow(x1, y1, x2, y2, flangeSize, padding1, padding2) {
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      const length = Math.sqrt(dx * dx + dy * dy);
-
-      let multiplier1 = padding1 / length;
-      const dx1 = dx * multiplier1;
-      const dy1 = dy * multiplier1;
-
-      let multiplier2 = padding2 / length;
-      const dx2 = dx * multiplier2;
-      const dy2 = dy * multiplier2;
-
-      var px = y1 - y2;
-      var py = x2 - x1;
-      let plength = Math.sqrt(px * px + py * py);
-      let pmultiplier = flangeSize / plength;
-
-      const px1 = px * pmultiplier;
-      const py1 = py * pmultiplier;
-
-      const sx = dx * pmultiplier;
-      const sy = dy * pmultiplier;
-
-      const a1 = x1 + dx1;
-      const b1 = y1 + dy1;
-      const a2 = x2 - dx2;
-      const b2 = y2 - dy2;
-
-      return `
-        M${a1}, ${b1}
-        L${a2}, ${b2}
-        M${a2 + px1 - sx}, ${b2 + py1 - sy}
-        L${a2}, ${b2}
-        L${a2 - px1 - sx}, ${b2 - py1 -sy}
-      `;
+      main_nodes.push(
+        {
+          x: new_x,
+          y: new_y
+        }
+      );
     }
 
-    var arrowTo = function(d) {
-      var y0 = d.source.y;
-      var x0 = d.source.x;
-      var x1 = d.target.x;
-      var y1 = d.target.y;
 
-      var arrow = generateArrow(x0, y0, x1, y1, 15, 25, 25);
+    const svg = d3.select(container).append('svg')
+      .attr("viewBox", [-margin.left, -margin.top, width, height])
+      .style("user-select", "none");
 
-      return arrow.toString();
-      //return path.toString();
-    }
+    svg.append("foreignObject")
+      .attr("transform", d => `translate(${main_nodes[0].x - (standard_box_size.width / 2)},${main_nodes[0].y})`)
+      .attr("width", standard_box_size.width)
+      .attr("height", standard_box_size.height)
+      .append("xhtml:div")
+      .attr("class", standard_class)
+      .style("font", standart_font)
+      .html(`<b>author submits article</b>`);
 
-		var linker = function(d) {
-		  var y0 = d.source.y;
-		  var x0 = d.source.x;
-		  var x1 = d.target.x;
-		  var y1 = d.target.y;
-		  var k = 20;
-
-		  var path = d3.path()
-		  path.moveTo(x0,y0)
-			path.lineTo(x1,y0 + (y1-y0)/2);
-			//path.lineTo(x1-k,y0-k)
-			//path.lineTo(x0+40,y0+0)
-			//path.moveTo(0,0);
-		 	//path.bezierCurveTo(y1-k,x0,y0,x1,y1-k,x1);
-		  path.lineTo(x1,y1);
-
-		  return path.toString();
-		}
-
-		//bezier = d3.bezierCurveTo().x(d => d.x).y(d => d.y);
-		//bezier = d3.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, x, y)
-
-		const root = d3.hierarchy(data);
-
-	  root.x0 = dy / 2;
-	  root.y0 = 0;
-	  root.descendants().forEach((d, i) => {
-	    d.id = i;
-	    d._children = d.children;
-			//console.log(d.depth);
-	    if (d.depth > maximum_depth_level) d.children = null;
-	  });
-
-
-	const svg = d3.select(container).append('svg')
-	  .attr("viewBox", [-margin.left, -margin.top, width, height])
-	  .style("font", "10px sans-serif")
-	  .style("user-select", "none");
-
-  const gLink = svg.append("g")
+    svg.append("path")
+      .attr("d", generateArrow(
+      main_nodes[0].x,
+      main_nodes[0].y,
+      main_nodes[1].x,
+      main_nodes[1].y,
+      flangeSize,
+      padding1,
+      padding2)
+      )
       .attr("fill", "none")
-      .attr("stroke", "blue")
+      .attr("stroke", "#164da2")
       .attr("stroke-opacity", 1.0)
       .attr("stroke-width", 2.5);
 
-  const gNode = svg.append("g")
-      .attr("cursor", "pointer")
-      .attr("pointer-events", "all");
 
-  function update(source) {
-    const duration = d3.event && d3.event.altKey ? 2500 : 250;
-    const nodes = root.descendants().reverse();
-    const links = root.links();
+    svg.append("foreignObject")
+      .attr("transform", d => `translate(${main_nodes[1].x - (standard_box_size.width / 2)},${main_nodes[1].y})`)
+      .attr("width", standard_box_size.width)
+      .attr("height", standard_box_size.height)
+      .append("xhtml:div")
+      .style("font", standart_font)
+      .attr("class", standard_class)
+      .html(`<b>editor assesses article</b>`);
 
-    // Compute the new tree layout.
-    tree(root);
+      svg.append("path")
+        .attr("d", generateArrow(
+        main_nodes[1].x,
+        main_nodes[1].y,
+        main_nodes[2].x,
+        main_nodes[2].y,
+        flangeSize,
+        padding1,
+        padding2)
+        )
+        .attr("fill", "none")
+        .attr("stroke", "#164da2")
+        .attr("stroke-opacity", 1.0)
+        .attr("stroke-width", 2.5);
 
-    let left = root;
-    let right = root;
-    root.eachBefore(node => {
-      if (node.x < left.x) left = node;
-      if (node.x > right.x) right = node;
-    });
+        //rejected #1
+        svg.append("path")
+          .attr("d", generateArrow(
+            main_nodes[1].x,
+            main_nodes[1].y + ((standard_box_size.height) / 2),
+            main_nodes[1].x + + (standard_box_size.width),
+            main_nodes[1].y + ((standard_box_size.height) / 2),
+           flangeSize,
+           ((standard_box_size.width) / 2) + 10,
+           padding2)
+           )
+          .attr("fill", "none")
+          .attr("stroke", "red")
+          .attr("stroke-opacity", 1.0)
+          .attr("stroke-width", 2.5);
 
-    //const height = 500;
+          svg.append("foreignObject")
+            .attr("transform", d => `translate(${main_nodes[1].x + (standard_box_size.width)}, ${main_nodes[1].y})`)
+            .attr("width", standard_box_size.width)
+            .attr("height", standard_box_size.height)
+            .append("xhtml:div")
+            .style("font", standart_font)
+            .attr("class", rejected_class)
+            .html(`<b>rejected</b>`);
 
-		//console.log("Viewbox: " + width + " - " + height);
-    const transition = svg.transition()
-        .duration(duration);
-      //  .attr("viewBox", [-margin.left, left.x - margin.top, width, height])
-      //  .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle"));
 
-    // Update the nodes…
-    const node = gNode.selectAll("g")
-      .data(nodes, d => d.id);
 
-    // Enter any new nodes at the parent's previous position.
-    const nodeEnter = node.enter().append("g")
-        .attr("transform", d => `translate(${source.x0},${source.y0})`)
-        .attr("fill-opacity", 0)
-        .attr("stroke-opacity", 0)
-        .on("click", (event, d) => {
-          d.children = d.children ? null : d._children;
-          update(d);
-        });
+      svg.append("foreignObject")
+        .attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2)},${main_nodes[2].y})`)
+        .attr("width", standard_box_size.width)
+        .attr("height", standard_box_size.height)
+        .append("xhtml:div")
+        .attr("class", information_class)
+        .style("font", standart_font)
+        .html(`<b>article sent to reviews</b>`);
 
-    nodeEnter.append("circle")
-        .attr("r", 5.5)
-        .attr("fill", d => d._children ? "blue" : "blue")
-        .attr("stroke-width", 10);
+        svg.append("path")
+          .attr("d", generateArrow(
+          main_nodes[2].x,
+          main_nodes[2].y,
+          main_nodes[3].x,
+          main_nodes[3].y,
+          flangeSize,
+          padding1,
+          padding2)
+          )
+          .attr("fill", "none")
+          .attr("stroke", "#164da2")
+          .attr("stroke-opacity", 1.0)
+          .attr("stroke-width", 2.5);
 
-    nodeEnter.append("text")
-        .attr("dy", d => d._children ? "-1em" : "1.5em")
-        .attr("x", d => d._children ? -0 : 0)
-        .attr("text-anchor", d => d._children ? "end" : "start")
-        .text(d => d.data.name)
-				.style("text-anchor", "middle")
-				.style("font-size", "2em")
-      .clone(true).lower()
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-width", 3);
 
-    // Transition nodes to their new position.
-    const nodeUpdate = node.merge(nodeEnter).transition(transition)
-        .attr("transform", d => `translate(${d.x},${d.y})`)
-        .attr("fill-opacity", 1)
-        .attr("stroke-opacity", 1);
+        svg.append("foreignObject")
+          .attr("transform", d => `translate(${main_nodes[3].x - (standard_box_size.width / 2)},${main_nodes[3].y})`)
+          .attr("width", standard_box_size.width)
+          .attr("height", standard_box_size.height)
+          .append("xhtml:div")
+          .attr("class", standard_class)
+          .style("font", standart_font)
+          .html(`<b>editor assesses reviews</b>`);
 
-    // Transition exiting nodes to the parent's new position.
-    const nodeExit = node.exit().transition(transition).remove()
-        .attr("transform", d => `translate(${source.x},${source.y})`)
-        .attr("fill-opacity", 0)
-        .attr("stroke-opacity", 0);
 
-    // Update the links…
-    const link = gLink.selectAll("path")
-      .data(links, d => d.target.id);
+    svg.append
 
-    // Enter any new links at the parent's previous position.
-    const linkEnter = link.enter().append("path")
-				.attr("d", arrowTo);
-
-    // Transition links to their new position.
-    link.merge(linkEnter).transition(transition)
-        				.attr("d", arrowTo);
-
-    // Transition exiting nodes to the parent's new position.
-    link.exit().transition(transition).remove()
-				.attr("d", arrowTo);
-
-    // Stash the old positions for transition.
-    root.eachBefore(d => {
-      d.x0 = d.x;
-      d.y0 = d.y;
-    });
+      return svg.node();
   }
 
-  update(root);
+  function generateArrow(x1, y1, x2, y2, flangeSize, padding1, padding2) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const length = Math.sqrt(dx * dx + dy * dy);
+    //Hypotenuse
 
-  return svg.node();
+    let multiplier1 = padding1 / length;
+    const dx1 = dx * multiplier1;
+    const dy1 = dy * multiplier1;
 
-	}
+
+    let multiplier2 = padding2 / length;
+    const dx2 = dx * multiplier2;
+    const dy2 = dy * multiplier2;
+
+    var px = y1 - y2;
+    var py = x2 - x1;
+    let plength = Math.sqrt(px * px + py * py);
+    let pmultiplier = flangeSize / plength;
+
+    const px1 = px * pmultiplier;
+    const py1 = py * pmultiplier;
+
+    const sx = dx * pmultiplier;
+    const sy = dy * pmultiplier;
+
+    const a1 = x1 + dx1;
+    const b1 = y1 + dy1;
+    const a2 = x2 - dx2;
+    const b2 = y2 - dy2;
+
+    return `
+      M${a1}, ${b1}
+      L${a2}, ${b2}
+      M${a2 + px1 - sx}, ${b2 + py1 - sy}
+      L${a2}, ${b2}
+      L${a2 - px1 - sx}, ${b2 - py1 -sy}
+    `;
+  }
+
+  var arrowTo = function(d) {
+    var y0 = d.source.y;
+    var x0 = d.source.x;
+    var x1 = d.target.x;
+    var y1 = d.target.y;
+
+    var arrow = generateArrow(x0, y0, x1, y1, 15, 25, 25);
+
+    return arrow.toString();
+    //return path.toString();
+  }
 
 </script>
