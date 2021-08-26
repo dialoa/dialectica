@@ -85,26 +85,10 @@
       var x1 = d.target.x;
       var y1 = d.target.y;
 
-      var directional_vector = [x0-x1, y0-y1];
-      console.log("directional vector: " + directional_vector);
+      var arrow = generateArrow(x0, y0, x1, y1, 15, 25, 25);
 
-      var path = d3.path()
-      path.moveTo(x0,y0)
-      //path.lineTo(x1,y0 + (y1-y0)/2);
-      //path.lineTo(x1,y1);
-      //path.lineTo(x1,y0 + (y1-y0) - 30);
-
-      //path.moveTo(x1,y1);
-      //path.lineTo(x0 + (x1-x0) - 30,y1);
-
-      arrow = generateArrow(x0, y0, x1, y1, 20, 20, 20);
-
-      path.lineTo(arrow[1]);
-
-      console.log(arrow);
-
-
-      return path.toString();
+      return arrow.toString();
+      //return path.toString();
     }
 
 		var linker = function(d) {
