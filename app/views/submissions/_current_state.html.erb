@@ -41,20 +41,67 @@
 		tree = d3.tree().nodeSize([dx, dy]);
 		diagonal = d3.linkHorizontal().x(d => d.x).y(d => d.y);
 
+    function generateArrow(x1, y1, x2, y2, flangeSize, padding1, padding2) {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const length = Math.sqrt(dx * dx + dy * dy);
+
+      let multiplier1 = padding1 / length;
+      const dx1 = dx * multiplier1;
+      const dy1 = dy * multiplier1;
+
+      let multiplier2 = padding2 / length;
+      const dx2 = dx * multiplier2;
+      const dy2 = dy * multiplier2;
+
+      var px = y1 - y2;
+      var py = x2 - x1;
+      let plength = Math.sqrt(px * px + py * py);
+      let pmultiplier = flangeSize / plength;
+
+      const px1 = px * pmultiplier;
+      const py1 = py * pmultiplier;
+
+      const sx = dx * pmultiplier;
+      const sy = dy * pmultiplier;
+
+      const a1 = x1 + dx1;
+      const b1 = y1 + dy1;
+      const a2 = x2 - dx2;
+      const b2 = y2 - dy2;
+
+      return `
+        M${a1}, ${b1}
+        L${a2}, ${b2}
+        M${a2 + px1 - sx}, ${b2 + py1 - sy}
+        L${a2}, ${b2}
+        L${a2 - px1 - sx}, ${b2 - py1 -sy}
+      `;
+    }
+
     var arrowTo = function(d) {
       var y0 = d.source.y;
       var x0 = d.source.x;
       var x1 = d.target.x;
       var y1 = d.target.y;
 
+      var directional_vector = [x0-x1, y0-y1];
+      console.log("directional vector: " + directional_vector);
+
       var path = d3.path()
       path.moveTo(x0,y0)
       //path.lineTo(x1,y0 + (y1-y0)/2);
-      path.lineTo(x1,y1);
-      path.lineTo(x1,y0 + (y1-y0) - 30);
+      //path.lineTo(x1,y1);
+      //path.lineTo(x1,y0 + (y1-y0) - 30);
 
-      path.moveTo(x1,y1);
-      path.lineTo(x0 + (x1-x0) - 30,y1);
+      //path.moveTo(x1,y1);
+      //path.lineTo(x0 + (x1-x0) - 30,y1);
+
+      arrow = generateArrow(x0, y0, x1, y1, 20, 20, 20);
+
+      path.lineTo(arrow[1]);
+
+      console.log(arrow);
 
 
       return path.toString();
