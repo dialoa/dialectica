@@ -87,7 +87,7 @@
       padding2)
       )
       .attr("fill", "none")
-      .attr("stroke", "#164da2")
+      .attr("stroke", "green")
       .attr("stroke-opacity", 1.0)
       .attr("stroke-width", 2.5);
 
@@ -267,9 +267,39 @@
                 .attr("stroke-width", 2.5);
 
 
+                svg.append("foreignObject")
+                  //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
+                  .attr("x", main_nodes[2].x - (standard_box_size.width / 2) + 125)
+                  .attr("y", main_nodes[2].y + 25)
+                  .attr("width", standard_box_size.width)
+                  .attr("height", standard_box_size.height)
+                  .attr("id", "your_article_is_here_sign")
+                  .append("xhtml:div")
+                  //.attr("id", "your_article_is_here_sign")
+                  .style("font", standart_font)
+                  .html(`<b>your article is here</b>`);
+
+                  swiggel();
+
 
       return svg.node();
   }
+
+  function swiggel() {
+    console.log(d3.select("#your_article_is_here_sign").attr("x"));
+    d3.select("#your_article_is_here_sign")
+    .transition()
+    .duration(2000)
+    //.attr("x", function (d) { return this.x + 100})
+    //.attr("transform", d => `translate(${d.x},${d.y})`)
+    //.attr("transform", `translate(${this.x}, 0)`)
+    //.duration(2000)      // apply it over 2000 milliseconds
+  //  .attr('x', 920)     // move the circle to 920 on the x axis
+  //  .transition()        // apply a transition
+  //  .duration(2000)      // apply it over 2000 milliseconds
+  //  .attr('x', 40)      // return the circle to 40 on the x axis
+    .on("end", swiggel);  // when the transition finishes start again
+  };
 
   function generateArrow(x1, y1, x2, y2, flangeSize, padding1, padding2) {
     const dx = x2 - x1;
