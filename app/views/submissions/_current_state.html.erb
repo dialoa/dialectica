@@ -28,7 +28,7 @@
   function drawCurrentState(container){
     margin = ({top: 10, right: 10, bottom: 10, left: 10});
     //var width = $( "#diagram" ).width();//500
-    var width = 700;
+    var width = 600;
     //var standard_box_size = ({width: 300, height: 30});
     var standard_box_size = ({width: 200, height: 25});
 
@@ -51,7 +51,7 @@
     for(var i=0; i < times; i++){
       new_coordinates = [];
       new_x = main_nodes[0].x
-      new_y = main_nodes[0].y + ((standard_box_size.height + 50) * (i + 1))
+      new_y = main_nodes[0].y + ((standard_box_size.height + 40) * (i + 1))
 
       main_nodes.push(
         {
@@ -120,7 +120,7 @@
           .attr("d", generateArrow(
             main_nodes[1].x,
             main_nodes[1].y + ((standard_box_size.height) / 2),
-            main_nodes[1].x + + (standard_box_size.width),
+            main_nodes[1].x + + (standard_box_size.width / 1.3),
             main_nodes[1].y + ((standard_box_size.height) / 2),
            flangeSize,
            ((standard_box_size.width) / 2) + 10,
@@ -132,7 +132,7 @@
           .attr("stroke-width", 2.5);
 
           svg.append("foreignObject")
-            .attr("transform", d => `translate(${main_nodes[1].x + (standard_box_size.width)}, ${main_nodes[1].y})`)
+            .attr("transform", d => `translate(${main_nodes[1].x + (standard_box_size.width / 1.3)}, ${main_nodes[1].y})`)
             .attr("width", standard_box_size.width)
             .attr("height", standard_box_size.height)
             .append("xhtml:div")
@@ -149,7 +149,7 @@
         .append("xhtml:div")
         .attr("class", information_class)
         .style("font", standart_font)
-        .html(`<b>article sent to reviews</b>`);
+        .html(`<b>article sent to reviewers</b>`);
 
         svg.append("path")
           .attr("d", generateArrow(
@@ -176,8 +176,71 @@
           .style("font", standart_font)
           .html(`<b>editor assesses reviews</b>`);
 
+          svg.append("path")
+            .attr("d", generateArrow(
+            main_nodes[3].x,
+            main_nodes[3].y,
+            main_nodes[4].x,
+            main_nodes[4].y,
+            flangeSize,
+            padding1,
+            padding2)
+            )
+            .attr("fill", "none")
+            .attr("stroke", "#164da2")
+            .attr("stroke-opacity", 1.0)
+            .attr("stroke-width", 2.5);
 
-    svg.append
+          svg.append("foreignObject")
+            .attr("transform", d => `translate(${main_nodes[4].x - (standard_box_size.width / 2)},${main_nodes[4].y})`)
+            .attr("width", standard_box_size.width)
+            .attr("height", standard_box_size.height)
+            .append("xhtml:div")
+            .attr("class", standard_class)
+            .style("font", standart_font)
+            .html(`<b>accepted</b>`);
+
+            svg.append("path")
+              .attr("d", generateArrow(
+              main_nodes[4].x,
+              main_nodes[4].y,
+              main_nodes[5].x,
+              main_nodes[5].y,
+              flangeSize,
+              padding1,
+              padding2)
+              )
+              .attr("fill", "none")
+              .attr("stroke", "#164da2")
+              .attr("stroke-opacity", 1.0)
+              .attr("stroke-width", 2.5);
+
+
+          svg.append("foreignObject")
+            .attr("transform", d => `translate(${main_nodes[5].x - (standard_box_size.width / 2)},${main_nodes[5].y})`)
+            .attr("width", standard_box_size.width)
+            .attr("height", standard_box_size.height)
+            .append("xhtml:div")
+            .attr("class", standard_class)
+            .style("font", standart_font)
+            .html(`<b>in production</b>`);
+
+            svg.append("path")
+              .attr("d", generateArrow(
+              main_nodes[2].x,
+              main_nodes[2].y,
+              main_nodes[3].x,
+              main_nodes[3].y,
+              flangeSize,
+              padding1,
+              padding2)
+              )
+              .attr("fill", "none")
+              .attr("stroke", "#164da2")
+              .attr("stroke-opacity", 1.0)
+              .attr("stroke-width", 2.5);
+
+
 
       return svg.node();
   }
