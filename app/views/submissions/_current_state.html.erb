@@ -269,15 +269,15 @@
 
                 svg.append("foreignObject")
                   //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
-                  .attr("x", main_nodes[2].x - (standard_box_size.width / 2) + 125)
-                  .attr("y", main_nodes[2].y + 25)
+                  .attr("x", main_nodes[2].x + (standard_box_size.width / 1.6))
+                  .attr("y", main_nodes[2].y)
                   .attr("width", standard_box_size.width)
                   .attr("height", standard_box_size.height)
                   .attr("id", "your_article_is_here_sign")
                   .append("xhtml:div")
                   //.attr("id", "your_article_is_here_sign")
                   .style("font", standart_font)
-                  .html(`<b>your article is here</b>`);
+                  .html(`<i class="fas fa-arrow-left"></i> <b>your article is here</b>`);
 
                   swiggel();
 
@@ -286,14 +286,20 @@
   }
 
   function swiggel() {
-    console.log(d3.select("#your_article_is_here_sign").attr("x"));
+    console.log("swiggel");
+    //console.log(d3.select("#your_article_is_here_sign"));
+    var x = d3.select("#your_article_is_here_sign").attr("x");
+    var y = d3.select("#your_article_is_here_sign").attr("y");
     d3.select("#your_article_is_here_sign")
     .transition()
-    .duration(2000)
+    .duration(1500)
     //.attr("x", function (d) { return this.x + 100})
-    //.attr("transform", d => `translate(${d.x},${d.y})`)
+    .attr("transform", `translate(${5},${0})`)
     //.attr("transform", `translate(${this.x}, 0)`)
-    //.duration(2000)      // apply it over 2000 milliseconds
+    .transition()
+    .duration(1500)      // apply it over 2000 milliseconds
+    .attr("transform", `translate(${-5},${0})`)
+
   //  .attr('x', 920)     // move the circle to 920 on the x axis
   //  .transition()        // apply a transition
   //  .duration(2000)      // apply it over 2000 milliseconds
