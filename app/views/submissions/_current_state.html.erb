@@ -46,35 +46,8 @@
   function drawTree(container){
     data = {
       "name": "Eve",
+      "content": "Author submits Article",
       "children": [
-        {
-          "name": "Cain"
-        },
-        {
-          "name": "Seth",
-          "children": [
-            {
-              "name": "Enos"
-            },
-            {
-              "name": "Noam"
-            }
-          ]
-        },
-        {
-          "name": "Abel"
-        },
-        {
-          "name": "Awan",
-          "children": [
-            {
-              "name": "Enoch"
-            }
-          ]
-        },
-        {
-          "name": "Azura"
-        }
       ]
     };
 
@@ -142,7 +115,7 @@
           .append("xhtml:div")
           .attr("class", standard_class)
           .style("font", standart_font)
-          .html(d => d.data.name);
+          .html(d => `<b>${d.data.content}</b>`);
 
     return svg.node();
   }

@@ -14,6 +14,28 @@ class Article < ApplicationRecord
     ["submitted", "published"]
   end
 
+  def self.phases
+    #["submitted", "published"]
+    [
+      "author submits article",
+      "editor assesses article",
+      "article sent to reviewers",
+      "editor assesses reviews",
+      "article is accepted",
+      "article is in production",
+      "article is published"
+    ]
+  end
+
    scope :submitted, -> { where(status: "submitted") }
+
+   def peer_review_process
+
+   {
+     "content": "Author submits Article",
+     "children": [
+     ]
+   }
+   end
 
 end
