@@ -9,7 +9,25 @@
 
   var cachedWidth = $(window).width();
 
-  drawCurrentState("#diagram");
+  margin = ({top: 10, right: 10, bottom: 10, left: 10});
+  //var width = $( "#diagram" ).width();//500
+  var width = $( "#diagram" ).width();
+  //var standard_box_size = ({width: 300, height: 30});
+  var standard_box_size = ({width: 200, height: 25});
+
+  //var height = standard_box_size.height * 8;
+  var height = 2000;
+  var standart_font = "13px 'Helvetica Neue'";
+  var standard_class = "bg-first-color rounded p-1 text-white text-center";
+  var success_class = "bg-success rounded p-1 text-white text-center";
+  var rejected_class = "bg-danger rounded p-1 text-white text-center";
+  var information_class = "bg-info rounded p-1 text-white text-center";
+  var flangeSize = 10;
+  var padding1 = standard_box_size.height + 5;
+  var padding2 = 10;
+
+  //drawCurrentState("#diagram");
+  drawTree("#diagram");
 
   $( window ).resize(function() {
 
@@ -25,24 +43,111 @@
 
   //functions
 
+  function drawTree(container){
+    data = {
+      "name": "Eve",
+      "children": [
+        {
+          "name": "Cain"
+        },
+        {
+          "name": "Seth",
+          "children": [
+            {
+              "name": "Enos"
+            },
+            {
+              "name": "Noam"
+            }
+          ]
+        },
+        {
+          "name": "Abel"
+        },
+        {
+          "name": "Awan",
+          "children": [
+            {
+              "name": "Enoch"
+            }
+          ]
+        },
+        {
+          "name": "Azura"
+        }
+      ]
+    };
+
+    //const root = tree(data);
+
+    const hierarchy = d3.hierarchy(data);
+    hierarchy.dx = standard_box_size.width; //20;
+    hierarchy.dy = standard_box_size.height * 3; //width / (root.height + 1);
+    const root = d3.tree().nodeSize([hierarchy.dx, hierarchy.dy])(hierarchy);
+
+    let x0 = Infinity;
+    let x1 = -x0;
+    root.each(d => {
+      if (d.x > x1) x1 = d.x;
+      if (d.x < x0) x0 = d.x;
+    });
+
+    const svg = d3.select(container).append('svg')
+      .attr("viewBox", [-margin.left, -margin.top, width, height])
+      .style("user-select", "none");
+
+    const g = svg.append("g")
+        .attr("font-family", "sans-serif")
+      //  .attr("font-size", 16)
+        .attr("transform", `translate(${width/2},${margin.top})`);
+
+    const link = g.append("g")
+      .attr("fill", "none")
+      .attr("stroke", "blue")
+      .attr("stroke-opacity", 0.8)
+      .attr("stroke-width", 2)
+    .selectAll("path")
+      .data(root.links())
+      .join("path")
+        .attr("d", d => arrowTo(d));
+  //      .attr("d", d3.linkHorizontal()
+  //          .x(d => d.x)
+  //          .y(d => d.y));
+
+    const node = g.append("g")
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-width", 3)
+      .selectAll("g")
+      .data(root.descendants())
+      .join("g")
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+
+    //node.append("circle")
+    //    .attr("fill", d => d.children ? "#555" : "#999")
+    //    .attr("r", 2.5);
+
+//    node.append("text")
+//        .attr("dy", "0em")
+//        .attr("y", d => d.children ? -3 : 3)
+//        .attr("text-anchor", d => d.children ? "end" : "start")
+//        .text(d => d.data.name)
+//      .clone(true).lower()
+//        .attr("stroke", "white");
+
+        node.append("foreignObject")
+          .attr("x", -standard_box_size.width / 2)
+          //.attr("transform", d => `translate(${main_nodes[5].x - (standard_box_size.width / 2)},${main_nodes[5].y})`)
+          .attr("width", standard_box_size.width)
+          .attr("height", standard_box_size.height)
+          .append("xhtml:div")
+          .attr("class", standard_class)
+          .style("font", standart_font)
+          .html(d => d.data.name);
+
+    return svg.node();
+  }
+
   function drawCurrentState(container){
-    margin = ({top: 10, right: 10, bottom: 10, left: 10});
-    //var width = $( "#diagram" ).width();//500
-    var width = 600;
-    //var standard_box_size = ({width: 300, height: 30});
-    var standard_box_size = ({width: 200, height: 25});
-
-
-    //var height = standard_box_size.height * 8;
-    var height = 500;
-    var standart_font = "13px 'Helvetica Neue'";
-    var standard_class = "bg-first-color rounded p-1 text-white text-center";
-    var success_class = "bg-success rounded p-1 text-white text-center";
-    var rejected_class = "bg-danger rounded p-1 text-white text-center";
-    var information_class = "bg-info rounded p-1 text-white text-center";
-    var flangeSize = 10;
-    var padding1 = standard_box_size.height + 5;
-    var padding2 = 10;
 
     var main_nodes = [
       {x: 100, y: 10},
@@ -330,6 +435,13 @@
     .on("end", swiggel);  // when the transition finishes start again
   };
 
+  function tree() {
+      const root = d3.hierarchy(data);
+      root.dx = standard_box_size.width; //20;
+      root.dy = standard_box_size.height * 3; //width / (root.height + 1);
+      return d3.tree().nodeSize([root.dx, root.dy])(root);
+    };
+
   function generateArrow(x1, y1, x2, y2, flangeSize, padding1, padding2) {
     const dx = x2 - x1;
     const dy = y2 - y1;
@@ -370,7 +482,19 @@
     `;
   }
 
-  var arrowTo = function(d) {
+   function arrowTo(d) {
+    var y0 = d.source.y;
+    var x0 = d.source.x;
+    var x1 = d.target.x;
+    var y1 = d.target.y;
+
+    var arrow = generateArrow(x0, y0, x1, y1, 15, 25, 25);
+
+    return arrow.toString();
+    //return path.toString();
+  }
+
+  var arrowTox = function(d) {
     var y0 = d.source.y;
     var x0 = d.source.x;
     var x1 = d.target.x;
