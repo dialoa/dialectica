@@ -182,6 +182,80 @@ relevant box:
     old_submissions.update_all(dead: "true")
   end
 
+  def self.phases
+    #["submitted", "published"]
+    [
+      "author submits article",
+      "editor assesses article",
+      "article sent to reviewers",
+      "editor assesses reviews",
+      "article is accepted",
+      "article is in production",
+      "article is published",
+      "revisons required",
+      "author submits revised article",
+      "rejected"
+    ]
+  end
+
+  def self.stem_phases
+    #["submitted", "published"]
+    [
+      "author submits article",
+      "editor assesses article",
+      "article sent to reviewers",
+      "editor assesses reviews",
+      "article is accepted",
+      "article is in production",
+      "article is published",
+    ]
+  end
+
+
+   def peer_review_process
+
+     phases = Submission.stem_phases
+
+     current_phase = "article sent to reviewers"
+
+     tree = create_tree_from_phases(phases, 0, current_phase)
+
+     tree = tree[0]
+
+   end
+
+   def create_tree_from_phases(phases, step, current_phase)
+
+     css_class = "bg-success rounded p-1 text-white text-center"
+     your_article_is_here_sign = ""
+
+     if phases[step] == current_phase
+       css_class = "bg-info rounded p-1 text-white text-center"
+       your_article_is_here_sign = "your_article_is_here_sign"
+     elsif step > phases.index(current_phase)
+        css_class = "bg-secondary rounded p-1 text-white text-center"
+     end
+
+     if step == phases.length - 1
+       [
+         {
+           "content" => phases[step],
+           "class" => css_class,
+           "id" => your_article_is_here_sign,
+           "children" => []
+         }
+       ]
+     else
+       [
+         {
+           "content" => phases[step],
+           "class" => css_class,
+           "id" => your_article_is_here_sign,
+           "children" => create_tree_from_phases(phases, step + 1, current_phase)
+         }
+       ]
+     end
+   end
 
 
 end

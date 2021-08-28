@@ -5,7 +5,8 @@
   </div>
 </div>
 
-<script>
+<script type="text/javascript">
+
 
   var cachedWidth = $(window).width();
 
@@ -35,7 +36,7 @@
   if(newWidth !== cachedWidth){
     console.log("resize!");
     $("#diagram").empty();
-    drawCurrentState("#diagram");
+    drawTree("#diagram");
     cachedWidth = newWidth;
   }
 
@@ -44,12 +45,9 @@
   //functions
 
   function drawTree(container){
-    data = {
-      "name": "Eve",
-      "content": "Author submits Article",
-      "children": [
-      ]
-    };
+
+    data = <%= raw "#{submission.peer_review_process.to_json}" %>;
+
 
     //const root = tree(data);
 
@@ -112,10 +110,14 @@
           //.attr("transform", d => `translate(${main_nodes[5].x - (standard_box_size.width / 2)},${main_nodes[5].y})`)
           .attr("width", standard_box_size.width)
           .attr("height", standard_box_size.height)
+          .attr("id", d => `${d.data.id}`)
           .append("xhtml:div")
-          .attr("class", standard_class)
+          .attr("class", d => `${d.data.class}`)
+          //.attr("id", d => `${d.data.id}`)
           .style("font", standart_font)
           .html(d => `<b>${d.data.content}</b>`);
+
+          add_your_article_is_here_sign("#diagram");
 
     return svg.node();
   }
@@ -382,14 +384,34 @@
                   .style("font", standart_font)
                   .html(`<i class="fas fa-arrow-left"></i> <b>your article is here</b>`);
 
-                  swiggel();
-
 
       return svg.node();
   }
 
+  function add_your_article_is_here_sign(container) {
+
+    const svg = d3.select(container).select("svg");
+
+    current_phase = d3.select("#your_article_is_here_sign");
+    g = current_phase.select(function() { return this.parentNode; })
+
+
+    g.append("foreignObject")
+      //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
+      .attr("x", standard_box_size.width / 1.7)
+      .attr("width", standard_box_size.width)
+      .attr("height", standard_box_size.height)
+      .attr("id", "your_article_is_here_sign_swiggel")
+      .append("xhtml:div")
+      //.attr("id", "your_article_is_here_sign")
+      .style("font", standart_font)
+      .html(`<i class="fas fa-arrow-left"></i> <b>your article is here</b>`);
+
+      swiggel();
+  }
+
   function swiggel() {
-    d3.select("#your_article_is_here_sign")
+    d3.select("#your_article_is_here_sign_swiggel")
     .transition()
     .ease(d3.easeLinear)
     .duration(1000)
