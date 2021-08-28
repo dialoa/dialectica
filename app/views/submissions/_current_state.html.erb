@@ -34,7 +34,7 @@
 
   var newWidth = $(window).width();
   if(newWidth !== cachedWidth){
-    console.log("resize!");
+    //console.log("resize!");
     $("#diagram").empty();
     drawTree("#diagram");
     cachedWidth = newWidth;
@@ -75,8 +75,8 @@
     const link = g.append("g")
       .attr("fill", "none")
       .attr("stroke", "blue")
-      .attr("stroke-opacity", 0.8)
-      .attr("stroke-width", 2)
+      .attr("stroke-opacity", 0.6)
+      .attr("stroke-width", 3)
     .selectAll("path")
       .data(root.links())
       .join("path")
@@ -483,7 +483,7 @@
     var x1 = d.target.x;
     var y1 = d.target.y;
 
-    var arrow = generateArrow(x0, y0, x1, y1, 15, 25, 25);
+    var arrow = generateArrow(x0, y0, x1, y1, 15, 30, 15);
 
     return arrow.toString();
     //return path.toString();
