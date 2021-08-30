@@ -198,6 +198,10 @@ relevant box:
     ]
   end
 
+  def self.phases_where_reject_is_possible
+    ["editor assesses article", "editor assesses reviews"]
+  end
+
   def self.stem_phases
     #["submitted", "published"]
     [
@@ -228,6 +232,7 @@ relevant box:
 
      css_class = "bg-success rounded p-1 text-white text-center"
      your_article_is_here_sign = ""
+     reject_is_possible = ""
 
      if phases[step] == current_phase
        css_class = "bg-info rounded p-1 text-white text-center"
@@ -236,12 +241,17 @@ relevant box:
         css_class = "bg-secondary rounded p-1 text-white text-center"
      end
 
+     if Submission.phases_where_reject_is_possible.include?(phases[step])
+       reject_is_possible = "reject_is_possible"
+     end
+
      if step == phases.length - 1
        [
          {
            "content" => phases[step],
            "class" => css_class,
            "id" => your_article_is_here_sign,
+           "reject_is_possible" => reject_is_possible,
            "children" => []
          }
        ]
@@ -251,6 +261,7 @@ relevant box:
            "content" => phases[step],
            "class" => css_class,
            "id" => your_article_is_here_sign,
+           "reject_is_possible" => reject_is_possible,
            "children" => create_tree_from_phases(phases, step + 1, current_phase)
          }
        ]
