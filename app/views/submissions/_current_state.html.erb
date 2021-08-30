@@ -395,19 +395,51 @@
   }
 
   function add_loop(container){
-    current_phase = d3.select("#your_article_is_here_sign");
-    g = current_phase.select(function() { return this.parentNode; })
 
-    g.append("foreignObject")
-      //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
-      .attr("x", -standard_box_size.width / 1.7)
-      .attr("width", standard_box_size.width)
-      .attr("height", standard_box_size.height)
-      //.attr("id", "your_article_is_here_sign_swiggel")
-      .append("xhtml:div")
-      //.attr("id", "your_article_is_here_sign")
-      .style("font", standart_font)
-      .html(`<i class="fas fa-arrow-left"></i> <b>article needs revision</b>`);
+    d3.selectAll("#editor-assesses-reviews")
+      .select(function() { return this.parentNode; })
+      .append("foreignObject")
+        //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
+        .attr("x", -standard_box_size.width*2)
+        .attr("width", standard_box_size.width)
+        .attr("height", standard_box_size.height)
+          .append("xhtml:div")
+          .style("font", standart_font)
+          .attr("class", "bg-secondary rounded p-1 text-white text-center")
+          .html(`<b>article needs revisions</b>`);
+
+        d3.selectAll("#editor-assesses-reviews")
+        .select(function() { return this.parentNode; })
+        .append("path")
+          .attr("d", d => generateArrow(0, standard_box_size.height/2, -standard_box_size.width, standard_box_size.height/2, 15, standard_box_size.width / 1.6, 15))
+          //.attr("d", d => arrowTo({"x": 0, "y": 0}, {"x": standard_box_size.width, "y": 0}))
+          .attr("fill", "none")
+          .attr("stroke", "black")
+          .attr("stroke-opacity", 0.6)
+          .attr("stroke-width", 3);
+
+        d3.selectAll("#editor-assesses-reviews")
+          .select(function() { return this.parentNode; })
+          .append("foreignObject")
+            //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
+            .attr("x", -standard_box_size.width*2)
+            .attr("y",-standard_box_size.height*3)
+            .attr("width", standard_box_size.width)
+            .attr("height", standard_box_size.height)
+              .append("xhtml:div")
+              .style("font", standart_font)
+              .attr("class", "bg-secondary rounded p-1 text-white text-center")
+              .html(`<b>author resubmits article</b>`)
+
+            d3.selectAll("#editor-assesses-reviews")
+            .select(function() { return this.parentNode; })
+            .append("path")
+              .attr("d", d => generateArrow(0, 0, -standard_box_size.width*2, -standard_box_size.height*3, 15, standard_box_size.width / 1.6, 15))
+              //.attr("d", d => arrowTo({"x": 0, "y": 0}, {"x": standard_box_size.width, "y": 0}))
+              .attr("fill", "none")
+              .attr("stroke", "black")
+              .attr("stroke-opacity", 0.6)
+              .attr("stroke-width", 3);
   }
 
   function add_possible_reject_signs(container){
@@ -434,7 +466,7 @@
             .attr("fill", "none")
             .attr("stroke", "black")
             .attr("stroke-opacity", 0.6)
-            .attr("stroke-width", 3)
+            .attr("stroke-width", 3);
 
   }
 
@@ -447,14 +479,15 @@
       .select(function() { return this.parentNode.parentNode; })
       .append("foreignObject")
       //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
-      .attr("x", standard_box_size.width / 1.7)
+      .attr("x", standard_box_size.width/2)
+      .attr("y", standard_box_size.height * 1.1)
       .attr("width", standard_box_size.width)
       .attr("height", standard_box_size.height)
       .attr("id", "your_article_is_here_sign_swiggel")
       .append("xhtml:div")
       //.attr("id", "your_article_is_here_sign")
       .style("font", standart_font)
-      .html(`<i class="fas fa-arrow-left"></i> <b>your article is here</b>`);
+      .html(`<b>↖ your article is here</b>`);
 
       swiggel();
   }
@@ -465,12 +498,12 @@
     .ease(d3.easeLinear)
     .duration(1000)
     //.attr("x", function (d) { return this.x + 100})
-    .attr("transform", `translate(${5},${0})`)
+    .attr("transform", `translate(${5},${5})`)
     //.attr("transform", `translate(${this.x}, 0)`)
     .transition()
     .ease(d3.easeLinear)
     .duration(1000)
-    .attr("transform", `translate(${-5},${0})`)
+    .attr("transform", `translate(${-5},${-5})`)
 
   //  .attr('x', 920)     // move the circle to 920 on the x axis
   //  .transition()        // apply a transition
