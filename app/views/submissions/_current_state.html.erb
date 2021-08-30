@@ -12,12 +12,13 @@
 
   margin = ({top: 10, right: 10, bottom: 10, left: 10});
   //var width = $( "#diagram" ).width();//500
-  var width = $( "#diagram" ).width();
+  //var width = $( "#diagram" ).width();
   //var standard_box_size = ({width: 300, height: 30});
   var standard_box_size = ({width: 200, height: 25});
 
   //var height = standard_box_size.height * 8;
-  var height = 2000;
+  //var height = 1000;
+  //var height =   root.height * (standard_box_size.height * 3);
   var standart_font = "13px 'Helvetica Neue'";
   var standard_class = "bg-first-color rounded p-1 text-white text-center";
   var success_class = "bg-success rounded p-1 text-white text-center";
@@ -48,7 +49,6 @@
 
     data = <%= raw "#{submission.peer_review_process.to_json}" %>;
 
-
     //const root = tree(data);
 
     const hierarchy = d3.hierarchy(data);
@@ -56,12 +56,17 @@
     hierarchy.dy = standard_box_size.height * 3; //width / (root.height + 1);
     const root = d3.tree().nodeSize([hierarchy.dx, hierarchy.dy])(hierarchy);
 
-    let x0 = Infinity;
-    let x1 = -x0;
-    root.each(d => {
-      if (d.x > x1) x1 = d.x;
-      if (d.x < x0) x0 = d.x;
-    });
+    var height =   root.height * (standard_box_size.height * 3.7);
+    var width = $( "#diagram" ).width();
+
+  //  let x0 = Infinity;
+  //  let x1 = -x0;
+  //  root.each(d => {
+  //    if (d.x > x1) x1 = d.x;
+  //    if (d.x < x0) x0 = d.x;
+  //  });
+
+
 
     const svg = d3.select(container).append('svg')
       .attr("viewBox", [-margin.left, -margin.top, width, height])
@@ -513,14 +518,14 @@
     d3.select("#your_article_is_here_sign_swiggel")
     .transition()
     .ease(d3.easeLinear)
-    .duration(1000)
+    .duration(750)
     //.attr("x", function (d) { return this.x + 100})
-    .attr("transform", `translate(${5},${5})`)
+    .attr("transform", `translate(${3},${3})`)
     //.attr("transform", `translate(${this.x}, 0)`)
     .transition()
     .ease(d3.easeLinear)
-    .duration(1000)
-    .attr("transform", `translate(${-5},${-5})`)
+    .duration(750)
+    .attr("transform", `translate(${-3},${-3})`)
 
   //  .attr('x', 920)     // move the circle to 920 on the x axis
   //  .transition()        // apply a transition
