@@ -1,6 +1,7 @@
-<div class="container-fluid">
+<div class="container-fluid text-center">
+  <hr>
   <h2>in which phase is your article right now?</h2>
-  <div id="diagram">
+  <div id="diagram" class="text-center" style="overflow: scroll;">
 
   </div>
 </div>
@@ -51,13 +52,22 @@
 
     //const root = tree(data);
 
+
+    //var width = $( "#diagram" ).width();
+    var width = standard_box_size.width * 4.1;
+
+    //standard_box_size = ({width: 200, height: 25});
+    standard_box_size = ({width: 200, height: 25});
+
+
     const hierarchy = d3.hierarchy(data);
     hierarchy.dx = standard_box_size.width; //20;
     hierarchy.dy = standard_box_size.height * 3; //width / (root.height + 1);
     const root = d3.tree().nodeSize([hierarchy.dx, hierarchy.dy])(hierarchy);
 
-    var height =   root.height * (standard_box_size.height * 3.7);
-    var width = $( "#diagram" ).width();
+    var height = root.height * (standard_box_size.height * 3.7);
+
+
 
   //  let x0 = Infinity;
   //  let x1 = -x0;
@@ -69,13 +79,16 @@
 
 
     const svg = d3.select(container).append('svg')
-      .attr("viewBox", [-margin.left, -margin.top, width, height])
-      .style("user-select", "none");
+    .attr("width", width + margin.right + margin.left)
+    .attr("height", height + margin.top + margin.bottom)
+      //.attr("viewBox", [-margin.left, -margin.top, width, height])
+      //.style("user-select", "none")
+      .style("overflow", "scroll");
 
     const g = svg.append("g")
         .attr("font-family", "sans-serif")
       //  .attr("font-size", 16)
-        .attr("transform", `translate(${width/2},${margin.top})`);
+        .attr("transform", `translate(${width/2.05},${margin.top})`);
 
     const link = g.append("g")
       .attr("fill", "none")
@@ -130,6 +143,8 @@
           add_possible_reject_signs("#diagram");
 
           add_loop("#diagram");
+
+      		$("#diagram").scrollLeft(width/2 - standard_box_size.width/1.8);
 
     return svg.node();
   }
