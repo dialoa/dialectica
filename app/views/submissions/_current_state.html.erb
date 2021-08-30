@@ -396,6 +396,7 @@
 
   function add_loop(container){
 
+    //first box
     d3.selectAll("#editor-assesses-reviews")
       .select(function() { return this.parentNode; })
       .append("foreignObject")
@@ -408,6 +409,7 @@
           .attr("class", "bg-secondary rounded p-1 text-white text-center")
           .html(`<b>article needs revisions</b>`);
 
+          //first path
         d3.selectAll("#editor-assesses-reviews")
         .select(function() { return this.parentNode; })
         .append("path")
@@ -418,6 +420,7 @@
           .attr("stroke-opacity", 0.6)
           .attr("stroke-width", 3);
 
+          //second box
         d3.selectAll("#editor-assesses-reviews")
           .select(function() { return this.parentNode; })
           .append("foreignObject")
@@ -431,25 +434,29 @@
               .attr("class", "bg-secondary rounded p-1 text-white text-center")
               .html(`<b>author resubmits article</b>`)
 
+            //second path
             d3.selectAll("#editor-assesses-reviews")
             .select(function() { return this.parentNode; })
             .append("path")
-              .attr("d", d => generateArrow(-standard_box_size.width*2, -standard_box_size.height*3, -standard_box_size.width, standard_box_size.height/2, 15, standard_box_size.width / 1.6, 15))
+              .attr("d", d => generateArrow(-standard_box_size.width * 1.5, 0, -standard_box_size.width * 1.5, -standard_box_size.height*2, 15, 10, 15))
               //.attr("d", d => arrowTo({"x": 0, "y": 0}, {"x": standard_box_size.width, "y": 0}))
               .attr("fill", "none")
               .attr("stroke", "black")
               .attr("stroke-opacity", 0.6)
               .attr("stroke-width", 3);
 
-            d3.selectAll("#editor-assesses-reviews")
-            .select(function() { return this.parentNode; })
-            .append("path")
-              .attr("d", d => generateArrow(0, 0, -standard_box_size.width*2, -standard_box_size.height*3, 15, standard_box_size.width / 1.6, 15))
-              //.attr("d", d => arrowTo({"x": 0, "y": 0}, {"x": standard_box_size.width, "y": 0}))
-              .attr("fill", "none")
-              .attr("stroke", "black")
-              .attr("stroke-opacity", 0.6)
-              .attr("stroke-width", 3);
+
+            //third path
+          d3.selectAll("#editor-assesses-reviews")
+          .select(function() { return this.parentNode; })
+          .append("path")
+            .attr("d", d => generateArrow(-standard_box_size.width * 1.5, (-standard_box_size.height/2)*5, -standard_box_size.width/2, (-standard_box_size.height/2)*5, 15, standard_box_size.width / 1.6, 15))
+            //.attr("d", d => arrowTo({"x": 0, "y": 0}, {"x": standard_box_size.width, "y": 0}))
+            .attr("fill", "none")
+            .attr("stroke", "black")
+            .attr("stroke-opacity", 0.6)
+            .attr("stroke-width", 3);
+
   }
 
   function add_possible_reject_signs(container){
