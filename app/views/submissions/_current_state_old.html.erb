@@ -1,239 +1,630 @@
-<div class="container">
-  <h2>current state</h2>
-  <div id="diagram">
+<div class="container-fluid text-center">
+  <hr>
+  <h2>in which phase is your article right now?</h2>
+  <div id="diagram" class="text-center" style="overflow: scroll;">
 
   </div>
 </div>
 
-<script>
+<script type="text/javascript">
 
-  var treeData = {
-    name: "article submitted",
-    children: [
-      {
-      name: "article assessed by editor",
-      children: []
-    },
-    {
-    name: "rejected",
-      children: []
-    }
-    ]
+
+  var cachedWidth = $(window).width();
+
+  margin = ({top: 10, right: 10, bottom: 10, left: 10});
+  //var width = $( "#diagram" ).width();//500
+  //var width = $( "#diagram" ).width();
+  //var standard_box_size = ({width: 300, height: 30});
+  var standard_box_size = ({width: 200, height: 25});
+
+  //var height = standard_box_size.height * 8;
+  //var height = 1000;
+  //var height =   root.height * (standard_box_size.height * 3);
+  var standart_font = "13px 'Helvetica Neue'";
+  var standard_class = "bg-first-color rounded p-1 text-white text-center";
+  var success_class = "bg-success rounded p-1 text-white text-center";
+  var rejected_class = "bg-danger rounded p-1 text-white text-center";
+  var information_class = "bg-info rounded p-1 text-white text-center";
+  var flangeSize = 10;
+  var padding1 = standard_box_size.height + 5;
+  var padding2 = 10;
+  var stroke_width = 2.5;
+
+  //drawCurrentState("#diagram");
+  drawTree("#diagram");
+
+  $( window ).resize(function() {
+
+  var newWidth = $(window).width();
+  if(newWidth !== cachedWidth){
+    //console.log("resize!");
+    $("#diagram").empty();
+    drawTree("#diagram");
+    cachedWidth = newWidth;
   }
 
-  width = $( "#diagram" ).width();//500
-  height = 500;
+});
+
+  //functions
+
+  function drawTree(container){
+
+    data = <%= raw "#{submission.peer_review_process.to_json}" %>;
+
+    //const root = tree(data);
 
 
-	drawTree('#diagram', treeData)
+    //var width = $( "#diagram" ).width();
+    var width = standard_box_size.width * 4.1;
 
-	function drawTree(container, data){
-
-		const maximum_depth_level = 7;
-
-		dy = 50;
-		dx = 200;
-		//console.log("maximum_depth_level: " + maximum_depth_level);
-		//height = maximum_depth_level * dx;  //$(window).height();
-
-		margin = ({top: 50, right: 50, bottom: 50, left: width/2});
-
-		tree = d3.tree().nodeSize([dx, dy]);
-		diagonal = d3.linkHorizontal().x(d => d.x).y(d => d.y);
-
-    function generateArrow(x1, y1, x2, y2, flangeSize, padding1, padding2) {
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      const length = Math.sqrt(dx * dx + dy * dy);
-      //Hypotenuse
-
-      let multiplier1 = padding1 / length;
-      const dx1 = dx * multiplier1;
-      const dy1 = dy * multiplier1;
+    //standard_box_size = ({width: 200, height: 25});
+    //standard_box_size = ({width: 200, height: 25});
 
 
-      let multiplier2 = padding2 / length;
-      const dx2 = dx * multiplier2;
-      const dy2 = dy * multiplier2;
+    const hierarchy = d3.hierarchy(data);
+    hierarchy.dx = standard_box_size.width; //20;
+    hierarchy.dy = standard_box_size.height * 3; //width / (root.height + 1);
+    const root = d3.tree().nodeSize([hierarchy.dx, hierarchy.dy])(hierarchy);
 
-      var px = y1 - y2;
-      var py = x2 - x1;
-      let plength = Math.sqrt(px * px + py * py);
-      let pmultiplier = flangeSize / plength;
-
-      const px1 = px * pmultiplier;
-      const py1 = py * pmultiplier;
-
-      const sx = dx * pmultiplier;
-      const sy = dy * pmultiplier;
-
-      const a1 = x1 + dx1;
-      const b1 = y1 + dy1;
-      const a2 = x2 - dx2;
-      const b2 = y2 - dy2;
-
-      return `
-        M${a1}, ${b1}
-        L${a2}, ${b2}
-        M${a2 + px1 - sx}, ${b2 + py1 - sy}
-        L${a2}, ${b2}
-        L${a2 - px1 - sx}, ${b2 - py1 -sy}
-      `;
-    }
-
-    var arrowTo = function(d) {
-      var y0 = d.source.y;
-      var x0 = d.source.x;
-      var x1 = d.target.x;
-      var y1 = d.target.y;
-
-      var arrow = generateArrow(x0, y0, x1, y1, 15, 25, 25);
-
-      return arrow.toString();
-      //return path.toString();
-    }
-
-		var linker = function(d) {
-		  var y0 = d.source.y;
-		  var x0 = d.source.x;
-		  var x1 = d.target.x;
-		  var y1 = d.target.y;
-		  var k = 20;
-
-		  var path = d3.path()
-		  path.moveTo(x0,y0)
-			path.lineTo(x1,y0 + (y1-y0)/2);
-			//path.lineTo(x1-k,y0-k)
-			//path.lineTo(x0+40,y0+0)
-			//path.moveTo(0,0);
-		 	//path.bezierCurveTo(y1-k,x0,y0,x1,y1-k,x1);
-		  path.lineTo(x1,y1);
-
-		  return path.toString();
-		}
-
-		//bezier = d3.bezierCurveTo().x(d => d.x).y(d => d.y);
-		//bezier = d3.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, x, y)
-
-		const root = d3.hierarchy(data);
-
-	  root.x0 = dy / 2;
-	  root.y0 = 0;
-	  root.descendants().forEach((d, i) => {
-	    d.id = i;
-	    d._children = d.children;
-			//console.log(d.depth);
-	    if (d.depth > maximum_depth_level) d.children = null;
-	  });
+    var height = root.height * (standard_box_size.height * 3.4);
 
 
-	const svg = d3.select(container).append('svg')
-	  .attr("viewBox", [-margin.left, -margin.top, width, height])
-	  .style("font", "10px sans-serif")
-	  .style("user-select", "none");
 
-  const gLink = svg.append("g")
+  //  let x0 = Infinity;
+  //  let x1 = -x0;
+  //  root.each(d => {
+  //    if (d.x > x1) x1 = d.x;
+  //    if (d.x < x0) x0 = d.x;
+  //  });
+
+
+
+    const svg = d3.select(container).append('svg')
+    .attr("width", width + margin.right + margin.left)
+    .attr("height", height + margin.top + margin.bottom)
+      //.attr("viewBox", [-margin.left, -margin.top, width, height])
+      //.style("user-select", "none")
+      .style("overflow", "scroll");
+
+    const g = svg.append("g")
+        .attr("font-family", "sans-serif")
+      //  .attr("font-size", 16)
+        .attr("transform", `translate(${width/2.05},${margin.top})`);
+
+    const link = g.append("g")
       .attr("fill", "none")
-      .attr("stroke", "blue")
-      .attr("stroke-opacity", 1.0)
-      .attr("stroke-width", 2.5);
+      .attr("stroke", "black")
+      .attr("stroke-opacity", 0.6)
+      .attr("stroke-width", stroke_width)
+    .selectAll("path")
+      .data(root.links())
+      .join("path")
+        .attr("d", d => arrowTo(d.source, d.target));
+  //      .attr("d", d3.linkHorizontal()
+  //          .x(d => d.x)
+  //          .y(d => d.y));
 
-  const gNode = svg.append("g")
-      .attr("cursor", "pointer")
-      .attr("pointer-events", "all");
-
-  function update(source) {
-    const duration = d3.event && d3.event.altKey ? 2500 : 250;
-    const nodes = root.descendants().reverse();
-    const links = root.links();
-
-    // Compute the new tree layout.
-    tree(root);
-
-    let left = root;
-    let right = root;
-    root.eachBefore(node => {
-      if (node.x < left.x) left = node;
-      if (node.x > right.x) right = node;
-    });
-
-    //const height = 500;
-
-		//console.log("Viewbox: " + width + " - " + height);
-    const transition = svg.transition()
-        .duration(duration);
-      //  .attr("viewBox", [-margin.left, left.x - margin.top, width, height])
-      //  .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle"));
-
-    // Update the nodes…
-    const node = gNode.selectAll("g")
-      .data(nodes, d => d.id);
-
-    // Enter any new nodes at the parent's previous position.
-    const nodeEnter = node.enter().append("g")
-        .attr("transform", d => `translate(${source.x0},${source.y0})`)
-        .attr("fill-opacity", 0)
-        .attr("stroke-opacity", 0)
-        .on("click", (event, d) => {
-          d.children = d.children ? null : d._children;
-          update(d);
-        });
-
-    nodeEnter.append("circle")
-        .attr("r", 5.5)
-        .attr("fill", d => d._children ? "blue" : "blue")
-        .attr("stroke-width", 10);
-
-    nodeEnter.append("text")
-        .attr("dy", d => d._children ? "-1em" : "1.5em")
-        .attr("x", d => d._children ? -0 : 0)
-        .attr("text-anchor", d => d._children ? "end" : "start")
-        .text(d => d.data.name)
-				.style("text-anchor", "middle")
-				.style("font-size", "2em")
-      .clone(true).lower()
+    const node = g.append("g")
         .attr("stroke-linejoin", "round")
-        .attr("stroke-width", 3);
+        .attr("stroke-width", stroke_width)
+      .selectAll("g")
+      .data(root.descendants())
+      .join("g")
+        .attr("transform", d => `translate(${d.x},${d.y})`);
 
-    // Transition nodes to their new position.
-    const nodeUpdate = node.merge(nodeEnter).transition(transition)
-        .attr("transform", d => `translate(${d.x},${d.y})`)
-        .attr("fill-opacity", 1)
-        .attr("stroke-opacity", 1);
+    //node.append("circle")
+    //    .attr("fill", d => d.children ? "#555" : "#999")
+    //    .attr("r", 2.5);
 
-    // Transition exiting nodes to the parent's new position.
-    const nodeExit = node.exit().transition(transition).remove()
-        .attr("transform", d => `translate(${source.x},${source.y})`)
-        .attr("fill-opacity", 0)
-        .attr("stroke-opacity", 0);
+//    node.append("text")
+//        .attr("dy", "0em")
+//        .attr("y", d => d.children ? -3 : 3)
+//        .attr("text-anchor", d => d.children ? "end" : "start")
+//        .text(d => d.data.name)
+//      .clone(true).lower()
+//        .attr("stroke", "white");
 
-    // Update the links…
-    const link = gLink.selectAll("path")
-      .data(links, d => d.target.id);
+        node.append("foreignObject")
+          .attr("x", -standard_box_size.width / 2)
+          //.attr("transform", d => `translate(${main_nodes[5].x - (standard_box_size.width / 2)},${main_nodes[5].y})`)
+          .attr("width", standard_box_size.width)
+          .attr("height", standard_box_size.height)
+          .attr("id", d => `${d.data.id}`)
+        //  .attr("id", d => `${d.data.phase}`)
+          .attr("class", d => `${d.data.reject_is_possible}`)
+          //.attr("class", d => `${d.data.class}`)
+          .append("xhtml:div")
+          .attr("class", d => `${d.data.class}`)
+          //.attr("id", d => `${d.data.id}`)
+          .style("font", standart_font)
+          .html(d => `<b>${d.data.content}</b>`);
 
-    // Enter any new links at the parent's previous position.
-    const linkEnter = link.enter().append("path")
-				.attr("d", arrowTo);
+          add_your_article_is_here_sign("#diagram");
 
-    // Transition links to their new position.
-    link.merge(linkEnter).transition(transition)
-        				.attr("d", arrowTo);
+          add_possible_reject_signs("#diagram");
 
-    // Transition exiting nodes to the parent's new position.
-    link.exit().transition(transition).remove()
-				.attr("d", arrowTo);
+          add_loop("#diagram");
 
-    // Stash the old positions for transition.
-    root.eachBefore(d => {
-      d.x0 = d.x;
-      d.y0 = d.y;
-    });
+      		$("#diagram").scrollLeft(width/2 - standard_box_size.width/1.8);
+
+    return svg.node();
   }
 
-  update(root);
+  function drawCurrentState(container){
 
-  return svg.node();
+    var main_nodes = [
+      {x: 100, y: 10},
+    ]
 
-	}
+    var times = 6;
+    for(var i=0; i < times; i++){
+      new_coordinates = [];
+      new_x = main_nodes[0].x
+      new_y = main_nodes[0].y + ((standard_box_size.height + 40) * (i + 1))
+
+      main_nodes.push(
+        {
+          x: new_x,
+          y: new_y
+        }
+      );
+    }
+
+
+    const svg = d3.select(container).append('svg')
+      .attr("viewBox", [-margin.left, -margin.top, width, height])
+      .style("user-select", "none");
+
+    svg.append("foreignObject")
+      .attr("transform", d => `translate(${main_nodes[0].x - (standard_box_size.width / 2)},${main_nodes[0].y})`)
+      .attr("width", standard_box_size.width)
+      .attr("height", standard_box_size.height)
+      .append("xhtml:div")
+      .attr("class", success_class)
+      .style("font", standart_font)
+      .html(`<b>author submits article</b>`);
+
+    svg.append("path")
+      .attr("d", generateArrow(
+      main_nodes[0].x,
+      main_nodes[0].y,
+      main_nodes[1].x,
+      main_nodes[1].y,
+      flangeSize,
+      padding1,
+      padding2)
+      )
+      .attr("fill", "none")
+      .attr("stroke", "green")
+      .attr("stroke-opacity", 1.0)
+      .attr("stroke-width", stroke_width);
+
+
+    svg.append("foreignObject")
+      .attr("transform", d => `translate(${main_nodes[1].x - (standard_box_size.width / 2)},${main_nodes[1].y})`)
+      .attr("width", standard_box_size.width)
+      .attr("height", standard_box_size.height)
+      .append("xhtml:div")
+      .style("font", standart_font)
+      .attr("class", success_class)
+      .html(`<b>editor assesses article</b>`);
+
+      svg.append("path")
+        .attr("d", generateArrow(
+        main_nodes[1].x,
+        main_nodes[1].y,
+        main_nodes[2].x,
+        main_nodes[2].y,
+        flangeSize,
+        padding1,
+        padding2)
+        )
+        .attr("fill", "none")
+        .attr("stroke", "#164da2")
+        .attr("stroke-opacity", 1.0)
+        .attr("stroke-width", stroke_width);
+
+        //rejected #1
+        svg.append("path")
+          .attr("d", generateArrow(
+            main_nodes[1].x,
+            main_nodes[1].y + ((standard_box_size.height) / 2),
+            main_nodes[1].x + + (standard_box_size.width / 1.3),
+            main_nodes[1].y + ((standard_box_size.height) / 2),
+           flangeSize,
+           ((standard_box_size.width) / 2) + 10,
+           padding2)
+           )
+          .attr("fill", "none")
+          .attr("stroke", "red")
+          .attr("stroke-opacity", 1.0)
+          .attr("stroke-width", stroke_width);
+
+          svg.append("foreignObject")
+            .attr("transform", d => `translate(${main_nodes[1].x + (standard_box_size.width / 1.3)}, ${main_nodes[1].y})`)
+            .attr("width", standard_box_size.width)
+            .attr("height", standard_box_size.height)
+            .append("xhtml:div")
+            .style("font", standart_font)
+            .attr("class", rejected_class)
+            .html(`<b>rejected</b>`);
+
+
+
+      svg.append("foreignObject")
+        .attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2)},${main_nodes[2].y})`)
+        .attr("width", standard_box_size.width)
+        .attr("height", standard_box_size.height)
+        .append("xhtml:div")
+        .attr("class", information_class)
+        .attr("id", "article_sent_to_reviewers")
+        .style("font", standart_font)
+        .html(`<b>article sent to reviewers</b>`);
+
+        svg.append("path")
+          .attr("d", generateArrow(
+          main_nodes[2].x,
+          main_nodes[2].y,
+          main_nodes[3].x,
+          main_nodes[3].y,
+          flangeSize,
+          padding1,
+          padding2)
+          )
+          .attr("fill", "none")
+          .attr("stroke", "#164da2")
+          .attr("stroke-opacity", 1.0)
+          .attr("stroke-width", stroke_width);
+
+
+        svg.append("foreignObject")
+          .attr("transform", d => `translate(${main_nodes[3].x - (standard_box_size.width / 2)},${main_nodes[3].y})`)
+          .attr("width", standard_box_size.width)
+          .attr("height", standard_box_size.height)
+          .append("xhtml:div")
+          .attr("class", standard_class)
+          .style("font", standart_font)
+          .html(`<b>editor assesses reviews</b>`);
+
+          //rejected #2
+          svg.append("path")
+            .attr("d", generateArrow(
+              main_nodes[3].x,
+              main_nodes[3].y + ((standard_box_size.height) / 2),
+              main_nodes[3].x + + (standard_box_size.width / 1.3),
+              main_nodes[3].y + ((standard_box_size.height) / 2),
+             flangeSize,
+             ((standard_box_size.width) / 2) + 10,
+             padding2)
+             )
+            .attr("fill", "none")
+            .attr("stroke", "red")
+            .attr("stroke-opacity", 1.0)
+            .attr("stroke-width", stroke_width);
+
+            svg.append("foreignObject")
+              .attr("transform", d => `translate(${main_nodes[3].x + (standard_box_size.width / 1.3)}, ${main_nodes[3].y})`)
+              .attr("width", standard_box_size.width)
+              .attr("height", standard_box_size.height)
+              .append("xhtml:div")
+              .style("font", standart_font)
+              .attr("class", rejected_class)
+              .html(`<b>rejected</b>`);
+
+          svg.append("path")
+            .attr("d", generateArrow(
+            main_nodes[3].x,
+            main_nodes[3].y,
+            main_nodes[4].x,
+            main_nodes[4].y,
+            flangeSize,
+            padding1,
+            padding2)
+            )
+            .attr("fill", "none")
+            .attr("stroke", "#164da2")
+            .attr("stroke-opacity", 1.0)
+            .attr("stroke-width", stroke_width);
+
+          svg.append("foreignObject")
+            .attr("transform", d => `translate(${main_nodes[4].x - (standard_box_size.width / 2)},${main_nodes[4].y})`)
+            .attr("width", standard_box_size.width)
+            .attr("height", standard_box_size.height)
+            .append("xhtml:div")
+            .attr("class", standard_class)
+            .style("font", standart_font)
+            .html(`<b>accepted</b>`);
+
+            svg.append("path")
+              .attr("d", generateArrow(
+              main_nodes[4].x,
+              main_nodes[4].y,
+              main_nodes[5].x,
+              main_nodes[5].y,
+              flangeSize,
+              padding1,
+              padding2)
+              )
+              .attr("fill", "none")
+              .attr("stroke", "#164da2")
+              .attr("stroke-opacity", 1.0)
+              .attr("stroke-width",stroke_width);
+
+
+          svg.append("foreignObject")
+            .attr("transform", d => `translate(${main_nodes[5].x - (standard_box_size.width / 2)},${main_nodes[5].y})`)
+            .attr("width", standard_box_size.width)
+            .attr("height", standard_box_size.height)
+            .append("xhtml:div")
+            .attr("class", standard_class)
+            .style("font", standart_font)
+            .html(`<b>in production</b>`);
+
+            svg.append("path")
+              .attr("d", generateArrow(
+              main_nodes[2].x,
+              main_nodes[2].y,
+              main_nodes[3].x,
+              main_nodes[3].y,
+              flangeSize,
+              padding1,
+              padding2)
+              )
+              .attr("fill", "none")
+              .attr("stroke", "#164da2")
+              .attr("stroke-opacity", 1.0)
+              .attr("stroke-width", stroke_width);
+
+            svg.append("foreignObject")
+              .attr("transform", d => `translate(${main_nodes[6].x - (standard_box_size.width / 2)},${main_nodes[6].y})`)
+              .attr("width", standard_box_size.width)
+              .attr("height", standard_box_size.height)
+              .append("xhtml:div")
+              .attr("class", standard_class)
+              .style("font", standart_font)
+              .html(`<b>publication</b>`);
+
+              svg.append("path")
+                .attr("d", generateArrow(
+                main_nodes[5].x,
+                main_nodes[5].y,
+                main_nodes[6].x,
+                main_nodes[6].y,
+                flangeSize,
+                padding1,
+                padding2)
+                )
+                .attr("fill", "none")
+                .attr("stroke", "#164da2")
+                .attr("stroke-opacity", 1.0)
+                .attr("stroke-width", stroke_width);
+
+
+                svg.append("foreignObject")
+                  //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
+                  .attr("x", main_nodes[2].x + (standard_box_size.width / 1.6))
+                  .attr("y", main_nodes[2].y)
+                  .attr("width", standard_box_size.width)
+                  .attr("height", standard_box_size.height)
+                  .attr("id", "your_article_is_here_sign")
+                  .append("xhtml:div")
+                  .style("font", standart_font)
+                  .html(`<i class="fas fa-arrow-left"></i> <b>your article is here</b>`);
+
+
+      return svg.node();
+  }
+
+  function add_loop(container){
+
+    //first box
+    d3.selectAll("#editor-assesses-reviews")
+      .select(function() { return this.parentNode; })
+      .append("foreignObject")
+        //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
+        .attr("x", -standard_box_size.width*2)
+        .attr("width", standard_box_size.width)
+        .attr("height", standard_box_size.height)
+          .append("xhtml:div")
+          .style("font", standart_font)
+          .attr("class", "bg-secondary rounded p-1 text-white text-center")
+          .html(`<b>article needs revisions</b>`);
+
+          //first path
+        d3.selectAll("#editor-assesses-reviews")
+        .select(function() { return this.parentNode; })
+        .append("path")
+          .attr("d", d => generateArrow(0, standard_box_size.height/2, -standard_box_size.width, standard_box_size.height/2, 15, standard_box_size.width / 1.6, 15))
+          //.attr("d", d => arrowTo({"x": 0, "y": 0}, {"x": standard_box_size.width, "y": 0}))
+          .attr("fill", "none")
+          .attr("stroke", "black")
+          .attr("stroke-opacity", 0.6)
+          .attr("stroke-width", stroke_width);
+
+          //second box
+        d3.selectAll("#editor-assesses-reviews")
+          .select(function() { return this.parentNode; })
+          .append("foreignObject")
+            //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
+            .attr("x", -standard_box_size.width*2)
+            .attr("y",-standard_box_size.height*3)
+            .attr("width", standard_box_size.width)
+            .attr("height", standard_box_size.height)
+              .append("xhtml:div")
+              .style("font", standart_font)
+              .attr("class", "bg-secondary rounded p-1 text-white text-center")
+              .html(`<b>author resubmits article</b>`)
+
+            //second path
+            d3.selectAll("#editor-assesses-reviews")
+            .select(function() { return this.parentNode; })
+            .append("path")
+              .attr("d", d => generateArrow(-standard_box_size.width * 1.5, 0, -standard_box_size.width * 1.5, -standard_box_size.height*2, 15, 10, 15))
+              //.attr("d", d => arrowTo({"x": 0, "y": 0}, {"x": standard_box_size.width, "y": 0}))
+              .attr("fill", "none")
+              .attr("stroke", "black")
+              .attr("stroke-opacity", 0.6)
+              .attr("stroke-width", stroke_width);
+
+
+            //third path
+          d3.selectAll("#editor-assesses-reviews")
+          .select(function() { return this.parentNode; })
+          .append("path")
+            .attr("d", d => generateArrow(-standard_box_size.width * 1.5, (-standard_box_size.height/2)*5, -standard_box_size.width/2, (-standard_box_size.height/2)*5, 15, standard_box_size.width / 1.6, 15))
+            //.attr("d", d => arrowTo({"x": 0, "y": 0}, {"x": standard_box_size.width, "y": 0}))
+            .attr("fill", "none")
+            .attr("stroke", "black")
+            .attr("stroke-opacity", 0.6)
+            .attr("stroke-width", stroke_width);
+
+  }
+
+  function add_possible_reject_signs(container){
+    //const svg = d3.select(container).select("svg");
+
+    d3.selectAll(".reject_is_possible")
+      .select(function() { return this.parentNode; })
+      .append("foreignObject")
+        //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
+        .attr("x", standard_box_size.width/1.2)
+        .attr("width", standard_box_size.width)
+        .attr("height", standard_box_size.height)
+        //.attr("id", "your_article_is_here_sign_swiggel")
+          .append("xhtml:div")
+          .style("font", standart_font)
+          .attr("class", "bg-secondary rounded p-1 text-white text-center")
+          .html(`<b>article is rejected</b>`);
+
+          d3.selectAll(".reject_is_possible")
+          .select(function() { return this.parentNode; })
+          .append("path")
+            .attr("d", d => generateArrow(0, standard_box_size.height/2, standard_box_size.width/1.2, standard_box_size.height/2, 15, standard_box_size.width / 1.8, 15))
+            //.attr("d", d => arrowTo({"x": 0, "y": 0}, {"x": standard_box_size.width, "y": 0}))
+            .attr("fill", "none")
+            .attr("stroke", "black")
+            .attr("stroke-opacity", 0.6)
+            .attr("stroke-width", stroke_width);
+
+  }
+
+
+
+  function add_your_article_is_here_sign(container) {
+
+    //const svg = d3.select(container).select("svg");
+    d3.selectAll(".your_article_is_here_sign")
+      .select(function() { return this.parentNode.parentNode; })
+      .append("foreignObject")
+      //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
+      .attr("x", standard_box_size.width/2)
+      .attr("y", standard_box_size.height * 1.1)
+      .attr("width", standard_box_size.width)
+      .attr("height", standard_box_size.height)
+      .attr("id", "your_article_is_here_sign_swiggel")
+      .append("xhtml:div")
+      //.attr("id", "your_article_is_here_sign")
+      .style("font", standart_font)
+      .html(`<b>↖ your article is here</b>`);
+
+      swiggel();
+  }
+
+  function swiggel() {
+    d3.select("#your_article_is_here_sign_swiggel")
+    .transition()
+    .ease(d3.easeLinear)
+    .duration(750)
+    //.attr("x", function (d) { return this.x + 100})
+    .attr("transform", `translate(${3},${3})`)
+    //.attr("transform", `translate(${this.x}, 0)`)
+    .transition()
+    .ease(d3.easeLinear)
+    .duration(750)
+    .attr("transform", `translate(${-3},${-3})`)
+
+  //  .attr('x', 920)     // move the circle to 920 on the x axis
+  //  .transition()        // apply a transition
+  //  .duration(2000)      // apply it over 2000 milliseconds
+  //  .attr('x', 40)      // return the circle to 40 on the x axis
+    .on("end", swiggel);  // when the transition finishes start again
+  };
+
+  function tree() {
+      const root = d3.hierarchy(data);
+      root.dx = standard_box_size.width; //20;
+      root.dy = standard_box_size.height * 3; //width / (root.height + 1);
+      return d3.tree().nodeSize([root.dx, root.dy])(root);
+    };
+
+  function generateArrow(x1, y1, x2, y2, flangeSize, padding1, padding2) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const length = Math.sqrt(dx * dx + dy * dy);
+    //Hypotenuse
+
+    let multiplier1 = padding1 / length;
+    const dx1 = dx * multiplier1;
+    const dy1 = dy * multiplier1;
+
+
+    let multiplier2 = padding2 / length;
+    const dx2 = dx * multiplier2;
+    const dy2 = dy * multiplier2;
+
+    var px = y1 - y2;
+    var py = x2 - x1;
+    let plength = Math.sqrt(px * px + py * py);
+    let pmultiplier = flangeSize / plength;
+
+    const px1 = px * pmultiplier;
+    const py1 = py * pmultiplier;
+
+    const sx = dx * pmultiplier;
+    const sy = dy * pmultiplier;
+
+    const a1 = x1 + dx1;
+    const b1 = y1 + dy1;
+    const a2 = x2 - dx2;
+    const b2 = y2 - dy2;
+
+    return `
+      M${a1}, ${b1}
+      L${a2}, ${b2}
+      M${a2 + px1 - sx}, ${b2 + py1 - sy}
+      L${a2}, ${b2}
+      L${a2 - px1 - sx}, ${b2 - py1 -sy}
+    `;
+  }
+
+   function arrowTo(source, target) {
+    //var y0 = d.source.y;
+    //var x0 = d.source.x;
+    //var x1 = d.target.x;
+    //var y1 = d.target.y;
+
+    var y0 = source.y;
+    var x0 = source.x;
+    var x1 = target.x;
+    var y1 = target.y;
+
+    var arrow = generateArrow(x0, y0, x1, y1, 15, 30, 15);
+
+    return arrow.toString();
+    //return path.toString();
+  }
+
+  var arrowTox = function(d) {
+    var y0 = d.source.y;
+    var x0 = d.source.x;
+    var x1 = d.target.x;
+    var y1 = d.target.y;
+
+
+    var arrow = generateArrow(x0, y0, x1, y1, 15, 25, 25);
+
+    return arrow.toString();
+    //return path.toString();
+  }
 
 </script>
