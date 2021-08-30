@@ -230,15 +230,18 @@ relevant box:
 
    def create_tree_from_phases(phases, step, current_phase)
 
-     css_class = "bg-success rounded p-1 text-white text-center"
+     css_class = ""
      your_article_is_here_sign = ""
      reject_is_possible = ""
+     phase = phases[step].parameterize
+     id = phase
 
      if phases[step] == current_phase
-       css_class = "bg-info rounded p-1 text-white text-center"
-       your_article_is_here_sign = "your_article_is_here_sign"
+       css_class = "bg-info rounded p-1 text-white text-center your_article_is_here_sign"
      elsif step > phases.index(current_phase)
         css_class = "bg-secondary rounded p-1 text-white text-center"
+      elsif step < phases.index(current_phase)
+        css_class = "bg-success rounded p-1 text-white text-center"
      end
 
      if Submission.phases_where_reject_is_possible.include?(phases[step])
@@ -249,8 +252,9 @@ relevant box:
        [
          {
            "content" => phases[step],
+           "phase" => phase,
            "class" => css_class,
-           "id" => your_article_is_here_sign,
+           "id" => id, #your_article_is_here_sign,
            "reject_is_possible" => reject_is_possible,
            "children" => []
          }
@@ -259,8 +263,9 @@ relevant box:
        [
          {
            "content" => phases[step],
+           "phase" => phase,
            "class" => css_class,
-           "id" => your_article_is_here_sign,
+           "id" => id, #your_article_is_here_sign,
            "reject_is_possible" => reject_is_possible,
            "children" => create_tree_from_phases(phases, step + 1, current_phase)
          }

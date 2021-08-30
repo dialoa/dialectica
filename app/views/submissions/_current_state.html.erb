@@ -74,13 +74,13 @@
 
     const link = g.append("g")
       .attr("fill", "none")
-      .attr("stroke", "blue")
+      .attr("stroke", "black")
       .attr("stroke-opacity", 0.6)
       .attr("stroke-width", 3)
     .selectAll("path")
       .data(root.links())
       .join("path")
-        .attr("d", d => arrowTo(d));
+        .attr("d", d => arrowTo(d.source, d.target));
   //      .attr("d", d3.linkHorizontal()
   //          .x(d => d.x)
   //          .y(d => d.y));
@@ -111,6 +111,7 @@
           .attr("width", standard_box_size.width)
           .attr("height", standard_box_size.height)
           .attr("id", d => `${d.data.id}`)
+        //  .attr("id", d => `${d.data.phase}`)
           .attr("class", d => `${d.data.reject_is_possible}`)
           //.attr("class", d => `${d.data.class}`)
           .append("xhtml:div")
@@ -122,6 +123,8 @@
           add_your_article_is_here_sign("#diagram");
 
           add_possible_reject_signs("#diagram");
+
+          add_loop("#diagram");
 
     return svg.node();
   }
@@ -384,12 +387,27 @@
                   .attr("height", standard_box_size.height)
                   .attr("id", "your_article_is_here_sign")
                   .append("xhtml:div")
-                  //.attr("id", "your_article_is_here_sign")
                   .style("font", standart_font)
                   .html(`<i class="fas fa-arrow-left"></i> <b>your article is here</b>`);
 
 
       return svg.node();
+  }
+
+  function add_loop(container){
+    current_phase = d3.select("#your_article_is_here_sign");
+    g = current_phase.select(function() { return this.parentNode; })
+
+    g.append("foreignObject")
+      //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
+      .attr("x", -standard_box_size.width / 1.7)
+      .attr("width", standard_box_size.width)
+      .attr("height", standard_box_size.height)
+      //.attr("id", "your_article_is_here_sign_swiggel")
+      .append("xhtml:div")
+      //.attr("id", "your_article_is_here_sign")
+      .style("font", standart_font)
+      .html(`<i class="fas fa-arrow-left"></i> <b>article needs revision</b>`);
   }
 
   function add_possible_reject_signs(container){
@@ -405,8 +423,18 @@
         //.attr("id", "your_article_is_here_sign_swiggel")
           .append("xhtml:div")
           .style("font", standart_font)
-          .attr("class", rejected_class)
-          .html(`<b>rejected</b>`);
+          .attr("class", "bg-secondary rounded p-1 text-white text-center")
+          .html(`<b>article is rejected</b>`);
+
+          d3.selectAll(".reject_is_possible")
+          .select(function() { return this.parentNode; })
+          .append("path")
+            .attr("d", d => generateArrow(0, standard_box_size.height/2, standard_box_size.width, standard_box_size.height/2, 15, standard_box_size.width / 1.6, 15))
+            //.attr("d", d => arrowTo({"x": 0, "y": 0}, {"x": standard_box_size.width, "y": 0}))
+            .attr("fill", "none")
+            .attr("stroke", "black")
+            .attr("stroke-opacity", 0.6)
+            .attr("stroke-width", 3)
 
   }
 
@@ -415,12 +443,9 @@
   function add_your_article_is_here_sign(container) {
 
     //const svg = d3.select(container).select("svg");
-
-    current_phase = d3.select("#your_article_is_here_sign");
-    g = current_phase.select(function() { return this.parentNode; })
-
-
-    g.append("foreignObject")
+    d3.selectAll(".your_article_is_here_sign")
+      .select(function() { return this.parentNode.parentNode; })
+      .append("foreignObject")
       //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
       .attr("x", standard_box_size.width / 1.7)
       .attr("width", standard_box_size.width)
@@ -501,11 +526,16 @@
     `;
   }
 
-   function arrowTo(d) {
-    var y0 = d.source.y;
-    var x0 = d.source.x;
-    var x1 = d.target.x;
-    var y1 = d.target.y;
+   function arrowTo(source, target) {
+    //var y0 = d.source.y;
+    //var x0 = d.source.x;
+    //var x1 = d.target.x;
+    //var y1 = d.target.y;
+
+    var y0 = source.y;
+    var x0 = source.x;
+    var x1 = target.x;
+    var y1 = target.y;
 
     var arrow = generateArrow(x0, y0, x1, y1, 15, 30, 15);
 
@@ -518,6 +548,7 @@
     var x0 = d.source.x;
     var x1 = d.target.x;
     var y1 = d.target.y;
+
 
     var arrow = generateArrow(x0, y0, x1, y1, 15, 25, 25);
 
