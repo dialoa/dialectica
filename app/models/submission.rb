@@ -189,12 +189,26 @@ relevant box:
       "editor assesses article",
       "article sent to reviewers",
       "editor assesses reviews",
-      "article is accepted",
-      "article is in production",
-      "article is published",
       "revisons required",
       "author submits revised article",
-      "rejected"
+      "article is accepted",
+      "article is in production",
+      "article is published"
+    ]
+  end
+
+  def self.phases2
+    #["submitted", "published"]
+    [
+      "author submits article",
+      "editor assesses article",
+      "article sent to reviewers",
+      "editor assesses reviews",
+      "revisons required",
+      "author submits revised article",
+      "article is accepted",
+      "article is in production",
+      "article is published"
     ]
   end
 
