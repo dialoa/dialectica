@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
   var cachedWidth = $(window).width();
-  var margin = ({top: 10, right: 10, bottom: 10, left: 10});
+  var margin = ({top: 20, right: 10, bottom: 10, left: 10});
   var standard_box_size = ({width: 200, height: 25});
   var standart_font = "13px 'Helvetica Neue'";
   var standard_class = "bg-first-color rounded p-1 text-white text-center";
@@ -73,6 +73,16 @@
           x: 1,
           y: 4,
         },
+        {
+          id: 8,
+          x: 1,
+          y: 5,
+        },
+        {
+          id: 9,
+          x: 1,
+          y: 6,
+        },
       ],
       links: [
         {source: 1, target: 2},
@@ -80,10 +90,18 @@
         {source: 3, target: 4},
         {source: 4, target: 5},
         {source: 5, target: 6},
+        {source: 6, target: 3},
+        {source: 4, target: 7},
+        {source: 7, target: 8},
+        {source: 8, target: 9},
       ]
     };
 
     var width = $("#diagram").width();
+
+    var x_distance_between_nodes = width/4;
+    var y_distance_between_nodes = 150;
+
     const svg = d3.select(container).append('svg')
     .attr("width", width)
     .attr("height", 2500)
@@ -101,14 +119,14 @@
        .enter();
          node.append("circle")
            .attr("r", 10)
-           .attr("cx", d => d.x * 300)
-           .attr("cy", d => d.y * 200)
+           .attr("cx", d => d.x * x_distance_between_nodes)
+           .attr("cy", d => d.y * y_distance_between_nodes)
            .attr("id", d => `circle-${d.id}`);
 
            node.append("text")
-             .attr("x", d => (d.x * 300)+15)
-             .attr("y", d => d.y * 200)
-            .text(function(d) { return `${d.id} - ${d.x * 300}, ${d.y * 200}`; });
+             .attr("x", d => (d.x * x_distance_between_nodes)+15)
+             .attr("y", d => d.y * y_distance_between_nodes)
+            .text(function(d) { return `${d.id}`; });
 
        const link = g.append("g")
          .attr("fill", "none")
@@ -118,7 +136,7 @@
        .selectAll("path")
          .data(dataset.links)
          .join("path")
-           .attr("d", d => arrowTo({x: d3.select(`#circle-${d.source}`).attr("cx")/1, y: d3.select(`#circle-${d.source}`).attr("cy")/1}, {x: d3.select(`#circle-${d.target}`).attr("cx"), y: d3.select(`#circle-${d.target}`).attr("cy")}));
+           .attr("d", d => arrowTo({x: d3.select(`#circle-${d.source}`).attr("cx")/1, y: d3.select(`#circle-${d.source}`).attr("cy")/1}, {x: d3.select(`#circle-${d.target}`).attr("cx")/1, y: d3.select(`#circle-${d.target}`).attr("cy")/1}));
 
 
   }
