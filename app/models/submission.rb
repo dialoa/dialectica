@@ -185,15 +185,31 @@ relevant box:
   def self.phases
     #["submitted", "published"]
     [
-      "author submits article",
-      "editor assesses article",
-      "article sent to reviewers",
-      "editor assesses reviews",
-      "revisons required",
-      "author submits revised article",
-      "article is accepted",
-      "article is in production",
-      "article is published"
+      {
+        "name": "author submits article",
+        "position": "1",
+        "direction": "down",
+      },
+      {
+        "name": "editor assesses article",
+        "position": "2",
+        "direction": "down"
+      },
+      {
+        "name": "article sent to reviewers",
+        "position": "3",
+        "direction": "down"
+      },
+      {
+        "name": "editor assesses reviews",
+        "position": "4",
+        "direction": "left"
+      },
+      {
+        "name": "revisons required",
+        "position": "5",
+        "direction": "up"
+      }
     ]
   end
 
@@ -232,9 +248,9 @@ relevant box:
 
    def peer_review_process
 
-     phases = Submission.stem_phases
+     phases = Submission.phases
 
-     current_phase = "article sent to reviewers"
+     current_phase = Submission.phases[2]
 
      tree = create_tree_from_phases(phases, 0, current_phase)
 
@@ -247,7 +263,7 @@ relevant box:
      css_class = ""
      your_article_is_here_sign = ""
      reject_is_possible = ""
-     phase = phases[step].parameterize
+     phase = phases[step][:name].parameterize
      id = phase
 
      if phases[step] == current_phase
@@ -258,29 +274,27 @@ relevant box:
         css_class = "bg-success rounded p-1 text-white text-center"
      end
 
-     if Submission.phases_where_reject_is_possible.include?(phases[step])
-       reject_is_possible = "reject_is_possible"
-     end
-
      if step == phases.length - 1
        [
          {
-           "content" => phases[step],
+           "content" => phases[step][:name],
            "phase" => phase,
            "class" => css_class,
            "id" => id, #your_article_is_here_sign,
            "reject_is_possible" => reject_is_possible,
+           "direction" => phases[step][:direction],
            "children" => []
          }
        ]
      else
        [
          {
-           "content" => phases[step],
+           "content" => phases[step][:name],
            "phase" => phase,
            "class" => css_class,
            "id" => id, #your_article_is_here_sign,
            "reject_is_possible" => reject_is_possible,
+           "direction" => phases[step][:direction],
            "children" => create_tree_from_phases(phases, step + 1, current_phase)
          }
        ]

@@ -20,21 +20,109 @@
   var padding2 = 10;
   var stroke_width = 2.5;
 
-  drawTree("#diagram");
+  //drawTree("#diagram");
+  drawFlowChart("#diagram")
 
   $( window ).resize(function() {
 
   var newWidth = $(window).width();
   if(newWidth !== cachedWidth){
-    $("#diagram").empty();
-    drawTree("#diagram");
+    //$("#diagram").empty();
+    //drawTree("#diagram");
     cachedWidth = newWidth;
   }
 
 });
 
-  //functions
 
+  function drawFlowChart(container){
+    const dataset =  {
+      nodes: [
+        {
+          id: 1,
+          x: 1,
+          y: 0,
+        },
+        {
+          id: 2,
+          x: 1,
+          y: 1,
+        },
+        {
+          id: 3,
+          x: 1,
+          y: 2,
+        },
+        {
+          id: 4,
+          x: 1,
+          y: 3,
+        },
+        {
+          id: 5,
+          x: 0,
+          y: 3,
+        },
+        {
+          id: 6,
+          x: 0,
+          y: 2,
+        },
+        {
+          id: 7,
+          x: 1,
+          y: 4,
+        },
+      ],
+      links: [
+        {source: 1, target: 2},
+        {source: 2, target: 3},
+        {source: 3, target: 4},
+        {source: 4, target: 5},
+        {source: 5, target: 6},
+      ]
+    };
+
+    var width = $("#diagram").width();
+    const svg = d3.select(container).append('svg')
+    .attr("width", width)
+    .attr("height", 2500)
+    .style("overflow", "scroll");
+
+    const g = svg.append("g")
+      .attr("font-family", "sans-serif")
+      .attr("transform", `translate(${width/3},${margin.top})`);
+
+    // Initialize the nodes
+    const node = g.append("g")
+       //.attr("class", "nodes")
+       .selectAll("circle")
+       .data(dataset.nodes)
+       .enter();
+         node.append("circle")
+           .attr("r", 10)
+           .attr("cx", d => d.x * 300)
+           .attr("cy", d => d.y * 200)
+           .attr("id", d => `circle-${d.id}`);
+
+           node.append("text")
+             .attr("x", d => (d.x * 300)+15)
+             .attr("y", d => d.y * 200)
+            .text(function(d) { return `${d.id} - ${d.x * 300}, ${d.y * 200}`; });
+
+       const link = g.append("g")
+         .attr("fill", "none")
+         .attr("stroke", "black")
+         .attr("stroke-opacity", 1.0)
+         .attr("stroke-width", stroke_width)
+       .selectAll("path")
+         .data(dataset.links)
+         .join("path")
+           .attr("d", d => arrowTo({x: d3.select(`#circle-${d.source}`).attr("cx")/1, y: d3.select(`#circle-${d.source}`).attr("cy")/1}, {x: d3.select(`#circle-${d.target}`).attr("cx"), y: d3.select(`#circle-${d.target}`).attr("cy")}));
+
+
+  }
+  //functions
   function drawTree(container){
 
     var data = <%= raw "#{submission.peer_review_process.to_json}" %>;
@@ -44,9 +132,13 @@
     const hierarchy = d3.hierarchy(data);
     hierarchy.dx = standard_box_size.width; //20;
     hierarchy.dy = standard_box_size.height * 3; //width / (root.height + 1);
-    const root = d3.tree().nodeSize([hierarchy.dx, hierarchy.dy])(hierarchy);
+    //const root = d3.tree().nodeSize([hierarchy.dx, hierarchy.dy])(hierarchy);
+    const root = d3.tree().size([200, 400])(hierarchy);
 
-    var height = root.height * (standard_box_size.height * 3.4);
+    console.log(root);
+
+    var height = 600;
+    //var height = root.height * (standard_box_size.height * 3.4);
 
     const svg = d3.select(container).append('svg')
     .attr("width", width + margin.right + margin.left)
@@ -96,8 +188,8 @@
       .delay(function(d,i){return(i*300)});
 
       add_your_article_is_here_sign("#diagram");
-      add_possible_reject_signs("#diagram");
-      add_loop("#diagram");
+      //add_possible_reject_signs("#diagram");
+      //add_loop("#diagram");
   		$("#diagram").scrollLeft(width/2 - standard_box_size.width/1.8);
 
       return svg.node();
@@ -291,6 +383,12 @@
     var x0 = source.x;
     var x1 = target.x;
     var y1 = target.y;
+    console.log("ARROWTO");
+    console.log(x0);
+    console.log(y0);
+    console.log(x1);
+    console.log(y1);
+
 
     var arrow = generateArrow(x0, y0, x1, y1, 15, 30, 15);
 
