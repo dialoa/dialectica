@@ -36,7 +36,7 @@
 
 
   function drawFlowChart(container){
-    const dataset =  {
+    const datasetx =  {
       nodes: [
         {
           id: 1,
@@ -106,6 +106,8 @@
         {source: 8, target: 9},
       ]
     };
+
+    const dataset = <%= raw submission.flow_chart.to_json %>;
 
     var width = $("#diagram").width();
 

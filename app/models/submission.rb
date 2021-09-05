@@ -182,6 +182,81 @@ relevant box:
     old_submissions.update_all(dead: "true")
   end
 
+  def flow_chart
+    dataset =  {
+      "nodes": [
+        {
+          "id": 1,
+          "x": 1,
+          "y": 0,
+          "active_phase": false,
+          "class": "bg-success"
+        },
+        {
+          "id": 2,
+          "x": 1,
+          "y": 1,
+        },
+        {
+          "id": 3,
+          "x": 1,
+          "y": 2,
+        },
+        {
+          "id": 4,
+          "x": 1,
+          "y": 3,
+        },
+        {
+          "id": 5,
+          "x": 0,
+          "y": 3,
+        },
+        {
+          "id": 6,
+          "x": 0,
+          "y": 2,
+        },
+        {
+          "id": 7,
+          "x": 1,
+          "y": 4,
+        },
+        {
+          "id": 8,
+          "x": 1,
+          "y": 5,
+        },
+        {
+          "id": 9,
+          "x": 1,
+          "y": 6,
+        },
+        {
+          "id": "reject1",
+          "x": 2,
+          "y": 1,
+        },
+        {
+          "id": "reject2",
+          "x": 2,
+          "y": 3,
+        },
+      ],
+      "links": [
+        {"source": 1, "target": 2},
+        {"source": 2, "target": 3},
+        {"source": 3, "target": 4},
+        {"source": 4, "target": 5},
+        {"source": 5, "target": 6},
+        {"source": 6, "target": 3},
+        {"source": 4, "target": 7},
+        {"source": 7, "target": 8},
+        {"source": 8, "target": 9},
+      ]
+    }
+  end
+
   def self.phases
     #["submitted", "published"]
     [
