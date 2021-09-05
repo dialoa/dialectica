@@ -186,61 +186,49 @@ relevant box:
     dataset =  {
       "nodes": [
         {
-          "id": 1,
+          "phase_id": 1,
           "x": 1,
           "y": 0,
-          "active_phase": false,
-          "class": "bg-success"
         },
         {
-          "id": 2,
+          "phase_id": 2,
           "x": 1,
           "y": 1,
         },
         {
-          "id": 3,
+          "phase_id": 3,
           "x": 1,
           "y": 2,
         },
         {
-          "id": 4,
+          "phase_id": 4,
           "x": 1,
           "y": 3,
         },
         {
-          "id": 5,
+          "phase_id": 5,
           "x": 0,
           "y": 3,
         },
         {
-          "id": 6,
+          "phase_id": 6,
           "x": 0,
           "y": 2,
         },
         {
-          "id": 7,
+          "phase_id": 7,
           "x": 1,
           "y": 4,
         },
         {
-          "id": 8,
+          "phase_id": 8,
           "x": 1,
           "y": 5,
         },
         {
-          "id": 9,
+          "phase_id": 9,
           "x": 1,
           "y": 6,
-        },
-        {
-          "id": "reject1",
-          "x": 2,
-          "y": 1,
-        },
-        {
-          "id": "reject2",
-          "x": 2,
-          "y": 3,
         },
       ],
       "links": [
@@ -255,9 +243,28 @@ relevant box:
         {"source": 8, "target": 9},
       ]
     }
+
+    dataset[:nodes].each do |node|
+      phase_id = node[:phase_id].to_i
+      node[:id] = "#{Submission.phases[phase_id-1].parameterize}"
+      current_phase = Submission.phases[3]
+      current_phase_index = Submission.phases.index(current_phase)
+
+      if phase_id == current_phase_index
+        css_class = "bg-info rounded p-1 text-white text-center your_article_is_here_sign"
+      elsif phase_id > current_phase_index
+        css_class = "bg-secondary rounded p-1 text-white text-center"
+       elsif phase_id < current_phase_index
+        css_class = "bg-success rounded p-1 text-white text-center"
+      end
+
+      node[:class] = css_class
+    end
+
+    return dataset
   end
 
-  def self.phases
+  def self.phases2
     #["submitted", "published"]
     [
       {
@@ -288,7 +295,7 @@ relevant box:
     ]
   end
 
-  def self.phases2
+  def self.phases
     #["submitted", "published"]
     [
       "author submits article",
@@ -338,7 +345,7 @@ relevant box:
      css_class = ""
      your_article_is_here_sign = ""
      reject_is_possible = ""
-     phase = phases[step][:name].parameterize
+     #phase = phases[step][:name].parameterize
      id = phase
 
      if phases[step] == current_phase

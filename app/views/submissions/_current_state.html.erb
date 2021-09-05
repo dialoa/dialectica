@@ -133,7 +133,8 @@
            .attr("r", 10)
            .attr("cx", d => d.x * x_distance_between_nodes)
            .attr("cy", d => d.y * y_distance_between_nodes)
-           .attr("id", d => `circle-${d.id}`);
+           .attr("id", d => `${d.id}`)
+           .attr("phase_id", d => `${d.phase_id}`);
 
            node.append("text")
              .attr("x", d => (d.x * x_distance_between_nodes)+15)
@@ -148,14 +149,14 @@
        .selectAll("path")
          .data(dataset.links)
          .join("path")
-           .attr("d", d => arrowTo({x: d3.select(`#circle-${d.source}`).attr("cx")/1, y: d3.select(`#circle-${d.source}`).attr("cy")/1}, {x: d3.select(`#circle-${d.target}`).attr("cx")/1, y: d3.select(`#circle-${d.target}`).attr("cy")/1}));
+           .attr("d", d => arrowTo({x: d3.select(`[phase_id='${d.source}']`).attr("cx")/1, y: d3.select(`[phase_id='${d.source}']`).attr("cy")/1}, {x: d3.select(`[phase_id='${d.target}']`).attr("cx")/1, y: d3.select(`[phase_id='${d.target}']`).attr("cy")/1}));
 
 
   }
   //functions
   function drawTree(container){
 
-    var data = <%= raw "#{submission.peer_review_process.to_json}" %>;
+    //var data = <%#= raw "#{submission.peer_review_process.to_json}" %>;
 
     var width = standard_box_size.width * 3.8;
 
