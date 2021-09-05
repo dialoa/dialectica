@@ -246,7 +246,9 @@ relevant box:
 
     dataset[:nodes].each do |node|
       phase_id = node[:phase_id].to_i
-      node[:id] = "#{Submission.phases[phase_id-1].parameterize}"
+      text = Submission.phases[phase_id-1]
+      node[:id] = text.parameterize
+      node[:text] = text
       current_phase = Submission.phases[3]
       current_phase_index = Submission.phases.index(current_phase)
 

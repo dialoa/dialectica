@@ -11,10 +11,6 @@
   var margin = ({top: 20, right: 10, bottom: 10, left: 10});
   var standard_box_size = ({width: 200, height: 25});
   var standart_font = "13px 'Helvetica Neue'";
-  var standard_class = "bg-first-color rounded p-1 text-white text-center";
-  var success_class = "bg-success rounded p-1 text-white text-center";
-  var rejected_class = "bg-danger rounded p-1 text-white text-center";
-  var information_class = "bg-info rounded p-1 text-white text-center";
   var flangeSize = 10;
   var padding1 = standard_box_size.height + 5;
   var padding2 = 10;
@@ -27,7 +23,8 @@
 
   var newWidth = $(window).width();
   if(newWidth !== cachedWidth){
-    //$("#diagram").empty();
+    $("#diagram").empty();
+    drawFlowChart("#diagram")
     //drawTree("#diagram");
     cachedWidth = newWidth;
   }
@@ -36,83 +33,15 @@
 
 
   function drawFlowChart(container){
-    const datasetx =  {
-      nodes: [
-        {
-          id: 1,
-          x: 1,
-          y: 0,
-        },
-        {
-          id: 2,
-          x: 1,
-          y: 1,
-        },
-        {
-          id: 3,
-          x: 1,
-          y: 2,
-        },
-        {
-          id: 4,
-          x: 1,
-          y: 3,
-        },
-        {
-          id: 5,
-          x: 0,
-          y: 3,
-        },
-        {
-          id: 6,
-          x: 0,
-          y: 2,
-        },
-        {
-          id: 7,
-          x: 1,
-          y: 4,
-        },
-        {
-          id: 8,
-          x: 1,
-          y: 5,
-        },
-        {
-          id: 9,
-          x: 1,
-          y: 6,
-        },
-        {
-          id: "reject1",
-          x: 2,
-          y: 1,
-        },
-        {
-          id: "reject2",
-          x: 2,
-          y: 3,
-        },
-      ],
-      links: [
-        {source: 1, target: 2},
-        {source: 2, target: 3},
-        {source: 3, target: 4},
-        {source: 4, target: 5},
-        {source: 5, target: 6},
-        {source: 6, target: 3},
-        {source: 4, target: 7},
-        {source: 7, target: 8},
-        {source: 8, target: 9},
-      ]
-    };
-
     const dataset = <%= raw submission.flow_chart.to_json %>;
-
     var width = $("#diagram").width();
 
     var x_distance_between_nodes = width/4;
-    var y_distance_between_nodes = 150;
+    var y_distance_between_nodes = 100;
+    var box_size = {
+      width: width/5,
+      height: 50,
+    }
 
     const svg = d3.select(container).append('svg')
     .attr("width", width)
@@ -130,26 +59,44 @@
        .data(dataset.nodes)
        .enter();
          node.append("circle")
-           .attr("r", 10)
-           .attr("cx", d => d.x * x_distance_between_nodes)
+           .attr("r", 0)
+           .attr("cx", d => (d.x * x_distance_between_nodes))
            .attr("cy", d => d.y * y_distance_between_nodes)
            .attr("id", d => `${d.id}`)
            .attr("phase_id", d => `${d.phase_id}`);
 
-           node.append("text")
-             .attr("x", d => (d.x * x_distance_between_nodes)+15)
-             .attr("y", d => d.y * y_distance_between_nodes)
-            .text(function(d) { return `${d.id}`; });
+           const link = g.append("g")
+             .attr("fill", "none")
+             .attr("stroke", "black")
+             .attr("stroke-opacity", 0.0)
+             .attr("stroke-width", stroke_width)
+             .selectAll("path")
+               .data(dataset.links)
+               .join("path")
+                 .attr("d", d => arrowTo({x: d3.select(`[phase_id='${d.source}']`).attr("cx")/1, y: d3.select(`[phase_id='${d.source}']`).attr("cy")/1}, {x: d3.select(`[phase_id='${d.target}']`).attr("cx")/1, y: d3.select(`[phase_id='${d.target}']`).attr("cy")/1}))
+                 .transition()
+                 .duration(3000)
+                 .style("stroke-opacity", 1.0)
+                 .delay(function(d,i){return(i*200)});
 
-       const link = g.append("g")
-         .attr("fill", "none")
-         .attr("stroke", "black")
-         .attr("stroke-opacity", 1.0)
-         .attr("stroke-width", stroke_width)
-       .selectAll("path")
-         .data(dataset.links)
-         .join("path")
-           .attr("d", d => arrowTo({x: d3.select(`[phase_id='${d.source}']`).attr("cx")/1, y: d3.select(`[phase_id='${d.source}']`).attr("cy")/1}, {x: d3.select(`[phase_id='${d.target}']`).attr("cx")/1, y: d3.select(`[phase_id='${d.target}']`).attr("cy")/1}));
+
+            node.append("foreignObject")
+              .attr("x", d => (d.x * x_distance_between_nodes) - (box_size.width/2))
+              .attr("y", d => (d.y * y_distance_between_nodes))
+              .attr("width", box_size.width)
+              .attr("height", box_size.height)
+              .attr("id", d => `${d.id}`)
+              .append("xhtml:div")
+              .attr("class", d => `${d.class}`)
+              .style("opacity", 0.0)
+              .style("font", standart_font)
+              .html(d => `<b>${d.text}</b>`)
+              .transition()
+              .duration(3000)
+              .style("opacity", 1.0)
+              .delay(function(d,i){return(i*300)});
+
+
 
 
   }
