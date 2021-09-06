@@ -7,6 +7,7 @@
 </div>
 
 <script type="text/javascript">
+
   var cachedWidth = $(window).width();
   var margin = ({top: 20, right: 10, bottom: 10, left: 10});
   var standard_box_size = ({width: 200, height: 25});
@@ -44,41 +45,80 @@
     }
 
     const svg = d3.select(container).append('svg')
+    //	  .attr("viewBox", [-margin.left, -margin.top, width, height])
     .attr("width", width)
     .attr("height", 2000)
     .style("overflow", "scroll");
 
-    const mainG = svg.append("g")
+    const gNode = svg.append("g")
       .attr("font-family", "sans-serif")
       .attr("transform", `translate(${width/3},${margin.top})`);
 
     // Initialize the nodes
-    const node = mainG.append("g")
-       .data(dataset.nodes)
-       .enter();
+    const node = gNode.selectAll("g")
+       .data(dataset.nodes);
+       //.enter();
+    const nodeEnter = node.enter().append("g")
+    .attr("transform", d => `translate(${d.x * x_distance_between_nodes},${d.y * y_distance_between_nodes})`)
+    .attr("x",  d => `${d.x * x_distance_between_nodes}`)
+    .attr("y",  d => `${d.y * y_distance_between_nodes}`)
+    .attr("id", d => `${d.id}`)
+    .attr("phase_id", d => `${d.phase_id}`);
 
-       node.append("circle")
-           .attr("r", 10)
-           //.attr("cx", d => (d.x * x_distance_between_nodes))
-           //.attr("cy", d => d.y * y_distance_between_nodes)
-           .attr("id", d => `${d.id}`)
-           .attr("phase_id", d => `${d.phase_id}`);
+    //nodeEnter.append("circle")
+    //  .attr("r", 2);
 
-           const link = mainG.append("g")
-             .attr("fill", "none")
-             .attr("stroke", "black")
-             .attr("stroke-opacity", 0.0)
-             .attr("stroke-width", stroke_width)
-             .selectAll("path")
-               .data(dataset.links)
-               .join("path")
-                 .attr("d", d => arrowTo({x: d3.select(`[phase_id='${d.source}']`).attr("cx")/1, y: d3.select(`[phase_id='${d.source}']`).attr("cy")/1}, {x: d3.select(`[phase_id='${d.target}']`).attr("cx")/1, y: d3.select(`[phase_id='${d.target}']`).attr("cy")/1}))
-                 .transition()
-                 .duration(3000)
-                 .style("stroke-opacity", 1.0)
-                 .delay(function(d,i){return(i*200)});
+      nodeEnter.append("foreignObject")
+          .attr("x", d => -box_size.width/2)
+          .attr("width", box_size.width)
+          .attr("height", box_size.height)
+          .attr("id", d => `${d.id}`)
+          .attr("your_article_is_here_sign", d => `${d.your_article_is_here_sign}`)
+            .append("xhtml:div")
+            .attr("class", d => `${d.class}`)
+            .style("opacity", 0.0)
+            .style("font", standart_font)
+            .html(d => `<b>${d.text}</b>`)
+            .transition()
+            .duration(3000)
+            .style("opacity", 1.0)
+            .delay(function(d,i){return(i*300)});
+
+      const your_article_is_here_sign = nodeEnter.filter(function(d){ return d.your_article_is_here_sign == "yes"; })
+          .append("foreignObject")
+          .attr("x", box_size.width/2)
+          .attr("y", box_size.height/2)
+          .attr("width", box_size.width)
+          .attr("height", box_size.height)
+          .attr("id", "swiggel_this_element")
+            .append("xhtml:div")
+            //.attr("class", d => `${d.class}`)
+            .style("opacity", 0.0)
+            .style("font", standart_font)
+            .html(d => `<b>↖ your article is here</b>`)
+            .transition()
+            .duration(3000)
+            .style("opacity", 1.0)
+            .delay(function(d,i){return(i*300)});
+
+            swiggel();
 
 
+     const link = gNode.append("g")
+       .attr("fill", "none")
+       .attr("stroke", "black")
+       .attr("stroke-opacity", 0.0)
+       .attr("stroke-width", stroke_width)
+       .selectAll("path")
+         .data(dataset.links)
+         .join("path")
+           .attr("d", d => arrowTo({x: d3.select(`[phase_id='${d.source}']`).attr("x")/1, y: d3.select(`[phase_id='${d.source}']`).attr("y")/1}, {x: d3.select(`[phase_id='${d.target}']`).attr("x")/1, y: d3.select(`[phase_id='${d.target}']`).attr("y")/1}))
+           .transition()
+           .duration(3000)
+           .style("stroke-opacity", 1.0)
+           .delay(function(d,i){return(i*200)});
+
+/*
           const  box = node.append("foreignObject")
               .attr("x", d => (d.x * x_distance_between_nodes) - (box_size.width/2))
               .attr("y", d => (d.y * y_distance_between_nodes))
@@ -105,6 +145,7 @@
                 .style("font", standart_font)
                 .html(`<b>↖ your article is here</b>`);
 
+*/
               //add_your_article_is_here_sign("#diagram");
   }
   //functions
@@ -302,22 +343,15 @@
   }
 
   function swiggel() {
-    d3.select("#your_article_is_here_sign_swiggel")
+    d3.select("#swiggel_this_element")
     .transition()
     .ease(d3.easeLinear)
     .duration(750)
-    //.attr("x", function (d) { return this.x + 100})
     .attr("transform", `translate(${5},${5})`)
-    //.attr("transform", `translate(${this.x}, 0)`)
     .transition()
     .ease(d3.easeLinear)
     .duration(750)
     .attr("transform", `translate(${-5},${-5})`)
-
-  //  .attr('x', 920)     // move the circle to 920 on the x axis
-  //  .transition()        // apply a transition
-  //  .duration(2000)      // apply it over 2000 milliseconds
-  //  .attr('x', 40)      // return the circle to 40 on the x axis
     .on("end", swiggel);  // when the transition finishes start again
   };
 
@@ -371,12 +405,6 @@
     var x0 = source.x;
     var x1 = target.x;
     var y1 = target.y;
-    console.log("ARROWTO");
-    console.log(x0);
-    console.log(y0);
-    console.log(x1);
-    console.log(y1);
-
 
     var arrow = generateArrow(x0, y0, x1, y1, 15, 30, 15);
 
