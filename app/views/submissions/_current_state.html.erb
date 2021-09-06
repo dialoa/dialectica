@@ -239,8 +239,13 @@
         .attr("height", standard_box_size.height)
           .append("xhtml:div")
           .style("font", standart_font)
+          .style("opacity", 0)
           .attr("class", "bg-secondary rounded p-1 text-white text-center")
-          .html(`<b>article needs revisions</b>`);
+          .html(`<b>article needs revisions</b>`)
+          .transition()
+          .duration(3000)
+          .style("opacity", 1.0)
+          .delay(function(d,i){return(i*300)});
 
           //first path
         d3.selectAll("#editor-assesses-reviews")
@@ -264,8 +269,13 @@
             .attr("height", standard_box_size.height)
               .append("xhtml:div")
               .style("font", standart_font)
+              .style("opacity", 0)
               .attr("class", "bg-secondary rounded p-1 text-white text-center")
               .html(`<b>author resubmits article</b>`)
+              .transition()
+              .duration(3000)
+              .style("opacity", 1.0)
+              .delay(400);
 
             //second path
             d3.selectAll("#editor-assesses-reviews")
@@ -305,8 +315,13 @@
         //.attr("id", "your_article_is_here_sign_swiggel")
           .append("xhtml:div")
           .style("font", standart_font)
+          .style("opacity", 0)
           .attr("class", "bg-secondary rounded p-1 text-white text-center")
-          .html(`<b>article is rejected</b>`);
+          .html(`<b>article is rejected</b>`)
+          .transition()
+          .duration(3000)
+          .style("opacity", 1.0)
+          .delay(function(d,i){return(i*300)});
 
           d3.selectAll(".reject_is_possible")
           .select(function() { return this.parentNode; })
