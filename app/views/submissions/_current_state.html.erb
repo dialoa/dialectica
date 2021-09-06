@@ -45,28 +45,26 @@
 
     const svg = d3.select(container).append('svg')
     .attr("width", width)
-    .attr("height", 2500)
+    .attr("height", 2000)
     .style("overflow", "scroll");
 
-    const g = svg.append("g")
+    const mainG = svg.append("g")
       .attr("font-family", "sans-serif")
       .attr("transform", `translate(${width/3},${margin.top})`);
 
     // Initialize the nodes
-    const node = g.append("g")
-       //.attr("class", "nodes")
-       .selectAll("circle")
+    const node = mainG.append("g")
        .data(dataset.nodes)
        .enter();
 
-         const circle = node.append("circle")
-           .attr("r", 0)
-           .attr("cx", d => (d.x * x_distance_between_nodes))
-           .attr("cy", d => d.y * y_distance_between_nodes)
+       node.append("circle")
+           .attr("r", 10)
+           //.attr("cx", d => (d.x * x_distance_between_nodes))
+           //.attr("cy", d => d.y * y_distance_between_nodes)
            .attr("id", d => `${d.id}`)
            .attr("phase_id", d => `${d.phase_id}`);
 
-           const link = g.append("g")
+           const link = mainG.append("g")
              .attr("fill", "none")
              .attr("stroke", "black")
              .attr("stroke-opacity", 0.0)
