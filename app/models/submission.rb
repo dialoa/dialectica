@@ -254,11 +254,11 @@ relevant box:
       current_phase_index = Submission.phases.index(current_phase)
       if phase_id == current_phase_index
         node[:your_article_is_here_sign] = "yes"
-        css_class = "bg-info rounded p-1 text-white text-center"
+        css_class = "h-100 bg-info rounded p-1 text-white text-center d-flex justify-content-center align-items-center"
       elsif phase_id > current_phase_index
-        css_class = "bg-secondary rounded p-1 text-white text-center"
+        css_class = "h-100 bg-secondary rounded p-1 text-white text-center d-flex justify-content-center align-items-center"
        elsif phase_id < current_phase_index
-        css_class = "bg-success rounded p-1 text-white text-center"
+        css_class = "h-100 bg-success rounded p-1 text-white text-center d-flex justify-content-center align-items-center"
       end
 
       node[:class] = css_class
@@ -269,7 +269,7 @@ relevant box:
         "id": "rejected1",
         "phase_id": 10,
         "text": "rejected",
-        "class": "bg-danger rounded p-1 text-white text-center",
+        "class": "h-100 bg-secondary rounded p-1 text-white text-center d-flex justify-content-center align-items-center",
         "x": 2,
         "y": 1,
       }
@@ -280,7 +280,7 @@ relevant box:
         "id": "rejected2",
         "phase_id": 11,
         "text": "rejected",
-        "class": "bg-danger rounded p-1 text-white text-center",
+        "class": "h-100 bg-secondary rounded p-1 text-white text-center d-flex justify-content-center align-items-center",
         "x": 2,
         "y": 3,
       }
