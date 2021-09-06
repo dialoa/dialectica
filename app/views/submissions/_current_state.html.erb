@@ -59,7 +59,7 @@
        .data(dataset.nodes)
        .enter();
 
-         node.append("circle")
+         const circle = node.append("circle")
            .attr("r", 0)
            .attr("cx", d => (d.x * x_distance_between_nodes))
            .attr("cy", d => d.y * y_distance_between_nodes)
@@ -80,7 +80,8 @@
                  .style("stroke-opacity", 1.0)
                  .delay(function(d,i){return(i*200)});
 
-            box = node.append("foreignObject")
+
+          const  box = node.append("foreignObject")
               .attr("x", d => (d.x * x_distance_between_nodes) - (box_size.width/2))
               .attr("y", d => (d.y * y_distance_between_nodes))
               .attr("width", box_size.width)
