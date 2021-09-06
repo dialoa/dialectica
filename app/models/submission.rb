@@ -249,11 +249,12 @@ relevant box:
       text = Submission.phases[phase_id-1]
       node[:id] = text.parameterize
       node[:text] = text
+
       current_phase = Submission.phases[3]
       current_phase_index = Submission.phases.index(current_phase)
-
       if phase_id == current_phase_index
-        css_class = "bg-info rounded p-1 text-white text-center your_article_is_here_sign"
+        node[:your_article_is_here_sign] = "yes"
+        css_class = "bg-info rounded p-1 text-white text-center"
       elsif phase_id > current_phase_index
         css_class = "bg-secondary rounded p-1 text-white text-center"
        elsif phase_id < current_phase_index
@@ -262,6 +263,35 @@ relevant box:
 
       node[:class] = css_class
     end
+
+    dataset[:nodes].push(
+      {
+        "id": "rejected1",
+        "phase_id": 10,
+        "text": "rejected",
+        "class": "bg-danger rounded p-1 text-white text-center",
+        "x": 2,
+        "y": 1,
+      }
+    )
+
+    dataset[:nodes].push(
+      {
+        "id": "rejected2",
+        "phase_id": 11,
+        "text": "rejected",
+        "class": "bg-danger rounded p-1 text-white text-center",
+        "x": 2,
+        "y": 3,
+      }
+    )
+
+    dataset[:links].push(
+      {"source": 2, "target": 10},
+      {"source": 4, "target": 11},
+    )
+
+
 
     return dataset
   end

@@ -58,6 +58,7 @@
        .selectAll("circle")
        .data(dataset.nodes)
        .enter();
+
          node.append("circle")
            .attr("r", 0)
            .attr("cx", d => (d.x * x_distance_between_nodes))
@@ -79,14 +80,16 @@
                  .style("stroke-opacity", 1.0)
                  .delay(function(d,i){return(i*200)});
 
-
-            node.append("foreignObject")
+            box = node.append("foreignObject")
               .attr("x", d => (d.x * x_distance_between_nodes) - (box_size.width/2))
               .attr("y", d => (d.y * y_distance_between_nodes))
               .attr("width", box_size.width)
               .attr("height", box_size.height)
               .attr("id", d => `${d.id}`)
-              .append("xhtml:div")
+              .attr("your_article_is_here_sign", d => `${d.your_article_is_here_sign}`);
+
+
+              box.append("xhtml:div")
               .attr("class", d => `${d.class}`)
               .style("opacity", 0.0)
               .style("font", standart_font)
@@ -97,8 +100,13 @@
               .delay(function(d,i){return(i*300)});
 
 
+              box.filter(function(d){ return d.your_article_is_here_sign == "yes"; })
+              .append("xhtml:div")
+              //.attr("id", "your_article_is_here_sign")
+                .style("font", standart_font)
+                .html(`<b>↖ your article is here</b>`);
 
-
+              //add_your_article_is_here_sign("#diagram");
   }
   //functions
   function drawTree(container){
@@ -273,13 +281,16 @@
 
   function add_your_article_is_here_sign(container) {
 
+    //d3.select(`[your_article_is_here_sign='yes']`)
+
     //const svg = d3.select(container).select("svg");
-    d3.selectAll(".your_article_is_here_sign")
-      .select(function() { return this.parentNode.parentNode; })
+    //d3.selectAll(".your_article_is_here_sign")
+      //.select(function() { return this.parentNode.parentNode; })
+    d3.select(`[your_article_is_here_sign='yes']`)
       .append("foreignObject")
       //.attr("transform", d => `translate(${main_nodes[2].x - (standard_box_size.width / 2) + 125},${main_nodes[2].y + 25})`)
-      .attr("x", standard_box_size.width/3)
-      .attr("y", standard_box_size.height * 1.2)
+      .attr("x", 0)
+      .attr("y", 0)
       .attr("width", standard_box_size.width)
       .attr("height", standard_box_size.height)
       .attr("id", "your_article_is_here_sign_swiggel")
