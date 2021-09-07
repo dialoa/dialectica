@@ -97,33 +97,34 @@ class SubmissionsController < ApplicationController
 
     #@submissions_without_reviewers = Submission.includes(:users).where( :users => { :id => nil } )
     @submissions_without_reviewers = Submission.alive.not_blacklisted(current_user).left_outer_joins(:users).where( users: { id: nil } )
-    @submissions_with_reviewers = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id)).order(:appearance_date)
-    @submissions_with_one_reviewer = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id)).order(:appearance_date)
+    @submissions_with_reviewers = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id))
+    @submissions_with_one_reviewer = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id))
     @submissions_suggested_to_me = Submission.alive.not_blacklisted(current_user).where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
     @proposed_submissions = Submission.alive.not_blacklisted(current_user).where(proposed: "true")
     @dead_submissions = Submission.dead.not_blacklisted(current_user)
-    @submissions_to_be_reviewed_by_me = current_user.submissions.alive.not_blacklisted(current_user).order(:appearance_date)
-    @all_submissions = Submission.not_blacklisted(current_user).order(:appearance_date)
-    @all_open_submissions = Submission.alive.not_blacklisted(current_user).order(:appearance_date)
+    @submissions_to_be_reviewed_by_me = current_user.submissions.alive.not_blacklisted(current_user)
+    @all_submissions = Submission.not_blacklisted(current_user)
+    @all_open_submissions = Submission.alive.not_blacklisted(current_user)
 
     if @selection == "without_reviewers"
-      @submissions = @submissions_without_reviewers.order(:appearance_date)
+      @submissions = @submissions_without_reviewers
     elsif @selection == "with_reviewers"
-      @submissions = @submissions_with_reviewers.order(:appearance_date)
+      @submissions = @submissions_with_reviewers
     elsif @selection == "by_me"
-      @submissions = @submissions_to_be_reviewed_by_me.order(:appearance_date)
+      @submissions = @submissions_to_be_reviewed_by_me
     elsif @selection == "all"
-      @submissions = @all_submissions.order(:appearance_date)
+      @submissions = @all_submissions
     elsif @selection == "all_open"
-      @submissions = @all_open_submissions.order(:appearance_date)
+      @submissions = @all_open_submissions
     elsif @selection == "suggested_to_me"
-      @submissions = @submissions_suggested_to_me.order(:appearance_date)
+      @submissions = @submissions_suggested_to_me
     elsif @selection == "proposed_submissions"
-      @submissions = @proposed_submissions.order(:appearance_date)
+      @submissions = @proposed_submissions
     elsif @selection == "dead_submissions"
-      @submissions = @dead_submissions.order(:appearance_date)
+      @submissions = @dead_submissions
     end
-    @submissions.order(:appearance_date).reverse_order
+    @submissions = @submissions.order(:appearance_date).reverse_order
+    #@submissions.order(:appearance_date)
     #@submissions = Submission.all.order(:created_at)
     #@submissions.order(proposed: :asc, appearance_date: :desc)
     #submissions_with_reviewers = Submission.where.not(id: submissions_without_reviewers.pluck(:id))
