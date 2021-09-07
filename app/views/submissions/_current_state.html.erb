@@ -37,11 +37,11 @@
     const dataset = <%= raw submission.flow_chart.to_json %>;
     var width = $(window).width();
 
-    var x_distance_between_nodes = width/4;
-    var y_distance_between_nodes = 100;
+    var x_distance_between_nodes = width/3;
+    var y_distance_between_nodes = 120;
     var box_size = {
       width: width/5,
-      height: 50,
+      height: y_distance_between_nodes/2,
     }
 
     var height = 7 * (y_distance_between_nodes)
@@ -54,7 +54,7 @@
 
     const gNode = svg.append("g")
       .attr("font-family", "sans-serif")
-      .attr("transform", `translate(${box_size.width},${margin.top})`);
+      .attr("transform", `translate(${box_size.width/2},${margin.top})`);
 
     // Initialize the nodes
     const node = gNode.selectAll("g")
@@ -154,6 +154,13 @@
               //add_your_article_is_here_sign("#diagram");
   }
   //functions
+  function getSize(d) {
+    var bbox = this.getBBox(),
+        cbbox = this.parentNode.getBBox(),
+        scale = Math.min(cbbox.width/bbox.width, cbbox.height/bbox.height);
+    d.scale = scale;
+  }
+
   function drawTree(container){
 
     //var data = <%#= raw "#{submission.peer_review_process.to_json}" %>;
