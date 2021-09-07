@@ -182,6 +182,151 @@ relevant box:
     old_submissions.update_all(dead: "true")
   end
 
+  def flow_chart
+    dataset =  {
+      "nodes": [
+        {
+          "phase_id": 1,
+          "x": 1,
+          "y": 0,
+        },
+        {
+          "phase_id": 2,
+          "x": 1,
+          "y": 1,
+        },
+        {
+          "phase_id": 3,
+          "x": 1,
+          "y": 2,
+        },
+        {
+          "phase_id": 4,
+          "x": 1,
+          "y": 3,
+        },
+        {
+          "phase_id": 5,
+          "x": 0,
+          "y": 3,
+        },
+        {
+          "phase_id": 6,
+          "x": 0,
+          "y": 2,
+        },
+        {
+          "phase_id": 7,
+          "x": 1,
+          "y": 4,
+        },
+        {
+          "phase_id": 8,
+          "x": 1,
+          "y": 5,
+        },
+        {
+          "phase_id": 9,
+          "x": 1,
+          "y": 6,
+        },
+      ],
+      "links": [
+        {"source": 1, "target": 2},
+        {"source": 2, "target": 3},
+        {"source": 3, "target": 4},
+        {"source": 4, "target": 5},
+        {"source": 5, "target": 6},
+        {"source": 6, "target": 3},
+        {"source": 4, "target": 7},
+        {"source": 7, "target": 8},
+        {"source": 8, "target": 9},
+      ]
+    }
+
+    dataset[:nodes].each do |node|
+      phase_id = node[:phase_id].to_i
+      text = Submission.phases[phase_id-1]
+      node[:id] = text.parameterize
+      node[:text] = text
+
+      current_phase = Submission.phases[3]
+      current_phase_index = Submission.phases.index(current_phase)
+      if phase_id == current_phase_index
+        node[:your_article_is_here_sign] = "yes"
+        css_class = "h-100 bg-info rounded p-1 text-white text-center d-flex justify-content-center align-items-center"
+      elsif phase_id > current_phase_index
+        css_class = "h-100 bg-secondary rounded p-1 text-white text-center d-flex justify-content-center align-items-center"
+       elsif phase_id < current_phase_index
+        css_class = "h-100 bg-success rounded p-1 text-white text-center d-flex justify-content-center align-items-center"
+      end
+
+      node[:class] = css_class
+    end
+
+    dataset[:nodes].push(
+      {
+        "id": "rejected1",
+        "phase_id": 10,
+        "text": "rejected",
+        "class": "h-100 bg-secondary rounded p-1 text-white text-center d-flex justify-content-center align-items-center",
+        "x": 2,
+        "y": 1,
+      }
+    )
+
+    dataset[:nodes].push(
+      {
+        "id": "rejected2",
+        "phase_id": 11,
+        "text": "rejected",
+        "class": "h-100 bg-secondary rounded p-1 text-white text-center d-flex justify-content-center align-items-center",
+        "x": 2,
+        "y": 3,
+      }
+    )
+
+    dataset[:links].push(
+      {"source": 2, "target": 10},
+      {"source": 4, "target": 11},
+    )
+
+
+
+    return dataset
+  end
+
+  def self.phases2
+    #["submitted", "published"]
+    [
+      {
+        "name": "author submits article",
+        "position": "1",
+        "direction": "down",
+      },
+      {
+        "name": "editor assesses article",
+        "position": "2",
+        "direction": "down"
+      },
+      {
+        "name": "article sent to reviewers",
+        "position": "3",
+        "direction": "down"
+      },
+      {
+        "name": "editor assesses reviews",
+        "position": "4",
+        "direction": "left"
+      },
+      {
+        "name": "revisons required",
+        "position": "5",
+        "direction": "up"
+      }
+    ]
+  end
+
   def self.phases
     #["submitted", "published"]
     [
@@ -189,12 +334,11 @@ relevant box:
       "editor assesses article",
       "article sent to reviewers",
       "editor assesses reviews",
-      "article is accepted",
-      "article is in production",
-      "article is published",
       "revisons required",
       "author submits revised article",
-      "rejected"
+      "article is accepted",
+      "article is in production",
+      "article is published"
     ]
   end
 
@@ -218,9 +362,9 @@ relevant box:
 
    def peer_review_process
 
-     phases = Submission.stem_phases
+     phases = Submission.phases
 
-     current_phase = "article sent to reviewers"
+     current_phase = Submission.phases[2]
 
      tree = create_tree_from_phases(phases, 0, current_phase)
 
@@ -233,7 +377,7 @@ relevant box:
      css_class = ""
      your_article_is_here_sign = ""
      reject_is_possible = ""
-     phase = phases[step].parameterize
+     #phase = phases[step][:name].parameterize
      id = phase
 
      if phases[step] == current_phase
@@ -244,29 +388,27 @@ relevant box:
         css_class = "bg-success rounded p-1 text-white text-center"
      end
 
-     if Submission.phases_where_reject_is_possible.include?(phases[step])
-       reject_is_possible = "reject_is_possible"
-     end
-
      if step == phases.length - 1
        [
          {
-           "content" => phases[step],
+           "content" => phases[step][:name],
            "phase" => phase,
            "class" => css_class,
            "id" => id, #your_article_is_here_sign,
            "reject_is_possible" => reject_is_possible,
+           "direction" => phases[step][:direction],
            "children" => []
          }
        ]
      else
        [
          {
-           "content" => phases[step],
+           "content" => phases[step][:name],
            "phase" => phase,
            "class" => css_class,
            "id" => id, #your_article_is_here_sign,
            "reject_is_possible" => reject_is_possible,
+           "direction" => phases[step][:direction],
            "children" => create_tree_from_phases(phases, step + 1, current_phase)
          }
        ]
