@@ -15,12 +15,15 @@
     <h3>#<%= submission.id %></h3>
     <hr />
     <h4>history</h4>
-    <% if submission.submitted_by_user_id.blank? %>
+    <% if true# submission.submitted_by_user_id.blank? %>
     <div class="small">
         <div class="card card-body">
           <p>
-            Author - <%= l(submission.created_at, format: :usa) %> <br>
+            Author - <%= l(submission.created_at, format: :usa) %>
+            <br>
             submitted: "<%= submission.title %>"
+            <br />
+            comments: "<%= strip_tags(submission.comment) %>"
           </p>
         </div>
     </div>
@@ -60,7 +63,7 @@
         <% end %>
       <% end %>
       <% if true %>
-      <hr />
+      <br />
       <%= render 'external_referee_submissions/requested_referees_for_submission', submission: submission %>
       <% end %>
   </div>
