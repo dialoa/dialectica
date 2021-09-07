@@ -123,8 +123,9 @@ class SubmissionsController < ApplicationController
     elsif @selection == "dead_submissions"
       @submissions = @dead_submissions.order(:appearance_date)
     end
+    #@submissions.order(:appearance_date).reverse_order
     #@submissions = Submission.all.order(:created_at)
-
+    @submissions.order(proposed: :asc, appearance_date: :desc)
     #submissions_with_reviewers = Submission.where.not(id: submissions_without_reviewers.pluck(:id))
   end
 
@@ -223,8 +224,8 @@ Dear #{suggested_to_user.name}
   def withdraw_proposal_of_submission
     submission = Submission.find(params[:submission_id])
     submission.update(proposed: "false")
-    submission.add_to_history(current_user, "Withdrew proposal of Submission".downcase)
-    redirect_to submission_path(submission), notice: 'Submission proposal has been withdrawn'.downcase
+    submission.add_to_history(current_user, "Unproposed Submission".downcase)
+    redirect_to submission_path(submission), notice: 'Submission proposal has been unproposed'.downcase
   end
 
   def make_submission_dead
