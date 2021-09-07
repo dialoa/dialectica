@@ -1,16 +1,13 @@
 
   <!-- Footer -->
   <footer class="footer mt-auto py-5 bg-first-color">
-    <div class="container">
+    <div class="container text-center">
       <p class="m-0 text-center text-white">
-        Impressum |
-
       <% if user_signed_in? %>
-
-        <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "text-white") %> |
-        <%= link_to 'Edit account', edit_user_registration_path, class: "text-white" %>
+        <%= button_to 'Logout', destroy_user_session_path, :method => 'delete', class: "btn btn-primary" %>
+        <br />
+        <%= link_to 'Edit account', edit_user_registration_path, class: "btn btn-primary" %>
       <% else %>
-
         <%= link_to('Login', new_user_session_path, class: "text-white") %> |
         <%= link_to "Sign Up", new_user_registration_path, class:"text-white" %>
       <% end %>
