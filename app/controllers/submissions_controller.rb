@@ -123,9 +123,9 @@ class SubmissionsController < ApplicationController
     elsif @selection == "dead_submissions"
       @submissions = @dead_submissions.order(:appearance_date)
     end
-    #@submissions.order(:appearance_date).reverse_order
+    @submissions.order(:appearance_date).reverse_order
     #@submissions = Submission.all.order(:created_at)
-    @submissions.order(proposed: :asc, appearance_date: :desc)
+    #@submissions.order(proposed: :asc, appearance_date: :desc)
     #submissions_with_reviewers = Submission.where.not(id: submissions_without_reviewers.pluck(:id))
   end
 
