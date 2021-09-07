@@ -6,19 +6,19 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title, label: "title", placeholder: "Towards a Reformed Liberal and Scientific Naturalism " %>
+    <%= f.input :title, label: "title", placeholder: "" %>
     <%#= f.input :area, collection: Submission.areas.map {|p| [t("#{p}"), p]} %>
     <%#= f.input :email %>
     <div class="row">
         <div class="col-6">
-          <%= f.input :firstname, label: "first name", placeholder: "Kevin" %>
+          <%= f.input :firstname, label: "first name", placeholder: "" %>
         </div>
         <div class="col-6">
-          <%= f.input :lastname, label: "last name", placeholder: "Mulligan" %>
+          <%= f.input :lastname, label: "last name", placeholder: "" %>
         </div>
     </div>
     <p>
-      <%= f.input :lastname, label: "email", placeholder: "kevin.mulligan@email.com" %>
+      <%= f.input :lastname, label: "email", placeholder: "" %>
     </p>
     <p>
       country*
@@ -29,7 +29,7 @@
 
     <%#= f.input :gender, label: "gender**", collection: Submission.gender_options.map {|p| [t("#{p}"), p]} %>
 
-    <%= f.input :other_authors, label: "other authors (please provide a complete list)", placeholder: "Laura Smith, Jonas Hamilton, Kim Ruthers" %>
+    <%= f.input :other_authors, label: "other authors (please provide a complete list)", placeholder: "" %>
     <p>
       <strong>upload file (pdf format) </strong><br />
       <%= f.file_field :file %>
