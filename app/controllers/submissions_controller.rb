@@ -123,7 +123,7 @@ class SubmissionsController < ApplicationController
     elsif @selection == "dead_submissions"
       @submissions = @dead_submissions
     end
-    @submissions = @submissions.order(:appearance_date).reverse_order
+    @submissions = @submissions.order(proposed: :desc, appearance_date: :desc)
     #@submissions.order(:appearance_date)
     #@submissions = Submission.all.order(:created_at)
     #@submissions.order(proposed: :asc, appearance_date: :desc)
