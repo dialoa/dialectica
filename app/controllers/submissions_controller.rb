@@ -47,7 +47,7 @@ class SubmissionsController < ApplicationController
       if @submission.save
         format.html {
           if user == current_user
-            @submission.add_to_history(current_user, "Created Submission".downcase)
+            #@submission.add_to_history(current_user, "Created Submission".downcase)
           end
           params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
             BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
