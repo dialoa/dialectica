@@ -6,19 +6,19 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title, label: "title", placeholder: "Towards a Reformed Liberal and Scientific Naturalism " %>
+    <%= f.input :title, label: "title", placeholder: "" %>
     <%#= f.input :area, collection: Submission.areas.map {|p| [t("#{p}"), p]} %>
     <%#= f.input :email %>
     <div class="row">
         <div class="col-6">
-          <%= f.input :firstname, label: "first name", placeholder: "Kevin" %>
+          <%= f.input :firstname, label: "first name", placeholder: "" %>
         </div>
         <div class="col-6">
-          <%= f.input :lastname, label: "last name", placeholder: "Mulligan" %>
+          <%= f.input :lastname, label: "last name", placeholder: "" %>
         </div>
     </div>
     <p>
-      <%= f.input :lastname, label: "email", placeholder: "kevin.mulligan@email.com" %>
+      <%= f.input :email, label: "email", placeholder: "" %>
     </p>
     <p>
       country*
@@ -29,7 +29,7 @@
 
     <%#= f.input :gender, label: "gender**", collection: Submission.gender_options.map {|p| [t("#{p}"), p]} %>
 
-    <%= f.input :other_authors, label: "other authors (please provide a complete list)", placeholder: "Laura Smith, Jonas Hamilton, Kim Ruthers" %>
+    <%= f.input :other_authors, label: "other authors (please provide a complete list)", placeholder: "" %>
     <p>
       <strong>upload file (pdf format) </strong><br />
       <%= f.file_field :file %>
@@ -45,13 +45,14 @@
 
   <div class="<%= "d-none" unless user_signed_in? %>"
     <br>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#blacklist_users_option" aria-expanded="false" aria-controls="blacklist_users_option">
-      blacklist users?
+    <button class="btn btn-primary mb-3" type="button" data-toggle="collapse" data-target="#blacklist_users_option" aria-expanded="false" aria-controls="blacklist_users_option">
+      blacklist members of the Editorial Committee as internal referees
     </button>
 
     <div class="collapse" id="blacklist_users_option">
       <div class="card card-body">
-        <%= f.input :blocked_users, as: :select, collection: User.all, label: false, required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users that should be blacklisted"}, multiple: true} %>
+        <br />
+        <%= f.input :blocked_users, as: :select, collection: User.all.order(:lastname), label: false, required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users that should be blacklisted"}, multiple: true} %>
       </div>
     </div>
     <br>

@@ -18,7 +18,10 @@ has_many :external_referees, :through => :external_referee_submissions
   #after_create :add_create_to_history
   after_create :add_appearance_date
 
-
+  validates :firstname, presence: true
+  validates :lastname, presence: true
+  validates :email, presence: true
+  validates :title, presence: true
 
   scope :dead, -> { where(dead: "true") }
   scope :alive, -> { where(dead: "false") }

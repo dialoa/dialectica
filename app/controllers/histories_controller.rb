@@ -56,7 +56,7 @@ class HistoriesController < ApplicationController
   def destroy
     @history.destroy
     respond_to do |format|
-      format.html { redirect_to submission_pool_url, notice: 'History was successfully destroyed.' }
+      format.html { redirect_to submission_pool_url, notice: 'History was successfully deleted.' }
       format.json { head :no_content }
     end
   end
