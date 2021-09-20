@@ -21,7 +21,7 @@ has_many :external_referees, :through => :external_referee_submissions
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :email, presence: true
-  validates :title, presence: true#, uniqueness: true
+  validates :title, presence: true, uniqueness: true
   validates :file, attached: true, content_type: { in: 'application/pdf', message: 'is not a PDF' }
 
   scope :dead, -> { where(dead: "true") }
@@ -417,6 +417,29 @@ relevant box:
          }
        ]
      end
+   end
+
+   def self.faker_submissions
+     array_of_fake_submissions = []
+
+     30.times do
+       fake_submission = {
+         "title" => Faker::Lorem.uniqe.sentence(word_count: 8),
+         "firstname" => Faker::Name.first_name,
+         "lastname" => Faker::Name.last_name,
+         "email" => Faker::Internet.email,
+         "country" => ["CH", "DE", "AT"].sample,
+         "comment" => Faker::Lorem.paragraph,
+         "other_authors" => Faker::Name.name
+
+       }
+
+       array_of_fake_submissions << fake_submission
+
+     end
+
+     File.open("cypress/fixtures/submissions.json", 'w') { |f| f.write(array_of_fake_submissions.to_json)}
+
    end
 
 

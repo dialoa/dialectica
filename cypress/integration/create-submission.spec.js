@@ -1,4 +1,4 @@
-describe('CV Generator', () => {
+describe('Create Submission', () => {
 
   beforeEach(function () {
     // "this" points at the test context object
@@ -50,6 +50,9 @@ describe('CV Generator', () => {
         cy.contains(submission.title).click();
         cy.contains(submission.title)
         cy.contains(submission.comment)
+        //deletes it
+        cy.contains("delete this submission").click();
+        cy.contains("submission was successfully deleted.");
       });
 
       cy.logout();

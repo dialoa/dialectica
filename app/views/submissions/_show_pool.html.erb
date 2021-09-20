@@ -72,11 +72,20 @@
         <% end %>
     </div>
   </div>
-  <% if is_user_editor?(current_user) %>
-    <p>
-      <%= link_to "edit submission", edit_submission_path(submission) %>
-    </p>
+
+  <% if policy(submission).edit? %>
+  <p>
+    <%= link_to "edit this submission", edit_submission_path(submission), data: { cy: "edit_submission" } %>
+  </p>
   <% end %>
+
+  <% if policy(submission).destroy? %>
+  <p>
+    <%= link_to 'delete this submission', submission, method: :delete, data: { confirm: 'Are you sure?', cy: "delete_submission" } %>
+  </p>
+  <% end %>
+
+
 <% else %>
   <h3>are you an editor or reviewer? <%= link_to('please log in', new_user_session_path, class: "") %></h3>
 <% end %>

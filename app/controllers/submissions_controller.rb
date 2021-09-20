@@ -1,23 +1,28 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool]
-  before_action :authenticate_user!, only: [:my_submissions, :pool]
+  before_action :authenticate_user!, except: [:show, :new, :create]
+  #after_action :verify_authorized, except: [:show, :new, :create]
 
   # GET /submissions
   # GET /submissions.json
   def index
+    authorize Submission
     @submissions = Submission.all
   end
 
   # GET /submissions/1
   # GET /submissions/1.json
   def show
+    #authorize @submission
   end
 
   def show_pool
+    #authorize @submission
   end
 
   def my_submissions
     @submmissions = current_user.submissions
+    authorize @submissions
   end
 
   # GET /submissions/new
@@ -27,6 +32,7 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions/1/edit
   def edit
+    authorize @submission
   end
 
   # POST /submissions
@@ -65,6 +71,7 @@ class SubmissionsController < ApplicationController
   # PATCH/PUT /submissions/1
   # PATCH/PUT /submissions/1.json
   def update
+    authorize @submission
     respond_to do |format|
       if @submission.update(submission_params)
         format.html {
@@ -85,14 +92,16 @@ class SubmissionsController < ApplicationController
   # DELETE /submissions/1
   # DELETE /submissions/1.json
   def destroy
+    authorize @submission
     @submission.destroy
     respond_to do |format|
-      format.html { redirect_to submissions_url, notice: 'Submission was successfully deleted.'.downcase }
+      format.html { redirect_to submission_pool_url, notice: 'Submission was successfully deleted.'.downcase }
       format.json { head :no_content }
     end
   end
 
   def pool
+    authorize Submission
     @selection = params[:selection].present? ? params[:selection] : "all"
 
     #@submissions_without_reviewers = Submission.includes(:users).where( :users => { :id => nil } )
@@ -131,7 +140,7 @@ class SubmissionsController < ApplicationController
   end
 
   def panel
-
+    authorize Submission
   end
 
   def send_notifications
