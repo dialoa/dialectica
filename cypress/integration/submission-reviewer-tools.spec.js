@@ -1,110 +1,60 @@
 describe('Submission Reviewer Tools', () => {
 
-  before(function () {
-    //creates 20 submissions
-    cy.fixture('submissions.json').then(submissions => {
-    submissions.forEach(submission => {
-      //start
-
-      cy.visit('http://localhost:3000/submissions/new');
-      cy.contains("new submission to dialectica");
-      cy.get('[data-cy=new_submission_form]').within(($form) => {
-        cy.get('#submission_title').type(submission.title)
-        cy.get('#submission_email').type(submission.email)
-        cy.get('#submission_firstname').type(submission.firstname)
-        cy.get('#submission_lastname').type(submission.lastname)
-        cy.get('#submission_other_authors').type(submission.other_authors)
-        cy.get('#submission_country').then($country => {$country.val(submission.country)})
-        cy.get('#submission_file').attachFile('sample.pdf');
-        cy.setTinyMceContent('submission_comment', submission.comment);
-        cy.root().submit();
-      });
-      cy.contains("submission was successfully created.");
-
-      //end
-      });
-    });
-
-
-  })
+  beforeEach(function () {
+    cy.login_as_reviewer();
+  });
 
   afterEach(function(){
-    //cy.destroy_user_account()
-    //cy.login_as_reviewer();
-  })
-
-  it('submits a submission, expects the reviewer and editor to see it and editor to delete it.', () => {
-    cy.visit('http://localhost:3000/submissions/new');
-    cy.contains("new submission to dialectica");
-    cy.get('[data-cy=new_submission_form]').within(($form) => {
-      cy.fixture('submission.json').then((submission) => {
-        cy.get('#submission_title').type(submission.title)
-        cy.get('#submission_email').type(submission.email)
-        cy.get('#submission_firstname').type(submission.firstname)
-        cy.get('#submission_lastname').type(submission.lastname)
-        cy.get('#submission_other_authors').type(submission.other_authors)
-        cy.get('#submission_country').then($country => {$country.val(submission.country)})
-        cy.get('#submission_file').attachFile('sample.pdf');
-        //cy.get('#submission_comment').type(submission.comment)
-        cy.setTinyMceContent('submission_comment', submission.comment);
-
-        })
-      cy.root().submit();
-    });
-
-      cy.contains("submission was successfully created.");
-
-      //reviewer
-      cy.login_as_reviewer();
-      cy.visit('http://localhost:3000/submission_pool')
-
-      cy.fixture('submission.json').then((submission) => {
-        cy.contains(submission.title).click();
-        cy.contains(submission.title)
-        cy.contains(submission.comment)
-      });
-      cy.logout();
-
-      //editor
-      cy.login_as_editor();
-      cy.visit('http://localhost:3000/submission_pool')
-
-      cy.fixture('submission.json').then((submission) => {
-        cy.contains(submission.title).click();
-        cy.contains(submission.title)
-        cy.contains(submission.comment)
-        //deletes it
-        cy.contains("delete this submission").click();
-        cy.contains("submission was successfully deleted.");
-      });
-
-      cy.logout();
-
+    cy.logout();
   });
 
-  it('submits an empty submission and expects error messages', () => {
-    cy.visit('http://localhost:3000/submissions/new');
-    cy.contains("new submission to dialectica");
-    cy.get('[data-cy=new_submission_form]').within(($form) => {
+  it("adds submission to the current user, shows up in the user's pool and removes it again.", () => {
+    const uuid = () => Cypress._.random(0, 1e6)
+    const id = uuid()
+    const testname = `testname${id}`
+    cy.create_submission(testname)
 
-      cy.root().submit();
-      })
+    cy.get('[data-cy=submissions_add_user_to_submission]').first().click(); //fish this
+    cy.contains("signed up as internal referee");
 
-      cy.contains("Title can't be blank");
-      cy.contains("Firstname can't be blank");
-      cy.contains("Lastname can't be blank");
-      cy.contains("Email can't be blank");
-      cy.contains("File can't be blank");
+    cy.visit('http://localhost:3000/submission_pool');
+
+    cy.contains("submissions to be reviewed by me").first().click();
+    cy.contains(testname).first().click();
+
+    cy.get('[data-cy=submissions_remove_user_to_submission]').first().click(); //fish this
+    cy.contains("quit as internal referee ");
   });
 
-  it('submits a png instead of a pdf and expects error messages', () => {
-    cy.visit('http://localhost:3000/submissions/new');
-    cy.contains("new submission to dialectica");
-    cy.get('[data-cy=new_submission_form]').within(($form) => {
-      cy.get('#submission_file').attachFile('sample.png');
-      cy.root().submit();
-    });
-    cy.contains("File is not a PDF");
+  it("adds a comment to submission.", () => {
+    const comment_text = "This is my comment on this submission";
+    const uuid = () => Cypress._.random(0, 1e6)
+    const id = uuid()
+    const testname = `testname${id}`
+    cy.create_submission(testname);
+
+    cy.get('[data-cy=add_comment_to_submission_button]').first().click();
+    cy.setTinyMceContent('comment_comment', comment_text);
+    cy.get('[data-cy=submit_comment_to_submission_button]').first().click();
+
+    cy.contains(comment_text);
+    //cy.get('[data-cy=]').first().click();
   });
+
+  it("uploads a file to a submission.", () => {
+    const uuid = () => Cypress._.random(0, 1e6)
+    const id = uuid()
+    const testname = `testname${id}`
+    cy.create_submission(testname);
+
+    cy.get('[data-cy=upload_file_button]').first().click();
+    cy.get('#upload_file_field_tag').attachFile('sample.pdf');
+    cy.get('[data-cy=submit_upload_file_button]').first().click();
+
+
+    cy.contains("uploaded a file: sample.pdf");
+    //cy.get('[data-cy=]').first().click();
+  });
+
 
 });

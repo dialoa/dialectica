@@ -8,6 +8,7 @@
     <div class="col-12">
       <%#= mail_to "", "send to external referee", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, as it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn btn-light border my-2" %>
       <% if is_user_reviewer?(current_user) %>
+      <h5>reviewer-tools<h5>
         <%  if current_user.submissions.where(id: submission.id).empty?  %>
         <% if !submission.users.empty? %>
           <div class="d-inline-block">
@@ -18,15 +19,15 @@
             </div>
         <% end %>
 
-          <%= link_to "fish this", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
+          <%= link_to "fish this", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2", data: { cy: "submissions_add_user_to_submission" } %>
           <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
           <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#suggestionModal">
             suggest to internal reviewer
           </button>
-          <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#uploadfileModal">
+          <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#uploadfileModal" data-cy="upload_file_button">
             upload file
           </button>
-          <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#addCommentModal">
+          <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#addCommentModal" data-cy="add_comment_to_submission_button">
             add comment
           </button>
         <% else %>
@@ -38,14 +39,14 @@
             <% end %>
             </div>
         <% end %>
-        <%= link_to "leave it", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
+        <%= link_to "leave it", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2", data: { cy: "submissions_remove_user_to_submission" } %>
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#suggestionModal">
           suggest to internal reviewer
         </button>
-        <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#uploadfileModal">
+        <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#uploadfileModal" data-cy="upload_file_button">
           upload file
         </button>
-        <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#addCommentModal">
+        <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#addCommentModal" data-cy="add_comment_to_submission_button">
           add comment
         </button>
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#send_to_external_refereeModal">
@@ -74,6 +75,7 @@
 
   <% if is_user_editor?(current_user) && submission.dead == "false" %>
     <hr />
+    <h5>editor-tools<h5>
     <%= link_to "accept", accept_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
     <%= link_to "reject", reject_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
     <%= link_to "resurrect", resurrect_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
@@ -125,10 +127,10 @@
           <%#= file_field_tag :file, class: "btn btn-secondary" %>
           <%#= hidden_field_tag :submission_id, submission.id %>
           <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
-          <%= file_field_tag :attachments %>
+          <%= file_field_tag :attachments, id: "upload_file_field_tag" %>
           <br />
           <br />
-          <%= button_tag "upload file", class: "btn btn-light border" %>
+          <%= button_tag "upload file", class: "btn btn-light border", data: {cy: "submit_upload_file_button"} %>
 
         <% end %>
       </div>
@@ -155,7 +157,7 @@
         <%= simple_form_for :comment, url: add_comment_to_submission_path(submission) do |f| %>
           <%#= f.input :comment, as: :text %>
           <%= f.text_area :comment, :class => "tinymce", :rows => 40, :cols => 120 %>
-          <%= f.submit "add comment", class: "btn btn-light border my-2" %>
+          <%= f.submit "add comment", class: "btn btn-light border my-2", data: {cy: "submit_comment_to_submission_button"} %>
         <% end %>
 
       </div>
