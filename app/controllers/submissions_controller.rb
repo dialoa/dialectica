@@ -187,7 +187,7 @@ Dear #{suggested_to_user.name}
 
 #{helpers.link_to submission.title, submission_url(submission)} has been suggested to you by #{current_user.name}.
 "
-    SubmissionMailer.send_notification_of_suggestion(suggested_to_user, "dialectica - a submission has been suggested to you", body).deliver_now if suggested_to_user.notify_me_when_i_am_suggested_as_an_internal_referee == "yes"
+    #SubmissionMailer.send_notification_of_suggestion(suggested_to_user, "dialectica - a submission has been suggested to you", body).deliver_now if suggested_to_user.notify_me_when_i_am_suggested_as_an_internal_referee == "yes"
     message = "suggested to #{User.find(params[:user_id]).name}"
     submission.add_to_history(current_user, message)
     #byebug
@@ -217,7 +217,7 @@ Dear #{suggested_to_user.name}
     #redirect_to submission_path(params[:submission_id]), notice: message
 
     if params[:send_directly]
-      SubmissionMailer.send_to_external_referee(@mail, @subject, @body, current_user).deliver_now
+      #SubmissionMailer.send_to_external_referee(@mail, @subject, @body, current_user).deliver_now
     else
       #byebug
     end
