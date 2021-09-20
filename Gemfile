@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
 
+gem 'active_storage_validations'
 gem 'json_converter'
 gem 'kramdown'
 gem 'redcarpet'

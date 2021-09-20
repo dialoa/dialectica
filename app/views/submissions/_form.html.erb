@@ -1,7 +1,7 @@
 <%= tinymce_assets %>
 <%= tinymce %>
 
-<%= simple_form_for(@submission) do |f| %>
+<%= simple_form_for(@submission, html: {data: {cy: "new_submission_form"}}) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -32,7 +32,8 @@
     <%= f.input :other_authors, label: "other authors (please provide a complete list)", placeholder: "" %>
     <p>
       <strong>upload file (pdf format) </strong><br />
-      <%= f.file_field :file %>
+      <%#= f.file_field :file %>
+      <%= f.input :file %>
     </p>
     <% if false %>
     <p>
@@ -71,7 +72,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, class: "btn btn-primary my-2" %>
+    <%= f.button :submit, "submit", class: "btn btn-primary my-2" %>
   </div>
 
   <hr />
