@@ -1,7 +1,7 @@
 <div class="container">
 <h2>login</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {data: {cy: "user_login_form"}}) do |f| %>
   <div class="form-inputs">
     <%#= f.input :email,
                 required: false,

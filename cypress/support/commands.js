@@ -23,29 +23,29 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('login', (email, password) => {
-  cy.visit('localhost:3000')
-  cy.get("[data-cy=form_for_login]").within(($form) => {
-    cy.get('#user_email').type(email)
-    cy.get('#user_password').type(password)
+Cypress.Commands.add('login_as_reviewer', () => {
+  cy.visit('http://localhost:3000/users/sign_in')
+  cy.get("[data-cy=user_login_form]").within(($form) => {
+    cy.get('#user_login').type("reviewer@gmail.com")
+    cy.get('#user_password').type("epikur")
     cy.root().submit()
   })
-  cy.contains('Erfolgreich angemeldet.')
+  cy.contains('Signed in successfully.')
 })
 
-Cypress.Commands.add('login', (email, password) => {
-  cy.visit('localhost:3000')
-  cy.get("[data-cy=form_for_login]").within(($form) => {
-    cy.get('#user_email').type(email)
-    cy.get('#user_password').type(password)
+Cypress.Commands.add('login_as_editor', () => {
+  cy.visit('http://localhost:3000/users/sign_in')
+  cy.get("[data-cy=user_login_form]").within(($form) => {
+    cy.get('#user_login').type("editor@gmail.com")
+    cy.get('#user_password').type("epikur")
     cy.root().submit()
   })
-  cy.contains('Erfolgreich angemeldet.')
+  cy.contains('Signed in successfully.')
 })
+
 
 Cypress.Commands.add('logout', () => {
-  cy.get("[data-cy=logout]").click()
-  cy.contains('Erfolgreich abgemeldet.')
+  cy.get("[data-cy=logout]").click();
 })
 
 Cypress.Commands.add('destroy_user_account', () => {

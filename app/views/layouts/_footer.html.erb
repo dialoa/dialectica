@@ -4,7 +4,7 @@
     <div class="container text-center">
       <p class="m-0 text-center text-white">
       <% if user_signed_in? %>
-        <%= link_to 'logout', destroy_user_session_path, :method => 'delete', class: "text-white" %>
+        <%= link_to 'logout', destroy_user_session_path, :method => 'delete', class: "text-white", data: { cy: "logout" } %>
          |
         <%= link_to 'edit account', edit_user_registration_path, class: "text-white" %>
          |

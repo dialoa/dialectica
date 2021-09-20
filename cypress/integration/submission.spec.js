@@ -7,9 +7,10 @@ describe('CV Generator', () => {
 
   afterEach(function(){
     //cy.destroy_user_account()
+    //cy.login_as_reviewer();
   })
 
-  it('submits a submission and expects a message', () => {
+  it('submits a submission, expects the reviewer and editor to see it and editor to delete it.', () => {
     cy.visit('http://localhost:3000/submissions/new');
     cy.contains("new submission to dialectica");
     cy.get('[data-cy=new_submission_form]').within(($form) => {
@@ -24,12 +25,34 @@ describe('CV Generator', () => {
         //cy.get('#submission_comment').type(submission.comment)
         cy.setTinyMceContent('submission_comment', submission.comment);
 
-
         })
       cy.root().submit();
-      })
+    });
 
       cy.contains("submission was successfully created.");
+
+      //reviewer
+      cy.login_as_reviewer();
+      cy.visit('http://localhost:3000/submission_pool')
+
+      cy.fixture('submission.json').then((submission) => {
+        cy.contains(submission.title).click();
+        cy.contains(submission.title)
+        cy.contains(submission.comment)
+      });
+      cy.logout();
+
+      //editor
+      cy.login_as_editor();
+      cy.visit('http://localhost:3000/submission_pool')
+
+      cy.fixture('submission.json').then((submission) => {
+        cy.contains(submission.title).click();
+        cy.contains(submission.title)
+        cy.contains(submission.comment)
+      });
+
+      cy.logout();
 
   });
 

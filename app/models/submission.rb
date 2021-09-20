@@ -21,7 +21,7 @@ has_many :external_referees, :through => :external_referee_submissions
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :email, presence: true
-  validates :title, presence: true
+  validates :title, presence: true#, uniqueness: true
   validates :file, attached: true, content_type: { in: 'application/pdf', message: 'is not a PDF' }
 
   scope :dead, -> { where(dead: "true") }
