@@ -56,5 +56,33 @@ describe('Submission Reviewer Tools', () => {
     //cy.get('[data-cy=]').first().click();
   });
 
+  it("sends to an external referee and the mail should appear in the history.", () => {
+    const mail_text = "hello-this is my custom mail!";
+    const uuid = () => Cypress._.random(0, 1e6)
+    const id = uuid()
+    const testname = `testname${id}`
+    cy.create_submission(testname);
+
+    cy.get('[data-cy=submissions_add_user_to_submission]').first().click(); //fish this
+
+    cy.get('[data-cy=send_to_external_referee_button]').first().click();
+
+    cy.get('[data-cy=open-up-fast-create-external-referee-button]').first().click();
+
+    cy.get('#external_referee_firstname').type("Sandro");
+    cy.get('#external_referee_lastname').type("Räss");
+    cy.get('#external_referee_email').type("s.raess@me.com");
+
+    cy.get('[data-cy=submit_fast_create_external_referee_button]').first().click();
+
+    cy.get('#send_to_external_referee_external_referee').select(["Sandro Räss - s.raess@me.com"], { force: true })
+
+    cy.get('#send_to_external_referee_body').clear().type(mail_text);
+    cy.get('[data-cy=submit_send_to_external_referee_button]').first().click();
+
+    cy.contains(mail_text);
+    //cy.get('[data-cy=]').first().click();
+  });
+
 
 });
