@@ -45,7 +45,7 @@ Cypress.Commands.add('login_as_editor', () => {
 
 Cypress.Commands.add('create_submission', (title) => {
   cy.visit('http://localhost:3000/submissions/new');
-  cy.contains("new submission to dialectica");
+  cy.contains("new submission to Dialectica");
   cy.get('[data-cy=new_submission_form]').within(($form) => {
     cy.fixture('submission.json').then((submission) => {
       cy.get('#submission_title').type(title)
