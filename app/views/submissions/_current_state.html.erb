@@ -10,8 +10,8 @@
 
   var cachedWidth = $(window).width();
   var margin = ({top: 20, right: 10, bottom: 10, left: 10});
-  var standard_box_size = ({width: 200, height: 25});
-  var standart_font = "13px 'Helvetica Neue'";
+  var standard_box_size = ({width: 100, height: 25});
+  var standart_font = "11px 'Helvetica Neue'";
   var flangeSize = 10;
   var padding1 = standard_box_size.height + 5;
   var padding2 = 10;
@@ -37,14 +37,14 @@
     const dataset = <%= raw submission.flow_chart.to_json %>;
     var width = $(window).width();
 
-    var x_distance_between_nodes = width/3;
+    var x_distance_between_nodes = width/6;
     var y_distance_between_nodes = 120;
     var box_size = {
-      width: width/5,
+      width: width/7,
       height: y_distance_between_nodes/2,
     }
 
-    var height = 7 * (y_distance_between_nodes)
+    var height = 12 * (y_distance_between_nodes)
 
     const svg = d3.select(container).append('svg')
     //	  .attr("viewBox", [-margin.left, -margin.top, width, height])

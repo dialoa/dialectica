@@ -191,12 +191,12 @@ relevant box:
       "nodes": [
         {
           "phase_id": 1,
-          "x": 1,
+          "x": 2,
           "y": 0,
         },
         {
           "phase_id": 2,
-          "x": 1,
+          "x": 2,
           "y": 1,
         },
         {
@@ -206,18 +206,18 @@ relevant box:
         },
         {
           "phase_id": 4,
-          "x": 1,
-          "y": 3,
+          "x": 3,
+          "y": 2,
         },
         {
           "phase_id": 5,
-          "x": 0,
-          "y": 3,
+          "x": 4,
+          "y": 2,
         },
         {
           "phase_id": 6,
-          "x": 0,
-          "y": 2,
+          "x": 1,
+          "y": 3,
         },
         {
           "phase_id": 7,
@@ -226,25 +226,73 @@ relevant box:
         },
         {
           "phase_id": 8,
+          "x": 0,
+          "y": 4,
+        },
+        {
+          "phase_id": 9,
+          "x": 0,
+          "y": 3,
+        },
+        {
+          "phase_id": 10,
+          "x": 2,
+          "y": 5,
+        },
+        {
+          "phase_id": 11,
+          "x": 3,
+          "y": 5,
+        },
+        {
+          "phase_id": 12,
           "x": 1,
           "y": 5,
         },
         {
-          "phase_id": 9,
+          "phase_id": 13,
           "x": 1,
           "y": 6,
+        },
+        {
+          "phase_id": 14,
+          "x": 1,
+          "y": 7,
+        },
+        {
+          "phase_id": 15,
+          "x": 2,
+          "y": 7,
+        },
+        {
+          "phase_id": 16,
+          "x": 1,
+          "y": 8,
+        },
+        {
+          "phase_id": 17,
+          "x": 1,
+          "y": 9,
         },
       ],
       "links": [
         {"source": 1, "target": 2},
         {"source": 2, "target": 3},
-        {"source": 3, "target": 4},
+        {"source": 2, "target": 4},
         {"source": 4, "target": 5},
-        {"source": 5, "target": 6},
-        {"source": 6, "target": 3},
-        {"source": 4, "target": 7},
+        {"source": 3, "target": 6},
+        {"source": 6, "target": 7},
         {"source": 7, "target": 8},
         {"source": 8, "target": 9},
+        {"source": 9, "target": 6},
+        {"source": 7, "target": 10},
+        {"source": 10, "target": 11},
+        {"source": 7, "target": 12},
+        {"source": 12, "target": 13},
+        {"source": 13, "target": 14},
+        {"source": 14, "target": 15},
+        {"source": 14, "target": 16},
+        {"source": 16, "target": 17},
       ]
     }
 
@@ -254,7 +302,7 @@ relevant box:
       node[:id] = text.parameterize
       node[:text] = text
 
-      current_phase = Submission.phases[3]
+      current_phase = Submission.phases[2]
       current_phase_index = Submission.phases.index(current_phase)
       if phase_id == current_phase_index
         node[:your_article_is_here_sign] = "yes"
@@ -268,31 +316,11 @@ relevant box:
       node[:class] = css_class
     end
 
-    dataset[:nodes].push(
-      {
-        "id": "rejected1",
-        "phase_id": 10,
-        "text": "rejected",
-        "class": "h-100 bg-secondary rounded p-1 text-white text-center d-flex justify-content-center align-items-center",
-        "x": 2,
-        "y": 1,
-      }
-    )
 
-    dataset[:nodes].push(
-      {
-        "id": "rejected2",
-        "phase_id": 11,
-        "text": "rejected",
-        "class": "h-100 bg-secondary rounded p-1 text-white text-center d-flex justify-content-center align-items-center",
-        "x": 2,
-        "y": 3,
-      }
-    )
 
     dataset[:links].push(
-      {"source": 2, "target": 10},
-      {"source": 4, "target": 11},
+      #{"source": 2, "target": 10},
+      #{"source": 4, "target": 11},
     )
 
 
@@ -335,12 +363,20 @@ relevant box:
     #["submitted", "published"]
     [
       "author submits article",
-      "editor assesses article",
+      "article goes into the pool",
+      "an EC member fishes* the article",
+      "after one month, no EC member has fished the article",
+      "author is notified",
       "article sent to reviewers",
-      "editor assesses reviews",
-      "revisons required",
+      "EC member assesses reviews (and revisions)",
+      "revisions required",
       "author submits revised article",
+      "if more than three months pass",
+      "author is notified",
+      "EC member makes a case to the EC",
+      "EC agrees with publication (possibly conditional)",
       "article is accepted",
+      "author is notified",
       "article is in production",
       "article is published"
     ]
