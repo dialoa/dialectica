@@ -28,7 +28,9 @@ class ExternalRefereeSubmissionsController < ApplicationController
 
     respond_to do |format|
       if @external_referee_submission.save
-        format.html { redirect_to @external_referee_submission, notice: 'External referee submission was successfully created.' }
+        format.html {
+          redirect_to @external_referee_submission, notice: 'External referee submission was successfully created.'
+        }
         format.json { render :show, status: :created, location: @external_referee_submission }
       else
         format.html { render :new }
