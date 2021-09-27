@@ -11,7 +11,7 @@
   var cachedWidth = $(window).width();
   var margin = ({top: 20, right: 10, bottom: 10, left: 10});
   var standard_box_size = ({width: 100, height: 25});
-  var standart_font = "11px 'Helvetica Neue'";
+  var standart_font = "13px 'Helvetica Neue'";
   var flangeSize = 10;
   var padding1 = standard_box_size.height + 5;
   var padding2 = 10;
@@ -37,7 +37,7 @@
     const dataset = <%= raw submission.flow_chart.to_json %>;
     var width = $(window).width();
 
-    var x_distance_between_nodes = width/6;
+    var x_distance_between_nodes = width/5;
     var y_distance_between_nodes = 120;
     var box_size = {
       width: width/7,
@@ -433,8 +433,8 @@
     var x1 = target.x;
     var y1 = target.y;
 
-    var padding1 = 30;
-    var padding2 = 15;
+    var padding1 = Math.hypot(box_size.height, box_size.width)/1.5;
+    var padding2 = 20;
 
     if(x0 == x1){
       padding1 = box_size.height + 10;
