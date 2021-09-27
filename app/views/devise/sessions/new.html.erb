@@ -1,5 +1,17 @@
 <div class="container">
 <h2>login</h2>
+<hr>
+<p>
+  <strong>editor</strong><br>
+  email: editor@gmail.com<br>
+  password: epikur
+</p>
+<p>
+  <strong>reviewer</strong><br>
+  email: reviewer@gmail.com<br>
+  password: epikur
+</p>
+<hr>
 
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {data: {cy: "user_login_form"}}) do |f| %>
   <div class="form-inputs">

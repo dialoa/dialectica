@@ -12,7 +12,7 @@ describe('Create Submission', () => {
 
   it('submits a submission, expects the reviewer and editor to see it and editor to delete it.', () => {
     cy.visit('http://localhost:3000/submissions/new');
-    cy.contains("new submission to dialectica");
+    cy.contains("new submission to Dialectica");
     cy.get('[data-cy=new_submission_form]').within(($form) => {
       cy.fixture('submission.json').then((submission) => {
         cy.get('#submission_title').type(submission.title)
@@ -61,7 +61,7 @@ describe('Create Submission', () => {
 
   it('submits an empty submission and expects error messages', () => {
     cy.visit('http://localhost:3000/submissions/new');
-    cy.contains("new submission to dialectica");
+    cy.contains("new submission to Dialectica");
     cy.get('[data-cy=new_submission_form]').within(($form) => {
 
       cy.root().submit();
@@ -76,7 +76,7 @@ describe('Create Submission', () => {
 
   it('submits a png instead of a pdf and expects error messages', () => {
     cy.visit('http://localhost:3000/submissions/new');
-    cy.contains("new submission to dialectica");
+    cy.contains("new submission to Dialectica");
     cy.get('[data-cy=new_submission_form]').within(($form) => {
       cy.get('#submission_file').attachFile('sample.png');
       cy.root().submit();
