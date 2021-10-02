@@ -3,6 +3,9 @@ describe('Create Submission', () => {
   beforeEach(function () {
     // "this" points at the test context object
     //cy.fixture('user').as('user')
+    cy.request('http://localhost:3000/test/destroy_all_submissions')
+    cy.request('http://localhost:3000/test/destroy_all_users')
+    cy.request('http://localhost:3000/test/destroy_all_external_referees')
   })
 
   afterEach(function(){

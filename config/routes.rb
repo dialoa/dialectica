@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'test/destroy_all_submissions'
+  get 'test/destroy_all_users'
+  get 'test/destroy_all_external_referees'
   resources :external_referee_submissions
   resources :external_referees
   resources :requested_reviewers

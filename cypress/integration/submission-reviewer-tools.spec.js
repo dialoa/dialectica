@@ -1,6 +1,9 @@
 describe('Submission Reviewer Tools', () => {
 
   beforeEach(function () {
+    cy.request('http://localhost:3000/test/destroy_all_submissions')
+    cy.request('http://localhost:3000/test/destroy_all_users')
+    cy.request('http://localhost:3000/test/destroy_all_external_referees')
     cy.login_as_reviewer();
   });
 
@@ -70,12 +73,14 @@ describe('Submission Reviewer Tools', () => {
     cy.get('[data-cy=open-up-fast-create-external-referee-button]').first().click();
 
     cy.get('#external_referee_firstname').type("Sandro");
-    cy.get('#external_referee_lastname').type("Räss");
+    cy.get('#external_referee_lastname').type("Rass");
     cy.get('#external_referee_email').type("s.raess@me.com");
 
     cy.get('[data-cy=submit_fast_create_external_referee_button]').first().click();
 
-    cy.get('#send_to_external_referee_external_referee').select(["Sandro Räss - s.raess@me.com"], { force: true })
+    cy.wait(1000);
+
+    cy.get('#send_to_external_referee_external_referee').select("Sandro Rass - s.raess@me.com");
 
     cy.get('#send_to_external_referee_body').clear().type(mail_text);
     cy.get('[data-cy=submit_send_to_external_referee_button]').first().click();
