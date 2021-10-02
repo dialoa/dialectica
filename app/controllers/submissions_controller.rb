@@ -11,11 +11,11 @@ class SubmissionsController < ApplicationController
   end
 
   def download_csv
-
+    send_data Submission.to_csv, filename: "submissions-#{Date.today}.csv"
   end
 
   def upload_csv
-    
+
   end
 
   # GET /submissions/1

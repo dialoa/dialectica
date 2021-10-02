@@ -478,5 +478,18 @@ relevant box:
 
    end
 
+ CSV_ATTRIBUTES = %w{id title firstname lastname email country other_authors comment appearance_date created_at}
+
+
+  def self.to_csv
+    CSV.generate(headers: true) do |csv|
+      csv << CSV_ATTRIBUTES
+
+      all.each do |submission|
+        csv << CSV_ATTRIBUTES.map{ |attr| submission.send(attr) }
+      end
+    end
+  end
+
 
 end

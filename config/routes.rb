@@ -104,6 +104,8 @@ Rails.application.routes.draw do
   post '/submission_tools/add_comment_to_submission/:id/', to: "submissions#add_comment_to_submission", as: "add_comment_to_submission"
   get '/submission_tools/send_notifications/', to: "submissions#send_notifications", as: "send_notifications"
 
+  get '/submission_tools/download_csv/', to: "submissions#download_csv", as: "submissions_download_csv"
+
   post '/submission_tools/make_submission_dead/:submission_id/', to: "submissions#make_submission_dead", as: "make_submission_dead"
   post '/submission_tools/make_submission_alive/:submission_id/', to: "submissions#make_submission_alive", as: "make_submission_alive"
 
