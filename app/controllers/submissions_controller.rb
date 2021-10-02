@@ -15,7 +15,11 @@ class SubmissionsController < ApplicationController
   end
 
   def upload_csv
+    file = params[:file]
+  end
 
+  def create_or_update_submission
+    
   end
 
   # GET /submissions/1

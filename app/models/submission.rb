@@ -491,5 +491,17 @@ relevant box:
     end
   end
 
+  def self.create_or_update_submission_from_csv(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      submission = row.to_hash
+      submission = submission.select!{|attribute| Submission.attribute_names.index(attribute)}
+      submission.delete_if {|key, value| value.blank?}
+      if Submission.where(id: submission["id"]).empty?
+        submission = Submission.create(submission)
+      else
+        submission = Submission.find(submission["id"]).update(submission)
+      end
+    end
+  end
 
 end
