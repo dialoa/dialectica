@@ -10,6 +10,14 @@ class SubmissionsController < ApplicationController
     @submissions = Submission.all
   end
 
+  def download_csv
+
+  end
+
+  def upload_csv
+    
+  end
+
   # GET /submissions/1
   # GET /submissions/1.json
   def show

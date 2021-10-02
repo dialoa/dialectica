@@ -30,7 +30,7 @@ Cypress.Commands.add('login_as_reviewer', () => {
     cy.get('#user_password').type("epikur")
     cy.root().submit()
   })
-  cy.contains('Signed in successfully.')
+  cy.contains('logged in as Reviewer Reviewer')
 })
 
 Cypress.Commands.add('login_as_editor', () => {
@@ -40,7 +40,7 @@ Cypress.Commands.add('login_as_editor', () => {
     cy.get('#user_password').type("epikur")
     cy.root().submit()
   })
-  cy.contains('Signed in successfully.')
+  cy.contains('logged in as Editor Editor')
 })
 
 Cypress.Commands.add('create_submission', (title) => {

@@ -72,9 +72,12 @@ describe('Submission Reviewer Tools', () => {
 
     cy.get('[data-cy=open-up-fast-create-external-referee-button]').first().click();
 
+    //FORM HAS TO BE SUBMITTED!
     cy.get('#external_referee_firstname').type("Sandro");
     cy.get('#external_referee_lastname').type("Rass");
     cy.get('#external_referee_email').type("s.raess@me.com");
+
+    cy.wait(5000);
 
     cy.get('[data-cy=submit_fast_create_external_referee_button]').first().click();
 

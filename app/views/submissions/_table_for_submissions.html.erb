@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered table-hover">
+<table class="table table-striped table-bordered">
 <thead>
   <tr>
     <th>
@@ -6,7 +6,6 @@
       </th>
     <th scope="col">Title</th>
     <th scope="col">Author</th>
-    <th scope="col">Area</th>
     <th scope="col">File</th>
     <th scope="col">Reviewers</th>
     <th>
@@ -28,7 +27,6 @@
         Anonymous
         <%#= submission.firstname %> <%#= submission.lastname %>
       </td>
-      <td><%= submission.area %></td>
       <td><%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") if submission.file.attached?  %></td>
       <td>
         <%= submission.users.count unless submission.users.empty? %>
