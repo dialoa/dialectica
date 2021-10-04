@@ -62,6 +62,64 @@ describe('Create Submission', () => {
 
   });
 
+  it('submits a submission and the editor edits it', () => {
+    cy.visit('http://localhost:3000/submissions/new');
+    cy.contains("new submission to Dialectica");
+    cy.get('[data-cy=new_submission_form]').within(($form) => {
+      cy.fixture('submission.json').then((submission) => {
+        cy.get('#submission_title').type(submission.title)
+        cy.get('#submission_email').type(submission.email)
+        cy.get('#submission_firstname').type(submission.firstname)
+        cy.get('#submission_lastname').type(submission.lastname)
+        cy.get('#submission_other_authors').type(submission.other_authors)
+        cy.get('#submission_country').then($country => {$country.val(submission.country)})
+        cy.get('#submission_file').attachFile('sample.pdf');
+        //cy.get('#submission_comment').type(submission.comment)
+        cy.setTinyMceContent('submission_comment', submission.comment);
+
+        })
+      cy.root().submit();
+    });
+
+      cy.contains("submission was successfully created.");
+
+      //editor
+      cy.login_as_editor();
+      cy.visit('http://localhost:3000/submission_pool');
+
+      cy.fixture('submission.json').then((submission) => {
+        cy.contains(submission.title).click();
+      });
+
+      cy.get('[data-cy=edit_submission_button]').first().click();
+
+      cy.get('[data-cy=edit_submission_form]').within(($form) => {
+        cy.fixture('submission2.json').then((submission) => {
+          cy.get('#submission_title').type(submission.title)
+          cy.get('#submission_email').type(submission.email)
+          cy.get('#submission_firstname').type(submission.firstname)
+          cy.get('#submission_lastname').type(submission.lastname)
+          cy.get('#submission_other_authors').type(submission.other_authors)
+          cy.get('#submission_country').then($country => {$country.val(submission.country)})
+          cy.get('#submission_file').attachFile('sample.pdf');
+          //cy.get('#submission_comment').type(submission.comment)
+          cy.setTinyMceContent('submission_comment', submission.comment);
+
+          })
+        cy.root().submit();
+      });
+
+      cy.visit('http://localhost:3000/submission_pool');
+      cy.fixture('submission2.json').then((submission) => {
+        cy.contains(submission.title).click();
+        cy.contains(submission.title)
+        cy.contains(submission.comment)
+      });
+
+      cy.logout();
+
+  });
+
   it('submits an empty submission and expects error messages', () => {
     cy.visit('http://localhost:3000/submissions/new');
     cy.contains("new submission to Dialectica");
