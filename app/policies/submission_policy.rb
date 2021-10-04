@@ -4,6 +4,18 @@ class SubmissionPolicy < ApplicationPolicy
     is_user_editor?(@user) || is_user_admin?(@user)
   end
 
+  def download_csv?
+    is_user_editor?(@user) || is_user_admin?(@user)
+  end
+
+  def upload_csv?
+    is_user_editor?(@user) || is_user_admin?(@user)
+  end
+
+  def create_or_update_submission?
+    is_user_editor?(@user) || is_user_admin?(@user)
+  end
+
   def pool?
     is_user_editor?(@user) || is_user_reviewer?(@user) || is_user_admin?(@user) || is_user_author?(@user)
   end

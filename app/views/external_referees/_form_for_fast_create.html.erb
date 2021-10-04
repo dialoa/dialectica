@@ -1,4 +1,4 @@
-<%= simple_form_for(ExternalReferee.new, remote: true, method: :post, url: external_referee_fast_create_path(submission_id: submission.id)) do |f| %>
+<%= simple_form_for(ExternalReferee.new, remote: true, method: :post, url: external_referee_fast_create_path(submission_id: submission.id), data: {cy: "fast-create-external-referee_form"}) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -9,6 +9,6 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "create external referee", class: "btn btn-light border", data: {cy: "submit_fast_create_external_referee_button"} %>
+    <%= f.button :submit, "create external referee", class: "btn btn-light border" %>
   </div>
 <% end %>

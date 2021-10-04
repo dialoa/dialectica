@@ -72,17 +72,15 @@ describe('Submission Reviewer Tools', () => {
 
     cy.get('[data-cy=open-up-fast-create-external-referee-button]').first().click();
 
-    //FORM HAS TO BE SUBMITTED!
-    cy.get('#external_referee_firstname').type("Sandro");
-    cy.get('#external_referee_lastname').type("Rass");
-    cy.get('#external_referee_email').type("s.raess@me.com");
+    cy.get('[data-cy=fast-create-external-referee_form]').within(($form) => {
+      cy.get('#external_referee_firstname').type("Sandro", {delay: 0});
+      cy.get('#external_referee_lastname').type("Rass");
+      cy.get('#external_referee_email').type("s.raess@me.com");
+      //cy.root().submit();
+    });
+    cy.get('[data-cy=fast-create-external-referee_form]').submit()
 
     cy.wait(5000);
-
-    cy.get('[data-cy=submit_fast_create_external_referee_button]').first().click();
-
-    cy.wait(1000);
-
     cy.get('#send_to_external_referee_external_referee').select("Sandro Rass - s.raess@me.com");
 
     cy.get('#send_to_external_referee_body').clear().type(mail_text);

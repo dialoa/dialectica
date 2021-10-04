@@ -1,48 +1,39 @@
 <div class="container">
 
 <h1>submissions</h1>
-<p>
-  <%= form_tag submissions_upload_csv_path, multipart: true, data: {cy: "upload_csv_form"} do %>
 
-    <%= file_field_tag :file, id: "upload_csv_field_tag" %>
-    <br />
-    <br />
-    <%= button_tag "upload csv", class: "btn btn-light border" %>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">download csv</h5>
+          <%= link_to "download csv with all submissions", submissions_download_csv_path, data: {cy: "download_csv_submission_button"} %>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">upload csv</h5>
+        <%= form_tag submissions_upload_csv_path, multipart: true, data: {cy: "upload_csv_form"} do %>
 
-  <% end %>
-</p>
+          <%= file_field_tag :file, id: "upload_csv_field_tag" %>
+          <br />
+          <br />
+          <%= button_tag "upload csv", class: "btn btn-light border" %>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <hr>
 
 <%= render 'submissions/table_for_submissions', submissions: @submissions %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Area</th>
-      <th>Firstname</th>
-      <th>Lastname</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @submissions.each do |submission| %>
-      <tr>
-        <td><%= submission.title %></td>
-        <td><%= submission.area %></td>
-        <td><%= submission.firstname %></td>
-        <td><%= submission.lastname %></td>
-        <td><%= link_to 'Show', submission %></td>
-        <td><%= link_to 'Edit', edit_submission_path(submission) %></td>
-        <td><%= link_to 'Destroy', submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
 <%= link_to 'New Submission', new_submission_path %>
+<br>
+<br>
 </div>

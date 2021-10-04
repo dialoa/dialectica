@@ -14,10 +14,12 @@ class SubmissionsController < ApplicationController
   end
 
   def download_csv
+    authorize Submission
     send_data Submission.to_csv, filename: "submissions-#{Date.today}.csv"
   end
 
   def upload_csv
+    authorize Submission
     file = params[:file]
 
     csv = CSV.new(File.read(file), :headers => true, :header_converters => :symbol, :converters => :all)
@@ -31,6 +33,7 @@ class SubmissionsController < ApplicationController
   end
 
   def create_or_update_submission
+    authorize Submission
     #puts params[:submission]
     submission = params[:submission]
     #byebug
