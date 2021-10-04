@@ -20,14 +20,24 @@ class SubmissionsController < ApplicationController
   def upload_csv
     file = params[:file]
 
-    @json_of_submissions = CSV.parse(File.read(file), headers: false).to_json
+    csv = CSV.new(File.read(file), :headers => true, :header_converters => :symbol, :converters => :all)
+    #csv = csv.encode("UTF-8")
+    csv = csv.to_a.map {|row| row.to_hash }
+
+    @json_of_submissions = csv.to_json
 
     render "upload_csv_loading_screen"
     #byebug
   end
 
   def create_or_update_submission
-    puts params[:submission]
+    #puts params[:submission]
+    submission = params[:submission]
+    #byebug
+    #byebug
+    finished_submission = Submission.create_or_update_submission(submission_params)
+
+    render json: finished_submission
   end
 
   # GET /submissions/1
@@ -328,6 +338,6 @@ Dear #{suggested_to_user.name}
 
     # Only allow a list of trusted parameters through.
     def submission_params
-      params.require(:submission).permit(:title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at)
+      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at)
     end
 end

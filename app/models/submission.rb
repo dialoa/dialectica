@@ -491,13 +491,34 @@ relevant box:
     end
   end
 
-  def self.create_or_update_submission_from_csv(file)
+  def self.create_or_update_submission(submission)
+
+      submission = submission.select!{|attribute| Submission.attribute_names.index(attribute)}
+      submission.delete_if {|key, value| value.blank?}
+
+      if Submission.where(id: submission["id"]).empty?
+        new_submission = Submission.new(submission)
+
+        new_submission.file.attach(io: File.open('cypress/fixtures/sample.pdf'), filename: 'file.pdf')
+
+        new_submission.save
+      else
+        update_submission = Submission.find(submission["id"]).update(submission)
+      end
+
+  end
+
+  def self.xcreate_or_update_submission_from_csv(file)
     CSV.foreach(file.path, headers: true) do |row|
       submission = row.to_hash
       submission = submission.select!{|attribute| Submission.attribute_names.index(attribute)}
       submission.delete_if {|key, value| value.blank?}
       if Submission.where(id: submission["id"]).empty?
-        submission = Submission.create(submission)
+        submission = Submission.new(submission)
+
+        submission.file.attach(io: File.open('cypress/fixtures/sample.pdf'), filename: 'file.pdf')
+
+        submission.save
       else
         submission = Submission.find(submission["id"]).update(submission)
       end
