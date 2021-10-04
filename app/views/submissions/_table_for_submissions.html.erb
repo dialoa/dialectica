@@ -30,7 +30,8 @@
         <%= link_to submission.title, submission_path(submission) %>
       </td>
       <td>
-        <%= "#{submission.firstname} #{submission.lastname}" %>
+        Anonymous
+        <%#= "#{submission.firstname} #{submission.lastname}" %>
         <%#= submission.firstname %> <%#= submission.lastname %>
       </td>
       <td><%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") if submission.file.attached?  %></td>
