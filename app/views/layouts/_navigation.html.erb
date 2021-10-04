@@ -7,11 +7,16 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <%= link_to "Pool", submission_pool_path, class: "nav-link" %>
+        <%= link_to "pool", submission_pool_path, class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to "Submit a Paper", new_submission_path, class: "nav-link" %>
+        <%= link_to "submit a paper", new_submission_path, class: "nav-link" %>
       </li>
+      <% if policy(Submission).index? %>
+        <li class="nav-item">
+          <%= link_to "submissions", submissions_path, class: "nav-link" %>
+        </li>
+      <% end %>
       <% if false %>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
