@@ -485,7 +485,7 @@ relevant box:
     CSV.generate(headers: true) do |csv|
       csv << CSV_ATTRIBUTES
 
-      all.each do |submission|
+      Submission.all.each do |submission|
         csv << CSV_ATTRIBUTES.map{ |attr| submission.send(attr) }
       end
     end

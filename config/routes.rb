@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   get 'test/destroy_all_submissions'
   get 'test/destroy_all_users'
   get 'test/destroy_all_external_referees'
+  get 'test/get_json_from_all_submissions'
+  get 'test/generate_fake_submissions_and_jsons'
+
   resources :external_referee_submissions
   resources :external_referees
   resources :requested_reviewers
@@ -104,7 +107,11 @@ Rails.application.routes.draw do
   post '/submission_tools/add_comment_to_submission/:id/', to: "submissions#add_comment_to_submission", as: "add_comment_to_submission"
   get '/submission_tools/send_notifications/', to: "submissions#send_notifications", as: "send_notifications"
 
+  post '/submission_tools/upload_csv', to: "submissions#upload_csv", as: "submissions_upload_csv"
+
   get '/submission_tools/download_csv/', to: "submissions#download_csv", as: "submissions_download_csv"
+
+  post '/submission_tools/create_or_update_submission', to: "submissions#create_or_update_submission", as: "create_or_update_submission"
 
   post '/submission_tools/make_submission_dead/:submission_id/', to: "submissions#make_submission_dead", as: "make_submission_dead"
   post '/submission_tools/make_submission_alive/:submission_id/', to: "submissions#make_submission_alive", as: "make_submission_alive"

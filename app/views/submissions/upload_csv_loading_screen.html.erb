@@ -1,0 +1,74 @@
+<section class="py-5 text-center container">
+  <div class="row py-lg-5">
+    <div class="mx-auto">
+      <h1 class="fw-light">csv is being processed</h1>
+      <div class="">
+        <p class="">
+          <ol class="fs-5" style="display: inline-block; text-align: left;">
+            <li class="">
+                this may take a while.
+              </li>
+          </ol>
+        </p>
+        <p>
+          done: <span id="completed_submissions_count">0</span>
+        </p>
+        <p>
+          <div class="progress">
+            <div id="progress-bar-loading-screen" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-1 text-center container-fluid">
+<hr />
+<div class="cvs">
+
+</div>
+
+</section>
+
+<script>
+  $( document ).ready(function() {
+
+      var submissions = <%= raw @json_of_submissions %>;
+      var iteration_value = 0;
+
+      var progress_bar_value = 0;
+      var progress_bar_steps = Math.round(100 / submissions.length);
+      var completed_submissions_value = 0;
+
+      create_or_update_submission(iteration_value);
+
+      function create_or_update_submission(step) {
+
+        submission = submissions[step];
+        console.log("Doing: " + submission);
+
+        $.ajax({
+          url: "<%= create_or_update_submission_path %>/",
+          method: 'POST',
+          data: {submission: submission},
+          headers: {
+            'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+          }
+        }).done(function() {
+          progress_bar_value = progress_bar_value + progress_bar_steps;
+          completed_submissions_value = completed_submissions_value + 1;
+          $("#progress-bar-loading-screen").width(progress_bar_value + "%");
+          $("#completed_submissions_count").text(completed_submissions_value);
+
+          if(completed_submissions_value === submissions.length){
+               window.location.href = "<%= submission_pool_path %>";
+          } else {
+            create_or_update_submission(step + 1)
+          }
+
+        });
+      }
+
+  });
+</script>

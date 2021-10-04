@@ -1,8 +1,15 @@
 <div class="container">
 
-<h1>Submissions</h1>
+<h1>submissions</h1>
 <p>
+  <%= form_tag submissions_upload_csv_path, multipart: true, data: {cy: "upload_csv_form"} do %>
 
+    <%= file_field_tag :file, id: "upload_csv_field_tag" %>
+    <br />
+    <br />
+    <%= button_tag "upload csv", class: "btn btn-light border" %>
+
+  <% end %>
 </p>
 
 <hr>

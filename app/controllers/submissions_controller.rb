@@ -1,3 +1,6 @@
+require 'csv'
+require 'json'
+
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool]
   before_action :authenticate_user!, except: [:show, :new, :create]
@@ -16,10 +19,15 @@ class SubmissionsController < ApplicationController
 
   def upload_csv
     file = params[:file]
+
+    @json_of_submissions = CSV.parse(File.read(file), headers: false).to_json
+
+    render "upload_csv_loading_screen"
+    #byebug
   end
 
   def create_or_update_submission
-    
+    puts params[:submission]
   end
 
   # GET /submissions/1

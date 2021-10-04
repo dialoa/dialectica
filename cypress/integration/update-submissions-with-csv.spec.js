@@ -27,21 +27,29 @@ describe('update submissions with csv', () => {
 
     cy.login_as_editor();
     cy.visit('http://localhost:3000/submissions');
-    cy.contains("submissions", { matchCase: false })
+    cy.contains("submissions", { matchCase: false });
     cy.logout();
   });
 
   it('creates submission with csv', () => {
+
+    cy.request('http://localhost:3000/test/generate_fake_submissions_and_jsons');
+
+
     cy.login_as_editor();
     cy.visit('http://localhost:3000/submissions');
 
-    cy.get('[data-cy=upload_csv_button]').first().click();
-    cy.get('#upload_csv_field_tag').attachFile('submissions.csv');
-    cy.get('[data-cy=submit_upload_csv]').first().click();
+    cy.get('[data-cy=upload_csv_form]').within(($form) => {
+      cy.get('#upload_csv_field_tag').attachFile('first_batch_of_submissions.csv');
 
-    cy.fixture('user.json').then((user) => {
-      for (var attribute in user) {
-        cy.contains(user[attribute])
+      cy.root().submit();
+    });
+
+    cy.request('http://localhost:3000/cv_generator/available_templates').then((templates) => {
+      console.log(templates.body);
+      for (var index = 0; index < templates.body.length; index++) {
+        console.log(index);
+        cy.contains("done: " + index);
       }
     });
 
