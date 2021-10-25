@@ -206,12 +206,12 @@ relevant box:
         },
         {
           "phase_id": 4,
-          "x": 3,
+          "x": 2,
           "y": 2,
         },
         {
           "phase_id": 5,
-          "x": 4,
+          "x": 3,
           "y": 2,
         },
         {
@@ -256,21 +256,26 @@ relevant box:
         },
         {
           "phase_id": 14,
-          "x": 1,
-          "y": 7,
+          "x": 3,
+          "y": 6,
         },
         {
           "phase_id": 15,
-          "x": 2,
+          "x": 1,
           "y": 7,
         },
         {
           "phase_id": 16,
+          "x": 3,
+          "y": 7,
+        },
+        {
+          "phase_id": 17,
           "x": 1,
           "y": 8,
         },
         {
-          "phase_id": 17,
+          "phase_id": 18,
           "x": 1,
           "y": 9,
         },
@@ -290,9 +295,10 @@ relevant box:
         {"source": 7, "target": 12},
         {"source": 12, "target": 13},
         {"source": 13, "target": 14},
-        {"source": 14, "target": 15},
-        {"source": 14, "target": 16},
-        {"source": 16, "target": 17},
+        {"source": 13, "target": 15},
+        {"source": 15, "target": 16},
+        {"source": 15, "target": 17},
+        {"source": 17, "target": 18}
       ]
     }
 
@@ -365,16 +371,17 @@ relevant box:
       "author submits article",
       "article goes into the pool",
       "an EC member fishes* the article",
-      "after one month, no EC member has fished the article",
+      "after one month",
       "author is notified",
       "article sent to reviewers",
       "EC member assesses reviews (and revisions)",
       "revisions required",
       "author submits revised article",
-      "if more than three months pass",
+      "if more than 3 months pass",
       "author is notified",
       "EC member makes a case to the EC",
       "EC agrees with publication (possibly conditional)",
+      "author is notified",
       "article is accepted",
       "author is notified",
       "article is in production",
