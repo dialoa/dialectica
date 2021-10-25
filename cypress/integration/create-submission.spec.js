@@ -95,15 +95,15 @@ describe('Create Submission', () => {
 
       cy.get('[data-cy=edit_submission_form]').within(($form) => {
         cy.fixture('submission2.json').then((submission) => {
-          cy.get('#submission_title').type(submission.title)
-          cy.get('#submission_email').type(submission.email)
-          cy.get('#submission_firstname').type(submission.firstname)
-          cy.get('#submission_lastname').type(submission.lastname)
-          cy.get('#submission_other_authors').type(submission.other_authors)
+          cy.get('#submission_title').clear().type(submission.title)
+          //cy.get('#submission_email').clear().type(submission.email)
+          cy.get('#submission_firstname').clear().type(submission.firstname)
+          cy.get('#submission_lastname').clear().type(submission.lastname)
+          cy.get('#submission_other_authors').clear().type(submission.other_authors)
           cy.get('#submission_country').then($country => {$country.val(submission.country)})
           cy.get('#submission_file').attachFile('sample.pdf');
           //cy.get('#submission_comment').type(submission.comment)
-          cy.setTinyMceContent('submission_comment', submission.comment);
+          //cy.setTinyMceContent('submission_comment', submission.comment);
 
           })
         cy.root().submit();
@@ -113,7 +113,7 @@ describe('Create Submission', () => {
       cy.fixture('submission2.json').then((submission) => {
         cy.contains(submission.title).click();
         cy.contains(submission.title)
-        cy.contains(submission.comment)
+        //cy.contains(submission.comment)
       });
 
       cy.logout();
