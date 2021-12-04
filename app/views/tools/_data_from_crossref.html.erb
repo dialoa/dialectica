@@ -1,7 +1,9 @@
 <table class="table table-bordered">
     <tr>
       <td>@article{</td>
-      <td>key</td>
+      <td>
+        <%= doi.first["message"]["author"][0]["family"].downcase %>_<%= doi.first["message"]["author"][0]["given"].chars.first.downcase %>:<%= doi.first["message"]["indexed"]["date-parts"][0][0] %>     
+      </td>
       <td>,</td>
       <td>author = {</td>
       <td>
@@ -28,7 +30,8 @@
         year = {
       </td>
       <td>
-        <%= doi.first["message"]["indexed"]["date-parts"][0][0] %>      </td>
+        <%= doi.first["message"]["indexed"]["date-parts"][0][0] %>
+      </td>
       <td>
         },
       </td>

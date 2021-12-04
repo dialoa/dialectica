@@ -3,7 +3,7 @@
   <p>
     <%= simple_form_for :doi, url: get_data_from_crossref_with_doi_path, method: :get, remote: true do |f| %>
     <p>
-      <%= f.text_field :doi %>
+      <%= f.text_field :doi, placeholder: "10.1007/s11098-021-01751-9" %>
     </p>
       <%= f.submit "submit doi", class: "btn btn-light border my-2" %>
     <% end %>
