@@ -1,0 +1,82 @@
+<table class="table table-bordered">
+    <tr>
+      <td>@article{</td>
+      <td>key</td>
+      <td>,</td>
+      <td>author = {</td>
+      <td>
+        <% doi.first["message"]["author"].each do |author| %>
+          <%= author["family"] %>, <%= author["given"] %>
+        <% end %>
+      </td>
+      <td>
+
+      </td>
+      <td>
+
+      </td>
+      <td>
+
+      </td>
+      <td>
+
+      </td>
+      <td>
+        },
+      </td>
+      <td>
+        year = {
+      </td>
+      <td>
+        <%= doi.first["message"]["indexed"]["date-parts"][0][0] %>      </td>
+      <td>
+        },
+      </td>
+      <td>
+        title = {
+      </td>
+      <td>
+        <%= doi.first["message"]["title"][0] %>
+      </td>
+      <td>
+        },
+      </td>
+      <td>
+        journal = {
+      </td>
+      <td>
+        <%= doi.first["message"]["publisher"] %>
+      </td>
+      <td>
+        },
+      </td>
+      <td>
+        volume = {
+      </td>
+      <td>
+        <%= doi.first["message"]["volume"] %>
+      </td>
+      <td>
+        },
+      </td>
+      <td>
+        number = {
+      </td>
+      <td>
+        <%#= doi.first["message"] %>
+      </td>
+      <td>
+        },
+      </td>
+      <td>
+        pages = {
+      </td>
+      <td>
+
+      </td>
+      <td>
+        },
+      </td>
+    </tr>
+
+</table>

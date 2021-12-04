@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Enter DOI</h1>
+  <p>
+    <%= simple_form_for :doi, url: get_data_from_crossref_with_doi_path, method: :get, remote: true do |f| %>
+    <p>
+      <%= f.text_field :doi %>
+    </p>
+      <%= f.submit "submit doi", class: "btn btn-light border my-2" %>
+    <% end %>
+  </p>
+
+  <div class="doi-result">
+    no result
+  </div>
+
+</div>

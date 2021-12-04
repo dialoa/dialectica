@@ -21,4 +21,13 @@ class ToolsController < ApplicationController
     end
 
   end
+
+  def enter_doi_page
+
+  end
+
+  def get_data_from_crossref_with_doi
+    @doi = Serrano.works(ids: params[:doi][:doi])
+  end
+
 end

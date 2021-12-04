@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :external_referee_submissions
   resources :external_referees
   resources :requested_reviewers
+  get 'tools/enter_doi_page', to: 'tools#enter_doi_page', as: "enter_doi_page"
+  get 'tools/get_data_from_crossref_with_doi', to: 'tools#get_data_from_crossref_with_doi', as: "get_data_from_crossref_with_doi"
   get 'tools/csv', to: 'tools#csv', as: "tools_csv"
   post 'tools/csv', to: 'tools#csv'
   resources :blocked_users
