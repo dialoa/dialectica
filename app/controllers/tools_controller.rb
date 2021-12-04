@@ -30,4 +30,19 @@ class ToolsController < ApplicationController
     @doi = Serrano.works(ids: params[:doi][:doi])
   end
 
+  def get_multiple_data_from_crossref_with_dois
+    csv_file = params[:dois][:csv_file] if params[:dois].present?
+    @array_of_dois = []
+    @dois = []
+    unless csv_file.blank?
+      csv = CSV.read(csv_file, :headers => true)
+      csv.each do |row|
+        doi = row["dois"]
+        puts doi
+        @dois.push(Serrano.works(ids: doi))
+      end
+    end
+    #byebug
+  end
+
 end

@@ -1,0 +1,3 @@
+div = ".doi-result";
+$(div).empty();
+$(div).append("<%= escape_javascript( render "tools/data_from_crossref", dois: @dois ) %>");

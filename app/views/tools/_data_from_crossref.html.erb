@@ -1,8 +1,9 @@
 <table class="table table-bordered">
+  <% dois.each do |doi| %>
     <tr>
       <td>@article{</td>
       <td>
-        <%= doi.first["message"]["author"][0]["family"].downcase %>_<%= doi.first["message"]["author"][0]["given"].chars.first.downcase %>:<%= doi.first["message"]["indexed"]["date-parts"][0][0] %>     
+        <%= doi.first["message"]["author"][0]["family"].downcase %>_<%= doi.first["message"]["author"][0]["given"].chars.first.downcase %>:<%= doi.first["message"]["indexed"]["date-parts"][0][0] %>
       </td>
       <td>,</td>
       <td>author = {</td>
@@ -81,5 +82,6 @@
         },
       </td>
     </tr>
+  <% end %>
 
 </table>

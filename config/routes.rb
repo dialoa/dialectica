@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   resources :requested_reviewers
   get 'tools/enter_doi_page', to: 'tools#enter_doi_page', as: "enter_doi_page"
   get 'tools/get_data_from_crossref_with_doi', to: 'tools#get_data_from_crossref_with_doi', as: "get_data_from_crossref_with_doi"
+  post 'tools/get_multiple_data_from_crossref_with_dois', to: 'tools#get_multiple_data_from_crossref_with_dois', as: "get_multiple_data_from_crossref_with_dois"
+
   get 'tools/csv', to: 'tools#csv', as: "tools_csv"
   post 'tools/csv', to: 'tools#csv'
   resources :blocked_users
