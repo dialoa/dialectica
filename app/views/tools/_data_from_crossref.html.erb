@@ -13,10 +13,10 @@
         <% end %>
       </td>
       <td>
-
+        2. Autor
       </td>
       <td>
-
+        3. Autor und alle weitere in der gleichen Spalte
       </td>
       <td>
 
@@ -31,6 +31,7 @@
         year = {
       </td>
       <td>
+        ACHTUNG: VERSCHIEDENE DATEN IN CROSSREF - PUBLISHED_PRINT NEHMEN
         <%= doi.first["message"]["indexed"]["date-parts"][0][0] %>
       </td>
       <td>
@@ -49,6 +50,7 @@
         journal = {
       </td>
       <td>
+        ACHTUNG JOURNAL NICHT PUBLISHER
         <%= doi.first["message"]["publisher"] %>
       </td>
       <td>
@@ -64,6 +66,7 @@
         },
       </td>
       <td>
+        ACHTUNG: ISSUE nicht NUMBER
         number = {
       </td>
       <td>
@@ -76,7 +79,8 @@
         pages = {
       </td>
       <td>
-
+        ACHTUNG: manche Artikel haben keine Pages
+        <%= doi.first["message"]["page"] %>
       </td>
       <td>
         },
