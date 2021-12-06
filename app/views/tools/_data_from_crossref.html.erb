@@ -8,22 +8,23 @@
       <td>,</td>
       <td>author = {</td>
       <td>
-        <% doi.first["message"]["author"].each do |author| %>
-          <%= author["family"] %>, <%= author["given"] %>
+        <% author1 = doi.first["message"]["author"][0] %>
+        <% unless author1.blank? %>
+          <%= author1["family"] %>, <%= author1["given"] %>
         <% end %>
       </td>
       <td>
-        2. Autor
+        <% author2 = doi.first["message"]["author"][1] %>
+        <% unless author2.blank? %>
+          <%= author2["family"] %>, <%= author2["given"] %>
+        <% end %>
       </td>
       <td>
-        3. Autor und alle weitere in der gleichen Spalte
+        <% doi.first["message"]["author"].drop(2).each do |author| %>
+          <%= author["family"] %>, <%= author["given"] %>,
+        <% end %>
       </td>
-      <td>
 
-      </td>
-      <td>
-
-      </td>
       <td>
         },
       </td>
@@ -31,8 +32,7 @@
         year = {
       </td>
       <td>
-        ACHTUNG: VERSCHIEDENE DATEN IN CROSSREF - PUBLISHED_PRINT NEHMEN
-        <%= doi.first["message"]["indexed"]["date-parts"][0][0] %>
+        <%= doi.first["message"]["published"]["date-parts"][0][0] %>
       </td>
       <td>
         },
@@ -50,8 +50,7 @@
         journal = {
       </td>
       <td>
-        ACHTUNG JOURNAL NICHT PUBLISHER
-        <%= doi.first["message"]["publisher"] %>
+        <%= doi.first["message"]["container-title"][0] %>
       </td>
       <td>
         },
@@ -66,11 +65,10 @@
         },
       </td>
       <td>
-        ACHTUNG: ISSUE nicht NUMBER
         number = {
       </td>
       <td>
-        <%#= doi.first["message"] %>
+        <%= doi.first["message"]["journal-issue"]["issue"] %>
       </td>
       <td>
         },
@@ -79,8 +77,16 @@
         pages = {
       </td>
       <td>
-        ACHTUNG: manche Artikel haben keine Pages
-        <%= doi.first["message"]["page"] %>
+        <%= doi.first["message"]["page"].gsub(/-/,'--') %>
+      </td>
+      <td>
+        },
+      </td>
+      <td>
+        doi = {
+      </td>
+      <td>
+        <%= doi.first["message"]["DOI"] %>
       </td>
       <td>
         },
