@@ -1,14 +1,18 @@
 <div class="container">
   <h1>Enter DOI</h1>
   <p>
+    Example: 10.1007/s11098-020-01510-2
+  </p>
+  <p>
     <%= simple_form_for :doi, url: get_data_from_crossref_with_doi_path, method: :get, remote: true do |f| %>
-      <%= f.text_field :doi, placeholder: "10.1007/s11098-021-01751-9" %>
+      <%= f.input :doi, placeholder: "10.1007/s11098-021-01751-9" %>
       <br />
       <%= f.submit "submit doi", class: "btn btn-light border my-2" %>
     <% end %>
   </p>
 
   <h1>Enter CSV with dois</h1>
+
   <p>
     <%= simple_form_for :dois, url: get_multiple_data_from_crossref_with_dois_path, method: :post, remote: true do |f| %>
     <%= f.file_field :csv_file %>
