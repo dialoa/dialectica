@@ -22,8 +22,69 @@
   </p>
 
   <hr />
-  <div class="doi-result">
-    no result
-  </div>
+  <table class="table table-striped doi-result">
+
+  </table>
 
 </div>
+
+<script>
+  $( document ).ready(function() {
+
+    var test_dois = ["10.1007/s11098-020-01510-2", "10.1007/s11098-021-01751-9"];
+    var dois = test_dois;
+
+      var iteration_value = 0;
+      var progress_bar_value = 0;
+      var progress_bar_steps = Math.round(100 / dois.length);
+      var completed_dois_value = 0;
+
+      get_data_from_crossref(iteration_value);
+
+      function get_data_from_crossref(step){
+        console.log(step);
+
+        $.ajax({
+          url: "https://api.crossref.org/works/" + dois[step],
+          method: 'GET'
+        }).done(function(data) {
+          console.log(data);
+          $(".doi-result").append(encapsulate_td(data.message.DOI));
+          iteration_value = iteration_value + 1;
+          get_data_from_crossref(iteration_value);
+        })
+      }
+
+      function encapsulate_td(content){
+        return "<tr><td>" + content + "</td></tr>"
+      }
+
+      function create_or_update_submission(step) {
+
+        submission = submissions[step];
+        console.log("Doing: " + submission);
+
+        $.ajax({
+          url: "<%= create_or_update_submission_path %>/",
+          method: 'POST',
+          data: {submission: submission},
+          headers: {
+            'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+          }
+        }).done(function() {
+          progress_bar_value = progress_bar_value + progress_bar_steps;
+          completed_submissions_value = completed_submissions_value + 1;
+          $("#progress-bar-loading-screen").width(progress_bar_value + "%");
+          $("#completed_submissions_count").text(completed_submissions_value);
+
+          if(completed_submissions_value === submissions.length){
+               window.location.href = "<%= submission_pool_path %>";
+          } else {
+            create_or_update_submission(step + 1)
+          }
+
+        });
+      }
+
+  });
+</script>
