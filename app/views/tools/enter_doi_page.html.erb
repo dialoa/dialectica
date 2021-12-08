@@ -1,27 +1,40 @@
 <div class="container">
-  <h1>Enter DOI</h1>
+  <h1>enter dois</h1>
   <p>
-    Example: 10.1007/s11098-020-01510-2
+    <strong>Examples</strong><br />
+    10.1007/s11098-018-1120-9<br />
+10.1007/s11098-018-1157-9<br />
+10.1007/s11098-018-1128-1<br />
+10.1007/s11098-018-1156-x<br />
+10.1007/s11098-018-1176-6<br />
+10.1007/s11098-018-1040-8<br />
+10.1007/s11098-018-1077-8<br />
+10.1007/s11098-018-1048-0<br />
+10.1007/s11098-018-1096-5<br />
+10.1007/s11098-018-1116-5<br />
+10.1007/s11098-017-1013-3<br />
+10.1007/s11098-018-1135-2<br />
+10.1007/s11098-018-1036-4<br />
+10.1007/s11098-018-1163-y<br />
+10.1007/s11098-018-1084-9<br />
+10.1007/s11098-018-1055-1<br />
+
   </p>
-  <p>
-    <%= simple_form_for :doi, url: get_data_from_crossref_with_doi_path, method: :get, remote: true do |f| %>
-      <%= f.input :doi, placeholder: "10.1007/s11098-021-01751-9" %>
-      <br />
-      <%= f.submit "submit doi", class: "btn btn-light border my-2" %>
-    <% end %>
-  </p>
-
-  <h1>Enter CSV with dois</h1>
-
-  <p>
-    <%= simple_form_for :dois, url: get_multiple_data_from_crossref_with_dois_path, method: :post, remote: true do |f| %>
-    <%= f.text_area :doi, placeholder: "10.1007/s11098-021-01751-9" %>
-
-    <br />
-      <%= f.submit "submit csv", class: "btn btn-light border my-2" %>
-    <% end %>
-  </p>
-
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Enter here</label>
+    <textarea class="form-control" id="dois_text_area" rows="10" placeholder="10.1007/s11098-018-1156-x
+10.1007/s11098-018-1176-6
+10.1007/s11098-018-1040-8
+10.1007/s11098-018-1077-8
+10.1007/s11098-018-1048-0
+10.1007/s11098-018-1096-5
+10.1007/s11098-018-1116-5
+10.1007/s11098-017-1013-3
+10.1007/s11098-018-1135-2
+10.1007/s11098-018-1036-4"></textarea>
+  </div>
+  <br />
+  <button id="button_to_get_data" type="button" class="btn btn-primary">submit dois</button>
   <hr />
   <table class="table table-striped table-bordered doi-result">
 
@@ -32,18 +45,32 @@
 <script>
   $( document ).ready(function() {
 
-    var test_dois = ["10.1007/s11098-020-01510-2", "10.1007/s11098-021-01751-9"];
-    var dois = test_dois;
+    //var test_dois = ["10.1007/s11098-020-01510-2", "10.1007/s11098-021-01751-9"];
+
+    //var dois = test_dois;
+
+    var dois_text_area = $("#dois_text_area").val();
+    var dois = dois_text_area.split(/\r?\n/);
+    console.log(dois);
 
       var iteration_value = 0;
-      var progress_bar_value = 0;
-      var progress_bar_steps = Math.round(100 / dois.length);
-      var completed_dois_value = 0;
+      //var progress_bar_value = 0;
+      //var progress_bar_steps = Math.round(100 / dois.length);
+      //var completed_dois_value = 0;
 
-      get_data_from_crossref(iteration_value);
+      $( "#button_to_get_data" ).click(function() {
+        get_data_from_crossref(iteration_value);
+      });
+
 
       function get_data_from_crossref(step){
-        console.log(step);
+        var dois_text_area = $("#dois_text_area").val();
+        var dois = dois_text_area.split(/\r?\n/);
+
+        if ( dois.length <= step ) {
+          iteration_value = 0;
+          return;
+        }
 
         $.ajax({
           url: "https://api.crossref.org/works/" + dois[step],
@@ -60,14 +87,19 @@
       }
 
       function encapsulate_td(data){
+        author3 = ""
+
+        author3_array = data.message.author.slice(2);
+        for (var i = 0; i < author3_array.length; i++) {
+          author3 = author3 + author3_array[i].family + ", " + author3_array[i].given + " "
+        }
+
         var html = `
         <tr>
           <td>@article{</td>
-          <td>
             <td>
               ${data.message.author[0].family.toLowerCase()}_${data.message.author[0].given.charAt(0).toLowerCase()}:${data.message.published["date-parts"][0][0]}
             </td>
-          </td>
           <td>,</td>
           <td>author = {</td>
           <td>
@@ -82,12 +114,7 @@
             }
           </td>
           <td>
-            ${
-              data.message.author[2] !== undefined ? data.message.author[1].family : ""
-            }
-            ${
-              data.message.author[2] !== undefined ? data.message.author[1].given : ""
-            }
+            ${ author3 }
           </td>
 
           <td>
@@ -151,7 +178,6 @@
           <td>
             doi = {
           </td>
-          <td>
           <td>${data.message.DOI}</td>
           <td>
             },
