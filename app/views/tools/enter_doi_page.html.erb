@@ -51,7 +51,6 @@
 
     var dois_text_area = $("#dois_text_area").val();
     var dois = dois_text_area.split(/\r?\n/);
-    console.log(dois);
 
       var iteration_value = 0;
       //var progress_bar_value = 0;
@@ -91,7 +90,11 @@
 
         author3_array = data.message.author.slice(2);
         for (var i = 0; i < author3_array.length; i++) {
-          author3 = author3 + author3_array[i].family + ", " + author3_array[i].given + " "
+          if (i == author3_array.length - 1) {
+            author3 = author3 + author3_array[i].family + ", " + author3_array[i].given
+          } else {
+            author3 = author3 + author3_array[i].family + ", " + author3_array[i].given + " and "
+          }
         }
 
         var html = `
@@ -170,7 +173,7 @@
             pages = {
           </td>
           <td>
-            ${data.message.page.replace(/-/,"--")}
+            ${data.message.page !== undefined ? data.message.page.replace(/-/,"--") : "undefined"}
           </td>
           <td>
             },
