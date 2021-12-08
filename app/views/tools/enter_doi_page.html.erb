@@ -15,14 +15,15 @@
 
   <p>
     <%= simple_form_for :dois, url: get_multiple_data_from_crossref_with_dois_path, method: :post, remote: true do |f| %>
-    <%= f.file_field :csv_file %>
+    <%= f.text_area :doi, placeholder: "10.1007/s11098-021-01751-9" %>
+
     <br />
       <%= f.submit "submit csv", class: "btn btn-light border my-2" %>
     <% end %>
   </p>
 
   <hr />
-  <table class="table table-striped doi-result">
+  <table class="table table-striped table-bordered doi-result">
 
   </table>
 
@@ -49,14 +50,115 @@
           method: 'GET'
         }).done(function(data) {
           console.log(data);
-          $(".doi-result").append(encapsulate_td(data.message.DOI));
+          $(".doi-result").append(encapsulate_td(data));
+
+
+        }).always(function(data) {
           iteration_value = iteration_value + 1;
           get_data_from_crossref(iteration_value);
         })
       }
 
-      function encapsulate_td(content){
-        return "<tr><td>" + content + "</td></tr>"
+      function encapsulate_td(data){
+        var html = `
+        <tr>
+          <td>@article{</td>
+          <td>
+            <td>
+              ${data.message.author[0].family.toLowerCase()}_${data.message.author[0].given.charAt(0).toLowerCase()}:${data.message.published["date-parts"][0][0]}
+            </td>
+          </td>
+          <td>,</td>
+          <td>author = {</td>
+          <td>
+            ${data.message.author[0].family}, ${data.message.author[0].given}
+          </td>
+          <td>
+            ${
+              data.message.author[1] !== undefined ? data.message.author[1].family : ""
+            }
+            ${
+              data.message.author[1] !== undefined ? data.message.author[1].given : ""
+            }
+          </td>
+          <td>
+            ${
+              data.message.author[2] !== undefined ? data.message.author[1].family : ""
+            }
+            ${
+              data.message.author[2] !== undefined ? data.message.author[1].given : ""
+            }
+          </td>
+
+          <td>
+            },
+          </td>
+          <td>
+            year = {
+          </td>
+          <td>
+            ${data.message.published["date-parts"][0][0]}
+          </td>
+          <td>
+            },
+          </td>
+          <td>
+            title = {
+          </td>
+          <td>
+            ${data.message.title[0]}
+          </td>
+          <td>
+            },
+          </td>
+          <td>
+            journal = {
+          </td>
+          <td>
+            ${data.message["container-title"][0]}
+          </td>
+          <td>
+            },
+          </td>
+          <td>
+            volume = {
+          </td>
+          <td>
+            ${data.message.volume}
+          </td>
+          <td>
+            },
+          </td>
+          <td>
+            number = {
+          </td>
+          <td>
+            ${data.message["journal-issue"] !== undefined ? data.message["journal-issue"]["issue"] : "undefined"}
+
+          </td>
+          <td>
+            },
+          </td>
+          <td>
+            pages = {
+          </td>
+          <td>
+            ${data.message.page}
+          </td>
+          <td>
+            },
+          </td>
+          <td>
+            doi = {
+          </td>
+          <td>
+          <td>${data.message.DOI}</td>
+          <td>
+            },
+          </td>
+        </tr>
+`;
+        return html;
       }
 
       function create_or_update_submission(step) {
