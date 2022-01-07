@@ -136,33 +136,34 @@
 */
               //add_your_article_is_here_sign("#diagram");
 
-    const your_article_is_here_sign = nodeEnter.filter(function(d){ return d.your_article_is_here_sign == "yes"; })
-        .append("text")
-        .attr("x", box_size.width/2)
-        .attr("y", box_size.height)
-        .attr("id", "swiggel_this_element")
-        .attr("font-weight", 900)
-        .text("↖ your article is here")
-        .style('fill', 'darkOrange')
-        .style("opacity", 0.0);
+            setTimeout(function() {
+              var your_article_is_here_sign = nodeEnter.filter(function(d){ return d.your_article_is_here_sign == "yes"; })
+                  .append("text")
+                  .attr("x", box_size.width/2)
+                  .attr("y", box_size.height)
+                  .attr("id", "swiggel_this_element")
+                  .attr("font-weight", 900)
+                  .text("↖ your article is here")
+                  .style('fill', 'darkOrange')
+                  .style("opacity", 0.0);
 
+                  //.attr("width", box_size.width)
+                  //.attr("height", box_size.height)
+                  //.attr("id", "swiggel_this_element")
+                  //  .append("xhtml:div")
+                    //.attr("class", d => `${d.class}`)
+                    //.style("opacity", 0.0)
+                    //.style("font", standart_font)
+                    //.html(d => `<b>↖ your article is here</b>`)
+                    //.transition()
+                    //.duration(3000)
+                    //.style("opacity", 1.0)
+                    //.delay(function(d,i){return(i*300)});
+                    make_visible("#swiggel_this_element");
+                    //swiggel();
 
+            }, dataset.nodes.length * 300);
 
-
-        //.attr("width", box_size.width)
-        //.attr("height", box_size.height)
-        //.attr("id", "swiggel_this_element")
-        //  .append("xhtml:div")
-          //.attr("class", d => `${d.class}`)
-          //.style("opacity", 0.0)
-          //.style("font", standart_font)
-          //.html(d => `<b>↖ your article is here</b>`)
-          //.transition()
-          //.duration(3000)
-          //.style("opacity", 1.0)
-          //.delay(function(d,i){return(i*300)});
-          make_visible("#swiggel_this_element");
-          //swiggel();
   }
   //functions
   function getSize(d) {
@@ -399,9 +400,10 @@
 
   function make_visible(element) {
     d3.select(element)
+    .raise()
     .transition()
     .ease(d3.easeLinear)
-    .duration(5000)
+    .duration(1000)
     .style("opacity", 1.0)
     .on("end", function(){swiggel("#swiggel_this_element")});
   };
