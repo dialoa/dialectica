@@ -40,7 +40,8 @@
     const dataset = <%= raw submission.flow_chart.to_json %>;
     var width = $(window).width();
 
-    var x_distance_between_nodes = width/4;
+    //change x_distance_between_nodes to change columns
+    var x_distance_between_nodes = width/3;
     var y_distance_between_nodes = 120;
     var box_size = {
       width: width/5,
@@ -89,27 +90,6 @@
             .style("opacity", 1.0)
             .delay(function(d,i){return(i*300)});
 
-      const your_article_is_here_sign = nodeEnter.filter(function(d){ return d.your_article_is_here_sign == "yes"; })
-          .append("text")
-          .attr("x", box_size.width/2)
-          .attr("y", box_size.height)
-          .attr("id", "swiggel_this_element")
-          .attr("font-weight", 900)
-          .text("↖ your article is here")
-          //.attr("width", box_size.width)
-          //.attr("height", box_size.height)
-          //.attr("id", "swiggel_this_element")
-          //  .append("xhtml:div")
-            //.attr("class", d => `${d.class}`)
-            //.style("opacity", 0.0)
-            //.style("font", standart_font)
-            //.html(d => `<b>↖ your article is here</b>`)
-            //.transition()
-            //.duration(3000)
-            //.style("opacity", 1.0)
-            //.delay(function(d,i){return(i*300)});
-
-            swiggel();
 
 
      const link = gNode.append("g")
@@ -155,6 +135,34 @@
 
 */
               //add_your_article_is_here_sign("#diagram");
+
+    const your_article_is_here_sign = nodeEnter.filter(function(d){ return d.your_article_is_here_sign == "yes"; })
+        .append("text")
+        .attr("x", box_size.width/2)
+        .attr("y", box_size.height)
+        .attr("id", "swiggel_this_element")
+        .attr("font-weight", 900)
+        .text("↖ your article is here")
+        .style('fill', 'darkOrange')
+        .style("opacity", 0.0);
+
+
+
+
+        //.attr("width", box_size.width)
+        //.attr("height", box_size.height)
+        //.attr("id", "swiggel_this_element")
+        //  .append("xhtml:div")
+          //.attr("class", d => `${d.class}`)
+          //.style("opacity", 0.0)
+          //.style("font", standart_font)
+          //.html(d => `<b>↖ your article is here</b>`)
+          //.transition()
+          //.duration(3000)
+          //.style("opacity", 1.0)
+          //.delay(function(d,i){return(i*300)});
+          make_visible("#swiggel_this_element");
+          //swiggel();
   }
   //functions
   function getSize(d) {
@@ -372,17 +380,30 @@
       swiggel();
   }
 
-  function swiggel() {
-    d3.select("#swiggel_this_element")
+  function swiggel(element) {
+    d3.select(element)
     .transition()
     .ease(d3.easeLinear)
     .duration(750)
     .attr("transform", `translate(${5},${5})`)
+    //.style("opacity", 0.2)
     .transition()
     .ease(d3.easeLinear)
     .duration(750)
     .attr("transform", `translate(${-5},${-5})`)
-    .on("end", swiggel);  // when the transition finishes start again
+    //.style("opacity", 1)
+    .on("end", function(){
+      swiggel("#swiggel_this_element");
+    })  // when the transition finishes start again
+  };
+
+  function make_visible(element) {
+    d3.select(element)
+    .transition()
+    .ease(d3.easeLinear)
+    .duration(5000)
+    .style("opacity", 1.0)
+    .on("end", function(){swiggel("#swiggel_this_element")});
   };
 
   function generateArrow(x1, y1, x2, y2, flangeSize, padding1, padding2) {
