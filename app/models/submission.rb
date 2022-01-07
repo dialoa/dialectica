@@ -191,12 +191,12 @@ relevant box:
       "nodes": [
         {
           "phase_id": 1,
-          "x": 2,
+          "x": 1,
           "y": 0,
         },
         {
           "phase_id": 2,
-          "x": 2,
+          "x": 1,
           "y": 1,
         },
         {
@@ -207,13 +207,13 @@ relevant box:
         {
           "phase_id": 4,
           "x": 2,
-          "y": 2,
+          "y": 1,
         },
-        {
-          "phase_id": 5,
-          "x": 3,
-          "y": 2,
-        },
+        #{
+        #  "phase_id": 5,
+        #  "x": 3,
+        #  "y": 2,
+        #},
         {
           "phase_id": 6,
           "x": 1,
@@ -234,14 +234,14 @@ relevant box:
           "x": 0,
           "y": 3,
         },
-        {
-          "phase_id": 10,
-          "x": 2,
-          "y": 5,
-        },
+        #{
+        #  "phase_id": 10,
+        #  "x": 2,
+        #  "y": 5,
+        #},
         {
           "phase_id": 11,
-          "x": 3,
+          "x": 2,
           "y": 5,
         },
         {
@@ -256,7 +256,7 @@ relevant box:
         },
         {
           "phase_id": 14,
-          "x": 3,
+          "x": 2,
           "y": 6,
         },
         {
@@ -266,7 +266,7 @@ relevant box:
         },
         {
           "phase_id": 16,
-          "x": 3,
+          "x": 2,
           "y": 7,
         },
         {
@@ -284,14 +284,15 @@ relevant box:
         {"source": 1, "target": 2},
         {"source": 2, "target": 3},
         {"source": 2, "target": 4},
-        {"source": 4, "target": 5},
+        #{"source": 4, "target": 5},
         {"source": 3, "target": 6},
         {"source": 6, "target": 7},
         {"source": 7, "target": 8},
         {"source": 8, "target": 9},
         {"source": 9, "target": 6},
-        {"source": 7, "target": 10},
-        {"source": 10, "target": 11},
+        #{"source": 7, "target": 10},
+        #{"source": 10, "target": 11},
+        {"source": 12, "target": 11},
         {"source": 7, "target": 12},
         {"source": 12, "target": 13},
         {"source": 13, "target": 14},
@@ -371,7 +372,7 @@ relevant box:
       "author submits article",
       "article goes into the pool",
       "an EC member fishes* the article",
-      "after one month",
+      "author is notified", #"after one month",
       "author is notified",
       "article sent to reviewers",
       "EC member assesses reviews (and revisions)",
