@@ -137,15 +137,19 @@
               //add_your_article_is_here_sign("#diagram");
 
             setTimeout(function() {
+
+
+
               var your_article_is_here_sign = nodeEnter.filter(function(d){ return d.your_article_is_here_sign == "yes"; })
-                  .append("text")
-                  .attr("x", box_size.width/2)
-                  .attr("y", box_size.height)
-                  .attr("id", "swiggel_this_element")
-                  .attr("font-weight", 900)
-                  .text("↖ your article is here")
-                  .style('fill', 'darkOrange')
-                  .style("opacity", 0.0);
+                   .raise()
+                   .append("text")
+                   .attr("x", box_size.width/2)
+                   .attr("y", box_size.height)
+                   .attr("id", "swiggel_this_element")
+                   .attr("font-weight", 900)
+                   .text("↖ your article is here")
+                   .style('fill', 'SkyBlue')
+                   .style("opacity", 0.0);
 
                   //.attr("width", box_size.width)
                   //.attr("height", box_size.height)
@@ -159,8 +163,10 @@
                     //.duration(3000)
                     //.style("opacity", 1.0)
                     //.delay(function(d,i){return(i*300)});
-                    make_visible("#swiggel_this_element");
                     //swiggel();
+
+
+                    make_visible("#swiggel_this_element");
 
             }, dataset.nodes.length * 300);
 
