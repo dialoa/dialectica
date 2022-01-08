@@ -309,8 +309,8 @@ relevant box:
           "text2": "one month"
         },
         {
-          "x": 0.5,
-          "y": 0.5,
+          "x": 1.5,
+          "y": 5.0,
           "text1": "if more than",
           "text2": "3 months pass"
         }

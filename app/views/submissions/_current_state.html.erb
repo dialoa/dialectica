@@ -106,25 +106,48 @@
            .style("stroke-opacity", 1.0)
            .delay(function(d,i){return(i*200)});
 
+           var dataxxx = [10,20,30,40];
 
+           var selection = d3.select("body").selectAll(null)
+             .data(dataxxx)
+             .enter()
+             .append("p")
+             .each(function(d) {
+               console.log("each: " + d); // d is datum
+             })
+             .call(function(d) {
+               console.log("call: ")
+               console.log(d.data()); // d is selection
+             })
 
-          const texts_above_link = gNode.data(dataset.text_above_links);
+        //  const texts_above_link = gNode.selectAll("g").data(dataset.text_above_links);
+          var texts_above_link = svg.selectAll("g").data(dataset.text_above_links);
 
           texts_above_link
-           .append("g")
-           .append("text")
-           .attr("transform", d => `translate(${(d.x * x_distance_between_nodes)  - box_size.width/4},${((d.y * y_distance_between_nodes) - 10)})`)
-           .style("font-size", "14px")
-           .text(d => d.text1)
-           .style('fill', 'black');
+          .each(function(d) {
 
-           texts_above_link
-            .append("g")
-            .append("text")
-            .attr("transform", d => `translate(${(d.x * x_distance_between_nodes)  - box_size.width/4},${((d.y * y_distance_between_nodes) - 0)})`)
-            .style("font-size", "14px")
-            .text(d => d.text2)
-            .style('fill', 'black');
+            svg.append("g")
+                .append("text")
+                .attr("transform", `translate(${(d.x * x_distance_between_nodes) + box_size.width/3},${((d.y * y_distance_between_nodes) + 30)})`)
+                .style("font-size", "14px")
+                .text(d.text1)
+                .style('fill', 'black');
+
+            svg.append("g")
+                .append("text")
+                .attr("transform", `translate(${(d.x * x_distance_between_nodes) + box_size.width/3},${((d.y * y_distance_between_nodes) + 45)})`)
+                .style("font-size", "14px")
+                .text(d.text2)
+                .style('fill', 'black');
+          });
+
+          // texts_above_link
+          //  .append("g")
+          //  .append("text")
+          //  .attr("transform", d => `translate(${(d.x * x_distance_between_nodes)  - box_size.width/4},${((d.y * y_distance_between_nodes) - 0)})`)
+          //  .style("font-size", "14px")
+          //  .text(d => d.text2)
+          //  .style('fill', 'black');
 
 
 /*
