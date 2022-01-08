@@ -304,7 +304,15 @@ relevant box:
       "text_above_links": [
         {
           "x": 1.5,
-          "y": 1,  
+          "y": 1,
+          "text1": "after",
+          "text2": "one month"
+        },
+        {
+          "x": 0.5,
+          "y": 2,
+          "text1": "if more than",
+          "text2": "3 months pass"
         }
       ]
     }
