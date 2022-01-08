@@ -106,6 +106,16 @@
            .style("stroke-opacity", 1.0)
            .delay(function(d,i){return(i*200)});
 
+
+       const text_above_links = gNode.append("g")
+        .data(dataset.text_above_links).enter()
+         .append("text")
+         .attr("x", box_size.width/2)
+         .attr("y", box_size.height)
+         .attr("font-weight", 900)
+         .text("↖ your article is here")
+         .style('fill', 'darkOrange');
+
 /*
           const  box = node.append("foreignObject")
               .attr("x", d => (d.x * x_distance_between_nodes) - (box_size.width/2))
@@ -138,8 +148,6 @@
 
             setTimeout(function() {
 
-
-
               var your_article_is_here_sign = nodeEnter.filter(function(d){ return d.your_article_is_here_sign == "yes"; })
                    .raise()
                    .append("text")
@@ -164,10 +172,7 @@
                     //.style("opacity", 1.0)
                     //.delay(function(d,i){return(i*300)});
                     //swiggel();
-
-
                     make_visible("#swiggel_this_element");
-
             }, dataset.nodes.length * 300);
 
   }
