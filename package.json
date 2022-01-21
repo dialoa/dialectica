@@ -502,7 +502,7 @@
     "pnp-webpack-plugin": "^1.7.0",
     "portfinder": "^1.0.28",
     "posix-character-classes": "^0.1.1",
-    "postcss": "^7.0.36",
+    "postcss": "^8.2.13",
     "postcss-attribute-case-insensitive": "^4.0.2",
     "postcss-calc": "^7.0.5",
     "postcss-color-functional-notation": "^2.0.1",
