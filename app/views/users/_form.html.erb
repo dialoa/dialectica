@@ -1,0 +1,21 @@
+<div class="border rounded p-3 mb-2">
+<%= simple_form_for user do |f| %>
+<p>
+  <%= f.input :email%>
+  <br />
+  <div class="row">
+    <div class="col-6">
+      <%= f.input :firstname %>
+    </div>
+    <div class="col-6">
+      <%= f.input :lastname %>
+    </div>
+  </div>
+  <br />
+  <%= f.input :hidden, collection: User.hidden_options, include_blank: false %>
+
+  <br />
+</p>
+  <%= f.submit class: "btn btn-light border my-2" %>
+<% end %>
+</div>

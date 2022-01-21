@@ -1,0 +1,38 @@
+class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+
+  def user_overview
+
+  end
+
+  def show
+    if params[:id].present?
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
+  end
+
+  def edit
+    #@user = User.find(params[:id])
+  end
+
+  def update
+  @user.update(user_params)
+
+  flash[:notice] = "edit was successful"
+  #byebug
+  redirect_back(fallback_location: root_path)
+end
+
+  private
+
+  def user_params
+    params.require(:user).permit(
+      :firstname, :lastname, :email, :hidden)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+end

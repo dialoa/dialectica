@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get 'test/get_json_from_all_submissions'
   get 'test/generate_fake_submissions_and_jsons'
 
+  get 'users/user_overview'
+  resources :users
+
   resources :external_referee_submissions
   resources :external_referees
   resources :requested_reviewers

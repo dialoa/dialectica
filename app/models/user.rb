@@ -23,6 +23,10 @@ has_many :blog_posts
      "#{self.firstname} #{self.lastname}"
    end
 
+   def self.hidden_options
+     ["yes", "no"]
+   end
+
  attr_writer :login
 
   def login
