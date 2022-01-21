@@ -1,5 +1,5 @@
 <div class="border rounded p-3 mb-2">
-<%= simple_form_for user do |f| %>
+<%= simple_form_for user, url: update_user_user_path(user), method: :put  do |f| %>
 <p>
   <%= f.input :email%>
   <br />

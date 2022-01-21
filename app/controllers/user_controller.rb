@@ -1,11 +1,11 @@
-class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+class UserController < ApplicationController
+  before_action :set_user, only: [:show_user, :edit_user, :update_user, :destroy]
 
   def user_overview
 
   end
 
-  def show
+  def show_user
     if params[:id].present?
       @user = User.find(params[:id])
     else
@@ -13,11 +13,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
+  def edit_user
     #@user = User.find(params[:id])
   end
 
-  def update
+  def update_user
   @user.update(user_params)
 
   flash[:notice] = "edit was successful"

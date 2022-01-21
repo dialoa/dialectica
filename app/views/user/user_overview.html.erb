@@ -1,0 +1,5 @@
+<div class="container">
+<% User.all.each do |user| %>
+  <%= user.email %> | <%= user.firstname %> | <%= user.lastname %> | <%= user.hidden %> | <%= link_to "edit", edit_user_user_path(user) %><br>
+<% end %>
+</div>
