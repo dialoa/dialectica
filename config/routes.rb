@@ -48,8 +48,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  root "submissions#pool"
-  #root 'static_pages#welcome'
+  #root "submissions#pool"
+  root 'static_pages#welcome'
 
   resources :pages
 

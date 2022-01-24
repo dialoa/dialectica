@@ -1,104 +1,23 @@
-
-
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <h1 class="display-4">How to Help</h1>
-  <p class="lead">Dialectica is a general analytic philosophy journal. It is edited in Switzerland, publishes predominantly systematic and theoretical philosophy and aims to become the best journal on the European Continent.</p>
-    <% if user_signed_in? %>
-
-    <% else %>
-      <hr />
-    <div class="text-center">
-      <h4><%= link_to('Login', new_user_session_path) %> | <%= link_to "Sign Up", new_user_registration_path %></h4>
-    </div>
-
-    <% end %>
-
-  <hr />
-
-</div>
-
 <div class="container">
-  <div class="card-deck mb-3 text-center">
-
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Refereeing</h4>
-      </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title"></h1>
-        <ul class="list-unstyled mt-3 mb-4">
-          <li>Information about Refeereing</li>
-        </ul>
-      <%= link_to "to the blog", blog_posts_path(category: "refereeing"), class: "btn btn-lg btn-block btn-primary" %>
-      </div>
-    </div>
-
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Bibliography</h4>
-      </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title"></h1>
-        <ul class="list-unstyled mt-3 mb-4">
-          <li>Check out our Bibliography</li>
-        </ul>
-        <%= link_to "to the blog", page_path(Page.find_by_slug("bibliography")), class: "btn btn-lg btn-block btn-primary" if Page.find_by_slug("bibliography").present? %>
-      <%#= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
-      </div>
-    </div>
-
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Journals</h4>
-      </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title"></h1>
-        <ul class="list-unstyled mt-3 mb-4">
-          <li>Help us with the Journals</li>
-        </ul>
-        <%= link_to "to the blog", page_path(Page.find_by_slug("journals")), class: "btn btn-lg btn-block btn-primary" if Page.find_by_slug("journals").present? %>
-      <%#= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
-      </div>
-    </div>
+  <h1 class="text-center">welcome to dialectica</h1>
+  <% unless user_signed_in? %>
+  <div class="text-center">
+    <p>
+      Please sign in:<br />
+      <%= link_to('login', new_user_session_path, class: "") %>
+    </p>
   </div>
+  <% end %>
 
-    <div class="card-deck mb-3 text-center">
-
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-          <h4 class="my-0 font-weight-normal">Books</h4>
-        </div>
-        <div class="card-body">
-          <h1 class="card-title pricing-card-title"></h1>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>Take a look at our books</li>
-          </ul>
-        <%= link_to "to the blog", page_path(Page.find_by_slug("books")), class: "btn btn-lg btn-block btn-primary" if Page.find_by_slug("books").present? %>
-        <%#= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
-        </div>
-      </div>
-
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-          <h4 class="my-0 font-weight-normal">OA</h4>
-        </div>
-        <div class="card-body">
-          <h1 class="card-title pricing-card-title"></h1>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>Support Open Access</li>
-          </ul>
-            <%= link_to "to the blog", blog_posts_path(category: "OA"), class: "btn btn-lg btn-block btn-primary" %>
-        <%#= link_to "To the Dashboard", dashboard_path, class: "btn btn-lg btn-block btn-primary" %>
-        </div>
-      </div>
-
-    </div>
+  <% if policy(:submission).pool? %>
+    <h2>fishpond</h2>
+    <%= link_to 'go to the fishpond', submission_pool_path %>
     <hr />
-
-    <h3 class="text-center">latest entries</h3>
-    <div class="blog_posts">
-      <%#= render partial: "blog_posts/show", collection: @blog_posts, as: :blog_post %>
-      <%= render 'blog_posts/blog_posts_in_groups_of_3', blog_posts: BlogPost.order(:created_at).last(5) %>
-    </div>
-
+  <% end %>
+  <% if user_signed_in? %>
+    <h2>my submissions</h2>
+    <% Submission.where(email: current_user.email).each do |submission| %>
+      <%= link_to submission.title, submission_path(submission) %><br />
+    <% end %>
+  <% end %>
 </div>

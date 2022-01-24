@@ -1,4 +1,4 @@
-<% if user_signed_in? %>
+<% if policy(:submission).show? %>
   <%= link_to "back to the pool", submission_pool_path %>
   <hr />
   <%= render 'submissions/buttons', submission: submission %>
