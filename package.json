@@ -239,7 +239,7 @@
     "flatted": "^2.0.2",
     "flatten": "^1.0.3",
     "flush-write-stream": "^1.1.1",
-    "follow-redirects": "^1.14.2",
+    "follow-redirects": "^1.14.8",
     "for-in": "^1.0.2",
     "forever-agent": "^0.6.1",
     "form-data": "^2.3.3",
