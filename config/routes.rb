@@ -19,6 +19,15 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :submissions do
+    member do
+      put 'propose_for_acceptance'
+      put 'propose_for_rejection'
+      put 'unpropose_for_acceptance'
+      put 'unpropose_for_rejection'
+    end
+  end
+
   resources :external_referee_submissions
   resources :external_referees
   resources :requested_reviewers
@@ -35,7 +44,7 @@ Rails.application.routes.draw do
   resources :codes
   resources :bibtex_files
   resources :bibtex_entries
-  resources :submissions
+
   resources :stuffs
   resources :issues
   resources :blog_posts

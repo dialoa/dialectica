@@ -142,7 +142,9 @@ class SubmissionsController < ApplicationController
     @submissions_with_reviewers = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id))
     @submissions_with_one_reviewer = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id))
     @submissions_suggested_to_me = Submission.alive.not_blacklisted(current_user).where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
-    @proposed_submissions = Submission.alive.not_blacklisted(current_user).where(proposed: "true")
+    @proposed_submissions = Submission.alive.not_blacklisted(current_user).where(proposed_for_acceptance: "true")
+    @submissions_proposed_for_acceptance = Submission.alive.not_blacklisted(current_user).where(proposed_for_acceptance: "true")
+    @submissions_proposed_for_rejection = Submission.alive.not_blacklisted(current_user).where(proposed_for_rejection: "true")
     @dead_submissions = Submission.dead.not_blacklisted(current_user)
     @submissions_to_be_reviewed_by_me = current_user.submissions.alive.not_blacklisted(current_user)
     @all_submissions = Submission.not_blacklisted(current_user)
@@ -160,8 +162,10 @@ class SubmissionsController < ApplicationController
       @submissions = @all_open_submissions
     elsif @selection == "suggested_to_me"
       @submissions = @submissions_suggested_to_me
-    elsif @selection == "proposed_submissions"
-      @submissions = @proposed_submissions
+    elsif @selection == "submissions_proposed_for_acceptance"
+      @submissions = @submissions_proposed_for_acceptance
+    elsif @selection == "submissions_proposed_for_rejection"
+      @submissions = @submissions_proposed_for_rejection
     elsif @selection == "dead_submissions"
       @submissions = @dead_submissions
     end
@@ -275,6 +279,38 @@ Please visit: #{submission_url(submission)}
     submission.add_to_history(current_user, "Proposed Submission".downcase)
     #redirect_to submission_path(submission), notice: 'Submission has been proposed'
     redirect_to submission_path(params[:submission_id]), notice: 'Proposed Submission'.downcase
+  end
+
+  def propose_for_acceptance
+    submission = Submission.find(params[:id])
+    submission.update(proposed_for_acceptance: "true")
+    submission.add_to_history(current_user, "Proposed for Acceptance".downcase)
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(params[:id]), notice: 'Proposed for Acceptance'.downcase
+  end
+
+  def unpropose_for_acceptance
+    submission = Submission.find(params[:id])
+    submission.update(proposed_for_acceptance: "false")
+    submission.add_to_history(current_user, "Unproposed for Acceptance".downcase)
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(params[:id]), notice: 'Unproposed for Acceptance'.downcase
+  end
+
+  def propose_for_rejection
+    submission = Submission.find(params[:id])
+    submission.update(proposed_for_rejection: "true")
+    submission.add_to_history(current_user, "Proposed for Rejection".downcase)
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(params[:id]), notice: 'Proposed for Rejection'.downcase
+  end
+
+  def unpropose_for_rejection
+    submission = Submission.find(params[:id])
+    submission.update(proposed_for_rejection: "false")
+    submission.add_to_history(current_user, "Unproposed for Rejection".downcase)
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(params[:id]), notice: 'Unproposed for Rejection'.downcase
   end
 
   def withdraw_proposal_of_submission

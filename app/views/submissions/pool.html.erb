@@ -9,7 +9,8 @@
         ["submissions with reviewers: #{@submissions_with_reviewers.count}", "with_reviewers"],
         #["submissions to be reviewed by me: #{@submissions_to_be_reviewed_by_me.count}  (#{@submissions_to_be_reviewed_by_me.order(:id).map(&:id).join(",")})", "by_me"],
         ["submissions suggested to me: #{@submissions_suggested_to_me.count}", "suggested_to_me"],
-        ["proposed submissions: #{@proposed_submissions.count}", "proposed_submissions"],
+        ["submissions proposed for acceptance: #{@submissions_proposed_for_acceptance.count}", "submissions_proposed_for_acceptance"],
+        ["submissions proposed for rejection: #{@submissions_proposed_for_rejection.count}", "submissions_proposed_for_rejection"],
         ["all open submissions: #{@all_open_submissions.count}", "all_open"],
         ["dead submissions: #{@dead_submissions.count}", "dead_submissions"]
         ] %>

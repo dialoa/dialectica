@@ -4,20 +4,28 @@
 </p>
 <% end %>
 <% unless current_user.nil? %>
+
+<% if !submission.users.empty? %>
+<div class="row">
+    <div class="col-12">
+      <div class="d-inline-block">
+        <h5>internal reviewers</h5>
+        <% submission.users.each do |reviewer| %>
+          <%= reviewer.name %><br />
+        <% end %>
+      </div>
+  </div>
+</div>
+<hr>
+<% end %>
+
 <div class="row">
     <div class="col-12">
       <%#= mail_to "", "send to external referee", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, as it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn btn-light border my-2" %>
       <% if is_user_reviewer?(current_user) %>
       <h5>reviewer-tools<h5>
         <%  if current_user.submissions.where(id: submission.id).empty?  %>
-        <% if !submission.users.empty? %>
-          <div class="d-inline-block">
-            <strong>internal review</strong><br />
-            <% submission.users.each do |reviewer| %>
-              <%= reviewer.name %><br />
-            <% end %>
-            </div>
-        <% end %>
+
 
           <%= link_to "fish this", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2", data: { cy: "submissions_add_user_to_submission" } %>
           <%#= link_to "I know someone who could review it", submissions_add_user_to_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-success my-2" %>
@@ -33,14 +41,7 @@
           <%= link_to "add me to blocked users", add_me_to_blocked_users_submission_path(submission.id), method: :post, class: "btn btn-light border my-2", data: { cy: "add_me_to_blocked_users_submission" } %>
 
         <% else %>
-        <% if !submission.users.empty? %>
-          <div class="d-inline-block">
-            <strong>internal reviewers</strong><br />
-            <% submission.users.each do |reviewer| %>
-              <%= reviewer.name %><br />
-            <% end %>
-            </div>
-        <% end %>
+
         <%= link_to "leave it", submissions_remove_user_from_submission_path(current_user.id, submission.id), method: :post, class: "btn btn-light border my-2", data: { cy: "submissions_remove_user_to_submission" } %>
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#suggestionModal">
           suggest to internal reviewer
@@ -58,12 +59,22 @@
           <%#= link_to "suggest to another internal", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
           <%#= link_to "upload file", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
           <%#= submission.proposed.to_s == "false" %>
-          <% if submission.proposed.to_s == "false" %>
-            <%= link_to "propose", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2" %>
+          <% unless submission.proposed_for_acceptance.to_s == "true" %>
+            <%= link_to "propose for acceptance", propose_for_acceptance_submission_path(submission.id), method: :put, class: "btn btn-light border my-2" %>
           <% else %>
-          <%= link_to "proposed", propose_submission_path(submission.id, submission.id), method: :post, class: "btn btn-light border my-2 disabled" %>
-          <%= link_to "unpropose", withdraw_proposal_of_submission_path(submission.id, submission.id), method: :post, class: "btn btn-danger my-2" %>
+            <%= link_to "propose for acceptance", propose_for_acceptance_submission_path(submission.id), method: :put, class: "btn btn-light border my-2 disabled" %>
+            <%= link_to "unpropose for acceptance", unpropose_for_acceptance_submission_path(submission.id), method: :put, class: "btn btn-light border my-2" %>
           <% end %>
+
+          <% unless submission.proposed_for_rejection.to_s == "true" %>
+            <%= link_to "propose for rejection", propose_for_rejection_submission_path(submission.id), method: :put, class: "btn btn-light border my-2" %>
+          <% else %>
+            <%= link_to "propose for rejection", propose_for_rejection_submission_path(submission.id), method: :put, class: "btn btn-light border my-2 disabled" %>
+            <%= link_to "unpropose for rejection", unpropose_for_rejection_submission_path(submission.id), method: :put, class: "btn btn-light border my-2" %>
+          <% end %>
+
+
+
         <% end %>
       <% end %>
     </div>
