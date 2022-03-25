@@ -123,6 +123,7 @@ Rails.application.routes.draw do
   post '/submission_tools/upload_file_to_submission/:submission_id/', to: "submissions#upload_file_to_submission", as: "upload_file_to_submission"
   post '/submission_tools/add_comment_to_submission/:id/', to: "submissions#add_comment_to_submission", as: "add_comment_to_submission"
   get '/submission_tools/send_notifications/', to: "submissions#send_notifications", as: "send_notifications"
+  post '/submission_tools/add_me_to_blocked_users/:submission_id/', to: "submissions#add_me_to_blocked_users", as: "add_me_to_blocked_users_submission"
 
   post '/submission_tools/upload_csv', to: "submissions#upload_csv", as: "submissions_upload_csv"
 

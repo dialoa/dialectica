@@ -30,6 +30,8 @@
           <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#addCommentModal" data-cy="add_comment_to_submission_button">
             add comment
           </button>
+          <%= link_to "add me to blocked users", add_me_to_blocked_users_submission_path(submission.id), method: :post, class: "btn btn-light border my-2", data: { cy: "add_me_to_blocked_users_submission" } %>
+
         <% else %>
         <% if !submission.users.empty? %>
           <div class="d-inline-block">

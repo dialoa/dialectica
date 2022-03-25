@@ -207,6 +207,16 @@ class SubmissionsController < ApplicationController
     redirect_to submission_path(submission), notice: message
   end
 
+  def add_me_to_blocked_users
+    submission = Submission.find(params[:submission_id])
+    blocked_user = BlockedUser.create(user_id: current_user.id, submission_id: submission.id)
+
+    comment = "Blocked him- or herself from this submission".downcase
+    message = "Blocking was successful".downcase
+    submission.add_to_history(current_user, comment)
+    redirect_to submission_pool_path, notice: message
+  end
+
 
 
   def create_suggestion_to_user
