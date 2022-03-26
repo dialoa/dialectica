@@ -11,6 +11,10 @@ class SubmissionMailer < ApplicationMailer
     mail(to: email, cc: current_user.email, subject: subject, body: body)
   end
 
+  def send_confirmation_for_submission(email, subject, body)
+    mail(to: email, subject: subject, body: body)
+  end
+
   def send_notifications_of_what_happened_today(user, subject, body)
     mail(to: user.email, subject: subject, body: body)
   end
