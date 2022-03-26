@@ -91,7 +91,7 @@ class SubmissionsController < ApplicationController
           params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
             BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
           end
-          SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation").deliver_now
+          SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission).deliver_now
           redirect_to @submission, notice: 'submission was successfully created.'
         }
         format.json { render :show, status: :created, location: @submission }
