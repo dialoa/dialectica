@@ -17,7 +17,7 @@ class SubmissionMailer < ApplicationMailer
     @body = body
     @submission = submission
     #dialectica@philosophie.ch
-    mail(to: email, bcc: "s.raess@me.com", subject: "Submission: #{submission.title}")
+    mail(to: email, bcc: "dialectica@philosophie.ch", subject: "Submission: #{submission.title}")
   end
 
   def send_notifications_of_what_happened_today(user, subject, body)
