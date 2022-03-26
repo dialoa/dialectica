@@ -33,6 +33,7 @@ describe('Create Submission', () => {
     });
 
       cy.contains("submission was successfully created.");
+      cy.logout();
 
       //reviewer
       cy.login_as_reviewer();
@@ -82,6 +83,7 @@ describe('Create Submission', () => {
     });
 
       cy.contains("submission was successfully created.");
+      cy.logout();
 
       //editor
       cy.login_as_editor();

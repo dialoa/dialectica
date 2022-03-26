@@ -47,6 +47,16 @@ has_many :blog_posts
   #validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
   validate :validate_username
 
+  def self.create_uniq_username(lastname)
+    new_username = lastname
+    number = 1
+    while User.where(username: new_username).exists?
+      new_username = new_username + number.to_s
+      number = number + 1
+    end
+    new_username
+  end
+
   def validate_username
     if User.where(email: username).exists?
       errors.add(:username, :invalid)

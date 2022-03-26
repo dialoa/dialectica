@@ -93,7 +93,7 @@ class SubmissionsController < ApplicationController
           if current_user.blank?
             if User.where(email: @submission.email).empty?
               password = SecureRandom.hex(3)
-              username = @submission.email
+              username = User.create_uniq_username(@submission.lastname.parameterize)
               email = @submission.email
 
               author = User.create(username: username, email: @submission.email, password: password, password_confirmation: password, firstname: @submission.firstname, lastname: @submission.lastname)
