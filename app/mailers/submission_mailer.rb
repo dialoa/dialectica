@@ -20,6 +20,14 @@ class SubmissionMailer < ApplicationMailer
     mail(to: email, bcc: "dialectica@philosophie.ch", subject: "Submission: #{submission.title}")
   end
 
+  def send_credentials(email, username, password)
+    @email = email
+    @username = username
+    @password = password
+    #dialectica@philosophie.ch
+    mail(to: email, bcc: "sandro.raess@philosophie.ch", subject: "credentials for dialectica")
+  end
+
   def send_notifications_of_what_happened_today(user, subject, body)
     mail(to: user.email, subject: subject, body: body)
   end

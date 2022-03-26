@@ -2,7 +2,7 @@ require 'csv'
 require 'json'
 
 class SubmissionsController < ApplicationController
-  before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool]
+  before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool, :show_for_user]
   before_action :authenticate_user!, except: [:show, :new, :create]
   #after_action :verify_authorized, except: [:show, :new, :create]
 
@@ -53,6 +53,10 @@ class SubmissionsController < ApplicationController
     #authorize @submission
   end
 
+  def show_for_user
+    #authorize @submission
+  end
+
   def my_submissions
     @submmissions = current_user.submissions
     authorize @submissions
@@ -85,9 +89,21 @@ class SubmissionsController < ApplicationController
     respond_to do |format|
       if @submission.save
         format.html {
-          if user == current_user
-            #@submission.add_to_history(current_user, "Created Submission".downcase)
+
+          if current_user.blank?
+            if User.where(email: @submission.email).empty?
+              password = SecureRandom.hex(3)
+              username = @submission.email
+              email = @submission.email
+
+              author = User.create(username: username, email: @submission.email, password: password, password_confirmation: password, firstname: @submission.firstname, lastname: @submission.lastname)
+              author.roles << Role.find_by_name("author")
+              @submission.update(submitted_by_user_id: author.id)
+              SubmissionMailer.send_credentials(email, username, password).deliver_now
+              sign_in(:user, author)
+            end
           end
+
           params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
             BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
           end

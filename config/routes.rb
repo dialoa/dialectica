@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       put 'propose_for_rejection'
       put 'unpropose_for_acceptance'
       put 'unpropose_for_rejection'
+      get 'show_for_user'
     end
   end
 
