@@ -107,8 +107,10 @@ class SubmissionsController < ApplicationController
               @submission.update(submitted_by_user_id: author.id)
               SubmissionMailer.send_credentials(email, username, password).deliver_now
               sign_in(:user, author)
+              @submission.add_to_history(author, "submitted \"#{@submission.title}\"")
+            else 
+              @submission.add_to_history(User.find_by_email(@submission.email), "submitted \"#{@submission.title}\"")
             end
-            @submission.add_to_history(author, "submitted \"#{@submission.title}\"")
             redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
           else
             @submission.add_to_history(current_user, "submitted \"#{@submission.title}\"")
