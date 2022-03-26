@@ -3,7 +3,7 @@ rails assets:clobber
 RAILS_ENV=production rails assets:precompile
 git add .
 git commit -m "precompile"
-git push origin main
+git push origin master
 
 ssh sandro@159.65.120.231 << EOF
   cd dialectica
