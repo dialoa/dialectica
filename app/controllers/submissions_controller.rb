@@ -90,6 +90,12 @@ class SubmissionsController < ApplicationController
       if @submission.save
         format.html {
 
+          SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission).deliver_now
+
+          params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
+            BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
+          end
+
           if current_user.blank?
             if User.where(email: @submission.email).empty?
               password = SecureRandom.hex(3)
@@ -102,13 +108,14 @@ class SubmissionsController < ApplicationController
               SubmissionMailer.send_credentials(email, username, password).deliver_now
               sign_in(:user, author)
             end
+            redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
+          else
+            #redirect_to @submission, notice: 'submission was successfully created.' and return
+            redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
           end
 
-          params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
-            BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
-          end
-          SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission).deliver_now
-          redirect_to @submission, notice: 'submission was successfully created.'
+
+
         }
         format.json { render :show, status: :created, location: @submission }
       else
