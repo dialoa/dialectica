@@ -110,8 +110,8 @@ class SubmissionsController < ApplicationController
             end
             redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
           else
-            #redirect_to @submission, notice: 'submission was successfully created.' and return
-            redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
+            redirect_to @submission, notice: 'submission was successfully created.' and return
+            #redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
           end
 
 
