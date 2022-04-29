@@ -6,7 +6,7 @@
 
     <strong>
       <% if history.submission.submitted_by_user_id == history.user.id %>
-        anonymous - <%= l(history.created_at, format: :usa) %>
+        author - <%= l(history.created_at, format: :usa) %>
       <% else %>
         <%= history.user.name unless history.user.blank? %> - <%= l(history.created_at, format: :usa) %>
       <% end %>
