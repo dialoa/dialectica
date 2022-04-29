@@ -58,6 +58,18 @@ has_many :external_referees, :through => :external_referee_submissions
     ["false", "true"]
   end
 
+  def self.dead_options
+    ["false", "true"]
+  end
+
+  def self.accepted_options
+    ["false", "true"]
+  end
+
+  def self.rejected_options
+    ["false", "true"]
+  end
+
   def self.send_to_external_referee_text(submission, submission_blob_url, user)
     if user.blank?
       user = User.find_by_email("anonymous_user@mail.com")

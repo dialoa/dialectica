@@ -172,10 +172,12 @@ class SubmissionsController < ApplicationController
     @submissions_suggested_to_me = Submission.alive.not_blacklisted(current_user).where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
     @proposed_submissions = Submission.alive.not_blacklisted(current_user).where(proposed_for_acceptance: "true")
     @submissions_proposed_for_acceptance = Submission.alive.not_blacklisted(current_user).where(proposed_for_acceptance: "true")
+    @accepted_submissions = Submission.where(accepted: "true")
     @submissions_proposed_for_rejection = Submission.alive.not_blacklisted(current_user).where(proposed_for_rejection: "true")
+    @rejected_submissions = Submission.where(rejected: "true")
     @dead_submissions = Submission.dead.not_blacklisted(current_user)
     @submissions_to_be_reviewed_by_me = current_user.submissions.alive.not_blacklisted(current_user)
-    @all_submissions = Submission.not_blacklisted(current_user)
+    @all_submissions = Submission.alive.not_blacklisted(current_user)
     @all_open_submissions = Submission.alive.not_blacklisted(current_user)
 
     if @selection == "without_reviewers"
@@ -192,8 +194,12 @@ class SubmissionsController < ApplicationController
       @submissions = @submissions_suggested_to_me
     elsif @selection == "submissions_proposed_for_acceptance"
       @submissions = @submissions_proposed_for_acceptance
+    elsif @selection == "accepted_submissions"
+      @submissions = @accepted_submissions
     elsif @selection == "submissions_proposed_for_rejection"
       @submissions = @submissions_proposed_for_rejection
+    elsif @selection == "rejected_submissions"
+      @submissions = @rejected_submissions
     elsif @selection == "dead_submissions"
       @submissions = @dead_submissions
     end
@@ -372,7 +378,7 @@ Please visit: #{submission_url(submission)}
 
   def accept_submission
     submission = Submission.find(params[:submission_id])
-    submission.update(dead: "true")
+    submission.update(dead: "true", accepted: "true")
     message = "Submission accepted".downcase
     submission.add_to_history(current_user, message)
     redirect_to submission_path(submission), notice: message
@@ -380,7 +386,7 @@ Please visit: #{submission_url(submission)}
 
   def reject_submission
     submission = Submission.find(params[:submission_id])
-    submission.update(dead: "true")
+    submission.update(dead: "true", rejected: "true")
     message = "Submission rejected".downcase
     submission.add_to_history(current_user, message)
     redirect_to submission_path(submission), notice: message
@@ -418,6 +424,6 @@ Please visit: #{submission_url(submission)}
 
     # Only allow a list of trusted parameters through.
     def submission_params
-      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at)
+      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at, :accepted, :rejected, :dead)
     end
 end

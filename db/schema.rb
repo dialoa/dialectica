@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_25_100314) do
+ActiveRecord::Schema.define(version: 2022_04_29_140927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,8 @@ ActiveRecord::Schema.define(version: 2022_03_25_100314) do
     t.integer "submitted_by_user_id"
     t.string "proposed_for_acceptance", default: "false"
     t.string "proposed_for_rejection", default: "false"
+    t.string "accepted", default: "false"
+    t.string "rejected", default: "false"
   end
 
   create_table "suggestion_submissions", force: :cascade do |t|

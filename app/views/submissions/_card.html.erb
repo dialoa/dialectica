@@ -11,8 +11,16 @@
     <% if !current_user.blank? && !SuggestionSubmission.where(user_id: current_user.id).where(submission_id: submission.id).empty? %>
       <h5><span class="badge badge-pill badge-info text-white">suggested to you</span></h5>
     <% end %>
-    <% if submission.proposed == "true" %>
-      <h5><span class="badge badge-pill badge-success text-white">Proposed</span></h5>
+    <% if submission.accepted == "true" %>
+      <h5><span class="badge badge-pill badge-success text-white">accepted</span></h5>
+    <% elsif submission.proposed_for_acceptance == "true" %>
+      <h5><span class="badge badge-pill badge-success text-white text-wrap">proposed for acceptance</span></h5>
+    <% end %>
+
+    <% if submission.rejected == "true" %>
+      <h5><span class="badge badge-pill badge-danger text-white">rejected</span></h5>
+    <% elsif submission.proposed_for_rejection == "true" %>
+      <h5><span class="badge badge-pill badge-danger text-white text-wrap">proposed for rejection</span></h5>
     <% end %>
     <% if submission.dead == "true" %>
     <p class="card-text">
