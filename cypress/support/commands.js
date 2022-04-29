@@ -23,6 +23,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('login_as_author', () => {
+  cy.visit('http://localhost:3000/users/sign_in')
+  cy.get("[data-cy=user_login_form]").within(($form) => {
+    cy.get('#user_login').type("author@gmail.com")
+    cy.get('#user_password').type("epikur")
+    cy.root().submit()
+  })
+  cy.contains('logged in as Author Author')
+})
+
 Cypress.Commands.add('login_as_reviewer', () => {
   cy.visit('http://localhost:3000/users/sign_in')
   cy.get("[data-cy=user_login_form]").within(($form) => {

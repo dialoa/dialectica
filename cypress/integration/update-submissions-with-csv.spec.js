@@ -14,23 +14,6 @@ describe('update submissions with csv', () => {
     //cy.login_as_reviewer();
   })
 
-  it('checks who is able to access submissions', () => {
-
-    cy.visit('http://localhost:3000/submissions');
-    cy.contains("You need to sign in or sign up before continuing.", { matchCase: false })
-
-
-    cy.login_as_reviewer();
-    cy.visit('http://localhost:3000/submissions');
-    cy.contains("you are not authorized to perform this action.")
-    cy.logout();
-
-    cy.login_as_editor();
-    cy.visit('http://localhost:3000/submissions');
-    cy.contains("submissions", { matchCase: false });
-    cy.logout();
-  });
-
   it('downloads a csv', () => {
     cy.request('http://localhost:3000/test/generate_fake_submissions_and_jsons');
     cy.login_as_editor();

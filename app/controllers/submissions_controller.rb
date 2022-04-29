@@ -50,7 +50,7 @@ class SubmissionsController < ApplicationController
   end
 
   def show_pool
-    #authorize @submission
+    authorize Submission
   end
 
   def show_for_user
@@ -108,7 +108,7 @@ class SubmissionsController < ApplicationController
               SubmissionMailer.send_credentials(email, username, password).deliver_now
               sign_in(:user, author)
               @submission.add_to_history(author, "submitted \"#{@submission.title}\"")
-            else 
+            else
               @submission.add_to_history(User.find_by_email(@submission.email), "submitted \"#{@submission.title}\"")
             end
             redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return

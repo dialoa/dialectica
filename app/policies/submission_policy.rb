@@ -17,7 +17,7 @@ class SubmissionPolicy < ApplicationPolicy
   end
 
   def pool?
-    is_user_editor?(@user) || is_user_reviewer?(@user) || is_user_admin?(@user) || is_user_author?(@user)
+    is_user_editor?(@user) || is_user_reviewer?(@user) || is_user_admin?(@user)
   end
 
   def show_pool?
