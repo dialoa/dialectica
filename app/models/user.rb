@@ -10,7 +10,7 @@ has_many :blocked_users
 has_many :blog_posts
 
 
-scope :hidden, -> { where(hidden: "no") }
+scope :not_hidden, -> { where(hidden: "no") }
 scope :admins, -> { joins(:roles).where('roles.name = ?', "admin") }
 scope :editors, -> { joins(:roles).where('roles.name = ?', "editor") }
 scope :reviewers, -> { joins(:roles).where('roles.name = ?', "reviewer") }
