@@ -22,7 +22,7 @@
     <% elsif submission.proposed_for_rejection == "true" %>
       <h5><span class="badge badge-pill badge-danger text-white text-wrap">proposed for rejection</span></h5>
     <% end %>
-    <% if submission.dead == "true" %>
+    <% if false #submission.dead == "true" %>
     <p class="card-text">
       <strong><%= submission.firstname %> <%= submission.lastname %></strong>
     </p>
