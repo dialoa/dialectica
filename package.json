@@ -436,7 +436,7 @@
     "node-gyp": "^3.8.0",
     "node-libs-browser": "^2.2.1",
     "node-releases": "^1.1.75",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "nopt": "^3.0.6",
     "normalize-package-data": "^2.5.0",
     "normalize-path": "^3.0.0",
