@@ -117,7 +117,7 @@
           <%#= file_field_tag :file, class: "btn btn-secondary" %>
           <%= hidden_field_tag :submission_id, submission.id %>
           <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
-          <strong>to whom: </strong> <%= select_tag :user_id, options_for_select(User.where(hidden: "no").order(:lastname).collect{ |u| ["#{u.name} - #{u.email}", u.id] }) %>
+          <strong>to whom: </strong> <%= select_tag :user_id, options_for_select(User.available_for_internal_review.where(hidden: "no").order(:lastname).collect{ |u| ["#{u.name} - #{u.email}", u.id] }) %>
           <br />
           <br />
           <%= button_tag "suggest", class: "btn btn-light border" %>

@@ -10,6 +10,15 @@ has_many :blocked_users
 has_many :blog_posts
 
 
+scope :hidden, -> { where(hidden: "no") }
+scope :admins, -> { joins(:roles).where('roles.name = ?', "admin") }
+scope :editors, -> { joins(:roles).where('roles.name = ?', "editor") }
+scope :reviewers, -> { joins(:roles).where('roles.name = ?', "reviewer") }
+scope :authors, -> { joins(:roles).where('roles.name = ?', "author") }
+
+scope :available_for_internal_review, -> { admins.or(self.editors).or(self.reviewers).distinct }
+
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
