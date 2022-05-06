@@ -1,5 +1,5 @@
 class BibtexMailer < ApplicationMailer
-  default from: 'dialecticaphilosophie@gmail.com'
+  default from: 'dialectica@philosophie.ch'
 
   def bibtex_is_finished_email(email, stuff)
     @email = email
