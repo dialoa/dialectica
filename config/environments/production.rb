@@ -89,13 +89,24 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  #alte Einstellung
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.smtp_settings = {
+  #  address:              'smtp.gmail.com',
+  #  port:                 587,
+  #  domain:               'gmail.com',
+  #  user_name:             'dialecticaphilosophie@gmail.com',
+  #  password:              Rails.application.credentials.gmail_password,
+  #  authentication:       'plain',
+  #  enable_starttls_auto: true }
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
+    address:              'mail.oriented.net',
     port:                 587,
-    domain:               'gmail.com',
-    user_name:             'dialecticaphilosophie@gmail.com',
-    password:              Rails.application.credentials.gmail_password,
+    #domain:               'gmail.com',
+    user_name:             'dialectica@philosophie.ch',
+    password:              Rails.application.credentials.oriented_password,
     authentication:       'plain',
     enable_starttls_auto: true }
 
