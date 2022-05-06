@@ -1,5 +1,5 @@
 class SubmissionMailer < ApplicationMailer
-  default from: 'dialecticaphilosophie@gmail.com'
+  default from: 'dialectica@philosophie.ch'
 
   def send_to_external_referee(email, subject, body, current_user)
 
