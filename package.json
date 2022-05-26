@@ -217,7 +217,7 @@
     "etag": "^1.8.1",
     "eventemitter3": "^4.0.7",
     "events": "^3.3.0",
-    "eventsource": "^1.1.0",
+    "eventsource": "^2.0.2",
     "evp_bytestokey": "^1.0.3",
     "execa": "^1.0.0",
     "expand-brackets": "^2.1.4",
