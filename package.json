@@ -713,7 +713,7 @@
     "to-regex-range": "^2.1.1",
     "toidentifier": "^1.0.0",
     "tough-cookie": "^2.5.0",
-    "trim-newlines": "^1.0.0",
+    "trim-newlines": "^3.0.1",
     "trix": "^1.2.0",
     "true-case-path": "^1.0.3",
     "ts-pnp": "^1.2.0",
