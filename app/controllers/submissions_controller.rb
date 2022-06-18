@@ -177,7 +177,7 @@ class SubmissionsController < ApplicationController
     @rejected_submissions = Submission.where(rejected: "true")
     @dead_submissions = Submission.dead.not_blacklisted(current_user)
     @submissions_to_be_reviewed_by_me = current_user.submissions.alive.not_blacklisted(current_user)
-    @all_submissions = Submission.alive.not_blacklisted(current_user)
+    @all_submissions = Submission.not_blacklisted(current_user)
     @all_open_submissions = Submission.alive.not_blacklisted(current_user)
 
     if @selection == "without_reviewers"
