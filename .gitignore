@@ -40,4 +40,4 @@ yarn-debug.log*
 yarn-debug.log*
 .yarn-integrity
 
-get_database_from_digital_ocean.sh
+latest.sql
