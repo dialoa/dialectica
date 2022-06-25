@@ -3,7 +3,7 @@ require 'json'
 
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool, :show_for_user]
-  before_action :authenticate_user!, except: [:show, :new, :create]
+  before_action :authenticate_user!, except: [:show, :new, :create, :iframe_new]
   #after_action :verify_authorized, except: [:show, :new, :create]
 
   # GET /submissions
@@ -65,6 +65,12 @@ class SubmissionsController < ApplicationController
   # GET /submissions/new
   def new
     @submission = Submission.new
+  end
+
+  def iframe_new
+    @submission = Submission.new
+    response.headers["X-FRAME-OPTIONS"] = "ALLOW-FROM *"
+    render layout: "application_iframe"
   end
 
   # GET /submissions/1/edit

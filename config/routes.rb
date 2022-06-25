@@ -27,6 +27,9 @@ Rails.application.routes.draw do
       put 'unpropose_for_rejection'
       get 'show_for_user'
     end
+    collection do
+      get 'iframe_new'
+    end
   end
 
   resources :external_referee_submissions
