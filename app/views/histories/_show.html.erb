@@ -5,7 +5,8 @@
 <div class="history-<%= history.id %> small">
 
     <strong>
-      <% if history.blank? || history.submission.blank? || history.submission.submitted_by_user_id == history.user.id %>
+
+      <% if history.blank? || history.submission.blank? || history.user.blank? || history.submission.submitted_by_user_id == history.user.id %>
         author - <%= l(history.created_at, format: :usa) %>
       <% else %>
         <%= history.user.name unless history.user.blank? %> - <%= l(history.created_at, format: :usa) %>
