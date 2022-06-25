@@ -176,13 +176,15 @@
         <%= simple_form_for :comment, url: add_comment_to_submission_path(submission) do |f| %>
           <%#= f.input :comment, as: :text %>
           <%= f.text_area :comment, :class => "tinymce", :rows => 40, :cols => 120 %>
-          <%= f.submit "add comment", class: "btn btn-light border my-2", data: {cy: "submit_comment_to_submission_button"} %>
-        <% end %>
+
+
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= f.submit "make comment", class: "btn btn-light border my-2", data: {cy: "submit_comment_to_submission_button"} %>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">dismiss</button>
       </div>
+      <% end %>
     </div>
   </div>
 </div>
@@ -215,6 +217,10 @@
         inherit_select_classes: false,
         search_contains: true,
         width: '100%'
+      });
+
+      $('#addCommentModal').on('shown.bs.modal', function() {
+          $(document).off('focusin.modal');
       });
 
     });
