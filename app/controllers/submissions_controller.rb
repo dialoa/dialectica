@@ -4,6 +4,8 @@ require 'json'
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool, :show_for_user]
   before_action :authenticate_user!, except: [:show, :new, :create, :iframe_new, :submission_was_successful]
+  skip_before_action :verify_authenticity_token, only: [:create]
+
   #after_action :verify_authorized, except: [:show, :new, :create]
 
   # GET /submissions
