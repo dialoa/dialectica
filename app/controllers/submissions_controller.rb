@@ -3,7 +3,7 @@ require 'json'
 
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool, :show_for_user]
-  before_action :authenticate_user!, except: [:show, :new, :create, :iframe_new]
+  before_action :authenticate_user!, except: [:show, :new, :create, :iframe_new, :submission_was_successful]
   #after_action :verify_authorized, except: [:show, :new, :create]
 
   # GET /submissions
@@ -57,6 +57,10 @@ class SubmissionsController < ApplicationController
     #authorize @submission
   end
 
+  def submission_was_successful
+
+  end
+
   def my_submissions
     @submmissions = current_user.submissions
     authorize @submissions
@@ -86,11 +90,13 @@ class SubmissionsController < ApplicationController
     #byebug
 
     if current_user.blank?
-      user = User.find_by_email("anonymous_user@mail.com")
+      #user = User.find_by_email("anonymous_user@mail.com")
     else
       user = current_user
       @submission.submitted_by_user_id = user.id
     end
+
+    @submission.email = @submission.email.downcase
 
     respond_to do |format|
       if @submission.save
@@ -103,6 +109,7 @@ class SubmissionsController < ApplicationController
           end
 
           if current_user.blank?
+
             if User.where(email: @submission.email).empty?
               password = SecureRandom.hex(3)
               username = User.create_uniq_username(@submission.lastname.parameterize)
@@ -116,6 +123,7 @@ class SubmissionsController < ApplicationController
               @submission.add_to_history(author, "submitted \"#{@submission.title}\"")
             else
               @submission.add_to_history(User.find_by_email(@submission.email), "submitted \"#{@submission.title}\"")
+              redirect_to submission_was_successful_submissions_path, notice: 'submission was successfully created.' and return
             end
             redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
           else

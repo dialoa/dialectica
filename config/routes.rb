@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     end
     collection do
       get 'iframe_new'
+      get 'submission_was_successful'
     end
   end
 
