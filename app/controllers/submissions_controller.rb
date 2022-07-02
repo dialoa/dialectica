@@ -67,6 +67,12 @@ class SubmissionsController < ApplicationController
     #authorize @submissions
   end
 
+  def searchable_list
+    submission_search = SubmissionSearch.new(params[:search_input]["search_string"])
+    @submissions = submission_search.search
+    puts @submissions.pluck(:id)
+  end
+
   # GET /submissions/new
   def new
     @submission = Submission.new

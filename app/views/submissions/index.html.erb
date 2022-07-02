@@ -33,7 +33,8 @@
 
 <hr>
 
-<%= render 'submissions/table_for_submissions', submissions: @submissions %>
+<%#= render 'submissions/table_for_submissions', submissions: @submissions %>
+<%= render 'submissions/searchable_list', submissions: @submissions %>
 
 <%= link_to 'New Submission', new_submission_path %>
 <br>

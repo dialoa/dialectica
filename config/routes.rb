@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       get 'iframe_new'
       get 'submission_was_successful'
       get 'my_submissions'
+      get 'searchable_list'
     end
   end
 

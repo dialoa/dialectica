@@ -24,13 +24,17 @@ has_many :external_referees, :through => :external_referee_submissions
 
     self.search_field =
     [
+      id,
       title,
       firstname,
       lastname,
-      email
+      email,
+      comment
     ].compact.join(' ')
 
   end
+
+  scope :ilike_search_field, ->(search_term) { where("search_field ILIKE ?", "%#{search_term}%") }
 
   validates :firstname, presence: true
   validates :lastname, presence: true

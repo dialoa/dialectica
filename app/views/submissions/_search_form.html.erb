@@ -1,0 +1,12 @@
+
+<% search_input = OpenStruct.new(search_string: "") %>
+
+<%= form_with scope: :search_input, url: searchable_list_submissions_path, method: :get, remote: true do |form| %>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <%= form.submit "search", class: "btn btn-outline-primary" %>
+  </div>
+  <%= form.text_field :search_string, value: search_input.search_string, class: "form-control", placeholder: "enter search terms" %>
+</div>
+<% end %>

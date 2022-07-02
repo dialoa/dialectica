@@ -4,6 +4,6 @@ class SubmissionSearch
   end
 
   def search
-    Submission.all
+    Submission.ilike_search_field(@search_string)
   end
 end
