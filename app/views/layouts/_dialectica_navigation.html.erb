@@ -20,7 +20,7 @@
       <li class="nav-item">
         <%= link_to "my submissions", my_submissions_submissions_path, class: "nav-link" %>
       </li>
-      
+
       <% if policy(Submission).pool? %>
         <li class="nav-item">
           <%= link_to "pool", submission_pool_path, class: "nav-link" %>
@@ -30,3 +30,7 @@
     </ul>
   </div>
 </nav>
+
+<div class="container my-2">
+  <%= flash_messages %>
+</div>
