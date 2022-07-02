@@ -66,7 +66,7 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    
+
   end
 
   private
@@ -77,6 +77,6 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:title, :description, :keywords, :search_field, :content, :cover)
+      params.require(:page).permit(:title, :description, :keywords, :search_field, :content, :cover, :sort)
     end
 end

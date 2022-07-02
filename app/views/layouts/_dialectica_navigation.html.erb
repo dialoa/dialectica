@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-first-color">
+  <%= link_to "dialectica", root_path, class: "navbar-brand" %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+      <% Page.all.order(:sort).each do |page| %>
+        <li class="nav-item">
+          <%= link_to page.title, page_path(page), class: "nav-link" %>
+        </li>
+      <% end %>
+
+      <li class="nav-item">
+        <%= link_to "submit a paper", new_submission_path, class: "nav-link" %>
+      </li>
+
+    </ul>
+  </div>
+</nav>

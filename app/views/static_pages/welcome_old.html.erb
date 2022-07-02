@@ -1,0 +1,23 @@
+<div class="container">
+  <h1 class="text-center">welcome to dialectica</h1>
+  <% unless user_signed_in? %>
+  <div class="text-center">
+    <p>
+      Please sign in:<br />
+      <%= link_to('login', new_user_session_path, class: "") %>
+    </p>
+  </div>
+  <% end %>
+
+  <% if policy(:submission).pool? %>
+    <h2>fishpond</h2>
+    <%= link_to 'go to the fishpond', submission_pool_path %>
+    <hr />
+  <% end %>
+  <% if user_signed_in? %>
+    <h2>my submissions</h2>
+    <% Submission.where(email: current_user.email).each do |submission| %>
+      <%= link_to submission.title, show_for_user_submission_path(submission) %><br />
+    <% end %>
+  <% end %>
+</div>
