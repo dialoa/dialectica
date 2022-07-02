@@ -5,6 +5,7 @@ class Page < ApplicationRecord
   has_one_attached :cover
 
   before_save :update_search_field
+  after_create :set_sort
 
   def update_search_field
 
@@ -19,4 +20,12 @@ class Page < ApplicationRecord
     ].compact.join(' ')
 
   end
+
+  private
+
+  def set_sort
+    highest_value = Page.order(:sort).last.sort
+    self.update(sort: highest_value + 1)
+  end
+
 end

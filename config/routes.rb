@@ -65,7 +65,11 @@ Rails.application.routes.draw do
   #root "submissions#pool"
   root 'static_pages#welcome'
 
-  resources :pages
+  resources :pages do
+    collection do
+      post 'update_order'
+    end
+  end
 
   get '/about-us', to: 'pages#show', id: "about-us"
   get '/dashboard', to: 'static_pages#dashboard', as: "dashboard"
