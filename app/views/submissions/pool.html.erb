@@ -1,3 +1,5 @@
+<%= render "layouts/fishpond_navigation" %>
+
 <div class="container-fluid">
 
   <div class="row">
@@ -101,6 +103,8 @@
 <% submissions_with_reviewers = Submission.where.not(id: submissions_without_reviewers.pluck(:id)) %>
 
 </div>
+
+<%= render "layouts/footer" %>
 
 <script>
 

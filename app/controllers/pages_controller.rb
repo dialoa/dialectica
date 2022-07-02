@@ -69,6 +69,10 @@ class PagesController < ApplicationController
 
   end
 
+  def welcome
+    @page = Page.where(title: "dialectica").first
+  end
+
   def update_order
     puts params["order"]
     params["order"].each_with_index do |id, index|

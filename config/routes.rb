@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     collection do
       get 'iframe_new'
       get 'submission_was_successful'
+      get 'my_submissions'
     end
   end
 
@@ -63,7 +64,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   #root "submissions#pool"
-  root 'static_pages#welcome'
+  #root 'static_pages#welcome'
+  root 'pages#welcome'
 
   resources :pages do
     collection do

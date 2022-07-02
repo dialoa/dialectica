@@ -10,10 +10,9 @@
        <% end %>
 
        <% if is_user_admin?(current_user) %>
-        <hr>
-          <%= link_to "edit", edit_page_path(page), class: "btn btn-primary my-2" %>
-        <hr>
+        <%= render "page_buttons", page: page %>
        <% end %>
+
 
        <!-- Title -->
        <h1 class="mt-4"><%= page.title %></h1>

@@ -1,0 +1,109 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-first-color">
+  <%= link_to "dialectica", root_path, class: "navbar-brand" %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <% if policy(Submission).pool? %>
+      <li class="nav-item">
+        <%= link_to "pool", submission_pool_path, class: "nav-link" %>
+      </li>
+      <% end %>
+      <li class="nav-item">
+        <%= link_to "submit a paper", new_submission_path, class: "nav-link" %>
+      </li>
+      <% if policy(Submission).index? %>
+        <li class="nav-item">
+          <%= link_to "submissions", submissions_path, class: "nav-link" %>
+        </li>
+      <% end %>
+      <% if false %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Blog
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink9">
+          <% ["refereeing", "OA"].each do |category| %>
+            <%= link_to category, blog_posts_path(category: category), class: "dropdown-item" %>
+          <% end %>
+          <% page_slugs = ["bibliography", "journals", "books"] %>
+          <% page_slugs.each do |slug| %>
+            <% page = Page.find_by_slug(slug) %>
+            <% if page.present? %>
+              <%= link_to page.title.downcase, page_path(page), class: "dropdown-item" %>
+            <% end %>
+          <% end %>
+
+          <%#= link_to "Issues", issues_path, class: "dropdown-item" %>
+          <%#= link_to "Contents", articles_path, class: "dropdown-item" %>
+        </div>
+      </li>
+      <% end %>
+      <% if false %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Submissions
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+          <%#= link_to "Welcome to Dialectica", submission_welcome_path, class: "dropdown-item" %>
+          <%= link_to "Submit a Paper", new_submission_path, class: "dropdown-item" %>
+          <%#= link_to "Submissions", submissions_path, class: "dropdown-item" %>
+          <%= link_to "Pool", submission_pool_path, class: "dropdown-item" %>
+          <%#= link_to "My Submissions to review", submissions_path, class: "dropdown-item" %>
+        </div>
+      </li>
+      <% end %>
+
+      <% if false %>
+      <li class="nav-item">
+        <%#= link_to "Pandoc", pandoc_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Bibtex
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <%= link_to "Create Bibtex from List of References", bibtex_enter_path, class: "dropdown-item" %>
+          <%= link_to "Get Comma seperated list of bibtex keys", bibtex_comma_seperated_list_of_bibtex_keys_path, class: "dropdown-item" %>
+          <%#= link_to "Compare Bibtex with Crossref", bibtex_compare_bibtex_with_crossref_path, class: "dropdown-item" %>
+          <%= link_to "Compare Author's Bibtex with Crossref", bibtex_compare_author_bibtex_with_crossref_path, class: "dropdown-item" %>
+          <%= link_to "Replace Underscore", replace_underscore_path, class: "dropdown-item" %>
+          <%= link_to "Squish Bibtex", squish_bibtex_file_path, class: "dropdown-item" %>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          My Markdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <%= link_to "Create New Markdown", create_new_code_for_user_path, method: :post, class: "dropdown-item" %>
+          <%= link_to "Show all my Markdown", my_codes_path, class: "dropdown-item" %>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Markdown-Editor-Demo
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <%= link_to "Pancritic Editor", pancritic_editor_path, class: "dropdown-item" %>
+          <%= link_to "Basic Markdown Editor", basic_markdown_editor_path, class: "dropdown-item" %>
+          <%#= link_to "Etherpad-Editor", editor_path, class: "dropdown-item" %>
+        </div>
+      </li>
+      <% end %>
+      <% #page_slugs = ["dialectica", "about-us", "contents", "how-to-subscribe", "how-to-submit", "advice-to-authors", "contact-us", "links"] %>
+      <%# page_slugs = ["dialectica", "about-us", "contact-us"] %>
+      <% page_slugs = [] %>
+      <% page_slugs.each do |slug| %>
+        <% page = Page.find_by_slug(slug) %>
+        <% if page.present? %>
+        <li class="nav-item">
+          <%= link_to page.title, page_path(page), class: "nav-link" %>
+        </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</nav>

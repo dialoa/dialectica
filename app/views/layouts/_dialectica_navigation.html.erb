@@ -17,6 +17,16 @@
         <%= link_to "submit a paper", new_submission_path, class: "nav-link" %>
       </li>
 
+      <li class="nav-item">
+        <%= link_to "my submissions", my_submissions_submissions_path, class: "nav-link" %>
+      </li>
+      
+      <% if policy(Submission).pool? %>
+        <li class="nav-item">
+          <%= link_to "pool", submission_pool_path, class: "nav-link" %>
+        </li>
+      <% end %>
+
     </ul>
   </div>
 </nav>
