@@ -18,6 +18,20 @@ has_many :external_referees, :through => :external_referee_submissions
   #after_create :add_create_to_history
   after_create :add_appearance_date
 
+  before_save :update_search_field
+
+  def update_search_field
+
+    self.search_field =
+    [
+      title,
+      firstname,
+      lastname,
+      email
+    ].compact.join(' ')
+
+  end
+
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :email, presence: true
