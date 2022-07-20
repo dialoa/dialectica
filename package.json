@@ -700,7 +700,7 @@
     "svgo": "^1.3.2",
     "tapable": "^1.1.3",
     "tar": "^2.2.2",
-    "terser": "^4.8.0",
+    "terser": "^4.8.1",
     "terser-webpack-plugin": "^2.3.8",
     "through2": "^2.0.5",
     "thunky": "^1.1.0",
