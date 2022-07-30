@@ -3,8 +3,6 @@ class SubmissionSearch
     @search_string = search_string
     @selection = selection
     @submissions = Submission.all
-    puts "user_id"
-    puts user_id
     @user = User.where(id: user_id).empty? ? nil : User.find(user_id)
   end
 
