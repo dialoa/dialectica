@@ -3,13 +3,20 @@ class SubmissionSearch
     @search_string = search_string
     @selection = selection
     @submissions = Submission.all
-    @user = User.find(user_id).nil? ? nil : User.find(user_id)
+    puts "user_id"
+    puts user_id
+    @user = User.where(id: user_id).empty? ? nil : User.find(user_id)
   end
 
   def search
     select()
 
-    @submissions.ilike_search_field(@search_string)
+    unless @user.nil?
+      @submissions.ilike_search_field(@search_string).not_blacklisted(@user).order(proposed: :desc, appearance_date: :desc)
+    else
+      @submissions.ilike_search_field(@search_string).order(proposed: :desc, appearance_date: :desc)
+    end
+
   end
 
   def select
