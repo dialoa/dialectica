@@ -199,11 +199,11 @@ relevant box:
     puts self.appearance_date
   end
 
-  def add_to_history(user, message)
+  def add_to_history(user, message, alternative_name = "")
     #history = self.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")} - #{user.name}</strong>: <br>" + message + "</p>"
     #self.update(history: history)
     #byebug
-    history = History.create(content: message, user_id: user.id, submission_id: self.id)
+    history = History.create(content: message, user_id: user.id, submission_id: self.id, alternative_name: alternative_name)
   end
 
   def add_attachment_to_history(user, attachment)

@@ -6,7 +6,9 @@
 
     <strong>
 
-      <% if history.blank? || history.submission.blank? || history.user.blank? || history.submission.submitted_by_user_id == history.user.id %>
+      <% if !history.alternative_name.blank? %>
+        <%= history.alternative_name %> - <%= l(history.created_at, format: :usa) %>
+      <% elsif history.blank? || history.submission.blank? || history.user.blank? || history.submission.submitted_by_user_id == history.user.id %>
         author - <%= l(history.created_at, format: :usa) %>
       <% else %>
         <%= history.user.name unless history.user.blank? %> - <%= l(history.created_at, format: :usa) %>
@@ -16,7 +18,7 @@
     <div class="card card-body">
       <%= raw history.content %>
     </div>
-    <% if history.user == current_user %>
+    <% if history.user == current_user || is_user_admin?(current_user) || is_user_editor?(current_user) %>
       <%= link_to 'edit', edit_history_path(history) %>
       <%#= link_to 'delete', history, method: :delete, data: { confirm: 'Are you sure?' } %>
     <% end %>

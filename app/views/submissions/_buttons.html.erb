@@ -96,6 +96,15 @@
       <%= link_to "accept", accept_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
       <%= link_to "reject", reject_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
       <%= link_to "resurrect", resurrect_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
+
+      <% if policy(submission).edit? %>
+        <%= link_to "edit this submission", edit_submission_path(submission), data: { cy: "edit_submission_button" }, class: "btn btn-light border my-2" %>
+      <% end %>
+
+      <% if policy(submission).destroy? %>
+        <%= link_to 'delete this submission', submission, method: :delete, data: { confirm: 'Are you sure?', cy: "delete_submission" }, class: "btn btn-danger border my-2" %>
+      <% end %>
+
     <% end %>
 
   <% end %>

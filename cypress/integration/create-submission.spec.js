@@ -42,7 +42,7 @@ describe('Create Submission', () => {
       cy.fixture('submission.json').then((submission) => {
         cy.contains(submission.title).click();
         cy.contains(submission.title)
-        cy.contains(submission.comment)
+        //cy.contains(submission.comment)
       });
       cy.logout();
 
@@ -53,7 +53,7 @@ describe('Create Submission', () => {
       cy.fixture('submission.json').then((submission) => {
         cy.contains(submission.title).click();
         cy.contains(submission.title)
-        cy.contains(submission.comment)
+        //cy.contains(submission.comment)
         //deletes it
         cy.contains("delete this submission").click();
         cy.contains("submission was successfully deleted.");

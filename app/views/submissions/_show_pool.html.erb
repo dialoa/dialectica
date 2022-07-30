@@ -19,15 +19,17 @@
       </p>
       <hr />
       <h4>history</h4>
-      <% if true# submission.submitted_by_user_id.blank? %>
+      <% if false# submission.submitted_by_user_id.blank? %>
       <div class="small">
           <div class="card card-body">
             <p>
               Author - <%= l(submission.created_at, format: :usa) %>
               <br>
               submitted: "<%= submission.title %>"
-              <br />
-              comments: "<%= strip_tags(submission.comment) %>"
+              <% if false %>
+                <br />
+                comments: "<%= strip_tags(submission.comment) %>"
+              <% end %>
             </p>
           </div>
       </div>
@@ -73,16 +75,18 @@
     </div>
   </div>
 
-  <% if policy(submission).edit? %>
-  <p class="my-2">
-    <%= link_to "edit this submission", edit_submission_path(submission), data: { cy: "edit_submission_button" } %>
-  </p>
-  <% end %>
+  <% if false %>
+      <% if policy(submission).edit? %>
+      <p class="my-2">
+        <%= link_to "edit this submission", edit_submission_path(submission), data: { cy: "edit_submission_button" } %>
+      </p>
+      <% end %>
 
-  <% if policy(submission).destroy? %>
-  <p class="my-2">
-    <%= link_to 'delete this submission', submission, method: :delete, data: { confirm: 'Are you sure?', cy: "delete_submission" } %>
-  </p>
+      <% if policy(submission).destroy? %>
+      <p class="my-2">
+        <%= link_to 'delete this submission', submission, method: :delete, data: { confirm: 'Are you sure?', cy: "delete_submission" } %>
+      </p>
+      <% end %>
   <% end %>
 
 
