@@ -22,7 +22,9 @@ describe('Submission Reviewer Tools', () => {
 
     cy.visit('http://localhost:3000/submission_pool');
 
-    cy.contains("submissions to be reviewed by me").first().click();
+    //cy.contains("to be reviewed by me").first().click();
+
+    cy.get('[data-cy=submission_search_form_for_cards_selection]').select("to be reviewed by me");
     cy.contains(testname).first().click();
 
     cy.get('[data-cy=submissions_remove_user_to_submission]').first().click(); //fish this

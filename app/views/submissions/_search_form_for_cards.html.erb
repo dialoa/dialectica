@@ -10,7 +10,7 @@
   <%= form.hidden_field :user_id, value: current_user.id %>
 
 <div class="form-group">
-    <%= form.select :selection, SubmissionSearch.options, {}, {class: "form-control"} %>
+    <%= form.select :selection, SubmissionSearch.options, {}, {class: "form-control", data: { cy: "submission_search_form_for_cards_selection"}} %>
 </div>
 
 <%= form.submit "search", class: "btn btn-outline-primary" %>
