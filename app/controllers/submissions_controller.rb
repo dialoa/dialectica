@@ -73,7 +73,7 @@ class SubmissionsController < ApplicationController
   end
 
   def searchable_cards
-    submission_search = SubmissionSearch.new(params[:search_input]["search_string"])
+    submission_search = SubmissionSearch.new(params[:search_input]["search_string"], params[:search_input]["selection"], params[:search_input][:user_id])
     @submissions = submission_search.search
   end
 
@@ -187,6 +187,11 @@ class SubmissionsController < ApplicationController
   end
 
   def pool
+    authorize Submission
+
+  end
+
+  def pool_old
     authorize Submission
     @selection = params[:selection].present? ? params[:selection] : "all"
 
