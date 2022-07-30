@@ -2,6 +2,8 @@
 
 <div class="container-fluid">
 
+  <%= render "submissions/searchable_cards", submissions: Submission.last(10) %>
+
   <div class="row">
     <div class="col-sm-12 col-md-9">
       <h3>welcome to the fishpond</h3>

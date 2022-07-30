@@ -70,7 +70,11 @@ class SubmissionsController < ApplicationController
   def searchable_list
     submission_search = SubmissionSearch.new(params[:search_input]["search_string"])
     @submissions = submission_search.search
-    puts @submissions.pluck(:id)
+  end
+
+  def searchable_cards
+    submission_search = SubmissionSearch.new(params[:search_input]["search_string"])
+    @submissions = submission_search.search
   end
 
   # GET /submissions/new

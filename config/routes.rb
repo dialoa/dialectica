@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get 'submission_was_successful'
       get 'my_submissions'
       get 'searchable_list'
+      get 'searchable_cards'
     end
   end
 
