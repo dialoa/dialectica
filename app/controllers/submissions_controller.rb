@@ -64,6 +64,8 @@ class SubmissionsController < ApplicationController
   end
 
   def my_submissions
+    set_meta_tags title: "my submissions"
+
     #authorize @submissions
   end
 
@@ -79,7 +81,7 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions/new
   def new
-    set_meta_tags title: "Submit a Paper to dialectica"
+    set_meta_tags title: "submit a paper to dialectica"
 
     @submission = Submission.new
   end
