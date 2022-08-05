@@ -79,6 +79,8 @@ class SubmissionsController < ApplicationController
 
   # GET /submissions/new
   def new
+    set_meta_tags title: "Submit a Paper to dialectica"
+
     @submission = Submission.new
   end
 
