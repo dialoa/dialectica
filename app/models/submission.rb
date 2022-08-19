@@ -17,7 +17,7 @@ has_many :external_referees, :through => :external_referee_submissions
 
   #after_create :add_create_to_history
   after_create :add_appearance_date
-  after_create :set_dialectica_id
+  #after_create :set_dialectica_id # let's not to this, might mess up upload csv
 
   before_save :update_search_field
 
@@ -41,7 +41,7 @@ has_many :external_referees, :through => :external_referee_submissions
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :email, presence: true
-  validates :dialectica_id, uniqueness: true
+  #validates :dialectica_id, uniqueness: true # the problem is in upload csv: save fails if there is already dialectica id
   validates :title, presence: true, uniqueness: true
   validates :file, attached: true, content_type: { in: 'application/pdf', message: 'is not a PDF' }, size: { less_than: 1.megabytes , message: 'is too large' }
 
@@ -207,10 +207,11 @@ relevant box:
   def set_dialectica_id
     maximum = Submission.maximum(:dialectica_id)
     if maximum.nil?
-      maximum = 4396 + 1
+      maximum = 4396
     else
       maximum = maximum + 1
     end
+
     self.update(dialectica_id: maximum)
   end
 
@@ -575,6 +576,7 @@ relevant box:
         new_submission.file.attach(io: File.open('cypress/fixtures/sample.pdf'), filename: 'file.pdf')
 
         new_submission.save
+        puts new_submission.save!
       else
         update_submission = Submission.find(submission["id"]).update(submission)
       end

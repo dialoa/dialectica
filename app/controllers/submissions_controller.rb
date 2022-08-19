@@ -123,6 +123,9 @@ class SubmissionsController < ApplicationController
             BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
           end
 
+          @submission.set_dialectica_id
+
+
           if current_user.blank?
 
             if User.where(email: @submission.email).empty?
