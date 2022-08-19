@@ -33,7 +33,7 @@
     <%= f.input :other_authors, label: "other authors (please provide a complete list)", placeholder: "Laura Smith, Jonas Hamilton, Kim Ruthers" %>
     <p>
       <strong>upload file (pdf format) </strong>   - max 1 mb<br />
-      <%= f.file_field :file %>
+      <%= f.file_field :file, label: false %>
     </p>
     <% if false %>
     <p>
@@ -42,7 +42,7 @@
     </p>
     <% end %>
 
-    
+
     <%#= f.input :blocked_users, as: :select, collection: User.all, label: "blacklist users", required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users"}, multiple: true} %>
 
     <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#blacklist_users_option" aria-expanded="false" aria-controls="blacklist_users_option">
