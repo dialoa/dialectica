@@ -10,7 +10,7 @@
       <div class="list-group-item" data-id="<%= page.id %>">
         <i class="fas fa-arrows-alt handle"></i>
         &nbsp;&nbsp;
-        <%= page.title %> | <%= link_to 'show', page %> | <%= link_to 'edit', edit_page_path(page) %> | <%= link_to 'destroy', page, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= page.title %> | <%= page.status %> | <%= link_to 'show', page %> | <%= link_to 'edit', edit_page_path(page) %> | <%= link_to 'destroy', page, method: :delete, data: { confirm: 'Are you sure?' } %>
       </div>
     <% end %>
   </div>

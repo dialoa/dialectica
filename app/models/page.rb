@@ -4,8 +4,14 @@ class Page < ApplicationRecord
   #has_rich_text :content
   has_one_attached :cover
 
+  validates :slug, :title, presence: true, uniqueness: true
+
   before_save :update_search_field
   after_create :set_sort
+
+  def self.status_options
+    ["visible", "hidden"]
+  end
 
   def update_search_field
 

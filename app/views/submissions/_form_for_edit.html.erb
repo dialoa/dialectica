@@ -6,15 +6,15 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title, label: "title of paper", placeholder: "Towards a Reformed Liberal and Scientific Naturalism " %>
+    <%= f.input :title, label: "title of paper", placeholder: "Towards a Reformed Liberal and Scientific Naturalism ", required: false %>
     <%#= f.input :area, collection: Submission.areas.map {|p| [t("#{p}"), p]} %>
     <%#= f.input :email %>
     <div class="row">
         <div class="col-6">
-          <%= f.input :firstname, label: "first name", placeholder: "Kevin" %>
+          <%= f.input :firstname, label: "first name", placeholder: "Kevin", required: false %>
         </div>
         <div class="col-6">
-          <%= f.input :lastname, label: "last name", placeholder: "Mulligan" %>
+          <%= f.input :lastname, label: "last name", placeholder: "Mulligan", required: false %>
         </div>
     </div>
     <p>
@@ -42,6 +42,7 @@
     </p>
     <% end %>
 
+    
     <%#= f.input :blocked_users, as: :select, collection: User.all, label: "blacklist users", required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users"}, multiple: true} %>
 
     <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#blacklist_users_option" aria-expanded="false" aria-controls="blacklist_users_option">

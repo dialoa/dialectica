@@ -13,6 +13,8 @@
 
     <%= f.input :title %>
     <%= f.input :description %>
+    <%= f.input :slug %>
+    <%= f.input :status, collection: Page.status_options %>
     <%#= f.input :sort %>
     <%#= f.input :keywords %>
     <%= f.text_area :content, :class => "tinymce", :rows => 10 %>
