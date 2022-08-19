@@ -26,7 +26,7 @@ describe('Create Submission', () => {
         cy.get('#submission_country').then($country => {$country.val(submission.country)})
         cy.get('#submission_file').attachFile('sample.pdf');
         //cy.get('#submission_comment').type(submission.comment)
-        cy.setTinyMceContent('submission_comment', submission.comment);
+        //cy.setTinyMceContent('submission_comment', submission.comment);
 
         })
       cy.root().submit();
@@ -76,7 +76,7 @@ describe('Create Submission', () => {
         cy.get('#submission_country').then($country => {$country.val(submission.country)})
         cy.get('#submission_file').attachFile('sample.pdf');
         //cy.get('#submission_comment').type(submission.comment)
-        cy.setTinyMceContent('submission_comment', submission.comment);
+        //cy.setTinyMceContent('submission_comment', submission.comment);
 
         })
       cy.root().submit();
