@@ -458,6 +458,7 @@ Please visit: #{submission_url(submission)}
 
     # Only allow a list of trusted parameters through.
     def submission_params
-      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at, :accepted, :rejected, :dead)
+      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at, :accepted, :rejected, :dead, :dialectica_id)
+
     end
 end

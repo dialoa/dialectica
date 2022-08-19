@@ -28,6 +28,7 @@
     <%= f.input :accepted, label: "accepted?", collection: Submission.accepted_options %>
     <%= f.input :rejected, label: "rejected?", collection: Submission.rejected_options %>
     <%= f.input :dead, label: "dead?", collection: Submission.dead_options %>
+    <%= f.input :dialectica_id, label: "dialectica_id", as: :numeric %>
     <%#= f.input :gender, label: "gender**", collection: Submission.gender_options.map {|p| [t("#{p}"), p]} %>
 
     <%= f.input :other_authors, label: "other authors (please provide a complete list)", placeholder: "Laura Smith, Jonas Hamilton, Kim Ruthers" %>

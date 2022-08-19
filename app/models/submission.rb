@@ -17,6 +17,7 @@ has_many :external_referees, :through => :external_referee_submissions
 
   #after_create :add_create_to_history
   after_create :add_appearance_date
+  after_create :set_dialectica_id
 
   before_save :update_search_field
 
@@ -25,6 +26,7 @@ has_many :external_referees, :through => :external_referee_submissions
     self.search_field =
     [
       id,
+      dialectica_id,
       title,
       firstname,
       lastname,
@@ -39,6 +41,7 @@ has_many :external_referees, :through => :external_referee_submissions
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :email, presence: true
+  validates :dialectica_id, uniqueness: true
   validates :title, presence: true, uniqueness: true
   validates :file, attached: true, content_type: { in: 'application/pdf', message: 'is not a PDF' }, size: { less_than: 1.megabytes , message: 'is too large' }
 
@@ -49,6 +52,14 @@ has_many :external_referees, :through => :external_referee_submissions
 
   def name
     "#{self.firstname} #{self.lastname}"
+  end
+
+  def dialectica_id_public
+    if self.dialectica_id.nil?
+      self.id
+    else
+      self.dialectica_id
+    end
   end
 
   def self.areas
@@ -191,6 +202,16 @@ relevant box:
   def add_create_to_history
     history = self.history + "<p><strong>#{self.created_at.strftime("%d.%m.%Y")} - #{current_user.firstname} #{current_user.lastname}</strong> Submission created </p>"
     self.update(history: history)
+  end
+
+  def set_dialectica_id
+    maximum = Submission.maximum(:dialectica_id)
+    if maximum.nil?
+      maximum = 4396 + 1
+    else
+      maximum = maximum + 1
+    end
+    self.update(dialectica_id: maximum)
   end
 
   def add_appearance_date
@@ -530,7 +551,7 @@ relevant box:
 
    end
 
- CSV_ATTRIBUTES = %w{id title firstname lastname email country other_authors comment appearance_date created_at}
+ CSV_ATTRIBUTES = %w{id dialectica_id title firstname lastname email country other_authors comment appearance_date created_at}
 
 
   def self.to_csv
