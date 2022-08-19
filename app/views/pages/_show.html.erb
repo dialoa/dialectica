@@ -1,34 +1,35 @@
 <!-- Page Content -->
-   <div class="row">
+   <div class="row dialectica">
 
      <!-- Post Content Column -->
-     <div class="col-lg-8 my-4">
-
-       <% if is_user_admin?(current_user) %>
-        <%= link_to "Eintrag bearbeiten", edit_page_path(page), class: "btn btn-primary my-2" %>
-       <% end %>
+     <div class="col-12 my-4">
 
        <!-- Preview Image -->
        <% if page.cover.attached? %>
-          <%= image_tag page.cover, class: "img-fluid  rounded" %>
-         <hr>
+          <%= image_tag page.cover, class: "img-fluid mt-2  rounded" %>
        <% end %>
 
-       <!-- Title -->
-       <h1 class="mt-4 text-center"><%= page.title %></h1>
-       <hr>
+       <% if is_user_admin?(current_user) %>
+        <%= render "page_buttons", page: page %>
+       <% end %>
 
-       <!-- Description and Keywords -->
-       <% unless page.description.blank? %>
-         <p class="text-center text-justify mx-2">
-            <%= page.description %>
-         </p>
-         <% unless page.keywords.blank? %>
+
+       <!-- Title -->
+       <h1 class="mt-4"><%= page.title %></h1>
+
+       <% if false %>
+         <!-- Description and Keywords -->
+         <% unless page.description.blank? %>
            <p class="text-center text-justify mx-2">
-             <small class="text-muted"><strong>Keywords: </strong><%= page.keywords %></small>
+              <%= page.description %>
            </p>
+           <% unless page.keywords.blank? %>
+             <p class="text-center text-justify mx-2">
+               <small class="text-muted"><strong>Keywords: </strong><%= page.keywords %></small>
+             </p>
+           <% end %>
+           <hr>
          <% end %>
-         <hr>
        <% end %>
 
 
@@ -37,20 +38,9 @@
              <%= raw Sanitize.fragment(page.content, Sanitize::Config::RELAXED) %>
         </div>
 
-       <hr>
 
      </div>
 
-     <!-- Sidebar Widgets Column -->
-     <div class="col-md-4">
-         <% if user_signed_in? %>
-          <div class="text-center">
-           <%= link_to 'New Entry', new_blog_post_path(category: page.title), class: "btn btn-primary my-2" %>
-          </div>
-         <% end %>
-
-       <%= render partial: "blog_posts/card_without_h-100", collection: BlogPost.where(category: page.title).order(:created_at).last(3), as: :blog_post %>
-     </div>
 
    </div>
    <!-- /.row -->

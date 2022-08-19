@@ -14,6 +14,16 @@
         <%= link_to "sign up", new_user_registration_path, class:"text-white" %>
       <% end %>
       </p>
+
+      <p class="mt-3 text-center text-white">
+        webmaster: <%= mail_to "sandro.raess@philosophie.ch", "sandro.raess@philosophie.ch", subject: "dialectica - website", class: "text-white" %>
+      </p>
+      <p class="mt-3 text-center text-white">
+        © 2002-<%= Date.today.year %> dialectica.
+      </p>
+
+
+
     </div>
     <!-- /.container -->
   </footer>

@@ -1,6 +1,8 @@
+<%= render "layouts/fishpond_navigation" %>
 <div class="container">
 <h2>login</h2>
 <hr>
+<% if false %>
 <p>
   <strong>editor</strong><br>
   email: editor@gmail.com<br>
@@ -12,6 +14,8 @@
   password: epikur
 </p>
 <hr>
+
+<% end %>
 
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {data: {cy: "user_login_form"}}) do |f| %>
   <div class="form-inputs">
@@ -36,3 +40,4 @@
 <hr>
 <%= render "devise/shared/links" %>
 </div>
+<%= render "layouts/footer" %>

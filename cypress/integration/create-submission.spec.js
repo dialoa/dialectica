@@ -26,13 +26,14 @@ describe('Create Submission', () => {
         cy.get('#submission_country').then($country => {$country.val(submission.country)})
         cy.get('#submission_file').attachFile('sample.pdf');
         //cy.get('#submission_comment').type(submission.comment)
-        cy.setTinyMceContent('submission_comment', submission.comment);
+        //cy.setTinyMceContent('submission_comment', submission.comment);
 
         })
       cy.root().submit();
     });
 
       cy.contains("submission was successfully created.");
+      cy.logout();
 
       //reviewer
       cy.login_as_reviewer();
@@ -41,7 +42,7 @@ describe('Create Submission', () => {
       cy.fixture('submission.json').then((submission) => {
         cy.contains(submission.title).click();
         cy.contains(submission.title)
-        cy.contains(submission.comment)
+        //cy.contains(submission.comment)
       });
       cy.logout();
 
@@ -52,7 +53,7 @@ describe('Create Submission', () => {
       cy.fixture('submission.json').then((submission) => {
         cy.contains(submission.title).click();
         cy.contains(submission.title)
-        cy.contains(submission.comment)
+        //cy.contains(submission.comment)
         //deletes it
         cy.contains("delete this submission").click();
         cy.contains("submission was successfully deleted.");
@@ -75,13 +76,14 @@ describe('Create Submission', () => {
         cy.get('#submission_country').then($country => {$country.val(submission.country)})
         cy.get('#submission_file').attachFile('sample.pdf');
         //cy.get('#submission_comment').type(submission.comment)
-        cy.setTinyMceContent('submission_comment', submission.comment);
+        //cy.setTinyMceContent('submission_comment', submission.comment);
 
         })
       cy.root().submit();
     });
 
       cy.contains("submission was successfully created.");
+      cy.logout();
 
       //editor
       cy.login_as_editor();

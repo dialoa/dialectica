@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html class=h-100>
+  <head>
+    <%= display_meta_tags site: 'Dialectica' %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%#= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%#= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.js"
+			  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+			  crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/rails-ujs@5.2.6/lib/assets/compiled/rails-ujs.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-color/2.1.2/jquery.color.js" integrity="sha256-1Cn7TdfHiMcEbTuku97ZRSGt2b3SvZftEIn68UMgHC8=" crossorigin="anonymous"></script>
+    <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.js" integrity="sha512-UxcTlYsLkcuGZL9JNnMsfo3p7VFSmcgBjH1VUSM82Okk5ni52bk7vz9f2p+D1VnMcNUmMzbzgWqWcdJ2j8Svow==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/codemirror.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/theme/abcdef.min.css" integrity="sha512-Gzm0Fa7gFAThiSK+XOmw4e5Iou/zUMNPgyHcx+RemJUS8KeusL4DlvTM2qfP+A5mfeDexq5uOjFBz29VJP+EMA==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/markdown/markdown.min.js" integrity="sha512-i0WWgBhBBkoMBlFQAsWUqSGwbGx6ZRKHJqGvuLdAl1qu1SDSyxJmwPAiVSPkzGqz1TM64yiH7b8sCUjNeoW8Kw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/stex/stex.min.js" integrity="sha512-OITGCHHDM8bKyfrXELBVnb7tMhrp7Y8JN4oDXlpOS+ekzxoDBDxVmmUkaaoOiV//AaYxGSkL9R18OcAtziGgpg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/yaml/yaml.min.js" integrity="sha512-ooFTzFn1/cr1fYJNQqqiZFVUiUZVO7M+QfadtRcUOGyq1RldSAAUKVwwUawX5MFlmSonsZkGWMYj44paSnK6Ow==" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.1.1/jsoneditor.min.js" integrity="sha512-mKuSd5+Gs4h9I+mZAAMYo8npb4/1fDavO7SDtg4Zf8CaRrG3jhjnCcm1glsonm75MKJREgmh5sSRBonhTm/Adw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.1.1/jsoneditor.css" integrity="sha512-C4lyyyM6oEazFSIdZ4N8klIgD0frXwgcSh4hxlflXw8trQVlZ8M2etLv/TxupDhepsgjdLMbMfGmaB4UxnderA==" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/citation-js@0.5.0-alpha.9/build/citation.min.js" integrity="sha256-8ylR6w3Vn9WiUCEGB2ScAUvOJbyBHALDDdw3xQwhbH8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css" integrity="sha512-0nkKORjFgcyxv3HbE4rzFUlENUMNqic/EzDIeYCgsKa/nwqr2B91Vu/tNAu4Q0cBuG4Xe/D1f/freEci/7GDRA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.1/d3.js" integrity="sha512-GtmGlfEaLcFKLAK57uct3sNffu1QPAu1/KxdPOieXEz1tgQS5BcU7GQuYKlzYUrgZmeEGjuE1Mgvdi1241bh6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  </head>
+
+  <body class="bg-light d-flex flex-column h-100">
+    <%= render "layouts/navigation" %>
+    <div class="container my-2">
+      <%= flash_messages %>
+    </div>
+      <%= yield %>
+    <%= render "layouts/footer" %>
+  </body>
+</html>

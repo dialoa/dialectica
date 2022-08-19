@@ -1,5 +1,6 @@
 class HistoriesController < ApplicationController
   before_action :set_history, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /histories
   # GET /histories.json
@@ -69,6 +70,6 @@ class HistoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def history_params
-      params.require(:history).permit(:content)
+      params.require(:history).permit(:content, :alternative_name)
     end
 end

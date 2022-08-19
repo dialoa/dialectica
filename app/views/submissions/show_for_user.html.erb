@@ -1,0 +1,16 @@
+<%= render "layouts/fishpond_navigation" %>
+<div class="container">
+  <h1>
+    <%= @submission.title %>
+  </h1>
+  <%= render 'submissions/current_state', submission: @submission %>
+  <hr>
+  <% if user_signed_in? %>
+    <h2>my submissions</h2>
+    <% Submission.where(email: current_user.email).each do |submission| %>
+      <%= link_to submission.title, show_for_user_submission_path(submission) %><br />
+    <% end %>
+  <% end %>
+</div>
+
+<%= render "layouts/footer" %>

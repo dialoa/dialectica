@@ -2,8 +2,10 @@ require 'csv'
 require 'json'
 
 class SubmissionsController < ApplicationController
-  before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool]
-  before_action :authenticate_user!, except: [:show, :new, :create]
+  before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool, :show_for_user]
+  before_action :authenticate_user!, except: [:show, :new, :create, :iframe_new, :submission_was_successful, :my_submissions]
+  skip_before_action :verify_authenticity_token, only: [:create]
+
   #after_action :verify_authorized, except: [:show, :new, :create]
 
   # GET /submissions
@@ -50,17 +52,44 @@ class SubmissionsController < ApplicationController
   end
 
   def show_pool
+    authorize Submission
+  end
+
+  def show_for_user
     #authorize @submission
   end
 
+  def submission_was_successful
+
+  end
+
   def my_submissions
-    @submmissions = current_user.submissions
-    authorize @submissions
+    set_meta_tags title: "my submissions"
+
+    #authorize @submissions
+  end
+
+  def searchable_list
+    submission_search = SubmissionSearch.new(params[:search_input]["search_string"])
+    @submissions = submission_search.search
+  end
+
+  def searchable_cards
+    submission_search = SubmissionSearch.new(params[:search_input]["search_string"], params[:search_input]["selection"], params[:search_input][:user_id])
+    @submissions = submission_search.search
   end
 
   # GET /submissions/new
   def new
+    set_meta_tags title: "submit a paper to dialectica"
+
     @submission = Submission.new
+  end
+
+  def iframe_new
+    @submission = Submission.new
+    response.headers["X-FRAME-OPTIONS"] = "ALLOW-FROM *"
+    render layout: "application_iframe"
   end
 
   # GET /submissions/1/edit
@@ -76,22 +105,53 @@ class SubmissionsController < ApplicationController
     #byebug
 
     if current_user.blank?
-      user = User.find_by_email("anonymous_user@mail.com")
+      #user = User.find_by_email("anonymous_user@mail.com")
     else
       user = current_user
-      @submission.submitted_by_user_id = user.id
+      #@submission.submitted_by_user_id = user.id
     end
+
+    @submission.email = @submission.email.downcase
 
     respond_to do |format|
       if @submission.save
         format.html {
-          if user == current_user
-            #@submission.add_to_history(current_user, "Created Submission".downcase)
-          end
+
+          SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission).deliver_now
+
           params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
             BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
           end
-          redirect_to @submission, notice: 'submission was successfully created.'
+
+          @submission.set_dialectica_id
+
+
+          if current_user.blank?
+
+            if User.where(email: @submission.email).empty?
+              password = SecureRandom.hex(3)
+              username = User.create_uniq_username(@submission.lastname.parameterize)
+              email = @submission.email
+
+              author = User.create(username: username, email: @submission.email, password: password, password_confirmation: password, firstname: @submission.firstname, lastname: @submission.lastname)
+              author.roles << Role.find_by_name("author")
+              @submission.update(submitted_by_user_id: author.id)
+              SubmissionMailer.send_credentials(email, username, password).deliver_now
+              sign_in(:user, author)
+              @submission.add_to_history(author, "submitted \"#{@submission.title}\"", "author")
+            else
+              @submission.add_to_history(User.find_by_email(@submission.email), "submitted \"#{@submission.title}\"", "author")
+              redirect_to submission_was_successful_submissions_path, notice: 'submission was successfully created.' and return
+            end
+            redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
+          else
+            @submission.add_to_history(current_user, "submitted \"#{@submission.title}\"", "author")
+            redirect_to @submission, notice: 'submission was successfully created.' and return
+            #redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
+          end
+
+
+
         }
         format.json { render :show, status: :created, location: @submission }
       else
@@ -135,6 +195,11 @@ class SubmissionsController < ApplicationController
 
   def pool
     authorize Submission
+
+  end
+
+  def pool_old
+    authorize Submission
     @selection = params[:selection].present? ? params[:selection] : "all"
 
     #@submissions_without_reviewers = Submission.includes(:users).where( :users => { :id => nil } )
@@ -142,7 +207,11 @@ class SubmissionsController < ApplicationController
     @submissions_with_reviewers = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id))
     @submissions_with_one_reviewer = Submission.alive.not_blacklisted(current_user).where.not(id: @submissions_without_reviewers.pluck(:id))
     @submissions_suggested_to_me = Submission.alive.not_blacklisted(current_user).where(id: SuggestionSubmission.where(user_id: current_user.id).pluck(:submission_id))
-    @proposed_submissions = Submission.alive.not_blacklisted(current_user).where(proposed: "true")
+    @proposed_submissions = Submission.alive.not_blacklisted(current_user).where(proposed_for_acceptance: "true")
+    @submissions_proposed_for_acceptance = Submission.alive.not_blacklisted(current_user).where(proposed_for_acceptance: "true")
+    @accepted_submissions = Submission.where(accepted: "true")
+    @submissions_proposed_for_rejection = Submission.alive.not_blacklisted(current_user).where(proposed_for_rejection: "true")
+    @rejected_submissions = Submission.where(rejected: "true")
     @dead_submissions = Submission.dead.not_blacklisted(current_user)
     @submissions_to_be_reviewed_by_me = current_user.submissions.alive.not_blacklisted(current_user)
     @all_submissions = Submission.not_blacklisted(current_user)
@@ -160,8 +229,14 @@ class SubmissionsController < ApplicationController
       @submissions = @all_open_submissions
     elsif @selection == "suggested_to_me"
       @submissions = @submissions_suggested_to_me
-    elsif @selection == "proposed_submissions"
-      @submissions = @proposed_submissions
+    elsif @selection == "submissions_proposed_for_acceptance"
+      @submissions = @submissions_proposed_for_acceptance
+    elsif @selection == "accepted_submissions"
+      @submissions = @accepted_submissions
+    elsif @selection == "submissions_proposed_for_rejection"
+      @submissions = @submissions_proposed_for_rejection
+    elsif @selection == "rejected_submissions"
+      @submissions = @rejected_submissions
     elsif @selection == "dead_submissions"
       @submissions = @dead_submissions
     end
@@ -205,6 +280,16 @@ class SubmissionsController < ApplicationController
     message = "Added Comment".downcase
     submission.add_to_history(current_user, comment)
     redirect_to submission_path(submission), notice: message
+  end
+
+  def add_me_to_blocked_users
+    submission = Submission.find(params[:submission_id])
+    blocked_user = BlockedUser.create(user_id: current_user.id, submission_id: submission.id)
+
+    comment = "Blocked him- or herself from this submission".downcase
+    message = "Blocking was successful".downcase
+    submission.add_to_history(current_user, comment)
+    redirect_to submission_pool_path, notice: message
   end
 
 
@@ -267,6 +352,38 @@ Please visit: #{submission_url(submission)}
     redirect_to submission_path(params[:submission_id]), notice: 'Proposed Submission'.downcase
   end
 
+  def propose_for_acceptance
+    submission = Submission.find(params[:id])
+    submission.update(proposed_for_acceptance: "true")
+    submission.add_to_history(current_user, "Proposed for Acceptance".downcase)
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(params[:id]), notice: 'Proposed for Acceptance'.downcase
+  end
+
+  def unpropose_for_acceptance
+    submission = Submission.find(params[:id])
+    submission.update(proposed_for_acceptance: "false")
+    submission.add_to_history(current_user, "Unproposed for Acceptance".downcase)
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(params[:id]), notice: 'Unproposed for Acceptance'.downcase
+  end
+
+  def propose_for_rejection
+    submission = Submission.find(params[:id])
+    submission.update(proposed_for_rejection: "true")
+    submission.add_to_history(current_user, "Proposed for Rejection".downcase)
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(params[:id]), notice: 'Proposed for Rejection'.downcase
+  end
+
+  def unpropose_for_rejection
+    submission = Submission.find(params[:id])
+    submission.update(proposed_for_rejection: "false")
+    submission.add_to_history(current_user, "Unproposed for Rejection".downcase)
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(params[:id]), notice: 'Unproposed for Rejection'.downcase
+  end
+
   def withdraw_proposal_of_submission
     submission = Submission.find(params[:submission_id])
     submission.update(proposed: "false")
@@ -298,7 +415,7 @@ Please visit: #{submission_url(submission)}
 
   def accept_submission
     submission = Submission.find(params[:submission_id])
-    submission.update(dead: "true")
+    submission.update(dead: "true", accepted: "true")
     message = "Submission accepted".downcase
     submission.add_to_history(current_user, message)
     redirect_to submission_path(submission), notice: message
@@ -306,7 +423,7 @@ Please visit: #{submission_url(submission)}
 
   def reject_submission
     submission = Submission.find(params[:submission_id])
-    submission.update(dead: "true")
+    submission.update(dead: "true", rejected: "true")
     message = "Submission rejected".downcase
     submission.add_to_history(current_user, message)
     redirect_to submission_path(submission), notice: message
@@ -344,6 +461,7 @@ Please visit: #{submission_url(submission)}
 
     # Only allow a list of trusted parameters through.
     def submission_params
-      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at)
+      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at, :accepted, :rejected, :dead, :dialectica_id)
+
     end
 end

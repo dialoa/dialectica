@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-first-color">
+  <%= link_to "dialectica", root_path, class: "navbar-brand" %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+      <% Page.where(status: "visible").order(:sort).each do |page| %>
+        <li class="nav-item">
+          <%= link_to page.title, page_path(page), class: "nav-link" %>
+        </li>
+      <% end %>
+
+      <li class="nav-item">
+        <%= link_to "submit a paper", new_submission_path, class: "nav-link" %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to "my submissions", my_submissions_submissions_path, class: "nav-link" %>
+      </li>
+
+      <% if policy(Submission).pool? %>
+        <li class="nav-item">
+          <%= link_to "pool", submission_pool_path, class: "nav-link" %>
+        </li>
+      <% end %>
+
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <% unless Page.where(slug: "principles").empty? %>
+        <li class="nav-item">
+          <%= link_to "editorial principles", page_path(Page.where(slug: "principles").first), class: "nav-link" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
+
+<div class="container my-2">
+  <%= flash_messages %>
+</div>

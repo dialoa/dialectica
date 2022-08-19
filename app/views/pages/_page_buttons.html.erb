@@ -1,0 +1,11 @@
+<% if is_user_admin?(current_user) %>
+   <%= link_to "edit", edit_page_path(page), class: "btn btn-primary my-2" %>
+<% end %>
+
+<% if is_user_admin?(current_user) %>
+   <%= link_to 'destroy', page, method: :delete, class: "btn btn-danger my-2", data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+<% if is_user_admin?(current_user) %>
+   <%= link_to 'overview', pages_path, class: "btn btn-success my-2" %>
+<% end %>

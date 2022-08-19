@@ -1,27 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Histories</h1>
+<div class="container">
+<h1>activities</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @histories.each do |history| %>
-      <tr>
-        <td><%= history.content %></td>
-        <td><%= link_to 'Show', history %></td>
-        <td><%= link_to 'Edit', edit_history_path(history) %></td>
-        <td><%= link_to 'Destroy', history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+  <div class="" style="">
+    <% @histories.order(:created_at).reverse.each do |history| %>
+      <p>
+        <% unless history.submission.blank? %>
+          #<%= link_to history.submission.dialectica_id_public, submission_path(history.submission) %> - "<%= link_to history.submission.title, submission_path(history.submission) %>"
+        <% end %>
+      </p>
+      <%= render 'histories/show', history: history, collapse_status: "" %>
+      <hr />
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New History', new_history_path %>
+  </div>
+</div>

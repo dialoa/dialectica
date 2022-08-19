@@ -1,0 +1,11 @@
+var div_element = ".submission_cards";
+
+$( div_element ).fadeOut( "fast", function() {
+
+    content = $("<%= escape_javascript( render 'submissions/cards', submissions: @submissions ) %>")
+
+    $(div_element).replaceWith(function(){
+      return $(content).hide().fadeIn("fast");
+    });
+
+});

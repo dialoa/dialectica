@@ -6,9 +6,11 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+      <% if policy(Submission).pool? %>
       <li class="nav-item">
         <%= link_to "pool", submission_pool_path, class: "nav-link" %>
       </li>
+      <% end %>
       <li class="nav-item">
         <%= link_to "submit a paper", new_submission_path, class: "nav-link" %>
       </li>

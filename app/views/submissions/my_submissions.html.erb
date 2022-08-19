@@ -1,0 +1,15 @@
+<%= render "layouts/dialectica_navigation" %>
+
+<div class="container dialectica mt-4">
+  <h1>my submissions</h1>
+
+  <% if user_signed_in? %>
+    <% Submission.where(email: current_user.email).each do |submission| %>
+      <%= link_to submission.title, show_for_user_submission_path(submission) %><br />
+    <% end %>
+  <% else %>
+    <%= link_to('please login', new_user_session_path, class: "") %>
+  <% end %>
+
+</div>
+<%= render "layouts/footer" %>

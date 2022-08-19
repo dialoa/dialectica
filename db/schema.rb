@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_075021) do
+ActiveRecord::Schema.define(version: 2022_08_19_204710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_075021) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "alternative_name", default: ""
     t.index ["submission_id"], name: "index_histories_on_submission_id"
     t.index ["user_id"], name: "index_histories_on_user_id"
   end
@@ -180,6 +181,8 @@ ActiveRecord::Schema.define(version: 2022_01_21_075021) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
     t.text "content", default: ""
+    t.integer "sort", default: 0
+    t.string "status", default: "visible"
     t.index ["slug"], name: "index_pages_on_slug", unique: true
   end
 
@@ -244,6 +247,12 @@ ActiveRecord::Schema.define(version: 2022_01_21_075021) do
     t.text "comment", default: ""
     t.date "appearance_date"
     t.integer "submitted_by_user_id"
+    t.string "proposed_for_acceptance", default: "false"
+    t.string "proposed_for_rejection", default: "false"
+    t.string "accepted", default: "false"
+    t.string "rejected", default: "false"
+    t.text "search_field", default: ""
+    t.integer "dialectica_id"
   end
 
   create_table "suggestion_submissions", force: :cascade do |t|

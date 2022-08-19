@@ -1,33 +1,54 @@
-<p id="notice"><%= notice %></p>
+<%= render "layouts/dialectica_navigation" %>
 
-<h1>Pages</h1>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Keywords</th>
-      <th>Search field</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <h1>Pages</h1>
 
-  <tbody>
-    <% @pages.each do |page| %>
-      <tr>
-        <td><%= page.title %></td>
-        <td><%= page.description %></td>
-        <td><%= page.keywords %></td>
-        <td><%= page.search_field %></td>
-        <td><%= link_to 'Show', page %></td>
-        <td><%= link_to 'Edit', edit_page_path(page) %></td>
-        <td><%= link_to 'Destroy', page, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+  <div id="pages-sortable" class="list-group col">
+    <% @pages.order(:sort).each do |page| %>
+      <div class="list-group-item" data-id="<%= page.id %>">
+        <i class="fas fa-arrows-alt handle"></i>
+        &nbsp;&nbsp;
+        <%= page.title %> | <%= page.status %> | <%= link_to 'show', page %> | <%= link_to 'edit', edit_page_path(page) %> | <%= link_to 'destroy', page, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
 
-<br>
+  <button id="pages-sortable-update-order" type="button" class="btn btn-primary my-2">update order</button>
 
-<%= link_to 'New Page', new_page_path %>
+  <script>
+
+    $( document ).ready(function() {
+
+      var pages_sortable_id = document.getElementById('pages-sortable');
+      var pages_sortable = new Sortable(pages_sortable_id, {
+          handle: '.handle', // handle's class
+          animation: 150
+      });
+
+      $( "#pages-sortable-update-order" ).click(function() {
+          $.ajax({
+            type: "POST",
+            url: "/pages/update_order",
+            data: {order: pages_sortable.toArray()},
+            context: document.body
+          }).done(function(response) {
+            location.reload();
+          });
+        });
+
+
+
+    });
+
+  </script>
+
+
+  <br>
+
+  <%= link_to 'new page', new_page_path %>
+
+</div>
+
+<%= render "layouts/footer" %>

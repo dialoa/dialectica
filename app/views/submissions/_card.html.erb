@@ -2,7 +2,7 @@
 <div id="submission-<%= submission.id %> submission-<%= submission.id %>-random-id-<%= random_id %>" class="card h-100 mb-3 <%= submission.submission_urgency %> <%= submission.get_frame_status_color(current_user) %> <%= "animate__animated animate__shakeX animate__slow animate__repeat-2" if submission.suggested_to_me?(current_user) %> btn btn-light pool-select-button" style="" value="<%=submission.id%>" data-cy="submission_card">
   <div class="card-body">
     <p class="card-text">
-      <strong>#<%= submission.id %> - <%= l submission.created_at, format: :usa %></strong>
+      <strong>#<%= submission.dialectica_id_public %> - <%= l submission.created_at, format: :usa %></strong>
     </p>
     <hr class="bg-light" />
     <p class="card-text">
@@ -11,10 +11,18 @@
     <% if !current_user.blank? && !SuggestionSubmission.where(user_id: current_user.id).where(submission_id: submission.id).empty? %>
       <h5><span class="badge badge-pill badge-info text-white">suggested to you</span></h5>
     <% end %>
-    <% if submission.proposed == "true" %>
-      <h5><span class="badge badge-pill badge-success text-white">Proposed</span></h5>
+    <% if submission.accepted == "true" %>
+      <h5><span class="badge badge-pill badge-success text-white">accepted</span></h5>
+    <% elsif submission.proposed_for_acceptance == "true" %>
+      <h5><span class="badge badge-pill badge-success text-white text-wrap">proposed for acceptance</span></h5>
     <% end %>
-    <% if submission.dead == "true" %>
+
+    <% if submission.rejected == "true" %>
+      <h5><span class="badge badge-pill badge-danger text-white">rejected</span></h5>
+    <% elsif submission.proposed_for_rejection == "true" %>
+      <h5><span class="badge badge-pill badge-danger text-white text-wrap">proposed for rejection</span></h5>
+    <% end %>
+    <% if false #submission.dead == "true" %>
     <p class="card-text">
       <strong><%= submission.firstname %> <%= submission.lastname %></strong>
     </p>

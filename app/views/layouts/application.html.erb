@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class=h-100>
   <head>
-    <%= display_meta_tags site: 'Dialectica' %>
+    <%= display_meta_tags site: 'dialectica', reverse: true %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,7 @@
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
+    <%= favicon_link_tag('dialectica-favicon.png') %>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -40,16 +41,24 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.1/d3.js" integrity="sha512-GtmGlfEaLcFKLAK57uct3sNffu1QPAu1/KxdPOieXEz1tgQS5BcU7GQuYKlzYUrgZmeEGjuE1Mgvdi1241bh6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js" integrity="sha512-Eezs+g9Lq4TCCq0wae01s9PuNWzHYoCMkE97e2qdkYthpI0pzC3UGB03lgEHn2XM85hDOUF6qgqqszs+iXU4UA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3ZYVTCJTK7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-3ZYVTCJTK7');
+  </script>
 
   </head>
 
   <body class="bg-light d-flex flex-column h-100">
-    <%= render "layouts/navigation" %>
-    <div class="container my-2">
-      <%= flash_messages %>
-    </div>
       <%= yield %>
-    <%= render "layouts/footer" %>
   </body>
 </html>

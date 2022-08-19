@@ -10,6 +10,15 @@ has_many :blocked_users
 has_many :blog_posts
 
 
+scope :not_hidden, -> { where(hidden: "no") }
+scope :admins, -> { joins(:roles).where('roles.name = ?', "admin") }
+scope :editors, -> { joins(:roles).where('roles.name = ?', "editor") }
+scope :reviewers, -> { joins(:roles).where('roles.name = ?', "reviewer") }
+scope :authors, -> { joins(:roles).where('roles.name = ?', "author") }
+
+scope :available_for_internal_review, -> { admins.or(self.editors).or(self.reviewers).distinct }
+
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -46,6 +55,16 @@ has_many :blog_posts
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   #validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
   validate :validate_username
+
+  def self.create_uniq_username(lastname)
+    new_username = lastname
+    number = 1
+    while User.where(username: new_username).exists?
+      new_username = new_username + number.to_s
+      number = number + 1
+    end
+    new_username
+  end
 
   def validate_username
     if User.where(email: username).exists?

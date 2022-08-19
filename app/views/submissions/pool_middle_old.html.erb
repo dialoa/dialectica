@@ -1,0 +1,135 @@
+<%= render "layouts/fishpond_navigation" %>
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-sm-12 col-md-9">
+      <h3>welcome to the fishpond</h3>
+      <p>
+        <% submission_option_list = [
+        #["submissions without reviewers: #{@submissions_without_reviewers.count} (#{@submissions_without_reviewers.order(:id).map(&:id).join(",")})", "without_reviewers"],
+        ["submissions with reviewers: #{@submissions_with_reviewers.count}", "with_reviewers"],
+        #["submissions to be reviewed by me: #{@submissions_to_be_reviewed_by_me.count}  (#{@submissions_to_be_reviewed_by_me.order(:id).map(&:id).join(",")})", "by_me"],
+        ["submissions suggested to me: #{@submissions_suggested_to_me.count}", "suggested_to_me"],
+        ["accepted submissions: #{@accepted_submissions.count}", "accepted_submissions"],
+        ["rejected submissions: #{@rejected_submissions.count}", "rejected_submissions"],
+        ["submissions proposed for acceptance: #{@submissions_proposed_for_acceptance.count}", "submissions_proposed_for_acceptance"],
+        ["submissions proposed for rejection: #{@submissions_proposed_for_rejection.count}", "submissions_proposed_for_rejection"],
+        #["all open submissions: #{@all_open_submissions.count}", "all_open"],
+        ["dead submissions: #{@dead_submissions.count}", "dead_submissions"]
+        ] %>
+        <div class="small">
+          <a href="<%= submission_pool_path(selection: "all") %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == "all" %>">all submissions: <%= "#{@all_submissions.count}" %></a>
+          <br>
+          <a href="<%= submission_pool_path(selection: "all_open") %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == "all_open" %>">open submissions: <%= "#{@all_open_submissions.count}" %></a>
+          <% if false %>
+            (<% @submissions_without_reviewers.order(:id).each_with_index do |item, index| %>
+               <%= link_to item.id, submission_path(item) %>
+            <% unless @submissions_without_reviewers.size-1 == index %>
+               ,
+             <% end %>
+            <% end %>)
+          <% end %>
+          <br>
+          <a href="<%= submission_pool_path(selection: "without_reviewers") %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == "without_reviewers" %>">submissions without reviewers: <%= "#{@submissions_without_reviewers.count}" %></a>
+          <br />
+           <a href="<%= submission_pool_path(selection: "by_me") %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == "by_me" %>">submissions to be reviewed by me: <%= "#{@submissions_to_be_reviewed_by_me.count}" %></a>
+           (<% @submissions_to_be_reviewed_by_me.order(:id).each_with_index do |item, index| %>
+              <%= link_to item.id, submission_path(item) %>
+           <% unless @submissions_to_be_reviewed_by_me.size-1 == index %>
+              ,
+            <% end %>
+           <% end %>)
+            <br />
+          <% submission_option_list.each do |element| %>
+            <a href="<%= submission_pool_path(selection: element[1]) %>" class="<%= "p-1 rounded bg-primary text-white" if @selection == element[1] %>"><%= element[0] %></a><br />
+          <% end %>
+        </div>
+      </p>
+      </div>
+      <div class="col-sm-12 col-md-3">
+        <p>
+          <strong>manual</strong>
+        <ul>
+          <li>
+            click on a fish to see its history
+          </li>
+          <li>
+            "fish" it to become an internal reviewer
+          </li>
+          <li>
+             suggest some fish to others
+          </li>
+          <li>
+            build a case for one of them
+          </li>
+          <li>
+            "propose" it to put it on the EC's menu
+          </li>
+        </ul>
+        </p>
+      </div>
+      </div>
+      <hr />
+      <div class="row">
+      <div class="col-sm-12 col-md-9 order-2 order-md-1">
+        <%= render 'submissions/in_groups', submissions: @submissions %>
+      </div>
+    <div class="col-sm-12 col-md-3 order-1 order-md-2">
+
+        <h5>latest activities - <%= link_to "show all", histories_path %></h5>
+        <div class="overflow-auto small" style="height: 450px;">
+          <% History.order(:created_at).last(15).reverse.each do |history| %>
+            <p>
+              <% unless history.submission.blank? %>
+                #<%= link_to history.submission.id, submission_path(history.submission) %> - "<%= link_to history.submission.title, submission_path(history.submission) %>"
+              <% end %>
+            </p>
+            <%= render 'histories/show', history: history, collapse_status: "" %>
+            <hr />
+          <% end %>
+        </div>
+    </div>
+  </div>
+
+<p>
+
+</p>
+<%#= render 'submissions/card', submission: Submission.last %>
+
+<%#= render 'submissions/in_groups', submissions: Submission.all %>
+
+<% submissions_without_reviewers = Submission.left_outer_joins(:users).where( users: { id: nil } ) %>
+<% submissions_with_reviewers = Submission.where.not(id: submissions_without_reviewers.pluck(:id)) %>
+
+</div>
+
+<%= render "layouts/footer" %>
+
+<script>
+
+  $( document ).ready(function() {
+
+    $(document).on('click', '.pool-select-button', function() {
+
+      submission_id = $(this).attr("value");
+
+      window.location.href = "/submissions/" + submission_id;
+
+      //console.log(submission_id);
+
+      //$.ajax({
+      //  url: "/submission_panel/" + submission_id + ".js",
+      //  method: 'GET',
+      //  headers: {
+      //    'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content
+      //  }
+      //}).done(function(response) {
+      //$("#panel-information-field").html(response);
+    //})
+
+    });
+  });
+
+
+</script>

@@ -1,18 +1,27 @@
 <% collapse_status = "" %>
 <% collapse_status = local_assigns[:collapse_status] if local_assigns[:collapse_status] %>
 
+<% history_name = "" %>
+
+<% if !history.alternative_name.blank? %>
+  <% history_name = history.alternative_name %>
+<% elsif history.blank? || history.submission.blank? || history.user.blank? || history.submission.submitted_by_user_id == history.user.id %>
+  <% history_name = "author" %>
+<% else %>
+  <% history_name = history.user.name unless history.user.blank? %>
+<% end %>
+
 <% if strip_tags(history.content).length < 50 %>
 <div class="history-<%= history.id %> small">
 
-    <strong><%= history.user.name unless history.user.blank? %> - <%= l(history.created_at, format: :usa) %></strong>
+    <strong>
+      <%= history_name %> - <%= l(history.created_at, format: :usa) %>
+    </strong>
 
     <div class="card card-body">
       <%= raw history.content %>
     </div>
-    <% if history.user == current_user %>
-      <%= link_to 'edit', edit_history_path(history) %>
-      <%#= link_to 'delete', history, method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% end %>
+
 </div>
 
 <% else %>
@@ -25,18 +34,25 @@
       </svg>
 
     </button>
-    <strong><%= history.user.name unless history.user.blank? %> - <%= l(history.created_at, format: :usa) %></strong>
+    <strong>
+      <%= history_name %> - <%= l(history.created_at, format: :usa) %>
+    </strong>
   </p>
   <%#= collapse_status %>
   <div class="collapse <%= collapse_status %>" id="collapse-history-<%= history.id %>">
     <div class="card card-body">
       <%= raw history.content %>
     </div>
-    <% if history.user == current_user %>
-      <%= link_to 'edit', edit_history_path(history) %> |
-      <%= link_to 'destroy', history, method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% end %>
   </div>
 </div>
 
 <% end %>
+
+<div class="small">
+
+  <% if history.user == current_user || is_user_admin?(current_user) || is_user_editor?(current_user) %>
+    <%= link_to 'edit', edit_history_path(history) %>
+    <%#= link_to 'delete', history, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+
+  </div>

@@ -35,3 +35,5 @@ end
 Submissian.all.each do |sub|
   sub.update(appearance_date: sub.created_at.to_date)
 end
+
+Submission.find_each(&:save)

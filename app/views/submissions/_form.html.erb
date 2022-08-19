@@ -6,24 +6,24 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title, label: "title", placeholder: "" %>
+    <%= f.input :title, label: "title of paper", placeholder: "", required: false %>
     <%#= f.input :area, collection: Submission.areas.map {|p| [t("#{p}"), p]} %>
     <%#= f.input :email %>
     <div class="row">
         <div class="col-6">
-          <%= f.input :firstname, label: "first name", placeholder: "" %>
+          <%= f.input :firstname, label: "first name", placeholder: "", required: false %>
         </div>
         <div class="col-6">
-          <%= f.input :lastname, label: "last name", placeholder: "" %>
+          <%= f.input :lastname, label: "last name", placeholder: "", required: false %>
         </div>
     </div>
     <p>
-      <%= f.input :email, label: "email", placeholder: "" %>
+      <%= f.input :email, label: "email", placeholder: "", required: false %>
     </p>
     <p>
       country*
       <br />
-      <%= f.country_select :country, priority_countries: ["CH", "FR", "GB", "DE", "US"], selected: "CH" %>
+      <%= f.country_select :country, priority_countries: ["CH", "FR", "GB", "IT", "DE", "ES", "US"], selected: "CH" %>
     </p>
 
 
@@ -33,7 +33,7 @@
     <p>
       <strong>upload file (pdf format) </strong>  - max 1 mb<br />
       <%#= f.file_field :file %>
-      <%= f.input :file %>
+      <%= f.input :file, label: false %>
     </p>
     <% if false %>
     <p>
@@ -62,7 +62,7 @@
 
 
 
-    <% if true %>
+    <% if false %>
     <p>
       <strong>comments</strong><br />
         <%= f.text_area :comment, class: "tinymce", :rows => 10 %>
@@ -75,10 +75,14 @@
     <%= f.button :submit, "submit", class: "btn btn-primary my-2" %>
   </div>
 
-  <hr />
-  <p>
+
+  <p class="mt-3">
     * of primary institutional affiliation (otherwise of residence), for statistical purposes only
   </p>
+    <hr />
+  <div>
+    <div class="text-justify" style="font-size: large;"><p><span id="docs-internal-guid-2100eac1-7fff-a15e-1902-4cf9e96aab2e"></span></p> <ul> <li dir="ltr" aria-level="1"> <p dir="ltr" role="presentation"><span>By submitting their paper to </span><span>Dialectica</span><span>, authors state that it is their original work, that all contributing authors are listed and that they take credit for it  in the order in which the authors are entered into the form (corresponding author first). In case of (real, but also only suspected) plagiarism, </span><span>Dialectica</span><span> reserves the right to communicate the authors’ names and their paper to other parties. </span></p> </li> <li dir="ltr" aria-level="1"> <p dir="ltr" role="presentation"><span>Papers must be submitted in a form suitable for blind refereeing. If this is not the case and the Editorial Committee becomes aware of this fact, papers may be rejected or not selected without explicit explanation that non-blindness was the reason.</span></p> </li> <li dir="ltr" aria-level="1"> <p dir="ltr" role="presentation"><span>By submitting their paper, authors grant </span><span>Dialectica</span><span> the right to publish it in its submitted form, with author-identifying information. </span></p> </li> <li dir="ltr" aria-level="1"> <p dir="ltr" role="presentation"><span>Multiple submissions by the same author or authors are not excluded. </span></p> </li> <li dir="ltr" aria-level="1"> <p dir="ltr" role="presentation"><span>We like to read papers with informative abstracts, page numbers, few if any typos and proper references (pages, not just years). None of these, however, is a formal requirement for initial submissions. </span></p> </li> <li dir="ltr" aria-level="1"> <p dir="ltr" role="presentation"><span>Authors submitting to Dialectica automatically enter our pool of referees. While you are morally expected to do some refereeing as well, if asked, your decision to do so or not will (of course) not affect the fate of your paper. </span></p> </li> <li dir="ltr" aria-level="1"> <p dir="ltr" role="presentation"><span>Papers in Dialectica are published under a CC licence.</span></p> </li> <li dir="ltr" aria-level="1"> <p dir="ltr" role="presentation"><span>Length: we do not have an official limit, but authors of very short papers should double-check that they have engaged the literature and answered the extant objections to their view, while authors of very long papers should make sure that all sections of their paper adequately cohere and are as concise as possible.</span></p> </li> <li dir="ltr" aria-level="1"> <p dir="ltr" role="presentation"><span>References: we use an in-text author-date format but that any recognized, consistent format is fine up to the point of acceptance.</span></p> </li> </ul></div>
+  </div>
 <% end %>
 
 <script>

@@ -1,0 +1,19 @@
+
+<% search_input = OpenStruct.new(search_string: "") %>
+
+<%= form_with scope: :search_input, url: searchable_cards_submissions_path, method: :get, remote: true do |form| %>
+
+<div class="input-group mb-3">
+  <%= form.text_field :search_string, value: search_input.search_string, class: "form-control", placeholder: "enter search terms" %>
+</div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+<div class="form-group">
+    <%= form.select :selection, SubmissionSearch.options, {}, {class: "form-control", data: { cy: "submission_search_form_for_cards_selection"}} %>
+</div>
+
+<%= form.submit "search", class: "btn btn-outline-primary" %>
+
+<% end %>
+<hr>

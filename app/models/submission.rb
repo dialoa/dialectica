@@ -17,12 +17,33 @@ has_many :external_referees, :through => :external_referee_submissions
 
   #after_create :add_create_to_history
   after_create :add_appearance_date
+  #after_create :set_dialectica_id # let's not to this, might mess up upload csv
+
+  before_save :update_search_field
+
+  def update_search_field
+
+    self.search_field =
+    [
+      id,
+      dialectica_id,
+      title,
+      firstname,
+      lastname,
+      email,
+      comment
+    ].compact.join(' ')
+
+  end
+
+  scope :ilike_search_field, ->(search_term) { where("search_field ILIKE ?", "%#{search_term}%") }
 
   validates :firstname, presence: true
   validates :lastname, presence: true
   validates :email, presence: true
+  #validates :dialectica_id, uniqueness: true # the problem is in upload csv: save fails if there is already dialectica id
   validates :title, presence: true, uniqueness: true
-  validates :file, attached: true, content_type: { in: 'application/pdf', message: 'is not a PDF' }
+  validates :file, attached: true, content_type: { in: 'application/pdf', message: 'is not a PDF' }, size: { less_than: 1.megabytes , message: 'is too large' }
 
   scope :dead, -> { where(dead: "true") }
   scope :alive, -> { where(dead: "false") }
@@ -31,6 +52,14 @@ has_many :external_referees, :through => :external_referee_submissions
 
   def name
     "#{self.firstname} #{self.lastname}"
+  end
+
+  def dialectica_id_public
+    if self.dialectica_id.nil?
+      self.id
+    else
+      self.dialectica_id
+    end
   end
 
   def self.areas
@@ -55,6 +84,18 @@ has_many :external_referees, :through => :external_referee_submissions
   end
 
   def self.dead_statuses
+    ["false", "true"]
+  end
+
+  def self.dead_options
+    ["false", "true"]
+  end
+
+  def self.accepted_options
+    ["false", "true"]
+  end
+
+  def self.rejected_options
     ["false", "true"]
   end
 
@@ -163,17 +204,28 @@ relevant box:
     self.update(history: history)
   end
 
+  def set_dialectica_id
+    maximum = Submission.maximum(:dialectica_id)
+    if maximum.nil?
+      maximum = 4396
+    else
+      maximum = maximum + 1
+    end
+
+    self.update(dialectica_id: maximum)
+  end
+
   def add_appearance_date
     #byebug
     self.update(appearance_date: self.created_at.to_date)
     puts self.appearance_date
   end
 
-  def add_to_history(user, message)
+  def add_to_history(user, message, alternative_name = "")
     #history = self.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")} - #{user.name}</strong>: <br>" + message + "</p>"
     #self.update(history: history)
     #byebug
-    history = History.create(content: message, user_id: user.id, submission_id: self.id)
+    history = History.create(content: message, user_id: user.id, submission_id: self.id, alternative_name: alternative_name)
   end
 
   def add_attachment_to_history(user, attachment)
@@ -500,7 +552,7 @@ relevant box:
 
    end
 
- CSV_ATTRIBUTES = %w{id title firstname lastname email country other_authors comment appearance_date created_at}
+ CSV_ATTRIBUTES = %w{id dialectica_id title firstname lastname email country other_authors comment appearance_date created_at}
 
 
   def self.to_csv
@@ -524,6 +576,7 @@ relevant box:
         new_submission.file.attach(io: File.open('cypress/fixtures/sample.pdf'), filename: 'file.pdf')
 
         new_submission.save
+        puts new_submission.save!
       else
         update_submission = Submission.find(submission["id"]).update(submission)
       end

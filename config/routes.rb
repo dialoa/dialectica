@@ -19,6 +19,23 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :submissions do
+    member do
+      put 'propose_for_acceptance'
+      put 'propose_for_rejection'
+      put 'unpropose_for_acceptance'
+      put 'unpropose_for_rejection'
+      get 'show_for_user'
+    end
+    collection do
+      get 'iframe_new'
+      get 'submission_was_successful'
+      get 'my_submissions'
+      get 'searchable_list'
+      get 'searchable_cards'
+    end
+  end
+
   resources :external_referee_submissions
   resources :external_referees
   resources :requested_reviewers
@@ -35,7 +52,7 @@ Rails.application.routes.draw do
   resources :codes
   resources :bibtex_files
   resources :bibtex_entries
-  resources :submissions
+
   resources :stuffs
   resources :issues
   resources :blog_posts
@@ -49,9 +66,14 @@ Rails.application.routes.draw do
   devise_for :users
 
   #root "submissions#pool"
-  root 'static_pages#welcome'
+  #root 'static_pages#welcome'
+  root 'pages#welcome'
 
-  resources :pages
+  resources :pages do
+    collection do
+      post 'update_order'
+    end
+  end
 
   get '/about-us', to: 'pages#show', id: "about-us"
   get '/dashboard', to: 'static_pages#dashboard', as: "dashboard"
@@ -123,6 +145,7 @@ Rails.application.routes.draw do
   post '/submission_tools/upload_file_to_submission/:submission_id/', to: "submissions#upload_file_to_submission", as: "upload_file_to_submission"
   post '/submission_tools/add_comment_to_submission/:id/', to: "submissions#add_comment_to_submission", as: "add_comment_to_submission"
   get '/submission_tools/send_notifications/', to: "submissions#send_notifications", as: "send_notifications"
+  post '/submission_tools/add_me_to_blocked_users/:submission_id/', to: "submissions#add_me_to_blocked_users", as: "add_me_to_blocked_users_submission"
 
   post '/submission_tools/upload_csv', to: "submissions#upload_csv", as: "submissions_upload_csv"
 

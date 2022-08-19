@@ -1,5 +1,5 @@
 class SubmissionMailer < ApplicationMailer
-  default from: 'dialecticaphilosophie@gmail.com'
+  default from: 'dialectica@philosophie.ch'
 
   def send_to_external_referee(email, subject, body, current_user)
 
@@ -9,6 +9,23 @@ class SubmissionMailer < ApplicationMailer
     @current_user = current_user
 
     mail(to: email, cc: current_user.email, subject: subject, body: body)
+  end
+
+  def send_confirmation_for_submission(email, subject, body, submission)
+    @email = email
+    @subject = subject
+    @body = body
+    @submission = submission
+    #dialectica@philosophie.ch
+    mail(to: email, bcc: "dialectica@philosophie.ch", subject: "Submission: #{submission.title}")
+  end
+
+  def send_credentials(email, username, password)
+    @email = email
+    @username = username
+    @password = password
+    #dialectica@philosophie.ch
+    mail(to: email, bcc: "sandro.raess@philosophie.ch", subject: "credentials for dialectica")
   end
 
   def send_notifications_of_what_happened_today(user, subject, body)

@@ -1,8 +1,12 @@
+<div class="submissions_searchable_list">
 <table class="table table-striped table-bordered">
 <thead>
   <tr>
     <th>
       ID
+    </th>
+      <th>
+        Dialectica-ID
       </th>
     <th>
       Submission-Date
@@ -22,6 +26,9 @@
     <tr class="<%#= submission.submission_urgency %>">
       <td>
         <%= submission.id %>
+      </td>
+      <td>
+        <%= submission.dialectica_id_public %>
       </td>
       <td>
         <%= submission.created_at.strftime("%d/%m/%Y") %>
@@ -53,3 +60,4 @@
   <% end %>
 </tbody>
 </table>
+</div>
