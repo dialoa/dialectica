@@ -1,9 +1,7 @@
 <p>
-  your submission of “<%= @submission.title %>” to Dialectica
-</p>
-
-<p>
+  <strong>
   Dear <%= @submission.firstname %> <%= @submission.lastname %>
+  </strong>
 </p>
 
 <p>
@@ -32,17 +30,21 @@ We hope that it will attract the interest of some member of the Editorial Commit
   <% unless User.where(email: @submission.email).empty? %>
     with your
     <br>
-    username "<%= User.where(email: @submission.email).first.username %>"
+    <br>
+    username: <%= User.where(email: @submission.email).first.username %>
+    <br>
     <br>
   <% end %>
 
   <% unless @password.blank? %>
     and your
     <br>
-    password "<%= @password %>"
+    <br>
+    password: <%= @password %>
+    <br>
     <br>
   <% end %>
-.
+
 </p>
 <p>
   If you have second thoughts and want us to consider not the paper originally submitted, but a revision of it, please withdraw the first paper and submit the new one.
