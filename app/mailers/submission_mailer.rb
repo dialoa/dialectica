@@ -18,7 +18,7 @@ class SubmissionMailer < ApplicationMailer
     @submission = submission
     @password = password || ""
     #dialectica@philosophie.ch
-    mail(to: email, bcc: "dialectica@philosophie.ch", subject: "Dialectica Submission: #{submission.title}")
+    mail(to: email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: "Dialectica Submission: #{submission.title}")
   end
 
   def send_credentials(email, username, password)
