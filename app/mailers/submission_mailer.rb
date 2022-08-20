@@ -11,13 +11,14 @@ class SubmissionMailer < ApplicationMailer
     mail(to: email, cc: current_user.email, subject: subject, body: body)
   end
 
-  def send_confirmation_for_submission(email, subject, body, submission)
+  def send_confirmation_for_submission(email, subject, body, submission, password = "")
     @email = email
     @subject = subject
     @body = body
     @submission = submission
+    @password = password || ""
     #dialectica@philosophie.ch
-    mail(to: email, bcc: "dialectica@philosophie.ch", subject: "Submission: #{submission.title}")
+    mail(to: email, bcc: "dialectica@philosophie.ch", subject: "Dialectica Submission: #{submission.title}")
   end
 
   def send_credentials(email, username, password)

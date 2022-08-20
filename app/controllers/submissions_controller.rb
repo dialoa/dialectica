@@ -117,7 +117,7 @@ class SubmissionsController < ApplicationController
       if @submission.save
         format.html {
 
-          SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission).deliver_now
+          #SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission).deliver_now
 
           params[:submission]["blocked_users"].reject!(&:blank?).each do |blocked_user|
             BlockedUser.create(user_id: blocked_user, submission_id: @submission.id)
@@ -136,15 +136,19 @@ class SubmissionsController < ApplicationController
               author = User.create(username: username, email: @submission.email, password: password, password_confirmation: password, firstname: @submission.firstname, lastname: @submission.lastname)
               author.roles << Role.find_by_name("author")
               @submission.update(submitted_by_user_id: author.id)
-              SubmissionMailer.send_credentials(email, username, password).deliver_now
+              #.send_credentials(email, username, password).
+              SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission, password).deliver_now
+
               sign_in(:user, author)
               @submission.add_to_history(author, "submitted \"#{@submission.title}\"", "author")
             else
+              SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission).deliver_now
               @submission.add_to_history(User.find_by_email(@submission.email), "submitted \"#{@submission.title}\"", "author")
               redirect_to submission_was_successful_submissions_path, notice: 'submission was successfully created.' and return
             end
             redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
           else
+            SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission).deliver_now
             @submission.add_to_history(current_user, "submitted \"#{@submission.title}\"", "author")
             redirect_to @submission, notice: 'submission was successfully created.' and return
             #redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
