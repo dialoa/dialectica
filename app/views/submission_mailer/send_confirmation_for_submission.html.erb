@@ -30,12 +30,17 @@ We hope that it will attract the interest of some member of the Editorial Commit
 
 
   <% unless User.where(email: @submission.email).empty? %>
-    with your username "<%= User.where(email: @submission.email).first.username %>"
-
+    with your
+    <br>
+    username "<%= User.where(email: @submission.email).first.username %>"
+    <br>
   <% end %>
 
   <% unless @password.blank? %>
-    and your password "<%= @password %>"
+    and your
+    <br>
+    password "<%= @password %>"
+    <br>
   <% end %>
 .
 </p>
