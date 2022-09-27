@@ -10,9 +10,9 @@ class SubmissionSearch
     select()
 
     unless @user.nil?
-      @submissions.ilike_search_field(@search_string).not_blacklisted(@user).order(proposed: :desc, appearance_date: :desc)
+      @submissions.ilike_search_field(@search_string).not_blacklisted(@user).order(created_at: :desc)
     else
-      @submissions.ilike_search_field(@search_string).order(proposed: :desc, appearance_date: :desc)
+      @submissions.ilike_search_field(@search_string).order(created_at: :desc)
     end
 
   end
