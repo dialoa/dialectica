@@ -1,5 +1,6 @@
 #!/bin/bash
 #  pg_dump dialectica_production > latest.sql
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 
 ssh sandro@159.65.120.231 << EOF
   cd dialectica
@@ -17,3 +18,4 @@ pg_restore --verbose --clean --no-acl --no-owner -d dialectica_development lates
 
 mkdir -p ~/backups/dialectica
 cp latest.dump ~/backups/dialectica/"$(date +"%y-%m-%d")".dump
+/usr/bin/notify-send "dialectica - backup complete"
