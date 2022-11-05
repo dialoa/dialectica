@@ -636,7 +636,7 @@
     "sass-loader": "^7.3.1",
     "sax": "^1.2.4",
     "schema-utils": "^1.0.0",
-    "scss-tokenizer": "^0.2.3",
+    "scss-tokenizer": "^0.4.3",
     "select-hose": "^2.0.0",
     "selfsigned": "^1.10.11",
     "semver": "^6.3.0",
