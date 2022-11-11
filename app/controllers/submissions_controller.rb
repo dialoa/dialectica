@@ -331,7 +331,7 @@ Please visit: #{submission_url(submission)}
 
     @sending_option = params[:send_directly]
 
-    message = "sent to external referee: #{@external_referee.name_and_email} : #{@body}"
+    message = "sent to external referee: #{@external_referee.name_and_email}"
     submission = Submission.find(params[:submission_id])
     @submission = submission
     submission.add_to_history(current_user, message)
