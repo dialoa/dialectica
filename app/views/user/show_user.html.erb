@@ -1,0 +1,9 @@
+<%= render "layouts/fishpond_navigation" %>
+
+<div class="container">
+  <%= link_to "back", dashboard_path, class: "btn btn-primary" %>
+
+  <%= render "user/card", user: @user %>
+</div>
+
+<%= render "layouts/footer" %>

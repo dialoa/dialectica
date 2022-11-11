@@ -14,8 +14,11 @@ Rails.application.routes.draw do
 
     end
     member do
+      get 'show_user'
       get 'edit_user'
       put 'update_user'
+      put 'add_role_to_user'
+      put 'remove_role_from_user'
     end
   end
 

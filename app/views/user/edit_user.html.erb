@@ -1,4 +1,10 @@
-<div class="container">
+<%= render "layouts/fishpond_navigation" %>
+
+<div class="container my-3">
   <h5>edit</h5>
   <%= render 'user/form', user: @user %>
+  <%= link_to "back", show_user_user_path(@user), class: "btn btn-primary" %>
+
 </div>
+
+<%= render "layouts/footer" %>

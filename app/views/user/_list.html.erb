@@ -9,12 +9,13 @@
     <th scope="col">articles fished alive</th>
     <th scope="col">articles for which they are blacklisted</th>
     <th scope="col">activities</th>
+    <th scope="col">roles</th>
   </tr>
 </thead>
 <tbody>
   <% users.each do |user| %>
     <tr>
-      <td><%= link_to user.name, edit_user_user_path(user) %></td>
+      <td><%= link_to user.name, show_user_user_path(user) %></td>
       <td><%= user.email %></td>
       <td><%= user.notify_me_when_i_am_suggested_as_an_internal_referee %></td>
       <td><%= user.notify_me_when_something_happens_to_my_fish %></td>
@@ -22,6 +23,12 @@
       <td><%= user.submissions.alive.count %></td>
       <td><%= BlockedUser.where(user_id: user.id).count %></td>
       <td><%= user.histories.count %></td>
+      <td>
+        <% user.roles.each_with_index do |role, index| %>
+          <%= role.name %>
+          <br>
+        <% end %>
+      </td>
     </tr>
   <% end %>
 </tbody>

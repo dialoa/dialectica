@@ -1,0 +1,28 @@
+<div class="card my-3">
+  <div class="card-body">
+    <h1 class="card-title"><%= user.name %></h1>
+
+    <p>
+      <%= user.email %>
+    </p>
+    <p>
+      created at: <%= l(user.created_at, format: :usa) %>
+    </p>
+    <p>
+      last updated at: <%= l(user.updated_at, format: :usa) %>
+    </p>
+
+    <p>
+      <strong>submissions:</strong>
+    </p>
+    <% Submission.where(email: user.email).each do |submission| %>
+      <%= link_to submission.title, show_for_user_submission_path(submission) %><br />
+    <% end %>
+
+    <%= render "user/roles", user: user %>
+
+
+    <hr>
+    <%= link_to "edit", edit_user_user_path(user), class: "btn btn-primary" %>
+  </div>
+</div>
