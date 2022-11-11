@@ -1,3 +1,5 @@
+<%= render "layouts/fishpond_navigation" %>
+
 <div class="container">
   <h1>Dashboard</h1>
   <hr />
@@ -18,7 +20,7 @@
   <tbody>
     <% User.all.each do |user| %>
       <tr>
-        <td><%= user.name %></td>
+        <td><%= link_to user.name, edit_user_user_path(user) %></td>
         <td><%= user.email %></td>
         <td><%= user.notify_me_when_i_am_suggested_as_an_internal_referee %></td>
         <td><%= user.notify_me_when_something_happens_to_my_fish %></td>
@@ -53,3 +55,4 @@
     </table>
 
 </div>
+<%= render "layouts/footer" %>

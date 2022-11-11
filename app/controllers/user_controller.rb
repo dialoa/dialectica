@@ -14,15 +14,18 @@ class UserController < ApplicationController
   end
 
   def edit_user
+    authorize @user
     #@user = User.find(params[:id])
   end
 
   def update_user
+  authorize @user
   @user.update(user_params)
 
   flash[:notice] = "edit was successful"
   #byebug
-  redirect_back(fallback_location: root_path)
+  #redirect_back(fallback_location: root_path)
+  redirect_to dashboard_path
 end
 
   private
