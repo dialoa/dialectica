@@ -1,0 +1,28 @@
+<table class="table table-light table-striped table-bordered">
+<thead>
+  <tr>
+    <th scope="col">name</th>
+    <th scope="col">email</th>
+    <th scope="col">notify me if i am suggested</th>
+    <th scope="col">notify me if something happens to my fish</th>
+    <th scope="col">articles fished total</th>
+    <th scope="col">articles fished alive</th>
+    <th scope="col">articles for which they are blacklisted</th>
+    <th scope="col">activities</th>
+  </tr>
+</thead>
+<tbody>
+  <% users.each do |user| %>
+    <tr>
+      <td><%= link_to user.name, edit_user_user_path(user) %></td>
+      <td><%= user.email %></td>
+      <td><%= user.notify_me_when_i_am_suggested_as_an_internal_referee %></td>
+      <td><%= user.notify_me_when_something_happens_to_my_fish %></td>
+      <td><%= user.submissions.count %></td>
+      <td><%= user.submissions.alive.count %></td>
+      <td><%= BlockedUser.where(user_id: user.id).count %></td>
+      <td><%= user.histories.count %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>

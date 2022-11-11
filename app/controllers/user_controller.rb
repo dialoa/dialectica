@@ -5,6 +5,14 @@ class UserController < ApplicationController
 
   end
 
+  def add_role_to_user
+    authorize @user
+  end
+
+  def remove_role_to_user
+    authorize @user
+  end
+
   def show_user
     if params[:id].present?
       @user = User.find(params[:id])
