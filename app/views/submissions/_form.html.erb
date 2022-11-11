@@ -53,7 +53,7 @@
     <div class="collapse" id="blacklist_users_option">
       <div class="card card-body">
         <br />
-        <%= f.input :blocked_users, as: :select, collection: User.all.order(:lastname), label: false, required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users that should be blacklisted"}, multiple: true} %>
+        <%= f.input :blocked_users, as: :select, collection: User.reviewers.not_hidden.order(:lastname), label: false, required: false, label_method: :name, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select users that should be blacklisted"}, multiple: true} %>
       </div>
     </div>
     <br>

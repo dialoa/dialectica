@@ -38,8 +38,13 @@
       <% store_rails_blob_url = submission.file.attached? ? rails_blob_url(submission.file) : nil %>
       <%= f.input :body, label: "body", as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, store_rails_blob_url, current_user), rows: 25} %>
     </p>
-    <%= f.submit "send via private email program (this opens up your mail program)", class: "btn btn-light border my-2" %>
     <br />
-    <%= f.submit "send directly", name: 'send_directly', class: "btn btn-light border my-2", data: {cy: "submit_send_to_external_referee_button"} %>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">dismiss</button>
+      <%= f.submit "open email program (this opens up your mail program)", class: "btn btn-primary border my-2" %>
+
+      <%#= f.submit "send directly", name: 'send_directly', class: "btn btn-primary border my-2", data: {cy: "submit_send_to_external_referee_button"} %>
+
+    </div>
   <% end %>
 </div>

@@ -100,6 +100,8 @@ has_many :external_referees, :through => :external_referee_submissions
   end
 
   def self.send_to_external_referee_text(submission, submission_blob_url, user)
+    #{"Download the paper here:" unless submission_blob_url.blank?}
+    #{submission_blob_url unless submission_blob_url.blank?}
     if user.blank?
       user = User.find_by_email("anonymous_user@mail.com")
     end
@@ -113,8 +115,8 @@ time to do us this favour (it would be best if you could do it in about
 a month) and/or want to suggest another referee, please feel free to
 tell me so. Many thanks in advance and all the best
 
-#{"Download the paper here:" unless submission_blob_url.blank?}
-#{submission_blob_url unless submission_blob_url.blank?}
+<a href='#{submission_blob_url unless submission_blob_url.blank?}'>#{"Download the paper here" unless submission_blob_url.blank?}</a>
+
 
 #{user.firstname}
 member of the Editorial Committee of dialectica
