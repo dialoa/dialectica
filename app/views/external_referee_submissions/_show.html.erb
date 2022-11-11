@@ -1,4 +1,4 @@
-<% unless external_referee_submission %>
+<% unless external_referee_submission.blank? ||  external_referee_submission.external_referee.blank? %>
 <div id="<%= dom_id(external_referee_submission) %>" class="small <%= dom_id(external_referee_submission) %>">
   <%= external_referee_submission.external_referee.name_and_email %> - <%= l(external_referee_submission.created_at, format: :usa) %> <br />
     <%= external_referee_submission.status %>

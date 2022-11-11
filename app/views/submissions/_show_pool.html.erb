@@ -17,7 +17,11 @@
       <p>
         <%= submission.title %>
       </p>
-      <hr />
+      <hr>
+      <% if true %>
+      <br />
+      <%= render 'external_referee_submissions/requested_referees_for_submission', submission: submission %>
+      <% end %>
       <h4>history</h4>
       <% if false# submission.submitted_by_user_id.blank? %>
       <div class="small">
@@ -67,10 +71,6 @@
           <% submission.users.each do |reviewer| %>
             <%= reviewer.name %><br />
           <% end %>
-        <% end %>
-        <% if true %>
-        <br />
-        <%= render 'external_referee_submissions/requested_referees_for_submission', submission: submission %>
         <% end %>
     </div>
   </div>

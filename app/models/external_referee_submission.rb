@@ -3,7 +3,7 @@ class ExternalRefereeSubmission  < ApplicationRecord
   belongs_to :submission
 
   def self.status_options
-    ["no answer", "request denied", "positive", "negative"]
+    ["no answer", "request accepted", "request denied", "positive", "negative"]
   end
 
 end
