@@ -1,5 +1,9 @@
 class UserPolicy < ApplicationPolicy
 
+  def dashboard?
+    is_user_editor?(@user) || is_user_admin?(@user)
+  end
+
   def show_user?
     is_user_editor?(@user) || is_user_admin?(@user)
   end

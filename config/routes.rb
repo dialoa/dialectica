@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :user do
     collection do
       get 'user_overview'
+      get 'dashboard'
 
     end
     member do

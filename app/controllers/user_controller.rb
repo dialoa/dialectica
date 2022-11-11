@@ -5,6 +5,10 @@ class UserController < ApplicationController
 
   end
 
+  def dashboard
+
+  end
+
   def add_role_to_user
     authorize @user
     unless @user.roles.where(name: params[:role][:role_name]).exists?

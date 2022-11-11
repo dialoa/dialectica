@@ -1,0 +1,41 @@
+<%= render "layouts/fishpond_navigation" %>
+
+<div class="container">
+  <h1>Dashboard</h1>
+  <hr />
+  <h2>admins</h2>
+    <%= render "user/list", users: User.admins %>
+  <hr />
+  <h2>editors</h2>
+    <%= render "user/list", users: User.editors %>
+  <hr />
+  <h2>EC-members</h2>
+    <%= render "user/list", users: User.reviewers %>
+  <hr />
+  <h2>All users</h2>
+    <%= render "user/list", users: User.all %>
+  <hr />
+
+    <h2>external referees</h2>
+    <table class="table table-light table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">name</th>
+          <th scope="col">email</th>
+          <th scope="col">numbers of articles referenced</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% ExternalReferee.all.each do |referee| %>
+          <tr>
+            <td><%= referee.firstname %> <%= referee.lastname %></td>
+            <td><%= referee.email %></td>
+            <td><%= referee.submissions.count %>: <%= referee.submissions.map(&:id).join(', ') %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+</div>
+<%= render "layouts/footer" %>

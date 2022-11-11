@@ -19,6 +19,11 @@
           <%= link_to "submissions", submissions_path, class: "nav-link" %>
         </li>
       <% end %>
+      <% if policy(User).dashboard? %>
+        <li class="nav-item">
+          <%= link_to "users", dashboard_user_index_path, class: "nav-link" %>
+        </li>
+      <% end %>
       <% if false %>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
