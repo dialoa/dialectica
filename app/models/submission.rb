@@ -2,8 +2,6 @@ class Submission < ApplicationRecord
 has_many :external_referee_submissions
 has_many :external_referees, :through => :external_referee_submissions
 
-  include Rails.application.routes.url_helpers
-
   has_many :submission_users
   has_many :users, :through => :submission_users
   has_one_attached :file
@@ -99,6 +97,15 @@ has_many :external_referees, :through => :external_referee_submissions
     ["false", "true"]
   end
 
+  def self.placeholders(submission = nil)
+    {
+      "submission.title": submission && submission.title ? submission.title : "Ship of Theseus",
+      "submission.dialectica_id": submission && submission.dialectica_id ? submission.dialectica_id.to_s : "1234",
+      "submission.download_url": submission && submission.file.attached? ? Rails.application.routes.url_helpers.rails_blob_url(submission.file) : "https://website.com/download_url"
+    }
+  end
+
+
   def self.send_to_external_referee_text(submission, submission_blob_url, user, external_referee = nil)
     #{"Download the paper here:" unless submission_blob_url.blank?}
     #{submission_blob_url unless submission_blob_url.blank?}
@@ -128,18 +135,8 @@ has_many :external_referees, :through => :external_referee_submissions
 
       new_value = ""
 
-      case placeholder
-        when "user.firstname"
-          new_value = user.firstname
-        when "user.lastname"
-          new_value = user.lastname
-        when "submission.title"
-          new_value = submission.title
-        when "submission.download_url"
-          new_value = submission_blob_url
-        else
-          new_value = " ---WARNING! PLACEHOLDER NOT AVAILABLE! MAYBE MISSPELLED? WARNING--- "
-      end
+      new_value = PlaceholderReturner.new(placeholder_name: placeholder, submission: submission, user: user, external_referee: external_referee).return_value
+
 
 html_string = <<MARKER
 #{new_value}

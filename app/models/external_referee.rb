@@ -10,4 +10,11 @@ class ExternalReferee < ApplicationRecord
     "#{self.firstname} #{self.lastname} - #{self.email}"
   end
 
+  def self.placeholders(external_referee = nil)
+    {
+      "external_referee.firstname": external_referee && external_referee.firstname ? external_referee.firstname : "Max",
+      "external_referee.lastname": external_referee && external_referee.lastname ? external_referee.lastname : "Mustermann",
+    }
+  end
+
 end

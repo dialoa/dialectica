@@ -1,6 +1,7 @@
 <%= tinymce_assets %>
 <%= tinymce %>
 
+<h2>placeholders</h2>
 <table class="table">
   <thead>
     <tr>
@@ -9,18 +10,26 @@
     </tr>
   </thead>
   <tbody>
+    <% Submission.placeholders.each do |placeholder| %>
     <tr>
-      <td>*|user.firstname|*</td>
-      <td><%= current_user.firstname %></td>
+      <td>*|<%= placeholder.first.to_s %>|*</td>
+      <td><%= placeholder.second.to_s %></td>
     </tr>
+    <% end %>
+    <% User.placeholders.each do |placeholder| %>
     <tr>
-      <td>*|user.lastname|*</td>
-      <td><%= current_user.lastname %></td>
+      <td>*|<%= placeholder.first.to_s %>|*</td>
+      <td><%= placeholder.second.to_s %></td>
     </tr>
+    <% end %>
+
+    <% ExternalReferee.placeholders.each do |placeholder| %>
     <tr>
-      <td>*|download_link|*</td>
-      <td>https://download_link</td>
+      <td>*|<%= placeholder.first.to_s %>|*</td>
+      <td><%= placeholder.second.to_s %></td>
     </tr>
+    <% end %>
+
   </tbody>
 </table>
 

@@ -80,6 +80,13 @@ scope :available_for_internal_review, -> { admins.or(self.editors).or(self.revie
     ["no", "yes"]
   end
 
+  def self.placeholders(user = nil)
+    {
+      "user.firstname": user && user.firstname ? user.firstname : "John",
+      "user.lastname": user && user.lastname ? user.lastname : "Smith",
+    }
+  end
+
   def self.send_notifications
     #byebug
     subject = "dialectica - report"
