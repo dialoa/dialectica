@@ -107,8 +107,7 @@ has_many :external_referees, :through => :external_referee_submissions
 
 
   def self.send_to_external_referee_text(submission, submission_blob_url, user, external_referee = nil)
-    #{"Download the paper here:" unless submission_blob_url.blank?}
-    #{submission_blob_url unless submission_blob_url.blank?}
+
     if user.blank?
       user = User.find_by_email("anonymous_user@mail.com")
     end
@@ -121,17 +120,10 @@ has_many :external_referees, :through => :external_referee_submissions
 
     email_template_content = email_template.content
 
-    puts "COUNT"
-    puts email_template_content.scan(/\*\|.+\|\*/).count
 
     email_template_content.scan(/\*\|.+\|\*/).each do |match|
 
-      puts "MATCH"
-      puts match
-
       placeholder = match.scan(/(?<=\*\|)(.+?)(?=\|\*)/).first.first
-
-      puts placeholder
 
       new_value = ""
 
@@ -144,13 +136,45 @@ MARKER
 
 email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, html_string)
 
-puts email_template_content
 
     end
 
     email_template_content
 
     #byebug
+
+  end
+
+  def self.new_submission_text(submission: submission)
+
+    email_template = EmailTemplate.find_by_name("new submission")
+
+    if email_template.nil?
+      email_template = EmailTemplate.create(name: "new submission", content: "please edit this template")
+    end
+
+    email_template_content = email_template.content
+
+
+    email_template_content.scan(/\*\|.+\|\*/).each do |match|
+
+      placeholder = match.scan(/(?<=\*\|)(.+?)(?=\|\*)/).first.first
+
+      new_value = ""
+
+      new_value = PlaceholderReturner.new(placeholder_name: placeholder, submission: submission).return_value
+
+
+html_string = <<MARKER
+#{new_value}
+MARKER
+
+email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, html_string)
+
+
+    end
+
+    email_template_content
 
   end
 

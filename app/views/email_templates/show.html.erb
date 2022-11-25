@@ -1,9 +1,18 @@
+<%= render "layouts/fishpond_navigation" %>
+<div class="container">
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Content:</strong>
-  <%= @email_template.content %>
+  <strong>
+    <%= @email_template.name %>
+  </strong>
 </p>
+
+<%= raw @email_template.content %>
+
 
 <%= link_to 'Edit', edit_email_template_path(@email_template) %> |
 <%= link_to 'Back', email_templates_path %>
+
+</div>
+<%= render "layouts/footer" %>
