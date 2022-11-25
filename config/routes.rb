@@ -41,7 +41,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :external_referee_submissions
+  #   post '/external_referee_submission_tools/select_external_referee_for_form', to: "external_referee_submissions#select_external_referee_for_form", as: "select_external_referee_for_form"
+  resources :external_referee_submissions do
+    collection do
+      post 'select_external_referee_for_form', as: "select_external_referee_for_form"
+      get 'send_to_external_referee/:submission_id', to: 'external_referee_submissions#send_to_external_referee', as: "send_to_external_referee"
+    end
+  end
   resources :external_referees
   resources :requested_reviewers
   get 'tools/enter_doi_page', to: 'tools#enter_doi_page', as: "enter_doi_page"

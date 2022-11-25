@@ -52,6 +52,8 @@
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#addCommentModal" data-cy="add_comment_to_submission_button">
           add comment
         </button>
+
+        <%= link_to "send to external referee", send_to_external_referee_external_referee_submissions_path(submission) %>
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#send_to_external_refereeModal" data-cy="send_to_external_referee_button">
           send to external referee
         </button>
@@ -209,7 +211,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= render 'external_referee_submissions/send_to_external_referee', submission: submission %>
+        <%#= render 'external_referee_submissions/send_to_external_referee', submission: submission %>
         <%#= mail_to "", "send to external referee", subject: "Review for Dialectica", body: "Dear Reviewer \n\n There is a new submission on Dialectica called \"#{submission.title}\". \n\n Please take a look, as it is in your area of expertise! \n\n View it here: #{submission_url(submission)} \n\n Kind regards \n\n #{current_user.name unless current_user.blank?}", class: "btn btn-light border my-2" %>
       </div>
       <!--

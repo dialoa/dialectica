@@ -1,0 +1,8 @@
+console.log("select_external_referee_for_form");
+var form_id = "#form_for_send_to_external_referee";
+
+content = $("<%= escape_javascript( render "external_referee_submissions/form_for_send_to_external_referee", submission: @submission, external_referee: @external_referee ) %>");
+
+$(form_id).fadeOut("fast", function(){
+  $(form_id).empty().append(content).fadeIn("fast");
+});

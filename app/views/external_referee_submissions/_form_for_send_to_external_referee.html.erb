@@ -1,3 +1,5 @@
+<%= tinymce_assets %>
+<%= tinymce %>
 <%= simple_form_for :send_to_external_referee, url: submissions_send_to_external_referee_path(submission), remote: true do |f| %>
 <% if false %>
 <p>
@@ -11,7 +13,13 @@
 </p>
 <% end %>
 <p>
-  <%= f.input :external_referee, label: "select external referee", as: :select, collection: ExternalReferee.all.order(:lastname), label: "external referee", required: false, label_method: :name_and_email, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select external referee"}, multiple: false} %>
+  <%#= f.input :external_referee, label: "select external referee", as: :select, collection: ExternalReferee.all.order(:lastname), label: "external referee", required: false, label_method: :name_and_email, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select external referee"}, multiple: false} %>
+</p>
+
+<%=f.hidden_field :external_referee, :value => external_referee.id %>
+
+<p>
+  to: <br /><%= external_referee.email if external_referee && external_referee.email %>
 </p>
 <p>
   bcc: <br />dialectica@philosophie.ch
@@ -21,7 +29,7 @@
   </p>
   <p>
     <% store_rails_blob_url = submission.file.attached? ? rails_blob_url(submission.file) : nil %>
-    <%= f.text_area :body, class: "tinymce", value: Submission.send_to_external_referee_text(submission, store_rails_blob_url, current_user) %>
+    <%= f.text_area :body, class: "tinymce", value: Submission.send_to_external_referee_text(submission, store_rails_blob_url, current_user, external_referee), rows: 25  %>
     <%#= f.input :body, label: "body", as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, store_rails_blob_url, current_user), rows: 25} %>
   </p>
   <br />

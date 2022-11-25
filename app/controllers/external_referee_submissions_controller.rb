@@ -61,6 +61,19 @@ class ExternalRefereeSubmissionsController < ApplicationController
     submission.add_to_history(current_user, message + " ")
   end
 
+  def select_external_referee_for_form
+    puts "PARAMS:"
+    puts params
+    puts params[:select_external_referee_for_form][:submission_id]
+    @submission = Submission.find(params[:select_external_referee_for_form][:submission_id])
+    @external_referee = ExternalReferee.find(params[:select_external_referee_for_form][:external_referee])
+    #@submission = Submission.find(params[:submission_id])
+  end
+
+  def send_to_external_referee
+    @submission = Submission.find(params[:submission_id])
+  end
+
   # DELETE /external_referee_submissions/1
   # DELETE /external_referee_submissions/1.json
   def destroy

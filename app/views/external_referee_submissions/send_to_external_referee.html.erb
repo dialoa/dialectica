@@ -1,0 +1,17 @@
+<div class="container">
+<h1>send to external referee</h1>
+
+<%= simple_form_for :select_external_referee_for_form, url: select_external_referee_for_form_external_referee_submissions_path, remote: true do |f| %>
+
+  <%= f.input :external_referee, label: "select external referee", as: :select, collection: ExternalReferee.all.order(:lastname), label: "external referee", required: false, label_method: :name_and_email, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select external referee"}, multiple: false} %>
+  <%=f.hidden_field :submission_id, :value => @submission.id %>
+
+  <%= f.button :submit, "select", class: "btn btn-primary" %>
+<% end %>
+
+  <div id="form_for_send_to_external_referee">
+
+  </div>
+
+<%#= render "external_referee_submissions/form_for_send_to_external_referee", submission: @submission, external_referee: nil %>
+</div>

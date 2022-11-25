@@ -14,6 +14,12 @@
       </div>
   </p>
 
-  <%= render "external_referee_submissions/form_for_send_to_external_referee", submission: submission %>
+  <%= simple_form_for :select_external_referee_for_form, url: select_external_referee_for_form_path(submission), remote: true do |f| %>
+
+    <%= f.input :external_referee, label: "select external referee", as: :select, collection: ExternalReferee.all.order(:lastname), label: "external referee", required: false, label_method: :name_and_email, value_method: :id, input_html: {class: 'chosen-select', :data => {:placeholder => "select external referee"}, multiple: false} %>
+
+  <% end %>
+
+  <%= render "external_referee_submissions/form_for_send_to_external_referee", submission: submission, external_referee: nil %>
 
 </div>
