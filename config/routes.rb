@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :email_templates
   get 'test/destroy_all_submissions'
   get 'test/destroy_all_users'
   get 'test/destroy_all_external_referees'

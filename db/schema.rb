@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_19_204710) do
+ActiveRecord::Schema.define(version: 2022_11_25_153817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,13 @@ ActiveRecord::Schema.define(version: 2022_08_19_204710) do
     t.text "bibtex", default: ""
     t.string "name", default: ""
     t.text "yaml", default: ""
+  end
+
+  create_table "email_templates", force: :cascade do |t|
+    t.text "content", default: ""
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name", default: ""
   end
 
   create_table "external_referee_submissions", force: :cascade do |t|

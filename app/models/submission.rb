@@ -99,53 +99,62 @@ has_many :external_referees, :through => :external_referee_submissions
     ["false", "true"]
   end
 
-  def self.send_to_external_referee_text(submission, submission_blob_url, user)
+  def self.send_to_external_referee_text(submission, submission_blob_url, user, external_referee = nil)
     #{"Download the paper here:" unless submission_blob_url.blank?}
     #{submission_blob_url unless submission_blob_url.blank?}
     if user.blank?
       user = User.find_by_email("anonymous_user@mail.com")
     end
+
+    email_template = EmailTemplate.find_by_name("send to external referee")
+
+    if email_template.nil?
+      email_template = EmailTemplate.create(name: "send to external referee", content: "please edit this template.")
+    end
+
+    email_template_content = email_template.content
+
+    puts "COUNT"
+    puts email_template_content.scan(/\*\|.+\|\*/).count
+
+    email_template_content.scan(/\*\|.+\|\*/).each do |match|
+
+      puts "MATCH"
+      puts match
+
+      placeholder = match.scan(/(?<=\*\|)(.+?)(?=\|\*)/).first.first
+
+      puts placeholder
+
+      new_value = ""
+
+      case placeholder
+        when "user.firstname"
+          new_value = user.firstname
+        when "user.lastname"
+          new_value = user.lastname
+        when "submission.title"
+          new_value = submission.title
+        when "submission.download_url"
+          new_value = submission_blob_url
+        else
+          new_value = " ---WARNING! PLACEHOLDER NOT AVAILABLE! MAYBE MISSPELLED? WARNING--- "
+      end
+
+html_string = <<MARKER
+#{new_value}
+MARKER
+
+email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, html_string)
+
+puts email_template_content
+
+    end
+
+    email_template_content
+
     #byebug
-"Dear
 
-May I ask you whether you would be willing to referee the appended paper
-\"#{submission.title}\", recently submitted to dialectica.
-You may comment freely and/or use the form below. If you do not have
-time to do us this favour (it would be best if you could do it in about
-a month) and/or want to suggest another referee, please feel free to
-tell me so. Many thanks in advance and all the best
-
-<a href='#{submission_blob_url unless submission_blob_url.blank?}'>#{"Download the paper here" unless submission_blob_url.blank?}</a>
-
-
-#{user.firstname}
-member of the Editorial Committee of dialectica
-
-Dialectica
-Referee Form
-
-Please assess the paper's originality and the quality of its
-argumentation in relation to its length. If you think the paper should
-be shortened or expanded, please indicate where.
-As many authors of dialectica are not native speakers of English, minor
-mistakes should not be held too much against the authors (even if, of
-course, they would have to be corrected for publication).
-Please bear in mind that Journal policy is to make available as much of
-their reports as possible to the authors and adopt a judicious tone in
-their assessment, while not forgetting that, if a paper is of very poor
-quality the report must indicate this.
-
-1. Please characterise the submitted paper by checking the
-relevant box:
-[ ] Accepted with no or minor revisions
-[ ] Accepted with major revisions
-[ ] Rejected with possible resubmission
-[ ] rejected
-
-[ ] The paper should not have been sent to referees, but rejected outright.
-
-
-2. Comments"
   end
 
   def get_frame_status_color(user)
@@ -602,4 +611,47 @@ relevant box:
     end
   end
 
+end
+
+def archive_send_to_external_referee
+  "Dear
+
+  May I ask you whether you would be willing to referee the appended paper
+  \"#{submission.title}\", recently submitted to dialectica.
+  You may comment freely and/or use the form below. If you do not have
+  time to do us this favour (it would be best if you could do it in about
+  a month) and/or want to suggest another referee, please feel free to
+  tell me so. Many thanks in advance and all the best
+
+  <a href='#{submission_blob_url unless submission_blob_url.blank?}'>#{"Download the paper here" unless submission_blob_url.blank?}</a>
+
+
+  #{user.firstname}
+  member of the Editorial Committee of dialectica
+
+  Dialectica
+  Referee Form
+
+  Please assess the paper's originality and the quality of its
+  argumentation in relation to its length. If you think the paper should
+  be shortened or expanded, please indicate where.
+  As many authors of dialectica are not native speakers of English, minor
+  mistakes should not be held too much against the authors (even if, of
+  course, they would have to be corrected for publication).
+  Please bear in mind that Journal policy is to make available as much of
+  their reports as possible to the authors and adopt a judicious tone in
+  their assessment, while not forgetting that, if a paper is of very poor
+  quality the report must indicate this.
+
+  1. Please characterise the submitted paper by checking the
+  relevant box:
+  [ ] Accepted with no or minor revisions
+  [ ] Accepted with major revisions
+  [ ] Rejected with possible resubmission
+  [ ] rejected
+
+  [ ] The paper should not have been sent to referees, but rejected outright.
+
+
+  2. Comments"
 end
