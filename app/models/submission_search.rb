@@ -20,7 +20,17 @@ class SubmissionSearch
   def select
 
     if @selection == "without reviewers"
-      @submissions = @submissions.left_outer_joins(:users).where( users: { id: nil } )
+      #@submissions = @submissions.left_outer_joins(:users).where( users: { id: nil } )
+      #@submissions = @submissions.left_joins(:users).where('users.id IS NULL').distinct
+      array_of_ids = []
+      Submission.all.each do |submission|
+        if submission.users.count == 0
+          array_of_ids.push(submission.id)
+        end
+      end
+
+      @submissions = @submissions.where(id: array_of_ids)
+
     end
 
     if @selection == "with one reviewer"

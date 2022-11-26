@@ -156,7 +156,7 @@ has_many :external_referees, :through => :external_referee_submissions
     case
     #when submissions_suggested_to_me.include?(self.id) then "border-info thick-borders-6"
     #when SuggestionSubmission.where(user_id: user.id).where(submission_id: self.id).empty? then "border-info thick-borders-3"
-    when self.users.count == 2 then "border-light-yellow thick-borders-6"
+    when self.users.count >= 2 then "border-light-yellow thick-borders-6"
     when self.users.count == 1 then "border-dark-yellow thick-borders-6"
     else ""
     end
@@ -164,7 +164,7 @@ has_many :external_referees, :through => :external_referee_submissions
 
   def frame_status
     case
-    when self.users.count == 2 then "active"
+    when self.users.count >= 2 then "active"
     when self.users.count == 1 then "half-active"
     else "non-active"
     end

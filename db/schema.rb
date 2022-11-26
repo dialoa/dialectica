@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_30_171818) do
+ActiveRecord::Schema.define(version: 2022_11_25_153817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(version: 2022_07_30_171818) do
     t.string "slug"
     t.text "content", default: ""
     t.integer "sort", default: 0
+    t.string "status", default: "visible"
     t.index ["slug"], name: "index_pages_on_slug", unique: true
   end
 
@@ -258,6 +259,7 @@ ActiveRecord::Schema.define(version: 2022_07_30_171818) do
     t.string "accepted", default: "false"
     t.string "rejected", default: "false"
     t.text "search_field", default: ""
+    t.integer "dialectica_id"
   end
 
   create_table "suggestion_submissions", force: :cascade do |t|
