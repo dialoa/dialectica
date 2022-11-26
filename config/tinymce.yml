@@ -1,3 +1,5 @@
+relative_urls: false
+remove_script_host: false
 menubar: false
 toolbar:
   - styleselect | bold italic | undo redo | link | table | code | alignleft | aligncenter | alignjustify
