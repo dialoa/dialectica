@@ -84,6 +84,8 @@ scope :available_for_internal_review, -> { admins.or(self.editors).or(self.revie
     {
       "user.firstname": user && user.firstname ? user.firstname : "John",
       "user.lastname": user && user.lastname ? user.lastname : "Smith",
+      "user.email": user && user.email ? user.email : "john.smith@gmail.com",
+      "user.username": user && user.username ? user.username : "john.smith"
     }
   end
 

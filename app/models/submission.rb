@@ -145,7 +145,7 @@ email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, h
 
   end
 
-  def self.new_submission_text(submission: submission)
+  def self.new_submission_text(submission: submission, user: user)
 
     email_template = EmailTemplate.find_by_name("new submission")
 
@@ -162,7 +162,44 @@ email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, h
 
       new_value = ""
 
-      new_value = PlaceholderReturner.new(placeholder_name: placeholder, submission: submission).return_value
+      new_value = PlaceholderReturner.new(placeholder_name: placeholder, submission: submission, user: user).return_value
+
+
+html_string = <<MARKER
+#{new_value}
+MARKER
+
+email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, html_string)
+
+
+    end
+
+    email_template_content
+
+  end
+
+
+  def self.new_submission_with_login_text(submission: submission, user: user, password: password)
+    puts "USER INSPECT"
+
+    puts user.inspect
+    puts "PASSWORD"
+    puts password
+
+    email_template = EmailTemplate.find_by_name("new submission with login")
+
+    if email_template.nil?
+      email_template = EmailTemplate.create(name: "new submission with login", content: "please edit this template")
+    end
+
+    email_template_content = email_template.content
+
+
+    email_template_content.scan(/\*\|.+\|\*/).each do |match|
+
+      placeholder = match.scan(/(?<=\*\|)(.+?)(?=\|\*)/).first.first
+
+      new_value = PlaceholderReturner.new(placeholder_name: placeholder, submission: submission, user: user, password: password).return_value
 
 
 html_string = <<MARKER
