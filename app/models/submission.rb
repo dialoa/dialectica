@@ -180,11 +180,6 @@ email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, h
 
 
   def self.new_submission_with_login_text(submission: submission, user: user, password: password)
-    puts "USER INSPECT"
-
-    puts user.inspect
-    puts "PASSWORD"
-    puts password
 
     email_template = EmailTemplate.find_by_name("new submission with login")
 
