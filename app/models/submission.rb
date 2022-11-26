@@ -118,30 +118,8 @@ has_many :external_referees, :through => :external_referee_submissions
       email_template = EmailTemplate.create(name: "send to external referee", content: "please edit this template.")
     end
 
-    email_template_content = email_template.content
+   ScanAndSubstitute.new(content: email_template.content, submission: submission, user: user, external_referee: external_referee).scan_and_substitute
 
-
-    email_template_content.scan(/\*\|.+\|\*/).each do |match|
-
-      placeholder = match.scan(/(?<=\*\|)(.+?)(?=\|\*)/).first.first
-
-      new_value = ""
-
-      new_value = PlaceholderReturner.new(placeholder_name: placeholder, submission: submission, user: user, external_referee: external_referee).return_value
-
-
-html_string = <<MARKER
-#{new_value}
-MARKER
-
-email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, html_string)
-
-
-    end
-
-    email_template_content
-
-    #byebug
 
   end
 
@@ -153,28 +131,7 @@ email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, h
       email_template = EmailTemplate.create(name: "new submission", content: "please edit this template")
     end
 
-    email_template_content = email_template.content
-
-
-    email_template_content.scan(/\*\|.+\|\*/).each do |match|
-
-      placeholder = match.scan(/(?<=\*\|)(.+?)(?=\|\*)/).first.first
-
-      new_value = ""
-
-      new_value = PlaceholderReturner.new(placeholder_name: placeholder, submission: submission, user: user).return_value
-
-
-html_string = <<MARKER
-#{new_value}
-MARKER
-
-email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, html_string)
-
-
-    end
-
-    email_template_content
+    ScanAndSubstitute.new(content: email_template.content, submission: submission, user: user).scan_and_substitute
 
   end
 
@@ -187,26 +144,8 @@ email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, h
       email_template = EmailTemplate.create(name: "new submission with login", content: "please edit this template")
     end
 
-    email_template_content = email_template.content
+    ScanAndSubstitute.new(content: email_template.content, submission: submission, user: user, password: password).scan_and_substitute
 
-
-    email_template_content.scan(/\*\|.+\|\*/).each do |match|
-
-      placeholder = match.scan(/(?<=\*\|)(.+?)(?=\|\*)/).first.first
-
-      new_value = PlaceholderReturner.new(placeholder_name: placeholder, submission: submission, user: user, password: password).return_value
-
-
-html_string = <<MARKER
-#{new_value}
-MARKER
-
-email_template_content = email_template_content.gsub(/\*\|#{placeholder}\|\*/, html_string)
-
-
-    end
-
-    email_template_content
 
   end
 
