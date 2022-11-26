@@ -18,8 +18,6 @@ class SubmissionMailer < ApplicationMailer
     @submission = submission
     @password = password || ""
     #dialectica@philosophie.ch
-    puts "PASSWORD"
-    puts password
 
     if password
       @html_string = Submission.new_submission_with_login_text(submission: submission, user: user, password: password)
@@ -35,15 +33,15 @@ class SubmissionMailer < ApplicationMailer
     @username = username
     @password = password
     #dialectica@philosophie.ch
-    mail(to: email, bcc: "sandro.raess@philosophie.ch", subject: "credentials for dialectica")
+    mail(to: email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: "credentials for dialectica")
   end
 
   def send_notifications_of_what_happened_today(user, subject, body)
-    mail(to: user.email, subject: subject, body: body)
+    mail(to: user.email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: subject, body: body)
   end
 
   def send_notification_of_suggestion(user, subject, body)
-    mail(to: user.email, subject: subject, body: body)
+    mail(to: user.email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: subject, body: body)
   end
 
 end
