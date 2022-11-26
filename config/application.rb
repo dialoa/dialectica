@@ -10,7 +10,7 @@ module Dialectica
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
-    config.active_storage.service_urls_expire_in = 1.month # Defaut: 5.minutes
+    config.active_storage.service_urls_expire_in = 1.week # Defaut: 5.minutes
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
