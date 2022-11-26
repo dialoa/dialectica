@@ -1,3 +1,4 @@
+convert_urls: true
 relative_urls: false
 remove_script_host: false
 document_base_url: https://fishpond.philosophie.ch/

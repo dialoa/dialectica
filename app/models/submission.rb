@@ -101,7 +101,8 @@ has_many :external_referees, :through => :external_referee_submissions
     {
       "submission.title": submission && submission.title ? submission.title : "Ship of Theseus",
       "submission.dialectica_id": submission && submission.dialectica_id ? submission.dialectica_id.to_s : "1234",
-      "submission.download_url": submission && submission.file.attached? ? Rails.application.routes.url_helpers.rails_blob_path(submission.file) : "https://website.com/download_url"
+      "submission.download_url": submission && submission.file.attached? ? Rails.application.routes.url_helpers.rails_blob_url(submission.file) : "https://website.com/download_url",
+      "submission.a_href": submission && submission.file.attached? ? "<a href=\"#{Rails.application.routes.url_helpers.rails_blob_url(submission.file)}\">download</a>" : '<a href="url">download</a>'
     }
   end
 
