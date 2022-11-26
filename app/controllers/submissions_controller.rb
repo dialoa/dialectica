@@ -342,7 +342,7 @@ Please visit: #{submission_url(submission)}
     #redirect_to submission_path(params[:submission_id]), notice: message
 
     if params[:send_directly]
-      #SubmissionMailer.send_to_external_referee(@mail, @subject, @body, current_user).deliver_now
+      SubmissionMailer.send_to_external_referee(@mail, @subject, @body, current_user).deliver_now
     else
       #byebug
     end

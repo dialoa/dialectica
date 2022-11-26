@@ -1,11 +1,11 @@
-<%= simple_form_for(ExternalReferee.new, remote: true, method: :post, url: external_referee_fast_create_path(submission_id: submission.id), data: {cy: "fast-create-external-referee_form"}) do |f| %>
+<%= simple_form_for(ExternalReferee.new, method: :post, url: external_referee_fast_create_path(submission_id: submission.id), data: {cy: "fast-create-external-referee_form"}) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :firstname, label:"first name", placeholder: "Kevin" %>
-    <%= f.input :lastname, label:"last name", placeholder: "Mulligan" %>
-    <%= f.input :email, label:"email", placeholder: "kevin.mulligan@gmail.com" %>
+    <%= f.input :firstname, label:"first name", placeholder: "" %>
+    <%= f.input :lastname, label:"last name", placeholder: "" %>
+    <%= f.input :email, label:"email", placeholder: "" %>
   </div>
 
   <div class="form-actions">

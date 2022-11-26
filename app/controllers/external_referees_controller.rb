@@ -41,6 +41,8 @@ class ExternalRefereesController < ApplicationController
     #add history entry
     @external_referee = ExternalReferee.create(external_referee_params)
     @submission = Submission.find(params[:submission_id])
+    flash[:notice] = "external referee has been added"
+    redirect_to send_to_external_referee_external_referee_submissions_path(@submission)
     #@external_referee_submission.update(external_referee_submission_params)
   end
 

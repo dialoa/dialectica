@@ -53,10 +53,13 @@
           add comment
         </button>
 
-        <%= link_to "send to external referee", send_to_external_referee_external_referee_submissions_path(submission) %>
+        <%= link_to "send to external referee", send_to_external_referee_external_referee_submissions_path(submission), class: "btn btn-light border" %>
+        <% if false %>
         <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#send_to_external_refereeModal" data-cy="send_to_external_referee_button">
           send to external referee
         </button>
+
+        <% end %>
 
           <%#= link_to "suggest to another internal", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
           <%#= link_to "upload file", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>

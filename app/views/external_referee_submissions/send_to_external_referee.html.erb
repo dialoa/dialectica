@@ -1,6 +1,23 @@
 <%= render "layouts/fishpond_navigation" %>
 
 <div class="container">
+
+<%= render 'external_referee_submissions/requested_referees_for_submission', submission: @submission %>
+<p>
+  (external referee not in the database yet? Add here: <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#send_to_external_referee_submission_id_<%= @submission.id %>_collapse" aria-expanded="false" aria-controls="send_to_external_referee_submission_id_<%= @submission.id %>_collapse" data-cy="open-up-fast-create-external-referee-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+        </svg>
+      </button> )
+    <div class="collapse" id="send_to_external_referee_submission_id_<%= @submission.id %>_collapse">
+      <div class="card card-body">
+        <%= render 'external_referees/form_for_fast_create', submission: @submission %>
+      </div>
+    </div>
+</p>
+<hr>
+
 <h1>send to external referee</h1>
 
 <%= simple_form_for :select_external_referee_for_form, url: select_external_referee_for_form_external_referee_submissions_path, remote: true do |f| %>
@@ -16,6 +33,12 @@
   </div>
 
 <%#= render "external_referee_submissions/form_for_send_to_external_referee", submission: @submission, external_referee: nil %>
+
+<hr>
+<%= link_to "back to the submission", submission_path(@submission) %>
+<br>
+<br>
+
 </div>
 
 
