@@ -34,7 +34,8 @@
         <%= submission.created_at.strftime("%d/%m/%Y") %>
       </td>
       <td>
-        <%= link_to submission.title, submission_path(submission) %>
+        <%#= link_to submission.title, submission_path(submission) %>
+        <%= link_to submission.title, submission_dialectica_id_path(submission.dialectica_id.to_s) %>
       </td>
       <td>
         Anonymous

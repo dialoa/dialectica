@@ -41,6 +41,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'submission/:dialectica_id', to: "submissions#submission", as: "submission_dialectica_id"
+
+
   #   post '/external_referee_submission_tools/select_external_referee_for_form', to: "external_referee_submissions#select_external_referee_for_form", as: "select_external_referee_for_form"
   resources :external_referee_submissions do
     collection do

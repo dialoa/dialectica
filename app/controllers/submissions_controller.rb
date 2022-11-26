@@ -51,6 +51,10 @@ class SubmissionsController < ApplicationController
     #authorize @submission
   end
 
+  def submission
+    @submission = Submission.where(dialectica_id: params[:dialectica_id]).first
+  end
+
   def show_pool
     authorize Submission
   end

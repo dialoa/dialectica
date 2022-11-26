@@ -1,5 +1,6 @@
 <% random_id = SecureRandom.random_number(10000000) %>
-<%= link_to submission_path(submission) do %>
+<%#= link_to submission_path(submission) do %>
+<%= link_to submission_dialectica_id_path(submission.dialectica_id.to_s) do %>
 <div id="submission-<%= submission.id %> submission-<%= submission.id %>-random-id-<%= random_id %>" class="card h-100 mb-3 <%= submission.submission_urgency %> <%= submission.get_frame_status_color(current_user) %> <%= "animate__animated animate__shakeX animate__slow animate__repeat-2" if submission.suggested_to_me?(current_user) %> btn btn-light pool-select-button" style="" value="<%=submission.id%>" data-cy="submission_card">
   <div class="card-body">
     <p class="card-text">
