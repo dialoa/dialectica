@@ -11,6 +11,18 @@ class SubmissionMailer < ApplicationMailer
     mail(to: email, cc: current_user.email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: subject)
   end
 
+  def one_month_passed_without_case(email: email, submission: submission)
+
+     "one month passed without case: #{submission.title}"
+
+    @email = email
+    @subject = "one month passed without case: #{submission.title}"
+    @body = Submission.one_month_passed_without_case_text(submission: submission)
+    #@current_user = current_user
+
+    mail(to: email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: @subject)
+  end
+
   def send_confirmation_for_submission(email, subject, body, submission, user, password = nil)
     @email = email
     @subject = subject

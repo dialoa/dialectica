@@ -137,6 +137,18 @@ has_many :external_referees, :through => :external_referee_submissions
   end
 
 
+  def self.one_month_passed_without_case_text(submission: submission)
+
+    email_template = EmailTemplate.find_by_name("one month passed without case")
+
+    if email_template.nil?
+      email_template = EmailTemplate.create(name: "one month passed without case", content: "please edit this template")
+    end
+
+    ScanAndSubstitute.new(content: email_template.content, submission: submission).scan_and_substitute
+
+  end
+
   def self.new_submission_with_login_text(submission: submission, user: user, password: password)
 
     email_template = EmailTemplate.find_by_name("new submission with login")
