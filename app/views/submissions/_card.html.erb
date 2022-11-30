@@ -1,14 +1,14 @@
 <% random_id = SecureRandom.random_number(10000000) %>
 <%#= link_to submission_path(submission) do %>
 <%= link_to submission_dialectica_id_path(submission.dialectica_id.to_s) do %>
-<div id="submission-<%= submission.id %> submission-<%= submission.id %>-random-id-<%= random_id %>" class="card h-100 mb-3 <%= submission.submission_urgency %> <%= submission.get_frame_status_color(current_user) %> <%= "animate__animated animate__shakeX animate__slow animate__repeat-2" if submission.suggested_to_me?(current_user) %> btn btn-light pool-select-button" style="" value="<%=submission.id%>" data-cy="submission_card">
+<div id="submission-<%= submission.id %> submission-<%= submission.id %>-random-id-<%= random_id %>" class="card mb-3 <%= submission.submission_urgency %> <%= submission.get_frame_status_color(current_user) %> <%= "animate__animated animate__shakeX animate__slow animate__repeat-2" if submission.suggested_to_me?(current_user) %> btn btn-light pool-select-button" style="height: 300px; font-size: 0.9rem;" value="<%=submission.id%>" data-cy="submission_card">
   <div class="card-body">
     <p class="card-text">
       <strong>#<%= submission.dialectica_id_public %> - <%= l submission.created_at, format: :usa %></strong>
     </p>
     <hr class="bg-light" />
     <p class="card-text">
-      <strong><%= submission.title %></strong>
+      <strong><%= submission.title.truncate(100) %></strong>
     </p>
     <% if !current_user.blank? && !SuggestionSubmission.where(user_id: current_user.id).where(submission_id: submission.id).empty? %>
       <h5><span class="badge badge-pill badge-info text-white">suggested to you</span></h5>
