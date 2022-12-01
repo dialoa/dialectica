@@ -52,6 +52,10 @@ has_many :external_referees, :through => :external_referee_submissions
     "#{self.firstname} #{self.lastname}"
   end
 
+  def status_for_author
+
+  end
+
   def dialectica_id_public
     if self.dialectica_id.nil?
       self.id

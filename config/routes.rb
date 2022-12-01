@@ -94,6 +94,8 @@ Rails.application.routes.draw do
   get '/dashboard2', to: 'static_pages#dashboard2', as: "dashboard2"
   get '/bibtex', to: 'static_pages#bibtex', as: "bibtex"
   get '/submission_welcome', to: 'static_pages#submission_welcome', as: "submission_welcome"
+  get '/welcome_user', to: 'static_pages#welcome_user', as: "welcome_user"
+
 
   get '/pandoc', to: 'pandoc#pandoc', as: "pandoc"
   post 'pandoc/pandoc_command', to: 'pandoc#pandoc_command', as: "pandoc_command"

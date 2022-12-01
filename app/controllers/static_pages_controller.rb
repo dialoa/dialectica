@@ -4,7 +4,7 @@ require 'csl/styles'
 require 'serrano'
 
 class StaticPagesController < ApplicationController
-  def welcome
+  def welcome_user
 
   end
 
@@ -21,6 +21,10 @@ class StaticPagesController < ApplicationController
   end
 
   def dashboard2
+
+  end
+
+  def welcome
 
   end
 
