@@ -53,7 +53,9 @@ has_many :external_referees, :through => :external_referee_submissions
   end
 
   def status_for_author
-
+    return "rejected" if self.rejected == "yes"
+    return "accepted" if self.accepted == "yes"
+    return "open"
   end
 
   def dialectica_id_public
