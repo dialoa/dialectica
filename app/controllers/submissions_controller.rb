@@ -394,7 +394,7 @@ Please visit: #{submission_url(submission)}
 
   def withdraw_submission
     submission = Submission.find(params[:id])
-    submission.update(withdrawn: "true")
+    submission.update(withdrawn: "true", dead: "true")
     user = User.where(email: submission.email).first
 
     if user.blank?
@@ -407,7 +407,7 @@ Please visit: #{submission_url(submission)}
 
   def undo_withdraw_submission
     submission = Submission.find(params[:id])
-    submission.update(withdrawn: "false")
+    submission.update(withdrawn: "false", dead: "false")
     user = User.where(email: submission.email).first
 
     if user.blank?

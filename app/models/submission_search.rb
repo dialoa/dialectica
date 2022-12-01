@@ -68,6 +68,14 @@ class SubmissionSearch
       @submissions = @submissions.where(rejected: "true")
     end
 
+    if @selection == "withdrawn"
+      @submissions = @submissions.where(withdrawn: "true")
+    end
+
+    if @selection == "not withdrawn"
+      @submissions = @submissions.where.not(withdrawn: "true")
+    end
+
     if @selection == "dead"
       @submissions = @submissions.dead
     end
@@ -95,7 +103,9 @@ class SubmissionSearch
       "rejected",
       "dead",
       "to be reviewed by me",
-      "open"
+      "open",
+      "withdrawn",
+      "not withdrawn"
       ]
   end
 end
