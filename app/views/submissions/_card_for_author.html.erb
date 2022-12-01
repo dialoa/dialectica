@@ -6,15 +6,24 @@
       <strong>status: </strong> <%= submission.status_for_author %>
     </p>
     <hr>
+    <% if submission.withdrawn == "false" %>
     <p>
       do you want to withdraw your submission?
     </p>
-    <a href="#" class="btn btn-primary">withdraw submission</a>
+    <%= link_to "withdraw submission", withdraw_submission_submission_path(submission), method: :put, class: "btn btn-primary" %>
     <hr>
+    <% elsif submission.withdrawn == "true" %>
+    <p>
+      do you want to undo the withdrawal of your submission?
+    </p>
+    <%= link_to "undo the withdrawal of your submission", undo_withdraw_submission_submission_path(submission), method: :put, class: "btn btn-primary" %>
+    <hr>
+
+    <% end %>
+
     <p>
       do you want to re-submit this submission?
     </p>
-    <a href="#" class="btn btn-primary text-center">re-submit</a>
 
   </div>
 </div>

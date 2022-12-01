@@ -2,7 +2,7 @@ require 'csv'
 require 'json'
 
 class SubmissionsController < ApplicationController
-  before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool, :show_for_user]
+  before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool, :show_for_user, :withdraw_submission, :undo_withdraw_submission]
   before_action :authenticate_user!, except: [:show, :new, :create, :iframe_new, :submission_was_successful, :my_submissions]
   skip_before_action :verify_authenticity_token, only: [:create]
 
@@ -392,6 +392,32 @@ Please visit: #{submission_url(submission)}
     redirect_to submission_path(params[:id]), notice: 'Unproposed for Rejection'.downcase
   end
 
+  def withdraw_submission
+    submission = Submission.find(params[:id])
+    submission.update(withdrawn: "true")
+    user = User.where(email: submission.email).first
+
+    if user.blank?
+      user = current_user
+    end
+
+    submission.add_to_history(user, "withdrew Submission".downcase)
+    redirect_to submission_path(submission), notice: 'Submission has been withdrawn'.downcase
+  end
+
+  def undo_withdraw_submission
+    submission = Submission.find(params[:id])
+    submission.update(withdrawn: "false")
+    user = User.where(email: submission.email).first
+
+    if user.blank?
+      user = current_user
+    end
+
+    submission.add_to_history(user, "Submission not withdrawn anymore".downcase)
+    redirect_to submission_path(submission), notice: 'Submission is not withdrawn anymore'.downcase
+  end
+
   def withdraw_proposal_of_submission
     submission = Submission.find(params[:submission_id])
     submission.update(proposed: "false")
@@ -469,7 +495,7 @@ Please visit: #{submission_url(submission)}
 
     # Only allow a list of trusted parameters through.
     def submission_params
-      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at, :accepted, :rejected, :dead, :dialectica_id)
+      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at, :accepted, :rejected, :withdrawn, :dead, :dialectica_id)
 
     end
 end

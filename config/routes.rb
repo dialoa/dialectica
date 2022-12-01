@@ -30,6 +30,8 @@ Rails.application.routes.draw do
       put 'propose_for_rejection'
       put 'unpropose_for_acceptance'
       put 'unpropose_for_rejection'
+      put 'withdraw_submission'
+      put 'undo_withdraw_submission'
       get 'show_for_user'
     end
     collection do
