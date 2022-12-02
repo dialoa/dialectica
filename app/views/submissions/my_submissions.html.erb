@@ -1,15 +1,37 @@
 <%= render "layouts/dialectica_navigation" %>
 
-<div class="container dialectica mt-4">
-  <h1>my submissions</h1>
+<div class="container">
+  <!-- Page Content -->
+     <div class="row dialectica">
 
-  <% if user_signed_in? %>
-    <% Submission.where(email: current_user.email).each do |submission| %>
-      <%= link_to submission.title, show_for_user_submission_path(submission) %><br />
-    <% end %>
-  <% else %>
-    <%= link_to('please login', new_user_session_path, class: "") %>
-  <% end %>
+       <!-- Post Content Column -->
+       <div class="col-12 my-4">
+
+
+
+         <!-- Title -->
+         <h1 class="mt-4">my submissions</h1>
+
+         <% if policy(Submission).pool? %>
+           <div class="my-4">
+             <%= link_to "pool", submission_pool_path, class: "btn btn-primary" %>
+           </div>
+         <% end %>
+
+         <% if user_signed_in? %>
+           <% Submission.where(email: current_user.email).each do |submission| %>
+           <%= render "submissions/card_for_author", submission: submission %>
+             <%#= link_to submission.title, show_for_user_submission_path(submission) %><br />
+           <% end %>
+         <% end %>
+
+       </div>
+
+
+     </div>
+     <!-- /.row -->
+
 
 </div>
+
 <%= render "layouts/footer" %>

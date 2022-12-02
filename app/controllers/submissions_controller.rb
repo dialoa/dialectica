@@ -149,12 +149,19 @@ class SubmissionsController < ApplicationController
               SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission, User.where(email: @submission.email).first).deliver_now
               @submission.add_to_history(User.find_by_email(@submission.email), "submitted \"#{@submission.title}\"", "author")
               redirect_to submission_was_successful_submissions_path, notice: 'submission was successfully created.' and return
+              #redirect_to my_submissions_submissions_path, notice: 'submission was successfully created.' and return
+
             end
-            redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
+            #redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
+            redirect_to my_submissions_submissions_path, notice: 'submission was successfully created.' and return
+
           else
             SubmissionMailer.send_confirmation_for_submission(@submission.email, "Confirmation", "Confirmation", @submission, current_user).deliver_now
             @submission.add_to_history(current_user, "submitted \"#{@submission.title}\"", "author")
-            redirect_to @submission, notice: 'submission was successfully created.' and return
+
+            redirect_to my_submissions_submissions_path, notice: 'submission was successfully created.' and return
+
+            #redirect_to @submission, notice: 'submission was successfully created.' and return
             #redirect_to show_for_user_submission_path(@submission), notice: 'submission was successfully created.' and return
           end
 
@@ -402,7 +409,7 @@ Please visit: #{submission_url(submission)}
     end
 
     submission.add_to_history(user, "withdrew Submission".downcase)
-    redirect_to submission_path(submission), notice: 'Submission has been withdrawn'.downcase
+    redirect_to my_submissions_submissions_path, notice: 'Submission has been withdrawn'.downcase
   end
 
   def undo_withdraw_submission
@@ -415,7 +422,7 @@ Please visit: #{submission_url(submission)}
     end
 
     submission.add_to_history(user, "Submission not withdrawn anymore".downcase)
-    redirect_to submission_path(submission), notice: 'Submission is not withdrawn anymore'.downcase
+    redirect_to my_submissions_submissions_path, notice: 'Submission is not withdrawn anymore'.downcase
   end
 
   def withdraw_proposal_of_submission
