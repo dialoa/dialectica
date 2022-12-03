@@ -40,7 +40,7 @@ has_many :external_referees, :through => :external_referee_submissions
   validates :lastname, presence: true
   validates :email, presence: true
   #validates :dialectica_id, uniqueness: true # the problem is in upload csv: save fails if there is already dialectica id
-  validates :title, presence: true, uniqueness: true
+  validates :title, presence: true#, uniqueness: true
   validates :file, attached: true, content_type: { in: 'application/pdf', message: 'is not a PDF' }, size: { less_than: 1.megabytes , message: 'is too large' }
 
   scope :dead, -> { where(dead: "true") }
@@ -53,8 +53,10 @@ has_many :external_referees, :through => :external_referee_submissions
   end
 
   def status_for_author
-    return "rejected" if self.rejected == "yes"
-    return "accepted" if self.accepted == "yes"
+    return "rejected" if self.rejected == "true"
+    return "accepted" if self.accepted == "true"
+    return "withdrawn" if self.withdrawn == "true"
+    return "dead" if self.dead == "true"
     return "open"
   end
 

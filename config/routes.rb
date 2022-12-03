@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       put 'withdraw_submission'
       put 'undo_withdraw_submission'
       get 'show_for_user'
+      get 'resubmit_submission'
     end
     collection do
       get 'iframe_new'

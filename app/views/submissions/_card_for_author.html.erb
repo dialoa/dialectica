@@ -1,7 +1,15 @@
-<div class="card" style="width: 18rem;">
+<div class="card" style="width: 18rem;" class="my-4">
   <div class="card-body">
+    <p class="card-text">
+      <strong>#</strong><%= submission.dialectica_id %>
+    </p>
     <h5 class="card-title"><%= submission.title %></h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <% unless submission.resubmit_original_dialectica_id.blank? %>
+      <h6><span class="badge badge-pill badge-info text-white">re-submission of <br><%= submission.resubmit_original_dialectica_id %> </span></h6>
+    <% else %>
+
+    <% end %>
+
     <p class="card-text">
       <strong>status: </strong> <%= submission.status_for_author %>
     </p>
@@ -24,6 +32,15 @@
     <p>
       do you want to re-submit this submission?
     </p>
+
+    <p>
+      <strong>note:</strong> you can only re-submit if you withdraw your submission first.
+    </p>
+
+    <% if submission.withdrawn == "true" %>
+      <%= link_to "re-submit this paper", resubmit_submission_submission_path(submission), class: "btn btn-primary" %>
+    <% end %>
+
 
   </div>
 </div>

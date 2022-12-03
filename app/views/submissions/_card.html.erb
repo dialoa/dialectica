@@ -31,6 +31,12 @@
 
     <% end %>
 
+    <% unless submission.resubmit_original_dialectica_id.blank? %>
+      <h6><span class="badge badge-pill badge-info text-white">re-submission of <br><%= submission.resubmit_original_dialectica_id %> </span></h6>
+    <% else %>
+
+    <% end %>
+
     <% if false #submission.dead == "true" %>
     <p class="card-text">
       <strong><%= submission.firstname %> <%= submission.lastname %></strong>

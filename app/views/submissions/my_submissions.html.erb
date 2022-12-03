@@ -7,22 +7,40 @@
        <!-- Post Content Column -->
        <div class="col-12 my-4">
 
-
+         <% if policy(Submission).pool? %>
+           <div class="my-4">
+             <%= link_to "go to the pool", submission_pool_path, class: "btn btn-primary" %>
+           </div>
+         <% end %>
 
          <!-- Title -->
          <h1 class="mt-4">my submissions</h1>
 
-         <% if policy(Submission).pool? %>
-           <div class="my-4">
-             <%= link_to "pool", submission_pool_path, class: "btn btn-primary" %>
-           </div>
+         <% if user_signed_in? %>
+
+         <% unless @open_submissions.empty? %>
+         <h2 class="mt-4">open submissions</h2>
+           <% @open_submissions.each do |submission| %>
+            <%= render "submissions/card_for_author", submission: submission %>
+           <% end %>
+
          <% end %>
 
-         <% if user_signed_in? %>
-           <% Submission.where(email: current_user.email).each do |submission| %>
-           <%= render "submissions/card_for_author", submission: submission %>
-             <%#= link_to submission.title, show_for_user_submission_path(submission) %><br />
+         <% unless @closed_submissions.empty? %>
+         <h2 class="mt-4">closed submissions</h2>
+           <% @closed_submissions.each do |submission| %>
+            <%= render "submissions/card_for_author", submission: submission %>
            <% end %>
+
+         <% end %>
+
+
+         <% else %>
+          <p>
+            Please log in:
+          </p>
+          <%= link_to('login', new_user_session_path, class: "btn btn-primary") %>
+
          <% end %>
 
        </div>

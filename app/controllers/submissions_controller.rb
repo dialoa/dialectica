@@ -70,6 +70,23 @@ class SubmissionsController < ApplicationController
   def my_submissions
     set_meta_tags title: "my submissions"
 
+    @open_submissions = []
+    @closed_submissions = []
+
+    if user_signed_in?
+
+      Submission.where(email: current_user.email).each do |submission|
+        if submission.status_for_author == "open"
+          @open_submissions.push(submission)
+        else
+          @closed_submissions.push(submission)
+        end
+      end
+
+    end
+
+
+
     #authorize @submissions
   end
 
@@ -88,6 +105,13 @@ class SubmissionsController < ApplicationController
     set_meta_tags title: "submit a paper to dialectica"
 
     @submission = Submission.new
+  end
+
+  def resubmit_submission
+      original_submission = Submission.find(params[:id])
+      new_submission = original_submission.dup
+      new_submission.resubmit_original_dialectica_id = original_submission.dialectica_id
+      @submission = new_submission
   end
 
   def iframe_new
@@ -502,7 +526,7 @@ Please visit: #{submission_url(submission)}
 
     # Only allow a list of trusted parameters through.
     def submission_params
-      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at, :accepted, :rejected, :withdrawn, :dead, :dialectica_id)
+      params.require(:submission).permit(:id, :title, :area, :firstname, :lastname, :file, :email, :history, :country, :gender, :other_authors, :attachments, :comment, :appearance_date, :submitted_by_user_id, :created_at, :accepted, :rejected, :withdrawn, :dead, :dialectica_id, :resubmit_original_dialectica_id)
 
     end
 end

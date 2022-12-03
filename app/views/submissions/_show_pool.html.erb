@@ -17,6 +17,13 @@
       <p>
         <%= submission.title %>
       </p>
+      <% unless submission.resubmit_original_dialectica_id.blank? || Submission.where(dialectica_id: submission.resubmit_original_dialectica_id).empty? %>
+        <%= link_to submission_dialectica_id_path(submission.resubmit_original_dialectica_id) do %>
+          <h6><span class="badge badge-pill badge-info text-white">re-submission of <br><%= submission.resubmit_original_dialectica_id %> </span></h6>
+        <% end %>
+      <% else %>
+
+      <% end %>
       <hr>
       <% if true %>
       <br />
