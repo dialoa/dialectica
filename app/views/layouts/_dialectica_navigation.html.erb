@@ -31,7 +31,7 @@
     <ul class="navbar-nav ml-auto">
       <% unless Page.where(slug: "principles").empty? %>
         <li class="nav-item">
-          <%= link_to "editorial principles", page_path(Page.where(slug: "principles").first), class: "nav-link" %>
+          <%= link_to "editorial principles", principles_path, class: "nav-link" %>
         </li>
       <% end %>
     </ul>

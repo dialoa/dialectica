@@ -74,6 +74,10 @@ class PagesController < ApplicationController
     @page = Page.where(special_page: "welcome").first
   end
 
+  def principles
+    @page = Page.where(special_page: "principles").first
+  end
+
   def update_order
     puts params["order"]
     params["order"].each_with_index do |id, index|

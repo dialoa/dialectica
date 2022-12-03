@@ -1,0 +1,18 @@
+<%= render "layouts/dialectica_navigation" %>
+
+<% if @page.blank? %>
+    <div class="container text-center">
+      <p>
+        Please create a page with special_page "principles".
+      <p>
+      <p>
+        <%= link_to 'New Page', new_page_path %>
+      </p>
+    </div>
+<% else %>
+  <div class="container">
+    <%= render 'pages/show', page: @page %>
+  </div>
+<% end %>
+
+<%= render "layouts/footer" %>
