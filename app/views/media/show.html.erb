@@ -8,7 +8,9 @@
 <p>
   <strong>file:</strong>
   <% if @medium.file.attached? %>
-    <%= link_to "download", rails_blob_path(@medium.file)  %>
+    <%= link_to "download", rails_blob_path(@medium.file)  %> |
+    <%= link_to "url download", url_for(@medium.file)  %>
+
   <% end %>
 </p>
 
