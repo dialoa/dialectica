@@ -9,7 +9,7 @@
 
       <% Page.where(status: "visible").order(:sort).each do |page| %>
         <li class="nav-item">
-          <%= link_to page.title, page_path(page), class: "nav-link" %>
+          <%= link_to page.title, page.slug, class: "nav-link" %>
         </li>
       <% end %>
 
