@@ -1,4 +1,4 @@
-
+<div class="modal-body">
 <%= simple_form_for(medium, url: create_for_submission_media_path, method: :post) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -18,8 +18,13 @@
     <%#= f.input :mediumable_type %>
 
   </div>
+</div>
 
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+    <%= f.button :submit, "upload file", class: "btn btn-primary" %>
+
+  </div>
   <div class="form-actions">
-    <%= f.button :submit %>
   </div>
 <% end %>

@@ -147,7 +147,7 @@
 
 <!-- UploadModal -->
 <div class="modal fade" id="uploadfileModal" tabindex="-1" aria-labelledby="uploadfileModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="uploadfileModalLabel">upload file</h5>
@@ -155,33 +155,15 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+
 
         <%= render "media/form_for_submission", medium: Medium.new, parent: submission %>
 
-        <hr>
-
-        <%= form_tag upload_file_to_submission_path(submission), multipart: true do %>
-          <%#= file_field_tag :file, class: "btn btn-secondary" %>
-          <%#= hidden_field_tag :submission_id, submission.id %>
-          <%#= submit_tag "Submit", class: "btn btn-primary", id: "actual_bibtex_enter_button" %>
-          <%= file_field_tag :attachments, id: "upload_file_field_tag" %>
-          <br>
-          <br>
-          <p>
-            <strong>comment</strong>
-          </p>
-          <%= text_area_tag :comment, nil, rows: 8, placeholder: "what is this file about?" %>
-
-          <br />
-          <br />
-          <%= button_tag "upload file", class: "btn btn-light border", data: {cy: "submit_upload_file_button"} %>
-
-        <% end %>
-      </div>
+      <!--
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
+      -->
     </div>
   </div>
 </div>
