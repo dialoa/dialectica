@@ -212,4 +212,6 @@ Rails.application.routes.draw do
   post '/external_referee_tools/fast_create/:submission_id', to: "external_referees#fast_create", as: "external_referee_fast_create"
 
   get '/principles', to: "pages#principles", as: "principles"
+
+  get '/:id', to: "pages#show"
 end
