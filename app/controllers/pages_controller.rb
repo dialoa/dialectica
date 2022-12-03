@@ -71,7 +71,7 @@ class PagesController < ApplicationController
   end
 
   def welcome
-    @page = Page.where(title: "dialectica").first
+    @page = Page.where(special_page: "welcome").first
   end
 
   def update_order
@@ -90,6 +90,6 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:title, :description, :keywords, :search_field, :content, :cover, :sort, :slug, :status)
+      params.require(:page).permit(:title, :description, :keywords, :search_field, :content, :cover, :sort, :slug, :status, :special_page)
     end
 end
