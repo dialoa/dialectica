@@ -29,8 +29,8 @@
         </ul>
         </p>
         <h5 class="mt-5">latest activities - <%= link_to "show all", histories_path %></h5>
-        <div class="overflow-auto small" style="height: 450px;">
-          <% History.order(:created_at).last(15).reverse.each do |history| %>
+        <div class="overflow-auto small" style="height: 8000px;">
+          <% @histories.each do |history| %>
             <p>
               <% unless history.submission.blank? %>
                 #<%= link_to history.submission.dialectica_id_public, submission_path(history.submission) %> - "<%= link_to history.submission.title, submission_path(history.submission) %>"

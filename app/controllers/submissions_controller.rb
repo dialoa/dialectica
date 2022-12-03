@@ -235,6 +235,15 @@ class SubmissionsController < ApplicationController
   def pool
     authorize Submission
 
+    @histories = []
+
+    History.order(:created_at).reverse.each do |history|
+      unless current_user.blank? || history.submission.blank? || BlockedUser.where(user_id: current_user.id, submission_id: history.submission.id).present?
+        @histories.push(history)
+        break if @histories.length > 15
+      end
+    end
+
   end
 
   def pool_old
