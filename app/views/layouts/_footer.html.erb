@@ -11,7 +11,7 @@
         logged in as <%= current_user.firstname %> <%= current_user.lastname %>
       <% else %>
         <%= link_to('login', new_user_session_path, class: "text-white") %>
-        <%#= link_to "sign up", new_user_registration_path, class:"text-white" %>
+        <%#= link_to " | sign up", new_user_registration_path, class:"text-white" %>
       <% end %>
       </p>
 
