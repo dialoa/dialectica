@@ -138,6 +138,23 @@ has_many :external_referees, :through => :external_referee_submissions
 
   end
 
+  def self.send_to_external_referee_text(submission, submission_blob_url, user, external_referee = nil)
+
+    if user.blank?
+      user = User.find_by_email("anonymous_user@mail.com")
+    end
+
+    email_template = EmailTemplate.find_by_name("send to external referee")
+
+    if email_template.nil?
+      email_template = EmailTemplate.create(name: "send to external referee", content: "please edit this template.")
+    end
+
+   ScanAndSubstitute.new(content: email_template.content, submission: submission, user: user, external_referee: external_referee).scan_and_substitute
+
+
+  end
+
   def self.new_submission_text(submission: submission, user: user)
 
     email_template = EmailTemplate.find_by_name("new submission")
@@ -160,6 +177,20 @@ has_many :external_referees, :through => :external_referee_submissions
     end
 
     ScanAndSubstitute.new(content: email_template.content, submission: submission).scan_and_substitute
+
+  end
+
+  def self.withdraw_submission_email_text(submission: submission, user: user)
+
+    template_name = "withdraw submission"
+
+    email_template = EmailTemplate.find_by_name(template_name)
+
+    if email_template.nil?
+      email_template = EmailTemplate.create(name: template_name, content: "please edit this template")
+    end
+
+    ScanAndSubstitute.new(content: email_template.content, submission: submission, user: user).scan_and_substitute
 
   end
 

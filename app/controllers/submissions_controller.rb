@@ -428,9 +428,8 @@ Please visit: #{submission_url(submission)}
     submission.update(withdrawn: "true", dead: "true")
     user = User.where(email: submission.email).first
 
-    if user.blank?
-      user = current_user
-    end
+
+    SubmissionMailer.withdraw_submission_email(submission: submission, user: User.find_by_email(submission.email)).deliver_now
 
     submission.add_to_history(user, "withdrew Submission".downcase)
     redirect_to my_submissions_submissions_path, notice: 'Submission has been withdrawn'.downcase

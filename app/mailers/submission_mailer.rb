@@ -11,6 +11,15 @@ class SubmissionMailer < ApplicationMailer
     mail(to: email, cc: current_user.email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: subject)
   end
 
+  def withdraw_submission_email(submission: submission, user: user)
+
+      @subject = "submission withdrawn: #{submission.title}"
+      @body = Submission.withdraw_submission_email_text(submission: submission, user: user)
+      #@current_user = current_user
+
+      mail(to: submission.email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: @subject)
+    end
+
   def one_month_passed_without_case(email: email, submission: submission)
 
      "one month passed without case: #{submission.title}"
