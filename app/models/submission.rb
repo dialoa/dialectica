@@ -8,6 +8,8 @@ has_many :external_referees, :through => :external_referee_submissions
   has_many_attached :attachments
   has_many :histories, dependent: :destroy
   has_many :requested_reviewers
+  has_many :media, as: :mediumable
+
   #has_many :suggestion_submissions
 
   has_many :reports

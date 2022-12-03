@@ -1,0 +1,25 @@
+
+<%= simple_form_for(medium) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <p>
+      Cover <br />
+      <%= f.file_field :file %>
+    </p>
+    <%= f.input :comment, placeholder: "what is this file about?" %>
+
+    <%= f.hidden_field :mediumable_id, value: parent.id %>
+    <%= f.hidden_field :mediumable_type, value: parent.class.name %>
+
+    <%#= f.input :mediumable_id %>
+
+    <%#= f.input :mediumable_type %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

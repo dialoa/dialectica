@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_03_113850) do
+ActiveRecord::Schema.define(version: 2022_12_03_141433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,6 +179,15 @@ ActiveRecord::Schema.define(version: 2022_12_03_113850) do
     t.index ["bibtex_entry_id"], name: "index_jsons_on_bibtex_entry_id"
   end
 
+  create_table "media", force: :cascade do |t|
+    t.text "comment"
+    t.string "mediumable_type"
+    t.bigint "mediumable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["mediumable_type", "mediumable_id"], name: "index_media_on_mediumable_type_and_mediumable_id"
+  end
+
   create_table "pages", force: :cascade do |t|
     t.string "title", default: ""
     t.text "description", default: ""
@@ -226,6 +235,7 @@ ActiveRecord::Schema.define(version: 2022_12_03_113850) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "error", default: ""
+    t.text "comment", default: ""
   end
 
   create_table "submission_users", force: :cascade do |t|

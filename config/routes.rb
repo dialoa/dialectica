@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :media do
+    member do
+
+    end
+    collection do
+      post "create_for_submission"
+    end
+  end
   resources :email_templates
   get 'test/destroy_all_submissions'
   get 'test/destroy_all_users'
