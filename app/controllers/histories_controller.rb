@@ -5,7 +5,17 @@ class HistoriesController < ApplicationController
   # GET /histories
   # GET /histories.json
   def index
-    @histories = History.all
+    #@histories = History.all
+
+    @histories = []
+
+    History.order(:created_at).reverse.each do |history|
+      unless current_user.blank? || history.submission.blank? || BlockedUser.where(user_id: current_user.id, submission_id: history.submission.id).present?
+        @histories.push(history)
+        #break if @histories.length > 15
+      end
+    end
+
   end
 
   # GET /histories/1
