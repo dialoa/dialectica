@@ -194,6 +194,20 @@ has_many :external_referees, :through => :external_referee_submissions
 
   end
 
+  def self.send_rejection_to_author_text(submission: submission, user: user)
+
+    template_name = "reject submission"
+
+    email_template = EmailTemplate.find_by_name(template_name)
+
+    if email_template.nil?
+      email_template = EmailTemplate.create(name: template_name, content: "please edit this template")
+    end
+
+    ScanAndSubstitute.new(content: email_template.content, submission: submission, user: user).scan_and_substitute
+
+  end
+
   def self.new_submission_with_login_text(submission: submission, user: user, password: password)
 
     email_template = EmailTemplate.find_by_name("new submission with login")

@@ -1,0 +1,39 @@
+<%= render "layouts/fishpond_navigation" %>
+
+<div class="container">
+<%= tinymce_assets %>
+<%= tinymce %>
+<% submission = @submission %>
+<%= simple_form_for :submission, url: send_rejection_to_author_submission_path(submission.id), method: :put, remote: true do |f| %>
+
+
+<%#=f.hidden_field :external_referee, :value => external_referee.id %>
+
+<p>
+  to: <br /><%= submission.email if submission && submission.email %>
+</p>
+<p>
+  bcc: <br />dialectica@philosophie.ch
+</p>
+<p>
+  <%= f.input :subject, label: "subject", input_html: {value: "rejection of submission: \"#{submission.title}\""} %>
+  </p>
+  <p>
+    <%# store_rails_blob_url = submission.file.attached? ? rails_blob_url(submission.file) : nil %>
+    <%= f.text_area :body, class: "tinymce", value: Submission.send_rejection_to_author_text(submission: submission, user: User.find_by_email(submission.email)), rows: 25  %>
+    <%#= f.input :body, label: "body", as: :text, input_html: {value: Submission.send_to_external_referee_text(submission, store_rails_blob_url, current_user), rows: 25} %>
+  </p>
+  <br />
+  <div class="modal-footer">
+    <!--
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">dismiss</button>
+    -->
+    <%= f.submit "open email program (this opens up your mail program)", class: "btn btn-primary border my-2" %>
+
+    <%= f.submit "send directly", name: 'send_directly', class: "btn btn-primary border my-2", data: { confirm: 'Warning: This method is not reliable. Mail may end up in spam-folders or may not arrive at all. Proceed anyway?'} %>
+
+  </div>
+<% end %>
+</div>
+
+<%= render "layouts/footer" %>

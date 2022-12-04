@@ -2,7 +2,7 @@ require 'csv'
 require 'json'
 
 class SubmissionsController < ApplicationController
-  before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool, :show_for_user, :withdraw_submission, :undo_withdraw_submission]
+  before_action :set_submission, only: [:show, :edit, :update, :destroy, :panel, :show_pool, :show_for_user, :withdraw_submission, :undo_withdraw_submission, :send_rejection_to_author_form, :send_rejection_to_author]
   before_action :authenticate_user!, except: [:show, :new, :create, :iframe_new, :submission_was_successful, :my_submissions]
   skip_before_action :verify_authenticity_token, only: [:create]
 
@@ -387,6 +387,32 @@ Please visit: #{submission_url(submission)}
 
     if params[:send_directly]
       SubmissionMailer.send_to_external_referee(@mail, @subject, @body, current_user).deliver_now
+    else
+      #byebug
+    end
+  end
+
+  def send_rejection_to_author_form
+
+  end
+
+  def send_rejection_to_author
+
+    @subject = params[:submission][:subject]
+    @body = params[:submission][:body]
+
+    @sending_option = params[:send_directly]
+
+    message = "sent rejection to author"
+
+    @submission.add_to_history(current_user, message)
+    @email = @submission.email
+
+    @submission.update(dead: "true", rejected: "true")
+
+
+    if params[:send_directly]
+      SubmissionMailer.send_rejection_to_author(email: @email, subject: @subject, body: @body).deliver_now
     else
       #byebug
     end

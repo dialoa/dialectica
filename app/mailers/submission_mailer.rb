@@ -11,6 +11,14 @@ class SubmissionMailer < ApplicationMailer
     mail(to: email, cc: current_user.email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: subject)
   end
 
+  def send_rejection_to_author(email: nil, subject: nil, body: nil)
+    @email = email
+    @subject = subject
+    @body = body
+
+    mail(to: email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: subject)
+  end
+
   def withdraw_submission_email(submission: submission, user: user)
 
       @subject = "submission withdrawn: #{submission.title}"

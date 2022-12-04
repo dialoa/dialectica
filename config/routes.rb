@@ -42,6 +42,8 @@ Rails.application.routes.draw do
       put 'undo_withdraw_submission'
       get 'show_for_user'
       get 'resubmit_submission'
+      get 'send_rejection_to_author_form'
+      put 'send_rejection_to_author'
     end
     collection do
       get 'iframe_new'

@@ -55,10 +55,9 @@
 
         <%= link_to "send to external referee", send_to_external_referee_external_referee_submissions_path(submission), class: "btn btn-light border" %>
         <% if false %>
-        <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#send_to_external_refereeModal" data-cy="send_to_external_referee_button">
-          send to external referee
-        </button>
-
+          <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#send_to_external_refereeModal" data-cy="send_to_external_referee_button">
+            send to external referee
+          </button>
         <% end %>
 
           <%#= link_to "suggest to another internal", upload_file_to_submission_path(submission.id), class: "btn btn-light border my-2" %>
@@ -99,7 +98,11 @@
     <% else %>
       <h5>editor-tools<h5>
       <%= link_to "accept", accept_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
-      <%= link_to "reject", reject_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
+
+      <%#= link_to "reject", reject_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
+      <%= link_to "reject", send_rejection_to_author_form_submission_path(submission.id), method: :get, class: "btn btn-light border my-2" %>
+
+
       <%= link_to "resurrect", resurrect_submission_path(submission.id), method: :post, class: "btn btn-light border my-2" %>
 
       <% if policy(submission).edit? %>

@@ -1,0 +1,28 @@
+if (<%= @sending_option.nil? %>) {
+
+
+    location.href = "mailto:<%= @email %>?body=<%= url_encode(@body) %>&cc=dialectica@philosophie.ch&subject=<%= url_encode(@subject) %>";
+
+    $('.modal').modal('hide');
+
+    setTimeout(
+      function()
+      {
+        window.location.href = "/submissions/" + <%= @submission.id %>;
+      }, 1000);
+ }
+else {
+    $('.modal').modal('hide');
+
+    setTimeout(
+      function()
+      {
+        window.location.href = "/submissions/" + <%= @submission.id %>;
+      }, 1000);
+
+      setTimeout(
+        function()
+        {
+          alert("check your mail box!");
+        }, 2000);
+ }
