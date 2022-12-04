@@ -71,7 +71,11 @@ Rails.application.routes.draw do
   get 'tools/csv', to: 'tools#csv', as: "tools_csv"
   post 'tools/csv', to: 'tools#csv'
   resources :blocked_users
-  resources :histories
+  resources :histories do
+    collection do
+      get 'searchable_list_histories'
+    end
+  end
   resources :reports
   resources :jsons
   resources :codes

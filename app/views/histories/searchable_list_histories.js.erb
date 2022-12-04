@@ -1,0 +1,11 @@
+var div_element = ".searchable_list_histories";
+
+$( div_element ).fadeOut( "fast", function() {
+
+    content = $("<%= escape_javascript( render 'histories/histories', histories: @histories ) %>")
+
+    $(div_element).replaceWith(function(){
+      return $(content).hide().fadeIn("fast");
+    });
+
+});

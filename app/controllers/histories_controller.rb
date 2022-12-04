@@ -7,14 +7,7 @@ class HistoriesController < ApplicationController
   def index
     #@histories = History.all
 
-    @histories = []
-
-    History.order(:created_at).reverse.each do |history|
-      unless current_user.blank? || history.submission.blank? || BlockedUser.where(user_id: current_user.id, submission_id: history.submission.id).present?
-        @histories.push(history)
-        #break if @histories.length > 15
-      end
-    end
+    @histories = HistorySearch.new(current_user: current_user).search
 
   end
 
@@ -70,6 +63,15 @@ class HistoriesController < ApplicationController
       format.html { redirect_to submission_pool_url, notice: 'History was successfully deleted.' }
       format.json { head :no_content }
     end
+  end
+
+  def searchable_list_histories
+    @histories = HistorySearch.new(
+      search_string: params[:search_input][:search_string],
+      submission: params[:search_input][:submission_id].present? ? Submission.find(params[:search_input][:submission_id]) : nil,
+      user: params[:search_input][:user_id].present? ? User.find(params[:search_input][:user_id]) : nil,
+      current_user: current_user
+     ).search
   end
 
   private

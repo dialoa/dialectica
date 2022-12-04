@@ -1,9 +1,15 @@
+<%= render "layouts/dialectica_navigation" %>
+
 <p id="notice"><%= notice %></p>
 
 <div class="container">
-<h1>activities</h1>
+<h1>histories</h1>
 
+<%= render "histories/searchable_list", histories: @histories %>
 
+<hr>
+
+<% if false %>
   <div class="" style="">
     <% @histories.each do |history| %>
       <p>
@@ -16,3 +22,5 @@
     <% end %>
   </div>
 </div>
+<% end %>
+<%= render "layouts/footer" %>

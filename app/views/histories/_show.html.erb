@@ -11,7 +11,7 @@
   <% history_name = history.user.name unless history.user.blank? %>
 <% end %>
 
-<% if strip_tags(history.content).length < 50 %>
+<% if strip_tags(history.content).length < 100 %>
 <div class="history-<%= history.id %> small">
 
     <strong>

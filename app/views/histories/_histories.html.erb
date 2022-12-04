@@ -1,0 +1,11 @@
+<div class="searchable_list_histories">
+  <% histories.each do |history| %>
+    <p>
+      <% unless history.submission.blank? %>
+        #<%= link_to history.submission.dialectica_id_public, submission_path(history.submission) %> - "<%= link_to history.submission.title, submission_path(history.submission) %>"
+      <% end %>
+    </p>
+    <%= render 'histories/show', history: history, collapse_status: "" %>
+    <hr />
+  <% end %>
+</div>

@@ -1,0 +1,29 @@
+
+<% search_input = OpenStruct.new(search_string: "") %>
+
+<%= form_with scope: :search_input, url: searchable_list_histories_histories_path, method: :get, remote: true do |form| %>
+
+<div class="input-group mb-3">
+  <%= form.text_field :search_string, value: search_input.search_string, class: "form-control", placeholder: "enter search terms" %>
+</div>
+
+  <%#= form.hidden_field :user_id, value: current_user.id %>
+
+<div class="form-group">
+  <p>
+    <strong>submission</strong>
+  </p>
+    <%= form.select :submission_id, Submission.all.order(created_at: :desc).map {|submission| [submission.title, submission.id]}, {include_blank: true}, {class: "form-control"} %>
+</div>
+
+<div class="form-group">
+  <p>
+    <strong>user</strong>
+  </p>
+    <%= form.select :user_id, User.reviewers.not_hidden.order(:lastname).map {|user| ["#{user.name}", user.id]}, {include_blank: true}, {class: "form-control"} %>
+</div>
+
+<%= form.submit "search", class: "btn btn-outline-primary" %>
+
+<% end %>
+<hr>
