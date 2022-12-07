@@ -18,6 +18,9 @@
     <th>
       Action
     </th>
+    <th>
+      Status
+    </th>
   </tr>
 </thead>
 <tbody>
@@ -56,6 +59,9 @@
         <%= link_to 'show', submission %><br>
         <%= link_to 'edit', edit_submission_path(submission) %><br>
         <%= link_to 'delete', submission, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+      <td>
+        <%= submission.status_for_author %>
       </td>
     </tr>
   <% end %>

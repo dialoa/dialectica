@@ -19,6 +19,11 @@
           <%= link_to "submissions", submissions_path, class: "nav-link" %>
         </li>
       <% end %>
+      <% if policy(Submission).submission_list? %>
+        <li class="nav-item">
+          <%= link_to "submission list", submission_list_submissions_path, class: "nav-link" %>
+        </li>
+      <% end %>
       <% if policy(User).dashboard? %>
         <li class="nav-item">
           <%= link_to "users", dashboard_user_index_path, class: "nav-link" %>

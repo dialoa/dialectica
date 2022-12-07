@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       get 'my_submissions'
       get 'searchable_list'
       get 'searchable_cards'
+      get 'submission_list'
     end
   end
 

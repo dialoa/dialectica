@@ -1,0 +1,17 @@
+<%= render "layouts/fishpond_navigation" %>
+
+<div class="container">
+
+<h1>submissions</h1>
+
+<hr>
+
+<%= render 'submissions/table_for_submissions', submissions: @submissions %>
+<%#= render 'submissions/searchable_list', submissions: @submissions %>
+
+
+<br>
+<br>
+</div>
+
+<%= render "layouts/footer" %>

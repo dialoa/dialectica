@@ -12,7 +12,13 @@ class SubmissionsController < ApplicationController
   # GET /submissions.json
   def index
     authorize Submission
-    @submissions = Submission.all
+    @submissions = Submission.all.order(created_at: :desc)
+  end
+
+  def submission_list
+    authorize Submission
+    #@submissions = Submission.all.order(created_at: :desc)
+    @submissions = SubmissionSearch.new("", "all", current_user.id, current_user.id).search
   end
 
   def download_csv

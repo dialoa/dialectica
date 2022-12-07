@@ -1,9 +1,10 @@
 class SubmissionSearch
-  def initialize(search_string="", selection="all", user_id=nil)
+  def initialize(search_string="", selection="all", user_id=nil, rewiever_id=nil)
     @search_string = search_string
     @selection = selection
     @submissions = Submission.all
     @user = User.where(id: user_id).empty? ? nil : User.find(user_id)
+    @reviewer = User.where(id: rewiever_id).empty? ? nil : User.find(rewiever_id)
   end
 
   def search
@@ -90,6 +91,11 @@ class SubmissionSearch
 
     if @selection == "open"
       @submissions = @submissions.alive
+    end
+
+    unless @reviewer.blank?
+      array_of_ids = @reviewer.submissions.pluck(:id)
+      @submissions = @submissions.where(id: array_of_ids)
     end
 
   end

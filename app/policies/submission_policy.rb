@@ -4,6 +4,10 @@ class SubmissionPolicy < ApplicationPolicy
     is_user_editor?(@user) || is_user_admin?(@user)
   end
 
+  def submission_list?
+    is_user_editor?(@user) || is_user_reviewer?(@user) || is_user_admin?(@user)
+  end
+
   def download_csv?
     is_user_editor?(@user) || is_user_admin?(@user)
   end
