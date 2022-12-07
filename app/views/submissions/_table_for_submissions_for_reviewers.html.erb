@@ -1,0 +1,68 @@
+<div class="submissions_searchable_list">
+<table class="table table-striped table-bordered">
+<thead>
+  <tr>
+    <th>
+      ID
+    </th>
+      <th>
+        Dialectica-ID
+      </th>
+    <th>
+      Submission-Date
+      </th>
+    <th scope="col">Title</th>
+    <th scope="col">Author</th>
+    <th scope="col">File</th>
+    <th scope="col">Reviewers</th>
+    <th>
+      Action
+    </th>
+    <th>
+      Status
+    </th>
+  </tr>
+</thead>
+<tbody>
+  <%# Submission.where.not(id: submissions_with_reviewer.pluck(:id)).each do |submission| %>
+  <% submissions.order(:created_at).each do |submission| %>
+    <tr class="<%#= submission.submission_urgency %>">
+      <td>
+        <%= submission.id %>
+      </td>
+      <td>
+        <%= submission.dialectica_id_public %>
+      </td>
+      <td>
+        <%= submission.created_at.strftime("%d/%m/%Y") %>
+      </td>
+      <td>
+        <%#= link_to submission.title, submission_path(submission) %>
+        <%= link_to submission.title, submission_dialectica_id_path(submission.dialectica_id.to_s) %>
+      </td>
+      <td>
+        Anonymous
+        <%#= "#{submission.firstname} #{submission.lastname}" %>
+        <%#= submission.firstname %> <%#= submission.lastname %>
+      </td>
+      <td><%= link_to "Download", rails_blob_path(submission.file, disposition: "attachment") if submission.file.attached?  %></td>
+      <td>
+        <%= submission.users.count unless submission.users.empty? %>
+        <%# submission.users.each do |user| %>
+          <%#= user.email %>
+        <%# end %>
+        <% if submission.users.empty? %>
+          <strong>No Reviewers yet</strong>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to 'show', submission %><br>
+      </td>
+      <td>
+        <%= submission.status_for_author %>
+      </td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+</div>
