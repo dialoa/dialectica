@@ -112,6 +112,27 @@
       <% if policy(submission).destroy? %>
         <%= link_to 'delete this submission', submission, method: :delete, data: { confirm: 'Are you sure?', cy: "delete_submission" }, class: "btn btn-danger border my-2" %>
       <% end %>
+      <hr>
+      <% unless submission.proposed_for_acceptance.to_s == "true" %>
+        <%= link_to "propose for acceptance", propose_for_acceptance_submission_path(submission.id), method: :put, class: "btn btn-light border my-2" %>
+      <% else %>
+        <%= link_to "propose for acceptance", propose_for_acceptance_submission_path(submission.id), method: :put, class: "btn btn-light border my-2 disabled" %>
+        <%= link_to "unpropose for acceptance", unpropose_for_acceptance_submission_path(submission.id), method: :put, class: "btn btn-light border my-2" %>
+      <% end %>
+
+      <% unless submission.proposed_for_rejection.to_s == "true" %>
+        <%= link_to "propose for rejection", propose_for_rejection_submission_path(submission.id), method: :put, class: "btn btn-light border my-2" %>
+      <% else %>
+        <%= link_to "propose for rejection", propose_for_rejection_submission_path(submission.id), method: :put, class: "btn btn-light border my-2 disabled" %>
+        <%= link_to "unpropose for rejection", unpropose_for_rejection_submission_path(submission.id), method: :put, class: "btn btn-light border my-2" %>
+      <% end %>
+
+      <% unless submission.proposed_for_discussion.to_s == "true" %>
+        <%= link_to "propose for discussion", propose_for_discussion_submission_path(submission.id), method: :put, class: "btn btn-light border my-2" %>
+      <% else %>
+        <%= link_to "propose for discussion", propose_for_discussion_submission_path(submission.id), method: :put, class: "btn btn-light border my-2 disabled" %>
+        <%= link_to "unpropose for rejection", unpropose_for_discussion_submission_path(submission.id), method: :put, class: "btn btn-light border my-2" %>
+      <% end %>
 
     <% end %>
 

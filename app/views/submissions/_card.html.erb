@@ -25,6 +25,10 @@
       <h5><span class="badge badge-pill badge-danger text-white text-wrap">proposed for rejection</span></h5>
     <% end %>
 
+    <% if submission.proposed_for_discussion == "true" %>
+      <h5><span class="badge badge-pill badge-info text-white">discussion</span></h5>
+    <% end %>
+
     <% if submission.withdrawn == "true" %>
       <h5><span class="badge badge-pill badge-danger text-white">withdrawn</span></h5>
     <% elsif submission.withdrawn == "false" %>

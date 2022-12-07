@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_04_092716) do
+ActiveRecord::Schema.define(version: 2022_12_07_190510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -274,6 +274,7 @@ ActiveRecord::Schema.define(version: 2022_12_04_092716) do
     t.integer "dialectica_id"
     t.string "withdrawn", default: "false"
     t.integer "resubmit_original_dialectica_id"
+    t.string "proposed_for_discussion", default: ""
   end
 
   create_table "suggestion_submissions", force: :cascade do |t|

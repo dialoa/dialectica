@@ -91,6 +91,11 @@ has_many :external_referees, :through => :external_referee_submissions
     ["false", "true"]
   end
 
+  def self.proposed_for_discussion_statuses
+    ["false", "true"]
+  end
+
+
   def self.withdrawn_options
     ["false", "true"]
   end

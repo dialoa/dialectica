@@ -60,6 +60,10 @@ class SubmissionSearch
       @submissions = @submissions.where(proposed_for_rejection: "true")
     end
 
+    if @selection == "proposed for discussion"
+      @submissions = @submissions.where(proposed_for_discussion: "true")
+    end
+
     if @selection == "accepted"
       @submissions = @submissions.where(accepted: "true")
     end
@@ -99,6 +103,7 @@ class SubmissionSearch
       "suggested to me",
       "proposed for acceptance",
       "proposed for rejection",
+      "proposed for discussion",
       "accepted",
       "rejected",
       "dead",

@@ -426,6 +426,24 @@ Please visit: #{submission_url(submission)}
     redirect_to submission_path(params[:submission_id]), notice: 'Proposed Submission'.downcase
   end
 
+  def propose_for_discussion
+    submission = Submission.find(params[:id])
+    submission.update(proposed_for_discussion: "true")
+    message = "Proposed for Discussion".downcase
+    submission.add_to_history(current_user, message)
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(submission), notice: message
+  end
+
+  def unpropose_for_discussion
+    submission = Submission.find(params[:id])
+    submission.update(proposed_for_discussion: "false")
+    message = "Unproposed for Discussion".downcase
+    submission.add_to_history(current_user, message)
+    #redirect_to submission_path(submission), notice: 'Submission has been proposed'
+    redirect_to submission_path(submission), notice: message
+  end
+
   def propose_for_acceptance
     submission = Submission.find(params[:id])
     submission.update(proposed_for_acceptance: "true")

@@ -31,6 +31,8 @@
     <%= f.input :accepted, label: "accepted?", collection: Submission.accepted_options %>
     <%= f.input :rejected, label: "rejected?", collection: Submission.rejected_options %>
     <%= f.input :withdrawn, label: "withdrawn?", collection: Submission.withdrawn_options %>
+    <%= f.input :proposed_for_discussion, label: "proposed for discussion?", collection: Submission.proposed_for_discussion_statuses %>
+
 
     <%= f.input :dead, label: "dead?", collection: Submission.dead_options %>
     <%= f.input :dialectica_id, label: "dialectica_id", as: :numeric %>

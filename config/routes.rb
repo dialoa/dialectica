@@ -44,6 +44,8 @@ Rails.application.routes.draw do
       get 'resubmit_submission'
       get 'send_rejection_to_author_form'
       put 'send_rejection_to_author'
+      put 'propose_for_discussion'
+      put 'unpropose_for_discussion'
     end
     collection do
       get 'iframe_new'
