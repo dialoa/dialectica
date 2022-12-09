@@ -20,7 +20,7 @@ class SubmissionSearch
 
   def select
 
-    if @selection == "without reviewers"
+    if @selection == "without internal reviewers"
       #@submissions = @submissions.left_outer_joins(:users).where( users: { id: nil } )
       #@submissions = @submissions.left_joins(:users).where('users.id IS NULL').distinct
       array_of_ids = []
@@ -45,7 +45,7 @@ class SubmissionSearch
       @submissions = @submissions.where(id: array_of_ids)
     end
 
-    if @selection == "with reviewers"
+    if @selection == "with internal reviewers"
       @submissions = @submissions.left_joins(:users).where('users.id IS NOT NULL').distinct
     end
 
@@ -85,13 +85,24 @@ class SubmissionSearch
       @submissions = @submissions.dead
     end
 
-    if @selection == "to be reviewed by me"
+    if @selection == "reviewed by me"
       @submissions = @user.submissions
     end
 
     if @selection == "open"
       @submissions = @submissions.alive
     end
+
+    if @selection == "sent back"
+      #array_of_ids = []
+
+      old_submissions = Submission.where("appearance_date < ?", Date.today - 31.days).where.not(accepted: "true").where.not(rejected: "true")
+
+      @submissions = @submissions.where(id: old_submissions.pluck(:id))
+
+    end
+
+
 
     unless @reviewer.blank?
       array_of_ids = @reviewer.submissions.pluck(:id)
@@ -103,20 +114,21 @@ class SubmissionSearch
   def self.options
     [
       "all",
-      "without reviewers",
-      "with one reviewer",
-      "with reviewers",
+      "without internal reviewers",
+      #"with one reviewer",
+      "with internal reviewers",
       "suggested to me",
       "proposed for acceptance",
       "proposed for rejection",
       "proposed for discussion",
       "accepted",
       "rejected",
-      "dead",
-      "to be reviewed by me",
-      "open",
+      #"dead",
+      "reviewed by me",
+      #"open",
       "withdrawn",
-      "not withdrawn"
+      "not withdrawn",
+      "sent back"
       ]
   end
 end
