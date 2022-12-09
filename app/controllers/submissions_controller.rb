@@ -381,9 +381,13 @@ Please visit: #{submission_url(submission)}
 
     @sending_option = params[:send_directly]
 
+
+
     message = "sent to external referee: #{@external_referee.name_and_email}"
     submission = Submission.find(params[:submission_id])
     @submission = submission
+
+    submission.update(appearance_date: submission.appearance_date + 31.days)
     submission.add_to_history(current_user, message)
     #ExternalReferee.create(email: @mail, firstname: @firstname, lastname: @lastname)
     submission.external_referees << @external_referee
@@ -530,7 +534,9 @@ Please visit: #{submission_url(submission)}
 
   def resurrect_submission
     submission = Submission.find(params[:submission_id])
-    submission.update(appearance_date: Date.today)
+    #submission.update(appearance_date: Date.today)
+    submission.update(appearance_date: submission.appearance_date + 31.days)
+
     message = "Submission resurrected".downcase
     submission.add_to_history(current_user, message)
     redirect_to submission_path(submission), notice: message
@@ -559,6 +565,8 @@ Please visit: #{submission_url(submission)}
 
     #@submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} signed up as Internal Referee</p>")
     @submission.add_to_history(current_user, "Signed up as Internal Referee".downcase)
+    @submission.update(appearance_date: @submission.appearance_date + 7.days)
+
     #redirect_to submission_pool_path(selection: "by_me"), notice: 'Signed up as Internal Referee'
     redirect_to submission_path(@submission), notice: 'Signed up as Internal Referee'.downcase
   end
@@ -571,6 +579,7 @@ Please visit: #{submission_url(submission)}
 
     #@submission.update(history: @submission.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")}: </strong> #{current_user.firstname} #{current_user.lastname} quit as Internal Referee</p>")
     @submission.add_to_history(current_user, "Quit as Internal Referee".downcase)
+    @submission.update(appearance_date: @submission.appearance_date + 7.days)
 
     #redirect_to submission_pool_path, notice: 'Quit as Internal Referee'
     redirect_to submission_path(@submission), notice: 'Quit as Internal Referee'.downcase

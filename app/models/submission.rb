@@ -262,19 +262,22 @@ has_many :external_referees, :through => :external_referee_submissions
   end
 
   def submission_urgency
-    if appearance_date > Date.today - 2.weeks
+    if accepted == "true"
+      return "bg-color-dialectica-blue"
+    elsif appearance_date > Date.today - 6.days
+      #hellgrün
       return "bg-color-light-green"
-    elsif appearance_date > Date.today - 4.weeks
+    elsif appearance_date > Date.today - 13.days
+      #dunkelgrün
       return "bg-color-dark-green"
-    elsif appearance_date > Date.today - 6.weeks
-      return "bg-color-light-red"
-    elsif appearance_date > Date.today - 8.weeks
-      return "bg-color-dark-red text-white"
-    elsif appearance_date > Date.today - 10.weeks
-      return "bg-color-violet"
-    elsif appearance_date > Date.today - 12.weeks
-      return "bg-color-dark-grey"
+    elsif appearance_date > Date.today - 19.days
+      #dunkelrot
+      return "bg-color-dark-red"
+    elsif appearance_date > Date.today - 31.days
+      #hellrot
+      return "bg-color-light-red text-white"
     else
+      #danach schwarz
       return "bg-color-black text-white"
     end
   end
