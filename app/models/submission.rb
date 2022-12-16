@@ -44,6 +44,8 @@ has_many :external_referees, :through => :external_referee_submissions
   #validates :dialectica_id, uniqueness: true # the problem is in upload csv: save fails if there is already dialectica id
   validates :title, presence: true#, uniqueness: true
   validates :file, attached: true, content_type: { in: 'application/pdf', message: 'is not a PDF' }, size: { less_than: 1.megabytes , message: 'is too large' }
+  #validates :attachments, attached: true, size: { less_than: 5.megabytes , message: 'is too large' }
+
 
   scope :dead, -> { where(dead: "true") }
   scope :alive, -> { where(dead: "false") }

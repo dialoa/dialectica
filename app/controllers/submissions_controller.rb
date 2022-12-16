@@ -318,6 +318,8 @@ class SubmissionsController < ApplicationController
   end
 
   def upload_file_to_submission
+
+
     submission = Submission.find(params[:submission_id])
     submission.attachments.attach(params[:attachments])
     message = "Uploaded a file: ".downcase
@@ -326,6 +328,7 @@ class SubmissionsController < ApplicationController
     submission.add_to_history(current_user, message + " " + link)
     #submission.add_attachment_to_history(current_user, submission.attachments.order(:created_at).last)
     redirect_to submission_path(submission), notice: message
+
   end
 
   def add_comment_to_submission

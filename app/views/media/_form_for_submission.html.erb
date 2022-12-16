@@ -1,3 +1,11 @@
+<% if local_assigns[:parent].blank? %>
+  <% parent_id = medium.mediumable_id %>
+  <% parent_class_name = medium.mediumable_type %>
+<% else %>
+  <% parent_id = parent.id %>
+  <% parent_class_name = parent.class.name %>
+<% end %>
+
 <div class="modal-body">
 <%= simple_form_for(medium, url: create_for_submission_media_path, method: :post) do |f| %>
   <%= f.error_notification %>
@@ -5,13 +13,13 @@
 
   <div class="form-inputs">
     <p>
-      Cover <br />
-      <%= f.file_field :file %>
+      Cover (max 3 mb) <br />
+      <%= f.input :file, label: false %>
     </p>
     <%= f.input :comment, placeholder: "what is this file about?" %>
 
-    <%= f.hidden_field :mediumable_id, value: parent.id %>
-    <%= f.hidden_field :mediumable_type, value: parent.class.name %>
+    <%= f.hidden_field :mediumable_id, value: parent_id %>
+    <%= f.hidden_field :mediumable_type, value: parent_class_name %>
 
     <%#= f.input :mediumable_id %>
 
