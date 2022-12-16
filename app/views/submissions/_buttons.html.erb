@@ -206,8 +206,8 @@
         <%= tinymce_assets %>
         <%= tinymce %>
         <%= simple_form_for :comment, url: add_comment_to_submission_path(submission) do |f| %>
-          <%#= f.input :comment, as: :text %>
-          <%= f.text_area :comment, :class => "tinymce", :rows => 40, :cols => 120 %>
+          <%= f.input :comment, as: :text, :input_html => { :rows => 7} %>
+          <%#= f.text_area :comment, :class => "tinymce", :rows => 40, :cols => 120 %>
 
 
 
