@@ -40,6 +40,17 @@ class SubmissionMailer < ApplicationMailer
     mail(to: email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: @subject)
   end
 
+  def ask_author_a_question(user: user, submission: submission, question_answer: question_answer)
+    @user = user
+    @submission = submission
+    @question_answer = question_answer
+    @subject = "dialectica: you have been asked a question about your submision"
+    @body = Submission.ask_author_a_question_text(user: user, submission: submission, question_answer: question_answer)
+    #@current_user = current_user
+
+    mail(to: @submission.email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: @subject)
+  end
+
   def send_confirmation_for_submission(email, subject, body, submission, user, password = nil)
     @email = email
     @subject = subject

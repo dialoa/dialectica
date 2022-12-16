@@ -30,6 +30,13 @@
     </tr>
     <% end %>
 
+    <% QuestionAnswer.placeholders.each do |placeholder| %>
+    <tr>
+      <td>*|<%= placeholder.first.to_s %>|*</td>
+      <td><%= placeholder.second.to_s %></td>
+    </tr>
+    <% end %>
+
   </tbody>
 </table>
 

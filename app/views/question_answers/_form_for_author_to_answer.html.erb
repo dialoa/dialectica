@@ -1,0 +1,17 @@
+<% submission_id = local_assigns[:submission_id].blank? ? question_answer.submission_id : local_assigns[:submission_id] %>
+
+<%= simple_form_for(question_answer, url: answer_question_question_answer_path(question_answer), method: :put) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%#= f.input :question, label: "question" %>
+    <%= f.input :answer, label: "please answer the question" %>
+    <%#= f.hidden_field :submission_id, value: submission_id %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "answer", class: "btn btn-primary mb-3" %>
+  </div>
+<% end %>

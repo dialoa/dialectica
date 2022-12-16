@@ -1,15 +1,18 @@
 <%= render "layouts/dialectica_navigation" %>
 
 <div class="container">
+  <%= link_to "back to the pool", submission_pool_path %>
 
-  <% QuestionAnswer.where(submission_id: @submission.id).each do |question_answer| %>
-    <%= render "question_answers/card", question_answer: question_answer %>
-  <% end %>
+  <hr>
+
 
   <p>
     anonymously ask the author of #<%= @submission.dialectica_id %> - "<%= @submission.title %>" a question
   </p>
   <%= render 'form', question_answer: @question_answer, submission_id: @submission.id %>
+
+  <%= render "question_answers/previous_questions", question_answers: QuestionAnswer.where(submission_id: @submission.id) %>
+
 </div>
 
 <%= render "layouts/footer" %>

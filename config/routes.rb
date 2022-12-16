@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :question_answers
+  resources :question_answers do
+    member do
+      put "answer_question"
+    end
+  end
   resources :media do
     member do
 

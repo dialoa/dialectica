@@ -9,9 +9,16 @@
       <%= question_answer.question %>
     </p>
     <% if question_answer.answer.blank? %>
-      <p>
-        author hasn't answered yet.
-      </p>
+
+      <% if question_answer.submission.email == current_user.email %>
+      <hr>
+        <%= render 'question_answers/form_for_author_to_answer', question_answer: question_answer %>
+      <% else %>
+        <p>
+          <strong>author hasn't answered yet.</strong>
+        </p>
+      <% end %>
+
     <% else %>
       <p>
         <strong>answer of the author:</strong>

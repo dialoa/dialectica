@@ -5,13 +5,13 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :question %>
+    <%= f.input :question, label: "question" %>
     <%#= f.input :answer %>
     <%= f.hidden_field :submission_id, value: submission_id %>
 
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "ask author", class: "btn btn-primary" %>
+    <%= f.button :submit, "ask author (this will send an email to the author)", class: "btn btn-primary mb-3" %>
   </div>
 <% end %>

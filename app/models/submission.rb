@@ -177,6 +177,18 @@ class Submission < ApplicationRecord
 
   end
 
+  def self.ask_author_a_question_text(user: user, submission: submission, question_answer: question_answer)
+
+    email_template = EmailTemplate.find_by_name("ask author a question")
+
+    if email_template.nil?
+      email_template = EmailTemplate.create(name: "ask author a question", content: "please edit this template")
+    end
+
+    ScanAndSubstitute.new(content: email_template.content, user: user, submission: submission, question_answer: question_answer).scan_and_substitute
+
+  end
+
 
   def self.one_month_passed_without_case_text(submission: submission)
 
