@@ -1,0 +1,24 @@
+<div class="card my-3" style="min-width: 18rem;">
+  <div class="card-body">
+    <h6 class="card-subtitle mb-2 text-muted"><%= l question_answer.created_at, format: :usa %></h6>
+
+    <p>
+      <strong>question:</strong>
+    </p>
+    <p>
+      <%= question_answer.question %>
+    </p>
+    <% if question_answer.answer.blank? %>
+      <p>
+        author hasn't answered yet.
+      </p>
+    <% else %>
+      <p>
+        <strong>answer of the author:</strong>
+      </p>
+      <p>
+        <%= question_answer.answer %>
+      </p>
+    <% end %>
+  </div>
+</div>

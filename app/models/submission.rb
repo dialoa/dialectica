@@ -1,6 +1,9 @@
 class Submission < ApplicationRecord
-has_many :external_referee_submissions
-has_many :external_referees, :through => :external_referee_submissions
+
+  has_many :question_answers
+
+  has_many :external_referee_submissions
+  has_many :external_referees, :through => :external_referee_submissions
 
   has_many :submission_users
   has_many :users, :through => :submission_users

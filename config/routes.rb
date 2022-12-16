@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :question_answers
   resources :media do
     member do
 

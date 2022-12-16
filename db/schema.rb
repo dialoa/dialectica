@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_16_132522) do
+ActiveRecord::Schema.define(version: 2022_12_16_150256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -203,6 +203,15 @@ ActiveRecord::Schema.define(version: 2022_12_16_132522) do
     t.string "status", default: "visible"
     t.string "special_page", default: ""
     t.index ["slug"], name: "index_pages_on_slug", unique: true
+  end
+
+  create_table "question_answers", force: :cascade do |t|
+    t.text "question", default: ""
+    t.text "answer", default: ""
+    t.bigint "submission_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["submission_id"], name: "index_question_answers_on_submission_id"
   end
 
   create_table "reports", force: :cascade do |t|

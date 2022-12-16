@@ -1,0 +1,15 @@
+<%= render "layouts/dialectica_navigation" %>
+
+<div class="container">
+
+  <% QuestionAnswer.where(submission_id: @submission.id).each do |question_answer| %>
+    <%= render "question_answers/card", question_answer: question_answer %>
+  <% end %>
+
+  <p>
+    anonymously ask the author of #<%= @submission.dialectica_id %> - "<%= @submission.title %>" a question
+  </p>
+  <%= render 'form', question_answer: @question_answer, submission_id: @submission.id %>
+</div>
+
+<%= render "layouts/footer" %>
