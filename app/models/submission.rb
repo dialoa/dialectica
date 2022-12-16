@@ -304,11 +304,11 @@ has_many :external_referees, :through => :external_referee_submissions
     puts self.appearance_date
   end
 
-  def add_to_history(user, message, alternative_name = "")
+  def add_to_history(user, message, alternative_name = "", category: "")
     #history = self.history + "<p><strong>#{Date.today.strftime("%d.%m.%Y")} - #{user.name}</strong>: <br>" + message + "</p>"
     #self.update(history: history)
     #byebug
-    history = History.create(content: message, user_id: user.id, submission_id: self.id, alternative_name: alternative_name)
+    history = History.create(content: message, user_id: user.id, submission_id: self.id, alternative_name: alternative_name, category: category)
   end
 
   def add_attachment_to_history(user, attachment)

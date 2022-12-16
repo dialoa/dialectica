@@ -50,7 +50,7 @@
 
 <div class="small">
 
-  <% if history.user == current_user || is_user_admin?(current_user) || is_user_editor?(current_user) %>
+  <% if history.category == "comment" &&  (history.user == current_user || is_user_admin?(current_user) || is_user_editor?(current_user)) %>
     <%= link_to 'edit', edit_history_path(history) %>
     <%#= link_to 'delete', history, method: :delete, data: { confirm: 'Are you sure?' } %>
   <% end %>

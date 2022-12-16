@@ -332,7 +332,7 @@ class SubmissionsController < ApplicationController
     submission = Submission.find(params[:id])
     comment = params[:comment][:comment]
     message = "Added Comment".downcase
-    submission.add_to_history(current_user, comment)
+    submission.add_to_history(current_user, comment, category: "comment")
     redirect_to submission_path(submission), notice: message
   end
 

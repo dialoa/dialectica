@@ -82,6 +82,6 @@ class HistoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def history_params
-      params.require(:history).permit(:content, :alternative_name)
+      params.require(:history).permit(:content, :alternative_name, :category)
     end
 end
