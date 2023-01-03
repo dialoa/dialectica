@@ -375,7 +375,7 @@
     "json-schema-traverse": "^0.4.1",
     "json-stringify-safe": "^5.0.1",
     "json3": "^3.3.3",
-    "json5": "^2.2.0",
+    "json5": "^2.2.2",
     "jsprim": "^1.4.1",
     "killable": "^1.0.1",
     "kind-of": "^6.0.3",
