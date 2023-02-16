@@ -390,7 +390,9 @@ Please visit: #{submission_url(submission)}
     submission = Submission.find(params[:submission_id])
     @submission = submission
 
-    submission.update(appearance_date: submission.appearance_date + 31.days)
+    if submission.extended_appearance_date_for_send_to_external_referee == "false"
+      submission.update(appearance_date: submission.appearance_date + 31.days, extended_appearance_date_for_send_to_external_referee: "true")
+    end
     submission.add_to_history(current_user, message)
     #ExternalReferee.create(email: @mail, firstname: @firstname, lastname: @lastname)
     submission.external_referees << @external_referee

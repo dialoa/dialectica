@@ -121,6 +121,10 @@ class Submission < ApplicationRecord
     ["false", "true"]
   end
 
+  def self.extended_appearance_date_for_send_to_external_referee
+    ["false", "true"]
+  end
+
   def self.placeholders(submission = nil)
     {
       "submission.title": submission && submission.title ? submission.title : "Ship of Theseus",
