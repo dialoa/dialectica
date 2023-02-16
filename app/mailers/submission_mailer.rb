@@ -81,7 +81,7 @@ class SubmissionMailer < ApplicationMailer
   end
 
   def send_notification_of_suggestion(user, subject, body)
-    mail(to: user.email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: subject, body: body)
+    mail(to: user.email, bcc: "sandro.raess@philosophie.ch", subject: subject, body: body)
   end
 
 end
