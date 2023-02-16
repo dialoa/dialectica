@@ -47,7 +47,7 @@ class SubmissionMailer < ApplicationMailer
    @body = Submission.notify_user_that_submission_expires_soon_text(submission: submission, user: user)
    #@current_user = current_user
 
-   mail(to: @email, bcc: "sandro.raess@philosophie.ch", subject: @subject, body: @body)
+   mail(to: @email, bcc: "sandro.raess@philosophie.ch", subject: @subject)
   end
 
   def ask_author_a_question(user: user, submission: submission, question_answer: question_answer)
