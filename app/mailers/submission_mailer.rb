@@ -40,6 +40,16 @@ class SubmissionMailer < ApplicationMailer
     mail(to: email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: @subject)
   end
 
+  def notify_user_that_submission_expires_soon(submission: submission, user: user)
+
+   @email = user.email
+   @subject = "#{submission.title} is about to expire"
+   @body = Submission.notify_user_that_submission_expires_soon_text(submission: submission, user: user)
+   #@current_user = current_user
+
+   mail(to: @email, bcc: "sandro.raess@philosophie.ch", subject: @subject, body: @body)
+  end
+
   def ask_author_a_question(user: user, submission: submission, question_answer: question_answer)
     @user = user
     @submission = submission

@@ -125,6 +125,10 @@ class Submission < ApplicationRecord
     ["false", "true"]
   end
 
+  def open?
+
+  end
+
   def self.placeholders(submission = nil)
     {
       "submission.title": submission && submission.title ? submission.title : "Ship of Theseus",
@@ -167,6 +171,16 @@ class Submission < ApplicationRecord
    ScanAndSubstitute.new(content: email_template.content, submission: submission, user: user, external_referee: external_referee).scan_and_substitute
 
 
+  end
+
+  def self.notify_user_that_submission_expires_soon_text(submission: submission, user: user)
+    email_template = EmailTemplate.find_by_name("notify user that submission expires soon")
+
+    if email_template.nil?
+      email_template = EmailTemplate.create(name: "notify user that submission expires soon", content: "please edit this template")
+    end
+
+    ScanAndSubstitute.new(content: email_template.content, submission: submission, user: user).scan_and_substitute
   end
 
   def self.new_submission_text(submission: submission, user: user)
