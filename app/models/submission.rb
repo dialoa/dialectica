@@ -208,7 +208,7 @@ class Submission < ApplicationRecord
   end
 
 
-  def self.one_month_passed_without_case_text(submission: submission)
+  def self.one_month_passed_without_case_text(submission: submission, user: user)
 
     email_template = EmailTemplate.find_by_name("one month passed without case")
 
@@ -216,7 +216,7 @@ class Submission < ApplicationRecord
       email_template = EmailTemplate.create(name: "one month passed without case", content: "please edit this template")
     end
 
-    ScanAndSubstitute.new(content: email_template.content, submission: submission).scan_and_substitute
+    ScanAndSubstitute.new(content: email_template.content, submission: submission, user: user).scan_and_substitute
 
   end
 
