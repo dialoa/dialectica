@@ -372,6 +372,13 @@ Please visit: #{submission_url(submission)}
     redirect_to submission_path(params[:submission_id]), notice: 'Suggestion added'.downcase
   end
 
+  def prolong_life
+    submission = Submission.find(params[:id])
+    submission.update(appearance_date: submission.appearance_date + 7.days)
+    redirect_to submission_path(submission, notice: 'life prolonged'.downcase)
+
+  end
+
   def send_to_external_referee
     #@mail = params[:send_to_external_referee][:mail]
     @subject = params[:send_to_external_referee][:subject]

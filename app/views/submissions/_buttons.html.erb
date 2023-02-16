@@ -56,6 +56,9 @@
         <%= link_to "contact author", new_question_answer_path(submission_id: submission.id), class: "btn btn-light border" %>
 
         <%= link_to "send to external referee", send_to_external_referee_external_referee_submissions_path(submission), class: "btn btn-light border" %>
+
+        <%= link_to "prolong life", prolong_life_submission_path(submission), method: :put, class: "btn btn-light border" %>
+
         <% if false %>
           <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#send_to_external_refereeModal" data-cy="send_to_external_referee_button">
             send to external referee

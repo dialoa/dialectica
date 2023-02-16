@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       put 'send_rejection_to_author'
       put 'propose_for_discussion'
       put 'unpropose_for_discussion'
+      put 'prolong_life'
     end
     collection do
       get 'iframe_new'
