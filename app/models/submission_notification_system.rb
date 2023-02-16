@@ -13,8 +13,9 @@ class SubmissionNotificationSystem
 
   def notify_reviewers_when_submissions_are_about_to_be_expired
     submission_titles = []
-    Submission.where(appearance_date: Date.today + 7.days).each do |submission|
-      if submission.status_for_author == "open"
+    Submission.all.each do |submission|
+
+      if (submission.appearance_date + 31.days - 7.days == Date.today) && (submission.status_for_author == "open")
 
         submission_titles.push(submission.title)
 
@@ -22,11 +23,6 @@ class SubmissionNotificationSystem
           SubmissionMailer.notify_user_that_submission_expires_soon(user: user, submission: submission).deliver_now
         end
 
-        SubmissionMailer.one_month_passed_without_case(email: "dialectica@philosophie.ch", submission: submission).deliver_now
-
-
-        puts submission.title
-        #SubmissionMailer.one_month_passed_without_case(email: "dialectica@philosophie.ch", submission: submission).deliver_now
       end
     end
 
