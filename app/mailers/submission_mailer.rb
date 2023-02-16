@@ -34,7 +34,7 @@ class SubmissionMailer < ApplicationMailer
 
     @email = email
     @subject = "one month passed without case: #{submission.title}"
-    @body = Submission.one_month_passed_without_case_text(submission: submission)
+    @body = Submission.one_month_passed_without_case_text(submission: submission, user: User.where(email: submission.email).first)
     #@current_user = current_user
 
     mail(to: email, bcc: "dialectica@philosophie.ch, sandro.raess@philosophie.ch", subject: @subject)
