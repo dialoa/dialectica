@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= raw @web_site_content.content %>
+</p>
+
+<p>
+  <strong>Identifier:</strong>
+  <%= @web_site_content.identifier %>
+</p>
+
+<%= link_to 'Edit', edit_web_site_content_path(@web_site_content) %> |
+<%= link_to 'Back', web_site_contents_path %>

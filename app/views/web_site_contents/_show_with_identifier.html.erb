@@ -1,0 +1,10 @@
+<% web_site_contents = WebSiteContent.where(identifier: identifier) %>
+<% if web_site_contents.empty? %>
+  <p>
+    Please create WebSite-Content with the identifier: <%= identifier %>
+  </p>
+<% else %>
+<div>
+  <%= raw web_site_contents.first.content %>
+</div>
+<% end %>

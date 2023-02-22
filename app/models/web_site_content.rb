@@ -1,0 +1,2 @@
+class WebSiteContent < ApplicationRecord
+end

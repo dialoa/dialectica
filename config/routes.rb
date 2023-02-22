@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :web_site_contents
   resources :question_answers do
     member do
       put "answer_question"
