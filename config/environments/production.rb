@@ -102,11 +102,11 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'mail.oriented.net',
-    port:                 587,
+    address:              'mail.infomaniak.com',
+    port:                 465,
     #domain:               'gmail.com',
     user_name:             'dialectica@philosophie.ch',
-    password:              Rails.application.credentials.oriented_password,
+    password:              Rails.application.credentials.infomaniak_password,
     authentication:       'plain',
     enable_starttls_auto: true }
 
