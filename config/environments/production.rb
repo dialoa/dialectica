@@ -107,7 +107,8 @@ Rails.application.configure do
     #domain:               'gmail.com',
     user_name:             'dialectica@philosophie.ch',
     password:              Rails.application.credentials.infomaniak_password,
-    authentication:       'plain',
+    ssl:                  true,
+    authentication:       'login',
     enable_starttls_auto: true }
 
   # Inserts middleware to perform automatic connection switching.
