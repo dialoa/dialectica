@@ -104,12 +104,13 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address:              'mail.infomaniak.com',
     port:                 465,
-    #domain:               'gmail.com',
+    domain:               'philosophie.ch',
     user_name:             'dialectica@philosophie.ch',
     password:              Rails.application.credentials.infomaniak_password,
     ssl:                  true,
     authentication:       'login',
-    enable_starttls_auto: true }
+    openssl_verify_mode:  'none'
+  }
 
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
