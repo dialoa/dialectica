@@ -107,9 +107,10 @@ Rails.application.configure do
     domain:               'philosophie.ch',
     user_name:             'dialectica@philosophie.ch',
     password:              Rails.application.credentials.infomaniak_password,
-    ssl:                  true,
-    authentication:       'login',
-    openssl_verify_mode:  'none'
+    authentication: :plain,
+    ssl:            true,
+    tls:            true,
+    enable_starttls_auto: true
   }
 
   # Inserts middleware to perform automatic connection switching.
