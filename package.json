@@ -169,7 +169,7 @@
     "dashdash": "^1.14.1",
     "debug": "^2.6.9",
     "decamelize": "^1.2.0",
-    "decode-uri-component": "^0.2.0",
+    "decode-uri-component": "^0.2.1",
     "deep-equal": "^1.1.1",
     "default-gateway": "^4.2.0",
     "define-properties": "^1.1.3",
