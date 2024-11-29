@@ -219,9 +219,9 @@ GEM
     pg (1.2.3-x64-mingw32)
     pg (1.2.3-x86-mingw32)
     public_suffix (4.0.6)
-    puma (4.3.8)
+    puma (4.3.12)
       nio4r (~> 2.0)
-    puma (4.3.8-java)
+    puma (4.3.12-java)
       nio4r (~> 2.0)
     pundit (2.1.1)
       activesupport (>= 3.0.0)
@@ -383,7 +383,7 @@ DEPENDENCIES
   pandoc-ruby
   passenger (>= 5.3.2)
   pg (>= 0.18, < 2.0)
-  puma (~> 4.1)
+  puma (~> 4.3)
   pundit
   rails (~> 6.0.2, >= 6.0.2.1)
   rails-latex
